@@ -139,8 +139,9 @@ Quelle: `csv/Smart_Meter_Register_Map_Float/ac_meter_21x.csv`.
   `TotVAhExp`/`TotVAhImp` (+ je Phase; seit Archiv 1.2.6-2 unterstützt).
 - Nicht unterstützt: alle Blindenergiezähler `TotVArh*`. `Evt` fest 0.
 - Phasenwerte abhängig von Netzanschluss und Zählertyp.
-- Die **Modbus-Unit-ID** des Zählers steht nicht in der Registerkarte (`DA`: 1–247).
-  Der Zähler hat eine eigene Unit-ID, getrennt von der des Wechselrichters; welche, ist in der Fronius-Weboberfläche eingestellt.
+- Die **Modbus-Unit-ID** des Zählers steht nicht in der Registerkarte (`DA`: 1–247), aber im
+  GEN24-Handbuch: Default **200** (Zähler 1–5 → 200–204, einstellbar), siehe [`../handbuecher/README.md`](../handbuecher/README.md).
+- Vorzeichen von `W` und Bedeutung von Import/Export hängen von der Meter-Location ab (Handbuch, Abschnitt Meter Model).
 
 ## 8. Wichtige Änderungen laut Changelog
 

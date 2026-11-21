@@ -2,12 +2,16 @@
 
 Herstellerunterlagen von Fronius zu Modbus TCP / SunSpec, aufgeteilt nach Fronius-Archiv.
 Jedes Archiv hat `original/` (unverändert), `csv/` (jedes xlsx-Blatt als CSV, per `grep` durchsuchbar)
-und eine eigene README mit Zusammenfassung.
+und eine eigene README mit Zusammenfassung. Die Handbücher liegen als PDF plus Textfassung (`text/`) vor.
+
+**Registerkarten** (archiv_*) sagen *wo* ein Wert steht; die **Handbücher** sagen *wie* sich das Gerät
+verhält (Geräte-IDs, Timeouts, Schreiben/Steuern, Vorzeichen, Batterie-Logik).
 
 | Archiv | Geräte | Zusammenfassung |
 |---|---|---|
 | **1.1.7-0** | Datamanager-Geräte (Symo, Primo, Galvo, IG Plus …), **Argeno**, IG String Control, **State Codes & Event Flags** | [archiv_1.1.7/README.md](archiv_1.1.7/README.md) |
 | **1.2.7-2** | **Primo/Symo GEN24 (Plus)**, **Tauro**, **Tauro ECO**, **Verto (Plus)**, **Smart Meter** | [archiv_1.2.7/README.md](archiv_1.2.7/README.md) |
+| **Handbücher (PDF)** | Modbus TCP & RTU für **Datamanager** und **GEN24**, Bedienungsanleitung **Datamanager 2.0** – Geräte-IDs, Timeouts, Steuerung, Batterie, Vorzeichen | [handbuecher/README.md](handbuecher/README.md) |
 
 ---
 
@@ -49,6 +53,11 @@ an der Modellkette (z. B. Modell 124 vorhanden → Batterie-fähig).
 | `DCWH` in Modell 160 | Argeno/Hybrid: nicht unterstützt | geliefert |
 | Batterie in Modell 160 | – | zusätzliche Module `StCha n` / `StDisCha n` |
 | Modell 123 `*_WinTms`, `*_RmpTms` | nicht unterstützt (Argeno) | beschreibbar |
+| Unit-ID Wechselrichter | = WR-Nummer im Solar Net (00 → 100) | immer 1 |
+| Unit-ID Smart Meter | 240 (fest), 240–244 | 200 (Default), 200–204 |
+| Empfohlener Timeout | ≥ 10 s | ≥ 1 s |
+| Zusatzregister | Fronius-Register 212–216, 500–513 (State Code, Anlagensummen) | – |
+| Batterie in Modell 160 | Symo Hybrid: String 2 = Speicher (nur Absolutwert) | eigene Module `StCha`/`StDisCha` |
 
 ---
 
@@ -64,6 +73,10 @@ an der Modellkette (z. B. Modell 124 vorhanden → Batterie-fähig).
 | MPPT-Module | `sunspec.py::parse_mppt`, `sensor.py` | ⚠️ Batteriemodule (`StCha`/`StDisCha`) werden wie PV-Strings angelegt → sollten als Batterie erkannt werden |
 | `EvtVnd1-4` dekodieren | – | ⏳ je nach Gerätegeneration unterschiedlich (siehe Tabelle oben) |
 | Batterie (Modell 124: SoC, Status, Laden aus Netz) | – | ⏳ nicht umgesetzt |
-| Smart Meter (211–214, eigene Unit-ID) | – | ⏳ nicht umgesetzt |
-| Steuerung (Modell 123, 124 schreibbar) | – | ⏳ nicht umgesetzt |
+| Smart Meter (201–203/211–214; Unit-ID 200 bzw. 240) | – | ⏳ nicht umgesetzt; Vorzeichen je Meter-Location |
+| Timeout | `api.py` (`timeout=5`) | ⚠️ Datamanager empfiehlt ≥ 10 s |
+| Skalierungsfaktoren | `sunspec.py` | ✅ werden bei jedem Lesen mitgelesen (Handbuch: können sich zur Laufzeit ändern) |
+| Unit-ID im Config Flow | `config_flow.py` (Default 1) | ✅ GEN24; Datamanager: WR-Nummer, Hinweis „00 → 100“ fehlt in der UI |
+| Fronius-Register 214 (State Code), 500–513 (Anlagensummen) | – | ⏳ nur Datamanager |
+| Steuerung (Modell 123, 124 schreibbar) | – | ⏳ nicht umgesetzt (Ablauf siehe handbuecher §2) |
 | Nennleistung (Modell 120 `WRtg`) | – | ⏳ nicht umgesetzt |
