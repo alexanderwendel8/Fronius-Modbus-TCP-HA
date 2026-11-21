@@ -29,6 +29,118 @@
     "sensor": {
       "ac_power": {
         "name": "AC-Leistung"
+      },
+      "ac_energy": {
+        "name": "Gesamtenergie"
+      },
+      "ac_current": {
+        "name": "AC-Strom"
+      },
+      "ac_current_a": {
+        "name": "AC-Strom L1"
+      },
+      "ac_current_b": {
+        "name": "AC-Strom L2"
+      },
+      "ac_current_c": {
+        "name": "AC-Strom L3"
+      },
+      "ac_voltage_an": {
+        "name": "AC-Spannung L1-N"
+      },
+      "ac_voltage_bn": {
+        "name": "AC-Spannung L2-N"
+      },
+      "ac_voltage_cn": {
+        "name": "AC-Spannung L3-N"
+      },
+      "ac_voltage_ab": {
+        "name": "AC-Spannung L1-L2"
+      },
+      "ac_voltage_bc": {
+        "name": "AC-Spannung L2-L3"
+      },
+      "ac_voltage_ca": {
+        "name": "AC-Spannung L3-L1"
+      },
+      "ac_frequency": {
+        "name": "Netzfrequenz"
+      },
+      "ac_apparent_power": {
+        "name": "Scheinleistung"
+      },
+      "ac_reactive_power": {
+        "name": "Blindleistung"
+      },
+      "ac_power_factor": {
+        "name": "Leistungsfaktor"
+      },
+      "dc_power": {
+        "name": "DC-Leistung"
+      },
+      "dc_current": {
+        "name": "DC-Strom"
+      },
+      "dc_voltage": {
+        "name": "DC-Spannung"
+      },
+      "temperature_cabinet": {
+        "name": "Gehäusetemperatur"
+      },
+      "temperature_heatsink": {
+        "name": "Kühlkörpertemperatur"
+      },
+      "temperature_transformer": {
+        "name": "Transformatortemperatur"
+      },
+      "temperature_other": {
+        "name": "Sonstige Temperatur"
+      },
+      "status": {
+        "name": "Betriebszustand",
+        "state": {
+          "off": "Aus",
+          "sleeping": "Ruhemodus",
+          "starting": "Startet",
+          "mppt": "MPPT (Einspeisung)",
+          "throttled": "Gedrosselt",
+          "shutting_down": "Fährt herunter",
+          "fault": "Fehler",
+          "standby": "Standby"
+        }
+      },
+      "status_vendor": {
+        "name": "Fronius-Zustand",
+        "state": {
+          "off": "Aus",
+          "sleeping": "Ruhemodus",
+          "starting": "Startet",
+          "mppt": "MPPT (Einspeisung)",
+          "throttled": "Gedrosselt",
+          "shutting_down": "Fährt herunter",
+          "fault": "Fehler",
+          "standby": "Standby",
+          "no_solarnet": "Keine Solar-Net-Kommunikation",
+          "no_inverter_comm": "Keine Kommunikation mit Wechselrichter",
+          "sn_overcurrent": "Solar-Net-Überstrom",
+          "bootload": "Firmware-Update",
+          "afci": "Lichtbogen erkannt (AFCI)"
+        }
+      },
+      "events": {
+        "name": "Ereignis-Flags"
+      },
+      "mppt_dc_power": {
+        "name": "{module} DC-Leistung"
+      },
+      "mppt_dc_current": {
+        "name": "{module} DC-Strom"
+      },
+      "mppt_dc_voltage": {
+        "name": "{module} DC-Spannung"
+      },
+      "mppt_dc_energy": {
+        "name": "{module} DC-Energie"
       }
     }
   }

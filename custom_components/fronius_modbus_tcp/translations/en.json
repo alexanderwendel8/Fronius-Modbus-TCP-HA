@@ -29,6 +29,118 @@
     "sensor": {
       "ac_power": {
         "name": "AC power"
+      },
+      "ac_energy": {
+        "name": "Total energy"
+      },
+      "ac_current": {
+        "name": "AC current"
+      },
+      "ac_current_a": {
+        "name": "AC current L1"
+      },
+      "ac_current_b": {
+        "name": "AC current L2"
+      },
+      "ac_current_c": {
+        "name": "AC current L3"
+      },
+      "ac_voltage_an": {
+        "name": "AC voltage L1-N"
+      },
+      "ac_voltage_bn": {
+        "name": "AC voltage L2-N"
+      },
+      "ac_voltage_cn": {
+        "name": "AC voltage L3-N"
+      },
+      "ac_voltage_ab": {
+        "name": "AC voltage L1-L2"
+      },
+      "ac_voltage_bc": {
+        "name": "AC voltage L2-L3"
+      },
+      "ac_voltage_ca": {
+        "name": "AC voltage L3-L1"
+      },
+      "ac_frequency": {
+        "name": "Grid frequency"
+      },
+      "ac_apparent_power": {
+        "name": "Apparent power"
+      },
+      "ac_reactive_power": {
+        "name": "Reactive power"
+      },
+      "ac_power_factor": {
+        "name": "Power factor"
+      },
+      "dc_power": {
+        "name": "DC power"
+      },
+      "dc_current": {
+        "name": "DC current"
+      },
+      "dc_voltage": {
+        "name": "DC voltage"
+      },
+      "temperature_cabinet": {
+        "name": "Cabinet temperature"
+      },
+      "temperature_heatsink": {
+        "name": "Heat sink temperature"
+      },
+      "temperature_transformer": {
+        "name": "Transformer temperature"
+      },
+      "temperature_other": {
+        "name": "Other temperature"
+      },
+      "status": {
+        "name": "Operating state",
+        "state": {
+          "off": "Off",
+          "sleeping": "Sleeping",
+          "starting": "Starting",
+          "mppt": "MPPT",
+          "throttled": "Throttled",
+          "shutting_down": "Shutting down",
+          "fault": "Fault",
+          "standby": "Standby"
+        }
+      },
+      "status_vendor": {
+        "name": "Fronius state",
+        "state": {
+          "off": "Off",
+          "sleeping": "Sleeping",
+          "starting": "Starting",
+          "mppt": "MPPT",
+          "throttled": "Throttled",
+          "shutting_down": "Shutting down",
+          "fault": "Fault",
+          "standby": "Standby",
+          "no_solarnet": "No Solar Net communication",
+          "no_inverter_comm": "No inverter communication",
+          "sn_overcurrent": "Solar Net overcurrent",
+          "bootload": "Updating firmware",
+          "afci": "Arc fault detected (AFCI)"
+        }
+      },
+      "events": {
+        "name": "Event flags"
+      },
+      "mppt_dc_power": {
+        "name": "{module} DC power"
+      },
+      "mppt_dc_current": {
+        "name": "{module} DC current"
+      },
+      "mppt_dc_voltage": {
+        "name": "{module} DC voltage"
+      },
+      "mppt_dc_energy": {
+        "name": "{module} DC energy"
       }
     }
   }
