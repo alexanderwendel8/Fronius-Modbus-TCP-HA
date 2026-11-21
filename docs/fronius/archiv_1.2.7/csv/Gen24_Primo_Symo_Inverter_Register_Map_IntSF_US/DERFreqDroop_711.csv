@@ -1,0 +1,134 @@
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERFreqDroop (711),uint16,,,711
+2,2,1,R,0x03,L,Length of sunspec model DERFreqDroop (711),uint16,Registers,,52
+3,3,1,RW,"0x03
+0x06
+0x10",Ena,DER Frequency-Watt (Frequency-Droop) control enable.,enum16,,,"0: Disabled
+1: Enabled"
+4,4,1,RW,"0x03
+0x06
+0x10",AdptCtlReq,Set active control. 0 = No active control.,uint16,,,2 to 4
+5,5,1,R,0x03,AdptCtlRslt,Result of last set active control operation.,enum16,,,"0: In Progress
+1: Completed
+2: Failed"
+6,6,1,R,0x03,NCtl,Number of stored controls supported.,uint16,,,4
+7,8,2,RW,"0x03
+0x06
+0x10",RvrtTms,Reversion time in seconds.  0 = No reversion time.,uint32,Secs,,0 to 4294967294
+9,10,2,R,0x03,RvrtRem,Reversion time remaining in seconds.,uint32,Secs,,0 to 4294967294
+11,11,1,RW,"0x03
+0x06
+0x10",RvrtCtl,Default control after reversion timeout.,uint16,,,2 to 4
+12,12,1,R,0x03,Db_SF,Deadband scale factor.,sunssf,,,-3
+13,13,1,R,0x03,K_SF,Frequency change scale factor.,sunssf,,,-3
+14,14,1,R,0x03,RspTms_SF,Open loop response time scale factor.,sunssf,,,-2
+15,16,2,RW,"0x03
+0x06
+0x10",Ctl/1/DbOf,The deadband value for over-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 6 *
+
+*Actual range may vary based on inverter configuration or country setup"
+17,18,2,RW,"0x03
+0x06
+0x10",Ctl/1/DbUf,The deadband value for under-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 15 *
+
+*Actual range may vary based on inverter configuration or country setup"
+19,19,1,RW,"0x03
+0x06
+0x10",Ctl/1/KOf,Frequency droop per-unit frequency change for over-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.006 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+20,20,1,RW,"0x03
+0x06
+0x10",Ctl/1/KUf,Frequency droop per-unit frequency change for under-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.017 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+21,22,2,RW,"0x03
+0x06
+0x10",Ctl/1/RspTms,The open-loop response time in seconds.,uint32,Secs,RspTms_SF,"0 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+23,23,1,R,0x03,Ctl/1/PMin,"The minimum active power output due to DER prime mover constraints, in percent of the DER active power rating. The valid range is -100 to 100. This setting applies only to the frequency droop control.",int16,Pct,,not supported
+24,24,1,R,0x03,Ctl/1/ReadOnly,Control read-write access.,enum16,,,1 (R)
+25,26,2,RW,"0x03
+0x06
+0x10",Ctl/2/DbOf,The deadband value for over-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 6 *
+
+*Actual range may vary based on inverter configuration or country setup"
+27,28,2,RW,"0x03
+0x06
+0x10",Ctl/2/DbUf,The deadband value for under-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 15 *
+
+*Actual range may vary based on inverter configuration or country setup"
+29,29,1,RW,"0x03
+0x06
+0x10",Ctl/2/KOf,Frequency droop per-unit frequency change for over-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.006 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+30,30,1,RW,"0x03
+0x06
+0x10",Ctl/2/KUf,Frequency droop per-unit frequency change for under-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.017 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+31,32,2,RW,"0x03
+0x06
+0x10",Ctl/2/RspTms,The open-loop response time in seconds.,uint32,Secs,RspTms_SF,"0 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+33,33,1,R,0x03,Ctl/2/PMin,"The minimum active power output due to DER prime mover constraints, in percent of the DER active power rating. The valid range is -100 to 100. This setting applies only to the frequency droop control.",int16,Pct,,not supported
+34,34,1,R,0x03,Ctl/2/ReadOnly,Control read-write access.,enum16,,,0 (RW)
+35,36,2,RW,"0x03
+0x06
+0x10",Ctl/3/DbOf,The deadband value for over-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 6 *
+
+*Actual range may vary based on inverter configuration or country setup"
+37,38,2,RW,"0x03
+0x06
+0x10",Ctl/3/DbUf,The deadband value for under-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 15 *
+
+*Actual range may vary based on inverter configuration or country setup"
+39,39,1,RW,"0x03
+0x06
+0x10",Ctl/3/KOf,Frequency droop per-unit frequency change for over-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.006 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40,40,1,RW,"0x03
+0x06
+0x10",Ctl/3/KUf,Frequency droop per-unit frequency change for under-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.017 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41,42,2,RW,"0x03
+0x06
+0x10",Ctl/3/RspTms,The open-loop response time in seconds.,uint32,Secs,RspTms_SF,"0 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+43,43,1,R,0x03,Ctl/3/PMin,"The minimum active power output due to DER prime mover constraints, in percent of the DER active power rating. The valid range is -100 to 100. This setting applies only to the frequency droop control.",int16,Pct,,not supported
+44,44,1,R,0x03,Ctl/3/ReadOnly,Control read-write access.,enum16,,,0 (RW)
+45,46,2,RW,"0x03
+0x06
+0x10",Ctl/4/DbOf,The deadband value for over-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 6 *
+
+*Actual range may vary based on inverter configuration or country setup"
+47,48,2,RW,"0x03
+0x06
+0x10",Ctl/4/DbUf,The deadband value for under-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 15 *
+
+*Actual range may vary based on inverter configuration or country setup"
+49,49,1,RW,"0x03
+0x06
+0x10",Ctl/4/KOf,Frequency droop per-unit frequency change for over-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.006 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+50,50,1,RW,"0x03
+0x06
+0x10",Ctl/4/KUf,Frequency droop per-unit frequency change for under-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.017 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+51,52,2,RW,"0x03
+0x06
+0x10",Ctl/4/RspTms,The open-loop response time in seconds.,uint32,Secs,RspTms_SF,"0 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+53,53,1,R,0x03,Ctl/4/PMin,"The minimum active power output due to DER prime mover constraints, in percent of the DER active power rating. The valid range is -100 to 100. This setting applies only to the frequency droop control.",int16,Pct,,not supported
+54,54,1,R,0x03,Ctl/4/ReadOnly,Control read-write access.,enum16,,,0 (RW)

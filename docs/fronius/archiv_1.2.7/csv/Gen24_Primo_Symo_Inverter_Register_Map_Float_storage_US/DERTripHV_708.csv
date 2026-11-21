@@ -1,0 +1,323 @@
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERTripHV (708),uint16,,,708
+2,2,1,R,0x03,L,Length of sunspec model DERTripHV (708),uint16,Registers,,203
+3,3,1,RW,"0x03
+0x06
+0x10",Ena,DER high voltage trip control enable.,enum16,,,"0: Disabled
+1: Enabled"
+4,4,1,RW,"0x03
+0x06
+0x10",AdptCrvReq,Index of curve points to adopt. First curve index is 1.,uint16,,,2 to 4
+5,5,1,R,0x03,AdptCrvRslt,Result of last adopt curve operation.,enum16,,,"0: In Progress
+1: Completed
+2: Failed"
+6,6,1,R,0x03,NPt,Number of curve points supported.,uint16,,,5
+7,7,1,R,0x03,NCrvSet,Number of stored curves supported.,uint16,,,4
+8,8,1,R,0x03,V_SF,Scale factor for curve voltage points.,sunssf,,,-2
+9,9,1,R,0x03,Tms_SF,Scale factor for curve time points.,sunssf,,,-2
+10,10,1,R,0x03,Crv/1/ReadOnly,Curve read-write access.,enum16,,,1 (R)
+11,11,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+12,12,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+13,14,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+15,15,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+16,17,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+18,18,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+19,20,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+21,21,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+22,23,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+24,24,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+25,26,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+27,27,1,R,0x03,Crv/1/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+28,28,1,R,0x03,Crv/1/MayTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+29,30,2,R,0x03,Crv/1/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+31,31,1,R,0x03,Crv/1/MayTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+32,33,2,R,0x03,Crv/1/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+34,34,1,R,0x03,Crv/1/MayTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+35,36,2,R,0x03,Crv/1/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+37,37,1,R,0x03,Crv/1/MayTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+38,39,2,R,0x03,Crv/1/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40,40,1,R,0x03,Crv/1/MayTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41,42,2,R,0x03,Crv/1/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+43,43,1,R,0x03,Crv/1/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+44,44,1,R,0x03,Crv/1/MomCess/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+45,46,2,R,0x03,Crv/1/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+47,47,1,R,0x03,Crv/1/MomCess/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+48,49,2,R,0x03,Crv/1/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+50,50,1,R,0x03,Crv/1/MomCess/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+51,52,2,R,0x03,Crv/1/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+53,53,1,R,0x03,Crv/1/MomCess/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+54,55,2,R,0x03,Crv/1/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+56,56,1,R,0x03,Crv/1/MomCess/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+57,58,2,R,0x03,Crv/1/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+59,59,1,R,0x03,Crv/2/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+60,60,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+61,61,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+62,63,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+64,64,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+65,66,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+67,67,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+68,69,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+70,70,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+71,72,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+73,73,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+74,75,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+76,76,1,R,0x03,Crv/2/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+77,77,1,R,0x03,Crv/2/MayTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+78,79,2,R,0x03,Crv/2/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+80,80,1,R,0x03,Crv/2/MayTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+81,82,2,R,0x03,Crv/2/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+83,83,1,R,0x03,Crv/2/MayTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+84,85,2,R,0x03,Crv/2/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+86,86,1,R,0x03,Crv/2/MayTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+87,88,2,R,0x03,Crv/2/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+89,89,1,R,0x03,Crv/2/MayTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+90,91,2,R,0x03,Crv/2/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+92,92,1,R,0x03,Crv/2/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+93,93,1,R,0x03,Crv/2/MomCess/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+94,95,2,R,0x03,Crv/2/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+96,96,1,R,0x03,Crv/2/MomCess/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+97,98,2,R,0x03,Crv/2/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+99,99,1,R,0x03,Crv/2/MomCess/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+100,101,2,R,0x03,Crv/2/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+102,102,1,R,0x03,Crv/2/MomCess/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+103,104,2,R,0x03,Crv/2/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+105,105,1,R,0x03,Crv/2/MomCess/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+106,107,2,R,0x03,Crv/2/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+108,108,1,R,0x03,Crv/3/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+109,109,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+110,110,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+111,112,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+113,113,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+114,115,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+116,116,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+117,118,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+119,119,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+120,121,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+122,122,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+123,124,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+125,125,1,R,0x03,Crv/3/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+126,126,1,R,0x03,Crv/3/MayTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+127,128,2,R,0x03,Crv/3/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+129,129,1,R,0x03,Crv/3/MayTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+130,131,2,R,0x03,Crv/3/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+132,132,1,R,0x03,Crv/3/MayTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+133,134,2,R,0x03,Crv/3/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+135,135,1,R,0x03,Crv/3/MayTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+136,137,2,R,0x03,Crv/3/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+138,138,1,R,0x03,Crv/3/MayTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+139,140,2,R,0x03,Crv/3/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+141,141,1,R,0x03,Crv/3/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+142,142,1,R,0x03,Crv/3/MomCess/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+143,144,2,R,0x03,Crv/3/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+145,145,1,R,0x03,Crv/3/MomCess/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+146,147,2,R,0x03,Crv/3/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+148,148,1,R,0x03,Crv/3/MomCess/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+149,150,2,R,0x03,Crv/3/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+151,151,1,R,0x03,Crv/3/MomCess/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+152,153,2,R,0x03,Crv/3/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+154,154,1,R,0x03,Crv/3/MomCess/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+155,156,2,R,0x03,Crv/3/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+157,157,1,R,0x03,Crv/4/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+158,158,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+159,159,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+160,161,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+162,162,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+163,164,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+165,165,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+166,167,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+168,168,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+169,170,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+171,171,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+172,173,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+174,174,1,R,0x03,Crv/4/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+175,175,1,R,0x03,Crv/4/MayTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+176,177,2,R,0x03,Crv/4/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+178,178,1,R,0x03,Crv/4/MayTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+179,180,2,R,0x03,Crv/4/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+181,181,1,R,0x03,Crv/4/MayTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+182,183,2,R,0x03,Crv/4/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+184,184,1,R,0x03,Crv/4/MayTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+185,186,2,R,0x03,Crv/4/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+187,187,1,R,0x03,Crv/4/MayTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+188,189,2,R,0x03,Crv/4/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+190,190,1,R,0x03,Crv/4/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+191,191,1,R,0x03,Crv/4/MomCess/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+192,193,2,R,0x03,Crv/4/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+194,194,1,R,0x03,Crv/4/MomCess/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+195,196,2,R,0x03,Crv/4/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+197,197,1,R,0x03,Crv/4/MomCess/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+198,199,2,R,0x03,Crv/4/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+200,200,1,R,0x03,Crv/4/MomCess/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+201,202,2,R,0x03,Crv/4/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+203,203,1,R,0x03,Crv/4/MomCess/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+204,205,2,R,0x03,Crv/4/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported

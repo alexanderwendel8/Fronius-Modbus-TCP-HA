@@ -1,0 +1,24 @@
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model mppt (160),uint16,,,160
+2,2,1,R,0x03,L,Length of sunspec model mppt (160),uint16,Registers,,28
+3,3,1,R,0x03,DCA_SF,Current Scale Factor,sunssf,,,auto-scaled on DCA 1-N
+4,4,1,R,0x03,DCV_SF,Voltage Scale Factor,sunssf,,,auto-scaled on DCV 1-N
+5,5,1,R,0x03,DCW_SF,Power Scale Factor,sunssf,,,auto-scaled on DCW 1-N
+6,6,1,R,0x03,DCWH_SF,Energy Scale Factor,sunssf,,,auto-scaled on DCWH 1-N
+7,8,2,R,0x03,Evt,Global Events,bitfield32,,,not supported
+9,9,1,R,0x03,N,Number of Modules,count,,,"number of mppt trackers
+
+1 MPPT => 1 repeating block"
+10,10,1,R,0x03,TmsPer,Timestamp Period,uint16,,,not supported
+11,11,1,R,0x03,module/1/ID,Input ID,uint16,,,1
+12,19,8,R,0x03,module/1/IDStr,Input ID Sting,string,,,'MPPT 1'
+20,20,1,R,0x03,module/1/DCA,DC Current,uint16,A,DCA_SF
+21,21,1,R,0x03,module/1/DCV,DC Voltage,uint16,V,DCV_SF
+22,22,1,R,0x03,module/1/DCW,DC Power,uint16,W,DCW_SF
+23,24,2,R,0x03,module/1/DCWH,Lifetime Energy,acc32,Wh,DCWH_SF
+25,26,2,R,0x03,module/1/Tms,Timestamp,uint32,Secs,,number of seconds since Jan 1st 2000 00:00 am
+27,27,1,R,0x03,module/1/Tmp,Temperature,int16,C,,not supported
+28,28,1,R,0x03,module/1/DCSt,Operating State,enum16,,,not supported
+29,30,2,R,0x03,module/1/DCEvt,Module Events,bitfield32,,,not supported

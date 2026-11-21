@@ -1,0 +1,106 @@
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERCtlAC (704),uint16,,,704
+2,2,1,R,0x03,L,Length of sunspec model DERCtlAC (704),uint16,Registers,,65
+3,3,1,RW,"0x03
+0x06
+0x10",PFWInjEna,Power factor enable when injecting active power.,enum16,,,"0: Disabled
+1: Enabled"
+4,4,1,RW,"0x03
+0x06
+0x10",PFWInjEnaRvrt,Power factor reversion timer when injecting active power enable.,enum16,,,"0: Disabled
+1: Enabled"
+5,6,2,RW,"0x03
+0x06
+0x10",PFWInjRvrtTms,Power factor reversion timer when injecting active power.,uint32,Secs,,0 to 4294967294
+7,8,2,R,0x03,PFWInjRvrtRem,Power factor reversion time remaining when injecting active power.,uint32,Secs,,0 to 4294967294
+9,9,1,R,0x03,PFWAbsEna,Power factor enable when absorbing active power.,enum16,,,not supported
+10,10,1,R,0x03,PFWAbsEnaRvrt,Power factor reversion timer when absorbing active power enable.,enum16,,,not supported
+11,12,2,R,0x03,PFWAbsRvrtTms,Power factor reversion timer when absorbing active power.,uint32,Secs,,not supported
+13,14,2,R,0x03,PFWAbsRvrtRem,Power factor reversion time remaining when absorbing active power.,uint32,Secs,,not supported
+15,15,1,RW,"0x03
+0x06
+0x10",WMaxLimPctEna,Limit maximum active power percent enable.,enum16,,,"0: Disabled
+1: Enabled"
+16,16,1,RW,"0x03
+0x06
+0x10",WMaxLimPct,Limit maximum active power percent value.,uint16,Pct,WMaxLimPct_SF,0% to 100%
+17,17,1,RW,"0x03
+0x06
+0x10",WMaxLimPctRvrt,Reversion limit maximum active power percent value.,uint16,Pct,WMaxLimPct_SF,0% to 100%
+18,18,1,RW,"0x03
+0x06
+0x10",WMaxLimPctEnaRvrt,Reversion limit maximum active power percent value enable.,enum16,,,"0: Disabled
+1: Enabled"
+19,20,2,RW,"0x03
+0x06
+0x10",WMaxLimPctRvrtTms,Limit maximum active power percent reversion time.,uint32,Secs,,0 to 4294967294
+21,22,2,R,0x03,WMaxLimPctRvrtRem,Limit maximum active power percent reversion time remaining.,uint32,Secs,,0 to 4294967294
+23,23,1,R,0x03,WSetEna,Set active power enable.,enum16,,,not supported
+24,24,1,R,0x03,WSetMod,Set active power mode.,enum16,,,not supported
+25,26,2,R,0x03,WSet,Active power setting value in watts.,int32,W,WSet_SF,not supported
+27,28,2,R,0x03,WSetRvrt,Reversion active power setting value in watts.,int32,W,WSet_SF,not supported
+29,29,1,R,0x03,WSetPct,Active power setting value as percent.,int16,Pct,WSetPct_SF,not supported
+30,30,1,R,0x03,WSetPctRvrt,Reversion active power setting value as percent.,int16,Pct,WSetPct_SF,not supported
+31,31,1,R,0x03,WSetEnaRvrt,Reversion active power function enable.,enum16,,,not supported
+32,33,2,R,0x03,WSetRvrtTms,Set active power reversion time.,uint32,Secs,,not supported
+34,35,2,R,0x03,WSetRvrtRem,Set active power reversion time remaining.,uint32,Secs,,not supported
+36,36,1,RW,"0x03
+0x06
+0x10",VarSetEna,Set reactive power enable.,enum16,,,"0: Disabled
+1: Enabled"
+37,37,1,RW,"0x03
+0x06
+0x10",VarSetMod,Set reactive power mode.,enum16,,,0 to 3
+38,38,1,RW,"0x03
+0x06
+0x10",VarSetPri,Reactive power priority.,enum16,,,1 (Reactive)
+39,40,2,R,0x03,VarSet,Reactive power setting value in vars.,int32,Var,VarSet_SF,not supported
+41,42,2,R,0x03,VarSetRvrt,Reversion reactive power setting value in vars.,int32,Var,VarSet_SF,not supported
+43,43,1,RW,"0x03
+0x06
+0x10",VarSetPct,Reactive power setting value as percent.,int16,Pct,VarSetPct_SF,-100% to 100%
+44,44,1,RW,"0x03
+0x06
+0x10",VarSetPctRvrt,Reversion reactive power setting value as percent.,int16,Pct,VarSetPct_SF,-100% to 100%
+45,45,1,RW,"0x03
+0x06
+0x10",VarSetEnaRvrt,Reversion reactive power function enable.,enum16,,,"0: Disabled
+1: Enabled"
+46,47,2,RW,"0x03
+0x06
+0x10",VarSetRvrtTms,Set reactive power reversion time.,uint32,Secs,,0 to 4294967294
+48,49,2,R,0x03,VarSetRvrtRem,Set reactive power reversion time remaining.,uint32,Secs,,0 to 4294967294
+50,50,1,R,0x03,WRmp,Ramp rate for increases in active power during normal generation.,uint16,%Max/Sec,,not supported
+51,51,1,R,0x03,WRmpRef,Ramp rate reference unit for increases in active power or current during normal generation.,enum16,,,not supported
+52,52,1,R,0x03,VarRmp,Ramp rate based on max reactive power per second.,uint16,%Max/Sec,,not supported
+53,53,1,R,0x03,AntiIslEna,Anti-islanding enable.,enum16,,,not supported
+54,54,1,R,0x03,PF_SF,Power factor scale factor.,sunssf,,,-2
+55,55,1,R,0x03,WMaxLimPct_SF,Limit maximum power scale factor.,sunssf,,,-2
+56,56,1,R,0x03,WSet_SF,Active power scale factor.,sunssf,,,not supported
+57,57,1,R,0x03,WSetPct_SF,Active power pct scale factor.,sunssf,,,not supported
+58,58,1,R,0x03,VarSet_SF,Reactive power scale factor.,sunssf,,,not supported
+59,59,1,R,0x03,VarSetPct_SF,Reactive power pct scale factor.,sunssf,,,-2
+60,60,1,RW,"0x03
+0x06
+0x10",PFWInj/PF,Power factor setpoint when injecting active power.,uint16,,PF_SF,"0.8 to 1 *
+
+*Actual range may vary based on inverter configuration or country setup"
+61,61,1,RW,"0x03
+0x06
+0x10",PFWInj/Ext,Power factor excitation setpoint when injecting active power.,enum16,,,"0: Over Excited
+1: Under Excited"
+62,62,1,RW,"0x03
+0x06
+0x10",PFWInjRvrt/PF,Reversion power factor setpoint when injecting active power.,uint16,,PF_SF,"0.8 to 1 *
+
+*Actual range may vary based on inverter configuration or country setup"
+63,63,1,RW,"0x03
+0x06
+0x10",PFWInjRvrt/Ext,Reversion power factor excitation setpoint when injecting active power.,enum16,,,"0: Over Excited
+1: Under Excited"
+64,64,1,R,0x03,PFWAbs/PF,Power factor setpoint when absorbing active power.,uint16,,PF_SF,not supported
+65,65,1,R,0x03,PFWAbs/Ext,Power factor excitation setpoint when absorbing active power.,enum16,,,not supported
+66,66,1,R,0x03,PFWAbsRvrt/PF,Reversion power factor setpoint when absorbing active power.,uint16,,PF_SF,not supported
+67,67,1,R,0x03,PFWAbsRvrt/Ext,Reversion power factor excitation setpoint when absorbing active power.,enum16,,,not supported

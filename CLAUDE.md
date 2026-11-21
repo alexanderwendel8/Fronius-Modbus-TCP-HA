@@ -5,23 +5,30 @@ Code: `custom_components/fronius_modbus_tcp/`. Sprache in Code-Kommentaren und D
 
 ## Herstellerdokumentation – immer zuerst hier nachschlagen
 
-**Einstieg: [`docs/fronius/README.md`](docs/fronius/README.md)** – Dateiindex, Zusammenfassung,
-bekannte Fehler in den Quellen und Bezug zum Code.
+**Einstieg: [`docs/fronius/README.md`](docs/fronius/README.md)** – Gesamtindex: welches Dokument für
+welches Gerät, Unterschiede zwischen den Gerätegenerationen, Bezug zum Code.
 
-- Registerbelegung eines SunSpec-Modells: `docs/fronius/csv/Argeno_Register_Map/<Modellnummer>.csv`
-  (z. B. `113.csv`, `160.csv`, `123.csv`; Übersicht in `Index.csv`)
-- Status-/Event-Dekodierung: `docs/fronius/csv/Fronius_State_Codes_Event_Flags_1_0/`
-  (`St.csv`, `StVnd.csv`, `Evt1.csv`, `EvtVnd1_4_<Familie>.csv`, `<Familie>_State_Codes.csv`)
-- Originaldateien (xlsx/json/csv) unverändert in `docs/fronius/original/`
+| Archiv | Inhalt | Zusammenfassung |
+|---|---|---|
+| `docs/fronius/archiv_1.1.7/` | Argeno, Datamanager-Geräte, **State Codes & Event Flags** | `archiv_1.1.7/README.md` |
+| `docs/fronius/archiv_1.2.7/` | **GEN24**, Tauro, Verto, **Smart Meter**, **Batterie (124)** | `archiv_1.2.7/README.md` |
 
-Suchbeispiel: `grep -rn "WMaxLimPct" docs/fronius/csv/`
+Schnellzugriff:
+- GEN24-Register eines Modells: `docs/fronius/archiv_1.2.7/csv/Gen24_Primo_Symo_Inverter_Register_Map_Float_storage_ROW/<blatt>.csv`
+  (`inverter_11x`, `mppt_160`, `storage_124`, `controls_123`, `nameplate_120` …, absolute Adressen in `Complete_Map.csv`)
+- Smart Meter: `docs/fronius/archiv_1.2.7/csv/Smart_Meter_Register_Map_Float/ac_meter_21x.csv`
+- Argeno: `docs/fronius/archiv_1.1.7/csv/Argeno_Register_Map/<Modellnummer>.csv`
+- Status/Events Datamanager-Geräte: `docs/fronius/archiv_1.1.7/csv/Fronius_State_Codes_Event_Flags_1_0/`
+- Suche: `grep -rn "WMaxLimPct" docs/fronius/*/csv/`
 
 Regeln:
 - Adressen in der Fronius-Doku sind **1-basiert**, im Code **0-basiert** (−1).
-- Bei Widersprüchen gelten die xlsx/CSV-Tabellen, nicht `FroniusEventFlags.json`
-  (dort fehlen Bits, siehe README Abschnitt 6).
+- Archiv 1.2.7: Modellblätter haben **relative** Adressen (1 = ID, 2 = L) → Rumpf-Offset = relativ − 3.
+- `EvtVnd*` und `StVnd` bedeuten bei GEN24/Tauro/Verto etwas anderes als bei Datamanager-Geräten.
+- Bei Widersprüchen gelten xlsx/CSV, nicht `FroniusEventFlags.json`.
 - Keine festen Registeradressen einbauen – Modelle werden zur Laufzeit gescannt.
-- „not supported“-Register liefern NaN / 0xFFFF / 0x8000 → werden zu `None`.
+- „not supported“-Register liefern NaN / 0xFFFF / 0x8000 / acc32 0 → werden zu `None`.
+- Originale in `original/` nie verändern; CSV-Exporte bei Bedarf neu erzeugen.
 
 ## Entwicklung
 

@@ -1,0 +1,306 @@
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERWattVar (712),uint16,,,712
+2,2,1,R,0x03,L,Length of sunspec model DERWattVar (712),uint16,Registers,,76
+3,3,1,RW,"0x03
+0x06
+0x10",Ena,DER Watt-Var control enable.,enum16,,,"0: Disabled
+1: Enabled"
+4,4,1,RW,"0x03
+0x06
+0x10",AdptCrvReq,Set active curve. 0 = No active curve.,uint16,,,2 to 4
+5,5,1,R,0x03,AdptCrvRslt,Result of last set active curve operation.,enum16,,,"0: In Progress
+1: Completed
+2: Failed"
+6,6,1,R,0x03,NPt,Number of curve points supported.,uint16,,,6
+7,7,1,R,0x03,NCrv,Number of stored curves supported.,uint16,,,4
+8,9,2,RW,"0x03
+0x06
+0x10",RvrtTms,Reversion time in seconds.  0 = No reversion time.,uint32,Secs,,0 to 4294967294
+10,11,2,R,0x03,RvrtRem,Reversion time remaining in seconds.,uint32,Secs,,0 to 4294967294
+12,12,1,RW,"0x03
+0x06
+0x10",RvrtCrv,Default curve after reversion timeout.,uint16,,,2 to 4
+13,13,1,R,0x03,W_SF,Scale factor for curve active power points.,sunssf,,,-2
+14,14,1,R,0x03,DeptRef_SF,Scale factor for curve var points.,sunssf,,,-2
+15,15,1,RW,"0x03
+0x06
+0x10",Crv/1/ActPt,Number of active points.,uint16,,,6
+16,16,1,RW,"0x03
+0x06
+0x10",Crv/1/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+17,17,1,RW,"0x03
+0x06
+0x10",Crv/1/Pri,Power priority.,enum16,,,1
+18,18,1,R,0x03,Crv/1/ReadOnly,Curve read-write access.,enum16,,,1 (R)
+19,19,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/1/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+20,20,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+21,21,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/2/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+22,22,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+23,23,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/3/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+24,24,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+25,25,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/4/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+26,26,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+27,27,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/5/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+28,28,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/5/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+29,29,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/6/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+30,30,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/6/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+31,31,1,RW,"0x03
+0x06
+0x10",Crv/2/ActPt,Number of active points.,uint16,,,6
+32,32,1,RW,"0x03
+0x06
+0x10",Crv/2/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+33,33,1,RW,"0x03
+0x06
+0x10",Crv/2/Pri,Power priority.,enum16,,,1
+34,34,1,R,0x03,Crv/2/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+35,35,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/1/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+36,36,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+37,37,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/2/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+38,38,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+39,39,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/3/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40,40,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41,41,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/4/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+42,42,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+43,43,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/5/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+44,44,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/5/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+45,45,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/6/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+46,46,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/6/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+47,47,1,RW,"0x03
+0x06
+0x10",Crv/3/ActPt,Number of active points.,uint16,,,6
+48,48,1,RW,"0x03
+0x06
+0x10",Crv/3/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+49,49,1,RW,"0x03
+0x06
+0x10",Crv/3/Pri,Power priority.,enum16,,,1
+50,50,1,R,0x03,Crv/3/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+51,51,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/1/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+52,52,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+53,53,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/2/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+54,54,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+55,55,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/3/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+56,56,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+57,57,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/4/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+58,58,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+59,59,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/5/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+60,60,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/5/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+61,61,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/6/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+62,62,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/6/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+63,63,1,RW,"0x03
+0x06
+0x10",Crv/4/ActPt,Number of active points.,uint16,,,6
+64,64,1,RW,"0x03
+0x06
+0x10",Crv/4/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+65,65,1,RW,"0x03
+0x06
+0x10",Crv/4/Pri,Power priority.,enum16,,,1
+66,66,1,R,0x03,Crv/4/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+67,67,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/1/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+68,68,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+69,69,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/2/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+70,70,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+71,71,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/3/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+72,72,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+73,73,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/4/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+74,74,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+75,75,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/5/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+76,76,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/5/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+77,77,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/6/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+78,78,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/6/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
