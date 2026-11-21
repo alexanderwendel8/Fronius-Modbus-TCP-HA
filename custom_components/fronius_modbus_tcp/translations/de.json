@@ -3,23 +3,26 @@
     "step": {
       "user": {
         "title": "Fronius Modbus TCP",
-        "description": "Verbindung zu einem Fronius-Gerät per Modbus TCP. Modbus TCP muss am Gerät aktiviert sein.",
+        "description": "Verbindung zu einem Fronius-Wechselrichter per Modbus TCP. Modbus TCP muss in der Fronius-Weboberfläche aktiviert sein (GEN24: Kommunikation → Modbus, Datamanager: Einstellungen → Modbus, Datenausgabe „tcp“).",
         "data": {
           "host": "Host",
           "port": "Port",
-          "unit_id": "Modbus-Geräteadresse"
+          "unit_id": "Modbus-Adresse Wechselrichter",
+          "meter_unit_id": "Modbus-Adresse Smart Meter"
         },
         "data_description": {
-          "host": "Hostname oder IP-Adresse des Geräts.",
-          "port": "Modbus-TCP-Port (Standard 502).",
-          "unit_id": "Modbus-Adresse des Wechselrichters (meist 1)."
+          "host": "Hostname oder IP-Adresse des Wechselrichters bzw. Datamanagers.",
+          "port": "Modbus-TCP-Port: 502 (Standard) oder 1502 (Option beim GEN24).",
+          "unit_id": "GEN24, Tauro, Verto: immer 1. Datamanager (Symo, Primo, Galvo, Eco …): Wechselrichter-Nummer laut Display; Nummer 00 = Adresse 100.",
+          "meter_unit_id": "Leer lassen für automatische Suche (GEN24: 200, Datamanager: 240). 0 eintragen, wenn kein Smart Meter gelesen werden soll."
         }
       }
     },
     "error": {
       "cannot_connect": "Verbindung fehlgeschlagen",
-      "not_sunspec": "Das Gerät antwortet, liefert aber keine SunSpec-Daten.",
-      "unknown": "Unerwarteter Fehler"
+      "not_sunspec": "Das Gerät antwortet, liefert aber keine SunSpec-Wechselrichterdaten. Modbus-Adresse prüfen.",
+      "unknown": "Unerwarteter Fehler",
+      "meter_not_found": "Unter dieser Modbus-Adresse wurde kein Smart Meter gefunden."
     },
     "abort": {
       "already_configured": "Gerät ist bereits eingerichtet"
@@ -141,6 +144,148 @@
       },
       "mppt_dc_energy": {
         "name": "{module} DC-Energie"
+      },
+      "battery_power": {
+        "name": "Batterieleistung"
+      },
+      "battery_charge_power": {
+        "name": "Batterie-Ladeleistung"
+      },
+      "battery_discharge_power": {
+        "name": "Batterie-Entladeleistung"
+      },
+      "battery_voltage": {
+        "name": "Batteriespannung"
+      },
+      "battery_charge_energy": {
+        "name": "Batterie geladene Energie"
+      },
+      "battery_discharge_energy": {
+        "name": "Batterie entladene Energie"
+      },
+      "battery_soc": {
+        "name": "Batterie-Ladezustand"
+      },
+      "battery_state": {
+        "name": "Batteriestatus",
+        "state": {
+          "off": "Aus",
+          "empty": "Leer",
+          "discharging": "Entlädt",
+          "charging": "Lädt",
+          "full": "Voll",
+          "holding": "Halten",
+          "testing": "Kalibrierung / Serviceladung"
+        }
+      },
+      "battery_min_reserve": {
+        "name": "Batterie-Mindestreserve"
+      },
+      "battery_grid_charging": {
+        "name": "Batterie-Ladequelle",
+        "state": {
+          "pv": "Nur PV",
+          "grid": "PV und Netz"
+        }
+      },
+      "battery_control_mode": {
+        "name": "Batterie-Steuermodus",
+        "state": {
+          "none": "Keine Vorgaben",
+          "charge_limit": "Ladegrenze aktiv",
+          "discharge_limit": "Entladegrenze aktiv",
+          "charge_and_discharge_limit": "Lade- und Entladegrenze aktiv"
+        }
+      },
+      "battery_charge_limit": {
+        "name": "Batterie-Ladegrenze"
+      },
+      "battery_discharge_limit": {
+        "name": "Batterie-Entladegrenze"
+      },
+      "battery_max_power": {
+        "name": "Batterie-Maximalleistung"
+      },
+      "pv_power": {
+        "name": "PV-Leistung"
+      },
+      "meter_power": {
+        "name": "Leistung"
+      },
+      "meter_power_a": {
+        "name": "Leistung L1"
+      },
+      "meter_power_b": {
+        "name": "Leistung L2"
+      },
+      "meter_power_c": {
+        "name": "Leistung L3"
+      },
+      "meter_energy_import": {
+        "name": "Energie Bezug"
+      },
+      "meter_energy_export": {
+        "name": "Energie Einspeisung"
+      },
+      "meter_energy_import_a": {
+        "name": "Energie Bezug L1"
+      },
+      "meter_energy_import_b": {
+        "name": "Energie Bezug L2"
+      },
+      "meter_energy_import_c": {
+        "name": "Energie Bezug L3"
+      },
+      "meter_energy_export_a": {
+        "name": "Energie Einspeisung L1"
+      },
+      "meter_energy_export_b": {
+        "name": "Energie Einspeisung L2"
+      },
+      "meter_energy_export_c": {
+        "name": "Energie Einspeisung L3"
+      },
+      "meter_current": {
+        "name": "Strom"
+      },
+      "meter_current_a": {
+        "name": "Strom L1"
+      },
+      "meter_current_b": {
+        "name": "Strom L2"
+      },
+      "meter_current_c": {
+        "name": "Strom L3"
+      },
+      "meter_voltage_an": {
+        "name": "Spannung L1-N"
+      },
+      "meter_voltage_bn": {
+        "name": "Spannung L2-N"
+      },
+      "meter_voltage_cn": {
+        "name": "Spannung L3-N"
+      },
+      "meter_voltage_ab": {
+        "name": "Spannung L1-L2"
+      },
+      "meter_voltage_bc": {
+        "name": "Spannung L2-L3"
+      },
+      "meter_voltage_ca": {
+        "name": "Spannung L3-L1"
+      },
+      "meter_frequency": {
+        "name": "Frequenz"
+      },
+      "meter_apparent_power": {
+        "name": "Scheinleistung"
+      },
+      "meter_reactive_power": {
+        "name": "Blindleistung"
+      },
+      "meter_power_factor": {
+        "name": "Leistungsfaktor"
       }
     }
   }

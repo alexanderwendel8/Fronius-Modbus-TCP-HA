@@ -18,8 +18,10 @@ async def async_get_config_entry_diagnostics(
     hass: HomeAssistant, entry: FroniusConfigEntry
 ) -> dict[str, Any]:
     coordinator = entry.runtime_data
+    meter = coordinator.meter
     return {
         "entry": async_redact_data(dict(entry.data), TO_REDACT),
-        "device": async_redact_data(asdict(coordinator.device_info), TO_REDACT),
+        "inverter": async_redact_data(asdict(coordinator.inverter), TO_REDACT),
+        "meter": async_redact_data(asdict(meter), TO_REDACT) if meter else None,
         "values": coordinator.data.values if coordinator.data else None,
     }

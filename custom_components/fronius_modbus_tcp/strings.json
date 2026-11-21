@@ -3,23 +3,26 @@
     "step": {
       "user": {
         "title": "Fronius Modbus TCP",
-        "description": "Connect to a Fronius device via Modbus TCP. Modbus TCP must be enabled on the device.",
+        "description": "Connect to a Fronius inverter via Modbus TCP. Modbus TCP must be enabled in the Fronius web interface (GEN24: Communication → Modbus, Datamanager: Settings → Modbus, data output \"tcp\").",
         "data": {
           "host": "[%key:common::config_flow::data::host%]",
           "port": "[%key:common::config_flow::data::port%]",
-          "unit_id": "Modbus unit ID"
+          "unit_id": "Inverter Modbus address",
+          "meter_unit_id": "Smart Meter Modbus address"
         },
         "data_description": {
-          "host": "Hostname or IP address of the device.",
-          "port": "Modbus TCP port (default 502).",
-          "unit_id": "Modbus device address of the inverter (usually 1)."
+          "host": "Hostname or IP address of the inverter or Datamanager.",
+          "port": "Modbus TCP port: 502 (default) or 1502 (GEN24 option).",
+          "unit_id": "GEN24, Tauro, Verto: always 1. Datamanager (Symo, Primo, Galvo, Eco …): the inverter number from the inverter display; number 00 = address 100.",
+          "meter_unit_id": "Leave empty for automatic detection (GEN24: 200, Datamanager: 240). Enter 0 if no Smart Meter should be read."
         }
       }
     },
     "error": {
       "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
-      "not_sunspec": "The device responded but no SunSpec data was found.",
-      "unknown": "[%key:common::config_flow::error::unknown%]"
+      "not_sunspec": "The device responded but no SunSpec inverter data was found. Check the Modbus address.",
+      "unknown": "[%key:common::config_flow::error::unknown%]",
+      "meter_not_found": "No Smart Meter found at this Modbus address."
     },
     "abort": {
       "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
@@ -141,6 +144,148 @@
       },
       "mppt_dc_energy": {
         "name": "{module} DC energy"
+      },
+      "battery_power": {
+        "name": "Battery power"
+      },
+      "battery_charge_power": {
+        "name": "Battery charge power"
+      },
+      "battery_discharge_power": {
+        "name": "Battery discharge power"
+      },
+      "battery_voltage": {
+        "name": "Battery voltage"
+      },
+      "battery_charge_energy": {
+        "name": "Battery charged energy"
+      },
+      "battery_discharge_energy": {
+        "name": "Battery discharged energy"
+      },
+      "battery_soc": {
+        "name": "Battery state of charge"
+      },
+      "battery_state": {
+        "name": "Battery state",
+        "state": {
+          "off": "Off",
+          "empty": "Empty",
+          "discharging": "Discharging",
+          "charging": "Charging",
+          "full": "Full",
+          "holding": "Holding",
+          "testing": "Calibration / service charge"
+        }
+      },
+      "battery_min_reserve": {
+        "name": "Battery minimum reserve"
+      },
+      "battery_grid_charging": {
+        "name": "Battery charging source",
+        "state": {
+          "pv": "PV only",
+          "grid": "PV and grid"
+        }
+      },
+      "battery_control_mode": {
+        "name": "Battery control mode",
+        "state": {
+          "none": "No limits",
+          "charge_limit": "Charge limit active",
+          "discharge_limit": "Discharge limit active",
+          "charge_and_discharge_limit": "Charge and discharge limits active"
+        }
+      },
+      "battery_charge_limit": {
+        "name": "Battery charge limit"
+      },
+      "battery_discharge_limit": {
+        "name": "Battery discharge limit"
+      },
+      "battery_max_power": {
+        "name": "Battery maximum power"
+      },
+      "pv_power": {
+        "name": "PV power"
+      },
+      "meter_power": {
+        "name": "Power"
+      },
+      "meter_power_a": {
+        "name": "Power L1"
+      },
+      "meter_power_b": {
+        "name": "Power L2"
+      },
+      "meter_power_c": {
+        "name": "Power L3"
+      },
+      "meter_energy_import": {
+        "name": "Energy imported"
+      },
+      "meter_energy_export": {
+        "name": "Energy exported"
+      },
+      "meter_energy_import_a": {
+        "name": "Energy imported L1"
+      },
+      "meter_energy_import_b": {
+        "name": "Energy imported L2"
+      },
+      "meter_energy_import_c": {
+        "name": "Energy imported L3"
+      },
+      "meter_energy_export_a": {
+        "name": "Energy exported L1"
+      },
+      "meter_energy_export_b": {
+        "name": "Energy exported L2"
+      },
+      "meter_energy_export_c": {
+        "name": "Energy exported L3"
+      },
+      "meter_current": {
+        "name": "Current"
+      },
+      "meter_current_a": {
+        "name": "Current L1"
+      },
+      "meter_current_b": {
+        "name": "Current L2"
+      },
+      "meter_current_c": {
+        "name": "Current L3"
+      },
+      "meter_voltage_an": {
+        "name": "Voltage L1-N"
+      },
+      "meter_voltage_bn": {
+        "name": "Voltage L2-N"
+      },
+      "meter_voltage_cn": {
+        "name": "Voltage L3-N"
+      },
+      "meter_voltage_ab": {
+        "name": "Voltage L1-L2"
+      },
+      "meter_voltage_bc": {
+        "name": "Voltage L2-L3"
+      },
+      "meter_voltage_ca": {
+        "name": "Voltage L3-L1"
+      },
+      "meter_frequency": {
+        "name": "Frequency"
+      },
+      "meter_apparent_power": {
+        "name": "Apparent power"
+      },
+      "meter_reactive_power": {
+        "name": "Reactive power"
+      },
+      "meter_power_factor": {
+        "name": "Power factor"
       }
     }
   }

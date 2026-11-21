@@ -65,18 +65,19 @@ an der Modellkette (z. B. Modell 124 vorhanden → Batterie-fähig).
 
 | Thema | Code | Stand laut Doku |
 |---|---|---|
-| Modellkette dynamisch scannen | `api.py::_scan_models` | ✅ passt (L = 65/66, 103 + 113 parallel beim Argeno) |
-| float bevorzugen | `api.py::read_device_info` | ✅ |
-| Blöcke > 125 Register (160 mit N = 10 beim Argeno) | `api.py::_read` | ✅ |
-| Leistungsfaktor in % | `sensor.py` | ✅ Inverter: „Pct“ (Smart Meter dagegen „PF“!) |
+| Modellkette dynamisch scannen | `api.py::scan_models` | ✅ passt (L = 65/66, 103 + 113 parallel beim Argeno) |
+| float bevorzugen | `api.py::read_inverter_info` | ✅ |
+| Blöcke > 125 Register (160 mit N = 10 beim Argeno) | `api.py::read` | ✅ |
+| Leistungsfaktor | `sensor.py` | ✅ Inverter in % („Pct“); Smart Meter als Faktor −1…1 (int+SF: Pct ÷ 100) |
 | `StVnd`-Codes 9–13 | `sunspec.py::STATUS_VENDOR` | ✅ Datamanager; beim GEN24 identisch mit `St` |
-| MPPT-Module | `sunspec.py::parse_mppt`, `sensor.py` | ⚠️ Batteriemodule (`StCha`/`StDisCha`) werden wie PV-Strings angelegt → sollten als Batterie erkannt werden |
+| MPPT-Module | `sunspec.py::mppt_roles`, `combine_mppt` | ✅ `StCha`/`StDisCha` → Batterie; Symo Hybrid: String 2 = Speicher (Richtung aus DCW) |
+| Batterie (Modell 124) | `sunspec.py::parse_storage` | ✅ lesend: SoC, Status, Mindestreserve, Ladequelle, Grenzen; `WChaMax` = 0 → kein Speicher |
+| Smart Meter (201–204 / 211–214) | `sunspec.py::parse_meter_*`, `api.py::async_detect_meter` | ✅ Unit-ID automatisch (200, dann 240) oder manuell; Vorzeichen wie geliefert (Location „Netz“: + = Bezug) |
+| Timeout | `const.py` (`DEFAULT_TIMEOUT = 10`, Suche 3 s) | ✅ |
+| Skalierungsfaktoren | `sunspec.py` | ✅ werden bei jedem Lesen mitgelesen |
+| Unit-ID im Config Flow | `config_flow.py`, `strings.json` | ✅ Hinweise GEN24 = 1, Datamanager = WR-Nummer (00 → 100) |
 | `EvtVnd1-4` dekodieren | – | ⏳ je nach Gerätegeneration unterschiedlich (siehe Tabelle oben) |
-| Batterie (Modell 124: SoC, Status, Laden aus Netz) | – | ⏳ nicht umgesetzt |
-| Smart Meter (201–203/211–214; Unit-ID 200 bzw. 240) | – | ⏳ nicht umgesetzt; Vorzeichen je Meter-Location |
-| Timeout | `api.py` (`timeout=5`) | ⚠️ Datamanager empfiehlt ≥ 10 s |
-| Skalierungsfaktoren | `sunspec.py` | ✅ werden bei jedem Lesen mitgelesen (Handbuch: können sich zur Laufzeit ändern) |
-| Unit-ID im Config Flow | `config_flow.py` (Default 1) | ✅ GEN24; Datamanager: WR-Nummer, Hinweis „00 → 100“ fehlt in der UI |
+| Mehrere Smart Meter (200–204 / 240–244) | – | ⏳ derzeit nur einer |
 | Fronius-Register 214 (State Code), 500–513 (Anlagensummen) | – | ⏳ nur Datamanager |
 | Steuerung (Modell 123, 124 schreibbar) | – | ⏳ nicht umgesetzt (Ablauf siehe handbuecher §2) |
 | Nennleistung (Modell 120 `WRtg`) | – | ⏳ nicht umgesetzt |
