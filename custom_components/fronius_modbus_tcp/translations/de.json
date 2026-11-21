@@ -1,0 +1,35 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Fronius Modbus TCP",
+        "description": "Verbindung zu einem Fronius-Gerät per Modbus TCP. Modbus TCP muss am Gerät aktiviert sein.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "unit_id": "Modbus-Geräteadresse"
+        },
+        "data_description": {
+          "host": "Hostname oder IP-Adresse des Geräts.",
+          "port": "Modbus-TCP-Port (Standard 502).",
+          "unit_id": "Modbus-Adresse des Wechselrichters (meist 1)."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung fehlgeschlagen",
+      "not_sunspec": "Das Gerät antwortet, liefert aber keine SunSpec-Daten.",
+      "unknown": "Unerwarteter Fehler"
+    },
+    "abort": {
+      "already_configured": "Gerät ist bereits eingerichtet"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "ac_power": {
+        "name": "AC-Leistung"
+      }
+    }
+  }
+}
