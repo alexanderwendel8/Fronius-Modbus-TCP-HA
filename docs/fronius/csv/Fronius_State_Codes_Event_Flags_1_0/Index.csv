@@ -1,0 +1,14 @@
+Index
+
+St,SunSpec Status register of the inverter model
+StVnd,Fronius Status register of the inverter model (recommended to read out instead of St)
+Evt1,"First SunSpec Event Flag register of the inverter model. Second one not in use, shows only zeroes."
+Evt1-4 All,"Fronius Event Flag registers 1 to 4 of the inverter model. Lists all state codes of all supported inverters (including IG, Agilo, CL)."
+Evt1-4 Galvo,Fronius Event Flag registers 1 to 4 of the inverter model. Lists all state codes of Galvo inverter family.
+Evt1-4 Symo,Fronius Event Flag registers 1 to 4 of the inverter model. Lists all state codes of Symo inverter family.
+Evt1-4 Primo,Fronius Event Flag registers 1 to 4 of the inverter model. Lists all state codes of Primo inverter family.
+Evt1-4 IGPlus,Fronius Event Flag registers 1 to 4 of the inverter model. Lists all state codes of IG Plus inverter family.
+Galvo State Codes,List of Galvo state codes that are shown in the Fronius Event Flag registers.
+Symo State Codes,List of Symo state codes that are shown in the Fronius Event Flag registers.
+Primo State Codes,List of Primo state codes that are shown in the Fronius Event Flag registers.
+IGPlus State Codes,List of IG Plus state codes that are shown in the Fronius Event Flag registers.

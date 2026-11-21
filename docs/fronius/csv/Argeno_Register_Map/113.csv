@@ -1,0 +1,56 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+40123,ID,113,uint16,1,,,,S,Inverter (Three Phase) FLOAT
+40124,L,60,uint16,1,,,,S,Model length
+40125,A,,float32,2,,A,,,AC Current,Sum of active phases
+40127,AphA,,float32,2,,A,,,Phase A Current,Connected Phase
+40129,AphB,,float32,2,,A,,,Phase B Current,Connected Phase
+40131,AphC,,float32,2,,A,,,Phase C Current,Connected Phase
+40133,PPVphAB,,float32,2,,V,,,Phase Voltage AB
+40135,PPVphBC,,float32,2,,V,,,Phase Voltage BC
+40137,PPVphCA,,float32,2,,V,,,Phase Voltage CA
+40139,PhVphA,,float32,2,,V,,,Phase Voltage AN
+40141,PhVphB,,float32,2,,V,,,Phase Voltage BN
+40143,PhVphC,,float32,2,,V,,,Phase Voltage CN
+40145,W,,float32,2,,W,,,AC Power
+40147,Hz,,float32,2,,Hz,,,Line Frequency
+40149,VA,,float32,2,,VA,,,AC Apparent Power
+40151,VAr,,float32,2,,var,,,AC Reactive Power
+40153,PF,,float32,2,,Pct,,,AC Power Factor
+40155,WH,,float32,2,,Wh,,,AC Energy
+40157,DCA,,float32,2,,A,,,DC Current,not supported
+40159,DCV,,float32,2,,V,,,DC Voltage,not supported
+40161,DCW,,float32,2,,W,,,DC Power
+40163,TmpCab,,float32,2,,C,,,Cabinet Temperature
+40165,TmpSnk,,float32,2,,C,,,Heat Sink Temperature,not supported
+40167,TmpTrns,,float32,2,,C,,,Transformer Temperature,not supported
+40169,TmpOt,,float32,2,,C,,,Other Temperature,not supported
+40171,St,,enum16,1,,,,,Enumerated value.  Operating state,"1: OFF
+2: SLEEPING
+3: STARTING
+4: MPPT
+5: THROTTLED
+6: SHUTTING_DOWN
+7: FAULT
+8: STANDBY"
+40172,StVnd,,enum16,1,,,,,Vendor specific operating state code
+40173,Evt1,,bitfield32,2,,,,,Bitmask value. Event fields,"0: GROUND_FAULT
+1: DC_OVER_VOLT
+2: AC_DISCONNECT
+3: DC_DISCONNECT
+4: GRID_DISCONNECT
+5: CABINET_OPEN
+6: MANUAL_SHUTDOWN
+7: OVER_TEMP
+8: OVER_FREQUENCY
+9: UNDER_FREQUENCY
+10: AC_OVER_VOLT
+11: AC_UNDER_VOLT
+12: BLOWN_STRING_FUSE
+13: UNDER_TEMP
+14: MEMORY_LOSS
+15: HW_TEST_FAILURE"
+40175,Evt2,,bitfield32,2,,,,,Reserved for future use
+40177,EvtVnd1,,bitfield32,2,,,,,Vendor defined events
+40179,EvtVnd2,,bitfield32,2,,,,,Vendor defined events
+40181,EvtVnd3,,bitfield32,2,,,,,Vendor defined events
+40183,EvtVnd4,,bitfield32,2,,,,,Vendor defined events

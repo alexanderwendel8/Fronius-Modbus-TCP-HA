@@ -1,0 +1,11 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+41021,ID,145,uint16,1,,,,S,Inverter controls extended settings
+41022,L,8,uint16,1,,,,S,Model length
+41023,NomRmpUpRte,,uint16,1,Rmp_SF,Pct,RW,,Ramp up rate as a percentage of max current.
+41024,NomRmpDnRte,,uint16,1,Rmp_SF,Pct,RW,,Ramp down rate as a percentage of max current.
+41025,EmgRmpUpRte,,uint16,1,Rmp_SF,Pct,RW,,Emergency ramp up rate as a percentage of max current.,not supported
+41026,EmgRmpDnRte,,uint16,1,Rmp_SF,Pct,RW,,Emergency ramp down rate as a percentage of max current.,not supported
+41027,ConnRmpUpRte,,uint16,1,Rmp_SF,Pct,RW,,Connect ramp up rate as a percentage of max current.,not supported
+41028,ConnRmpDnRte,,uint16,1,Rmp_SF,Pct,RW,,Connect ramp down rate as a percentage of max current.,not supported
+41029,AGra,,uint16,1,Rmp_SF,Pct,RW,,Ramp rate specified in percent of max current.,not supported
+41030,Rmp_SF,,sunssf,1,,,,,Ramp Rate Scale Factor

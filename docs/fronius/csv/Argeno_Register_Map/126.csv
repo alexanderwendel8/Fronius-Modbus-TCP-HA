@@ -1,0 +1,214 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+40317,ID,126,uint16,1,,,,S,Static Volt-VAR Arrays,Ref 3: 8.8.1.2
+40318,L,226,uint16,1,,,,S,Model length
+40319,ActCrv,,uint16,1,,,RW,,Index of active curve. 0=no active curve.
+40320,ModEna,,bitfield16,1,,,RW,,Is Volt-VAR control active.,"0: DISABLED
+1: ENABLED"
+40321,WinTms,,uint16,1,,Secs,RW,,Time window for volt-VAR change.,not supported
+40322,RvrtTms,,uint16,1,,Secs,RW,,Timeout period for volt-VAR curve selection.,not supported
+40323,RmpTms,,uint16,1,,Secs,RW,,The time of the PT1 in seconds (time to accomplish a change of 95%).,not supported
+40324,NCrv,4,uint16,1,,,,,Number of curves supported (recommend 4).,4
+40325,NPt,10,uint16,1,,,,,Number of curve points supported (maximum of 20).,10
+40326,V_SF,,sunssf,1,,,,,Scale factor for percent VRef.
+40327,DeptRef_SF,,sunssf,1,,,,,scale factor for dependent variable.
+40328,RmpIncDec_SF,,sunssf,1
+40329,ActPt,4,uint16,1,,,RW,,Number of active points in array.
+40330,DeptRef,2,enum16,1,,,RW,,Meaning of dependent variable: 1=%WMax 2=%VArMax 3=%VArAval.,"1: WMax
+2: VArMax
+3: VArAval"
+40331,V1,,uint16,1,V_SF,% VRef,RW,,Point 1 Volts.
+40332,VAr1,,int16,1,DeptRef_SF,,RW,,Point 1 VARs.
+40333,V2,,uint16,1,V_SF,% VRef,RW,,Point 2 Volts.
+40334,VAr2,,int16,1,DeptRef_SF,,RW,,Point 2 VARs.
+40335,V3,,uint16,1,V_SF,% VRef,RW,,Point 2 Volts.
+40336,VAr3,,int16,1,DeptRef_SF,,RW,,Point 3 VARs.
+40337,V4,,uint16,1,V_SF,% VRef,RW,,Point 4 Volts.
+40338,VAr4,,int16,1,DeptRef_SF,,RW,,Point 4 VARs.
+40339,V5,,uint16,1,V_SF,% VRef,RW,,Point 5 Volts.
+40340,VAr5,,int16,1,DeptRef_SF,,RW,,Point 5 VARs.
+40341,V6,,uint16,1,V_SF,% VRef,RW,,Point 6 Volts.
+40342,VAr6,,int16,1,DeptRef_SF,,RW,,Point 6 VARs.
+40343,V7,,uint16,1,V_SF,% VRef,RW,,Point 7 Volts.
+40344,VAr7,,int16,1,DeptRef_SF,,RW,,Point 7 VARs.
+40345,V8,,uint16,1,V_SF,% VRef,RW,,Point 8 Volts.
+40346,VAr8,,int16,1,DeptRef_SF,,RW,,Point 8 VARs.
+40347,V9,,uint16,1,V_SF,% VRef,RW,,Point 9 Volts.
+40348,VAr9,,int16,1,DeptRef_SF,,RW,,Point 9 VARs.
+40349,V10,,uint16,1,V_SF,% VRef,RW,,Point 10 Volts.
+40350,VAr10,,int16,1,DeptRef_SF,,RW,,Point 10 VARs.
+40351,V11,,uint16,1,V_SF,% VRef,RW,,Point 11 Volts.,not supported
+40352,VAr11,,int16,1,DeptRef_SF,,RW,,Point 11 VARs.,not supported
+40353,V12,,uint16,1,V_SF,% VRef,RW,,Point 12 Volts.,not supported
+40354,VAr12,,int16,1,DeptRef_SF,,RW,,Point 12 VARs.,not supported
+40355,V13,,uint16,1,V_SF,% VRef,RW,,Point 13 Volts.,not supported
+40356,VAr13,,int16,1,DeptRef_SF,,RW,,Point 13 VARs.,not supported
+40357,V14,,uint16,1,V_SF,% VRef,RW,,Point 14 Volts.,not supported
+40358,VAr14,,int16,1,DeptRef_SF,,RW,,Point 14 VARs.,not supported
+40359,V15,,uint16,1,V_SF,% VRef,RW,,Point 15 Volts.,not supported
+40360,VAr15,,int16,1,DeptRef_SF,,RW,,Point 15 VARs.,not supported
+40361,V16,,uint16,1,V_SF,% VRef,RW,,Point 16 Volts.,not supported
+40362,VAr16,,int16,1,DeptRef_SF,,RW,,Point 16 VARs.,not supported
+40363,V17,,uint16,1,V_SF,% VRef,RW,,Point 17 Volts.,not supported
+40364,VAr17,,int16,1,DeptRef_SF,,RW,,Point 17 VARs.,not supported
+40365,V18,,uint16,1,V_SF,% VRef,RW,,Point 18 Volts.,not supported
+40366,VAr18,,int16,1,DeptRef_SF,,RW,,Point 18 VARs.,not supported
+40367,V19,,uint16,1,V_SF,% VRef,RW,,Point 19 Volts.,not supported
+40368,VAr19,,int16,1,DeptRef_SF,,RW,,Point 19 VARs.,not supported
+40369,V20,,uint16,1,V_SF,% VRef,RW,,Point 20 Volts.,not supported
+40370,VAr20,,int16,1,DeptRef_SF,,RW,,Point 20 VARs.,not supported
+40371,CrvNam,,string,8,,,RW,,Optional description for curve. (Max 16 chars)
+40379,RmpTms,,uint16,1,,Secs,RW,,The time of the PT1 in seconds (time to accomplish a change of 95%).,not supported
+40380,RmpDecTmm,,uint16,1,RmpIncDec_SF,% ref_value/min,RW,,The maximum rate at which the VAR value may be reduced in response to changes in the voltage value. %refVal is %WMax %VArMax or %VArAval depending on value of DeptRef.,not supported
+40381,RmpIncTmm,,uint16,1,RmpIncDec_SF,% ref_value/min,RW,,The maximum rate at which the VAR value may be increased in response to changes in the voltage value. %refVal is %WMax %VArMax or %VArAval depending on value of DeptRef.,not supported
+40382,ReadOnly,0,enum16,1,,,,,Boolean flag indicates if curve is read-only or can be modified.,"0: READWRITE
+1: READONLY"
+40383,ActPt,4,uint16,1,,,RW,,Number of active points in array.
+40384,DeptRef,2,enum16,1,,,RW,,Meaning of dependent variable: 1=%WMax 2=%VArMax 3=%VArAval.,"1: WMax
+2: VArMax
+3: VArAval"
+40385,V1,,uint16,1,V_SF,% VRef,RW,,Point 1 Volts.
+40386,VAr1,,int16,1,DeptRef_SF,,RW,,Point 1 VARs.
+40387,V2,,uint16,1,V_SF,% VRef,RW,,Point 2 Volts.
+40388,VAr2,,int16,1,DeptRef_SF,,RW,,Point 2 VARs.
+40389,V3,,uint16,1,V_SF,% VRef,RW,,Point 2 Volts.
+40390,VAr3,,int16,1,DeptRef_SF,,RW,,Point 3 VARs.
+40391,V4,,uint16,1,V_SF,% VRef,RW,,Point 4 Volts.
+40392,VAr4,,int16,1,DeptRef_SF,,RW,,Point 4 VARs.
+40393,V5,,uint16,1,V_SF,% VRef,RW,,Point 5 Volts.
+40394,VAr5,,int16,1,DeptRef_SF,,RW,,Point 5 VARs.
+40395,V6,,uint16,1,V_SF,% VRef,RW,,Point 6 Volts.
+40396,VAr6,,int16,1,DeptRef_SF,,RW,,Point 6 VARs.
+40397,V7,,uint16,1,V_SF,% VRef,RW,,Point 7 Volts.
+40398,VAr7,,int16,1,DeptRef_SF,,RW,,Point 7 VARs.
+40399,V8,,uint16,1,V_SF,% VRef,RW,,Point 8 Volts.
+40400,VAr8,,int16,1,DeptRef_SF,,RW,,Point 8 VARs.
+40401,V9,,uint16,1,V_SF,% VRef,RW,,Point 9 Volts.
+40402,VAr9,,int16,1,DeptRef_SF,,RW,,Point 9 VARs.
+40403,V10,,uint16,1,V_SF,% VRef,RW,,Point 10 Volts.
+40404,VAr10,,int16,1,DeptRef_SF,,RW,,Point 10 VARs.
+40405,V11,,uint16,1,V_SF,% VRef,RW,,Point 11 Volts.,not supported
+40406,VAr11,,int16,1,DeptRef_SF,,RW,,Point 11 VARs.,not supported
+40407,V12,,uint16,1,V_SF,% VRef,RW,,Point 12 Volts.,not supported
+40408,VAr12,,int16,1,DeptRef_SF,,RW,,Point 12 VARs.,not supported
+40409,V13,,uint16,1,V_SF,% VRef,RW,,Point 13 Volts.,not supported
+40410,VAr13,,int16,1,DeptRef_SF,,RW,,Point 13 VARs.,not supported
+40411,V14,,uint16,1,V_SF,% VRef,RW,,Point 14 Volts.,not supported
+40412,VAr14,,int16,1,DeptRef_SF,,RW,,Point 14 VARs.,not supported
+40413,V15,,uint16,1,V_SF,% VRef,RW,,Point 15 Volts.,not supported
+40414,VAr15,,int16,1,DeptRef_SF,,RW,,Point 15 VARs.,not supported
+40415,V16,,uint16,1,V_SF,% VRef,RW,,Point 16 Volts.,not supported
+40416,VAr16,,int16,1,DeptRef_SF,,RW,,Point 16 VARs.,not supported
+40417,V17,,uint16,1,V_SF,% VRef,RW,,Point 17 Volts.,not supported
+40418,VAr17,,int16,1,DeptRef_SF,,RW,,Point 17 VARs.,not supported
+40419,V18,,uint16,1,V_SF,% VRef,RW,,Point 18 Volts.,not supported
+40420,VAr18,,int16,1,DeptRef_SF,,RW,,Point 18 VARs.,not supported
+40421,V19,,uint16,1,V_SF,% VRef,RW,,Point 19 Volts.,not supported
+40422,VAr19,,int16,1,DeptRef_SF,,RW,,Point 19 VARs.,not supported
+40423,V20,,uint16,1,V_SF,% VRef,RW,,Point 20 Volts.,not supported
+40424,VAr20,,int16,1,DeptRef_SF,,RW,,Point 20 VARs.,not supported
+40425,CrvNam,,string,8,,,RW,,Optional description for curve. (Max 16 chars)
+40433,RmpTms,,uint16,1,,Secs,RW,,The time of the PT1 in seconds (time to accomplish a change of 95%).,not supported
+40434,RmpDecTmm,,uint16,1,RmpIncDec_SF,% ref_value/min,RW,,The maximum rate at which the VAR value may be reduced in response to changes in the voltage value. %refVal is %WMax %VArMax or %VArAval depending on value of DeptRef.,not supported
+40435,RmpIncTmm,,uint16,1,RmpIncDec_SF,% ref_value/min,RW,,The maximum rate at which the VAR value may be increased in response to changes in the voltage value. %refVal is %WMax %VArMax or %VArAval depending on value of DeptRef.,not supported
+40436,ReadOnly,0,enum16,1,,,,,Boolean flag indicates if curve is read-only or can be modified.,"0: READWRITE
+1: READONLY"
+40437,ActPt,4,uint16,1,,,RW,,Number of active points in array.
+40438,DeptRef,2,enum16,1,,,RW,,Meaning of dependent variable: 1=%WMax 2=%VArMax 3=%VArAval.,"1: WMax
+2: VArMax
+3: VArAval"
+40439,V1,,uint16,1,V_SF,% VRef,RW,,Point 1 Volts.
+40440,VAr1,,int16,1,DeptRef_SF,,RW,,Point 1 VARs.
+40441,V2,,uint16,1,V_SF,% VRef,RW,,Point 2 Volts.
+40442,VAr2,,int16,1,DeptRef_SF,,RW,,Point 2 VARs.
+40443,V3,,uint16,1,V_SF,% VRef,RW,,Point 2 Volts.
+40444,VAr3,,int16,1,DeptRef_SF,,RW,,Point 3 VARs.
+40445,V4,,uint16,1,V_SF,% VRef,RW,,Point 4 Volts.
+40446,VAr4,,int16,1,DeptRef_SF,,RW,,Point 4 VARs.
+40447,V5,,uint16,1,V_SF,% VRef,RW,,Point 5 Volts.
+40448,VAr5,,int16,1,DeptRef_SF,,RW,,Point 5 VARs.
+40449,V6,,uint16,1,V_SF,% VRef,RW,,Point 6 Volts.
+40450,VAr6,,int16,1,DeptRef_SF,,RW,,Point 6 VARs.
+40451,V7,,uint16,1,V_SF,% VRef,RW,,Point 7 Volts.
+40452,VAr7,,int16,1,DeptRef_SF,,RW,,Point 7 VARs.
+40453,V8,,uint16,1,V_SF,% VRef,RW,,Point 8 Volts.
+40454,VAr8,,int16,1,DeptRef_SF,,RW,,Point 8 VARs.
+40455,V9,,uint16,1,V_SF,% VRef,RW,,Point 9 Volts.
+40456,VAr9,,int16,1,DeptRef_SF,,RW,,Point 9 VARs.
+40457,V10,,uint16,1,V_SF,% VRef,RW,,Point 10 Volts.
+40458,VAr10,,int16,1,DeptRef_SF,,RW,,Point 10 VARs.
+40459,V11,,uint16,1,V_SF,% VRef,RW,,Point 11 Volts.,not supported
+40460,VAr11,,int16,1,DeptRef_SF,,RW,,Point 11 VARs.,not supported
+40461,V12,,uint16,1,V_SF,% VRef,RW,,Point 12 Volts.,not supported
+40462,VAr12,,int16,1,DeptRef_SF,,RW,,Point 12 VARs.,not supported
+40463,V13,,uint16,1,V_SF,% VRef,RW,,Point 13 Volts.,not supported
+40464,VAr13,,int16,1,DeptRef_SF,,RW,,Point 13 VARs.,not supported
+40465,V14,,uint16,1,V_SF,% VRef,RW,,Point 14 Volts.,not supported
+40466,VAr14,,int16,1,DeptRef_SF,,RW,,Point 14 VARs.,not supported
+40467,V15,,uint16,1,V_SF,% VRef,RW,,Point 15 Volts.,not supported
+40468,VAr15,,int16,1,DeptRef_SF,,RW,,Point 15 VARs.,not supported
+40469,V16,,uint16,1,V_SF,% VRef,RW,,Point 16 Volts.,not supported
+40470,VAr16,,int16,1,DeptRef_SF,,RW,,Point 16 VARs.,not supported
+40471,V17,,uint16,1,V_SF,% VRef,RW,,Point 17 Volts.,not supported
+40472,VAr17,,int16,1,DeptRef_SF,,RW,,Point 17 VARs.,not supported
+40473,V18,,uint16,1,V_SF,% VRef,RW,,Point 18 Volts.,not supported
+40474,VAr18,,int16,1,DeptRef_SF,,RW,,Point 18 VARs.,not supported
+40475,V19,,uint16,1,V_SF,% VRef,RW,,Point 19 Volts.,not supported
+40476,VAr19,,int16,1,DeptRef_SF,,RW,,Point 19 VARs.,not supported
+40477,V20,,uint16,1,V_SF,% VRef,RW,,Point 20 Volts.,not supported
+40478,VAr20,,int16,1,DeptRef_SF,,RW,,Point 20 VARs.,not supported
+40479,CrvNam,,string,8,,,RW,,Optional description for curve. (Max 16 chars)
+40487,RmpTms,,uint16,1,,Secs,RW,,The time of the PT1 in seconds (time to accomplish a change of 95%).,not supported
+40488,RmpDecTmm,,uint16,1,RmpIncDec_SF,% ref_value/min,RW,,The maximum rate at which the VAR value may be reduced in response to changes in the voltage value. %refVal is %WMax %VArMax or %VArAval depending on value of DeptRef.,not supported
+40489,RmpIncTmm,,uint16,1,RmpIncDec_SF,% ref_value/min,RW,,The maximum rate at which the VAR value may be increased in response to changes in the voltage value. %refVal is %WMax %VArMax or %VArAval depending on value of DeptRef.,not supported
+40490,ReadOnly,0,enum16,1,,,,,Boolean flag indicates if curve is read-only or can be modified.,"0: READWRITE
+1: READONLY"
+40491,ActPt,4,uint16,1,,,RW,,Number of active points in array.
+40492,DeptRef,2,enum16,1,,,RW,,Meaning of dependent variable: 1=%WMax 2=%VArMax 3=%VArAval.,"1: WMax
+2: VArMax
+3: VArAval"
+40493,V1,,uint16,1,V_SF,% VRef,RW,,Point 1 Volts.
+40494,VAr1,,int16,1,DeptRef_SF,,RW,,Point 1 VARs.
+40495,V2,,uint16,1,V_SF,% VRef,RW,,Point 2 Volts.
+40496,VAr2,,int16,1,DeptRef_SF,,RW,,Point 2 VARs.
+40497,V3,,uint16,1,V_SF,% VRef,RW,,Point 2 Volts.
+40498,VAr3,,int16,1,DeptRef_SF,,RW,,Point 3 VARs.
+40499,V4,,uint16,1,V_SF,% VRef,RW,,Point 4 Volts.
+40500,VAr4,,int16,1,DeptRef_SF,,RW,,Point 4 VARs.
+40501,V5,,uint16,1,V_SF,% VRef,RW,,Point 5 Volts.
+40502,VAr5,,int16,1,DeptRef_SF,,RW,,Point 5 VARs.
+40503,V6,,uint16,1,V_SF,% VRef,RW,,Point 6 Volts.
+40504,VAr6,,int16,1,DeptRef_SF,,RW,,Point 6 VARs.
+40505,V7,,uint16,1,V_SF,% VRef,RW,,Point 7 Volts.
+40506,VAr7,,int16,1,DeptRef_SF,,RW,,Point 7 VARs.
+40507,V8,,uint16,1,V_SF,% VRef,RW,,Point 8 Volts.
+40508,VAr8,,int16,1,DeptRef_SF,,RW,,Point 8 VARs.
+40509,V9,,uint16,1,V_SF,% VRef,RW,,Point 9 Volts.
+40510,VAr9,,int16,1,DeptRef_SF,,RW,,Point 9 VARs.
+40511,V10,,uint16,1,V_SF,% VRef,RW,,Point 10 Volts.
+40512,VAr10,,int16,1,DeptRef_SF,,RW,,Point 10 VARs.
+40513,V11,,uint16,1,V_SF,% VRef,RW,,Point 11 Volts.,not supported
+40514,VAr11,,int16,1,DeptRef_SF,,RW,,Point 11 VARs.,not supported
+40515,V12,,uint16,1,V_SF,% VRef,RW,,Point 12 Volts.,not supported
+40516,VAr12,,int16,1,DeptRef_SF,,RW,,Point 12 VARs.,not supported
+40517,V13,,uint16,1,V_SF,% VRef,RW,,Point 13 Volts.,not supported
+40518,VAr13,,int16,1,DeptRef_SF,,RW,,Point 13 VARs.,not supported
+40519,V14,,uint16,1,V_SF,% VRef,RW,,Point 14 Volts.,not supported
+40520,VAr14,,int16,1,DeptRef_SF,,RW,,Point 14 VARs.,not supported
+40521,V15,,uint16,1,V_SF,% VRef,RW,,Point 15 Volts.,not supported
+40522,VAr15,,int16,1,DeptRef_SF,,RW,,Point 15 VARs.,not supported
+40523,V16,,uint16,1,V_SF,% VRef,RW,,Point 16 Volts.,not supported
+40524,VAr16,,int16,1,DeptRef_SF,,RW,,Point 16 VARs.,not supported
+40525,V17,,uint16,1,V_SF,% VRef,RW,,Point 17 Volts.,not supported
+40526,VAr17,,int16,1,DeptRef_SF,,RW,,Point 17 VARs.,not supported
+40527,V18,,uint16,1,V_SF,% VRef,RW,,Point 18 Volts.,not supported
+40528,VAr18,,int16,1,DeptRef_SF,,RW,,Point 18 VARs.,not supported
+40529,V19,,uint16,1,V_SF,% VRef,RW,,Point 19 Volts.,not supported
+40530,VAr19,,int16,1,DeptRef_SF,,RW,,Point 19 VARs.,not supported
+40531,V20,,uint16,1,V_SF,% VRef,RW,,Point 20 Volts.,not supported
+40532,VAr20,,int16,1,DeptRef_SF,,RW,,Point 20 VARs.,not supported
+40533,CrvNam,,string,8,,,RW,,Optional description for curve. (Max 16 chars)
+40541,RmpTms,,uint16,1,,Secs,RW,,The time of the PT1 in seconds (time to accomplish a change of 95%).,not supported
+40542,RmpDecTmm,,uint16,1,RmpIncDec_SF,% ref_value/min,RW,,The maximum rate at which the VAR value may be reduced in response to changes in the voltage value. %refVal is %WMax %VArMax or %VArAval depending on value of DeptRef.,not supported
+40543,RmpIncTmm,,uint16,1,RmpIncDec_SF,% ref_value/min,RW,,The maximum rate at which the VAR value may be increased in response to changes in the voltage value. %refVal is %WMax %VArMax or %VArAval depending on value of DeptRef.,not supported
+40544,ReadOnly,0,enum16,1,,,,,Boolean flag indicates if curve is read-only or can be modified.,"0: READWRITE
+1: READONLY"

@@ -1,0 +1,210 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+40669,ID,132,uint16,1,,,,S,Volt-Watt,Ref 3: 8.12.1.2
+40670,L,226,uint16,1,,,,S,Model length
+40671,ActCrv,,uint16,1,,,RW,,Index of active curve. 0=no active curve.
+40672,ModEna,,bitfield16,1,,,RW,,Is Volt-Watt control active.,"0: DISABLED
+1: ENABLED"
+40673,WinTms,,uint16,1,,Secs,RW,,Time window for volt-watt change.,not supported
+40674,RvrtTms,,uint16,1,,Secs,RW,,Timeout period for volt-watt curve selection.,not supported
+40675,RmpTms,,uint16,1,,Secs,RW,,Ramp time for moving from current mode to new mode.,not supported
+40676,NCrv,4,uint16,1,,,,,Number of curves supported (recommend min. 4).,4
+40677,NPt,5,uint16,1,,,,,Number of points in array (maximum 20).,5
+40678,V_SF,,sunssf,1,,,,,Scale factor for percent VRef.
+40679,DeptRef_SF,,sunssf,1,,,,,Scale Factor for % DeptRef
+40680,RmpIncDec_SF,,sunssf,1,,,,,Scale factor for increment and decrement ramps.
+40681,ActPt,,uint16,1,,,RW,,Number of active points in array.
+40682,DeptRef,,enum16,1,,,RW,,Defines the meaning of the Watts DeptRef.  1=% WMax 2=% WAvail,"1: %Wmax
+2: %Waval"
+40683,V1,,uint16,1,V_SF,% VRef,RW,,Point 1 Volts.
+40684,W1,,int16,1,DeptRef_SF,% VRef,RW,,Point 1 Watts.
+40685,V2,,uint16,1,V_SF,% VRef,RW,,Point 2 Volts.
+40686,W2,,int16,1,DeptRef_SF,% VRef,RW,,Point 2 Watts.
+40687,V3,,uint16,1,V_SF,% VRef,RW,,Point 3 Volts.
+40688,W3,,int16,1,DeptRef_SF,% VRef,RW,,Point 3 Watts.
+40689,V4,,uint16,1,V_SF,% VRef,RW,,Point 4 Volts.
+40690,W4,,int16,1,DeptRef_SF,% VRef,RW,,Point 4 Watts.
+40691,V5,,uint16,1,V_SF,% VRef,RW,,Point 5 Volts.
+40692,W5,,int16,1,DeptRef_SF,% VRef,RW,,Point 5 Watts.
+40693,V6,,uint16,1,V_SF,% VRef,RW,,Point 6 Volts.,not supported
+40694,W6,,int16,1,DeptRef_SF,% VRef,RW,,Point 6 Watts.,not supported
+40695,V7,,uint16,1,V_SF,% VRef,RW,,Point 7 Volts.,not supported
+40696,W7,,int16,1,DeptRef_SF,% VRef,RW,,Point 7 Watts.,not supported
+40697,V8,,uint16,1,V_SF,% VRef,RW,,Point 8 Volts.,not supported
+40698,W8,,int16,1,DeptRef_SF,% VRef,RW,,Point 8 Watts.,not supported
+40699,V9,,uint16,1,V_SF,% VRef,RW,,Point 9 Volts.,not supported
+40700,W9,,int16,1,DeptRef_SF,% VRef,RW,,Point 9 Watts.,not supported
+40701,V10,,uint16,1,V_SF,% VRef,RW,,Point 10 Volts.,not supported
+40702,W10,,int16,1,DeptRef_SF,% VRef,RW,,Point 10 Watts.,not supported
+40703,V11,,uint16,1,V_SF,% VRef,RW,,Point 11 Volts.,not supported
+40704,W11,,int16,1,DeptRef_SF,% VRef,RW,,Point 11 Watts.,not supported
+40705,V12,,uint16,1,V_SF,% VRef,RW,,Point 12 Volts.,not supported
+40706,W12,,int16,1,DeptRef_SF,% VRef,RW,,Point 12 Watts.,not supported
+40707,V13,,uint16,1,V_SF,% VRef,RW,,Point 13 Volts.,not supported
+40708,W13,,int16,1,DeptRef_SF,% VRef,RW,,Point 13 Watts.,not supported
+40709,V14,,uint16,1,V_SF,% VRef,RW,,Point 14 Volts.,not supported
+40710,W14,,int16,1,DeptRef_SF,% VRef,RW,,Point 14 Watts.,not supported
+40711,V15,,uint16,1,V_SF,% VRef,RW,,Point 15 Volts.,not supported
+40712,W15,,int16,1,DeptRef_SF,% VRef,RW,,Point 15 Watts.,not supported
+40713,V16,,uint16,1,V_SF,% VRef,RW,,Point 16 Volts.,not supported
+40714,W16,,int16,1,DeptRef_SF,% VRef,RW,,Point 16 Watts.,not supported
+40715,V17,,uint16,1,V_SF,% VRef,RW,,Point 17 Volts.,not supported
+40716,W17,,int16,1,DeptRef_SF,% VRef,RW,,Point 17 Watts.,not supported
+40717,V18,,uint16,1,V_SF,% VRef,RW,,Point 18 Volts.,not supported
+40718,W18,,int16,1,DeptRef_SF,% VRef,RW,,Point 18 Watts.,not supported
+40719,V19,,uint16,1,V_SF,% VRef,RW,,Point 19 Volts.,not supported
+40720,W19,,int16,1,DeptRef_SF,% VRef,RW,,Point 19 Watts.,not supported
+40721,V20,,uint16,1,V_SF,% VRef,RW,,Point 20 Volts.,not supported
+40722,W20,,int16,1,DeptRef_SF,% VRef,RW,,Point 20 Watts.,not supported
+40723,CrvNam,,string,8,,,RW,,Optional description for curve.
+40731,RmpPt1Tms,,uint16,1,,Secs,RW,,The time of the PT1 in seconds (time to accomplish a change of 95%).,not supported
+40732,RmpDecTmm,,uint16,1,RmpIncDec_SF,% WMax/min,RW,,The maximum rate at which the watt value may be reduced in response to changes in the voltage value.,not supported
+40733,RmpIncTmm,,uint16,1,RmpIncDec_SF,% WMax/min,RW,,The maximum rate at which the watt value may be increased in response to changes in the voltage value.,not supported
+40734,ReadOnly,0,enum16,1,,,,,Enumerated value indicates if curve is read-only or can be modified.,"0: READWRITE
+1: READONLY"
+40735,ActPt,,uint16,1,,,RW,,Number of active points in array.
+40736,DeptRef,,enum16,1,,,RW,,Defines the meaning of the Watts DeptRef.  1=% WMax 2=% WAvail,"1: %Wmax
+2: %Waval"
+40737,V1,,uint16,1,V_SF,% VRef,RW,,Point 1 Volts.
+40738,W1,,int16,1,DeptRef_SF,% VRef,RW,,Point 1 Watts.
+40739,V2,,uint16,1,V_SF,% VRef,RW,,Point 2 Volts.
+40740,W2,,int16,1,DeptRef_SF,% VRef,RW,,Point 2 Watts.
+40741,V3,,uint16,1,V_SF,% VRef,RW,,Point 3 Volts.
+40742,W3,,int16,1,DeptRef_SF,% VRef,RW,,Point 3 Watts.
+40743,V4,,uint16,1,V_SF,% VRef,RW,,Point 4 Volts.
+40744,W4,,int16,1,DeptRef_SF,% VRef,RW,,Point 4 Watts.
+40745,V5,,uint16,1,V_SF,% VRef,RW,,Point 5 Volts.
+40746,W5,,int16,1,DeptRef_SF,% VRef,RW,,Point 5 Watts.
+40747,V6,,uint16,1,V_SF,% VRef,RW,,Point 6 Volts.,not supported
+40748,W6,,int16,1,DeptRef_SF,% VRef,RW,,Point 6 Watts.,not supported
+40749,V7,,uint16,1,V_SF,% VRef,RW,,Point 7 Volts.,not supported
+40750,W7,,int16,1,DeptRef_SF,% VRef,RW,,Point 7 Watts.,not supported
+40751,V8,,uint16,1,V_SF,% VRef,RW,,Point 8 Volts.,not supported
+40752,W8,,int16,1,DeptRef_SF,% VRef,RW,,Point 8 Watts.,not supported
+40753,V9,,uint16,1,V_SF,% VRef,RW,,Point 9 Volts.,not supported
+40754,W9,,int16,1,DeptRef_SF,% VRef,RW,,Point 9 Watts.,not supported
+40755,V10,,uint16,1,V_SF,% VRef,RW,,Point 10 Volts.,not supported
+40756,W10,,int16,1,DeptRef_SF,% VRef,RW,,Point 10 Watts.,not supported
+40757,V11,,uint16,1,V_SF,% VRef,RW,,Point 11 Volts.,not supported
+40758,W11,,int16,1,DeptRef_SF,% VRef,RW,,Point 11 Watts.,not supported
+40759,V12,,uint16,1,V_SF,% VRef,RW,,Point 12 Volts.,not supported
+40760,W12,,int16,1,DeptRef_SF,% VRef,RW,,Point 12 Watts.,not supported
+40761,V13,,uint16,1,V_SF,% VRef,RW,,Point 13 Volts.,not supported
+40762,W13,,int16,1,DeptRef_SF,% VRef,RW,,Point 13 Watts.,not supported
+40763,V14,,uint16,1,V_SF,% VRef,RW,,Point 14 Volts.,not supported
+40764,W14,,int16,1,DeptRef_SF,% VRef,RW,,Point 14 Watts.,not supported
+40765,V15,,uint16,1,V_SF,% VRef,RW,,Point 15 Volts.,not supported
+40766,W15,,int16,1,DeptRef_SF,% VRef,RW,,Point 15 Watts.,not supported
+40767,V16,,uint16,1,V_SF,% VRef,RW,,Point 16 Volts.,not supported
+40768,W16,,int16,1,DeptRef_SF,% VRef,RW,,Point 16 Watts.,not supported
+40769,V17,,uint16,1,V_SF,% VRef,RW,,Point 17 Volts.,not supported
+40770,W17,,int16,1,DeptRef_SF,% VRef,RW,,Point 17 Watts.,not supported
+40771,V18,,uint16,1,V_SF,% VRef,RW,,Point 18 Volts.,not supported
+40772,W18,,int16,1,DeptRef_SF,% VRef,RW,,Point 18 Watts.,not supported
+40773,V19,,uint16,1,V_SF,% VRef,RW,,Point 19 Volts.,not supported
+40774,W19,,int16,1,DeptRef_SF,% VRef,RW,,Point 19 Watts.,not supported
+40775,V20,,uint16,1,V_SF,% VRef,RW,,Point 20 Volts.,not supported
+40776,W20,,int16,1,DeptRef_SF,% VRef,RW,,Point 20 Watts.,not supported
+40777,CrvNam,,string,8,,,RW,,Optional description for curve.
+40785,RmpPt1Tms,,uint16,1,,Secs,RW,,The time of the PT1 in seconds (time to accomplish a change of 95%).,not supported
+40786,RmpDecTmm,,uint16,1,RmpIncDec_SF,% WMax/min,RW,,The maximum rate at which the watt value may be reduced in response to changes in the voltage value.,not supported
+40787,RmpIncTmm,,uint16,1,RmpIncDec_SF,% WMax/min,RW,,The maximum rate at which the watt value may be increased in response to changes in the voltage value.,not supported
+40788,ReadOnly,,enum16,1,,,,,Enumerated value indicates if curve is read-only or can be modified.,"0: READWRITE
+1: READONLY"
+40789,ActPt,,uint16,1,,,RW,,Number of active points in array.
+40790,DeptRef,,enum16,1,,,RW,,Defines the meaning of the Watts DeptRef.  1=% WMax 2=% WAvail,"1: %Wmax
+2: %Waval"
+40791,V1,,uint16,1,V_SF,% VRef,RW,,Point 1 Volts.
+40792,W1,,int16,1,DeptRef_SF,% VRef,RW,,Point 1 Watts.
+40793,V2,,uint16,1,V_SF,% VRef,RW,,Point 2 Volts.
+40794,W2,,int16,1,DeptRef_SF,% VRef,RW,,Point 2 Watts.
+40795,V3,,uint16,1,V_SF,% VRef,RW,,Point 3 Volts.
+40796,W3,,int16,1,DeptRef_SF,% VRef,RW,,Point 3 Watts.
+40797,V4,,uint16,1,V_SF,% VRef,RW,,Point 4 Volts.
+40798,W4,,int16,1,DeptRef_SF,% VRef,RW,,Point 4 Watts.
+40799,V5,,uint16,1,V_SF,% VRef,RW,,Point 5 Volts.
+40800,W5,,int16,1,DeptRef_SF,% VRef,RW,,Point 5 Watts.
+40801,V6,,uint16,1,V_SF,% VRef,RW,,Point 6 Volts.,not supported
+40802,W6,,int16,1,DeptRef_SF,% VRef,RW,,Point 6 Watts.,not supported
+40803,V7,,uint16,1,V_SF,% VRef,RW,,Point 7 Volts.,not supported
+40804,W7,,int16,1,DeptRef_SF,% VRef,RW,,Point 7 Watts.,not supported
+40805,V8,,uint16,1,V_SF,% VRef,RW,,Point 8 Volts.,not supported
+40806,W8,,int16,1,DeptRef_SF,% VRef,RW,,Point 8 Watts.,not supported
+40807,V9,,uint16,1,V_SF,% VRef,RW,,Point 9 Volts.,not supported
+40808,W9,,int16,1,DeptRef_SF,% VRef,RW,,Point 9 Watts.,not supported
+40809,V10,,uint16,1,V_SF,% VRef,RW,,Point 10 Volts.,not supported
+40810,W10,,int16,1,DeptRef_SF,% VRef,RW,,Point 10 Watts.,not supported
+40811,V11,,uint16,1,V_SF,% VRef,RW,,Point 11 Volts.,not supported
+40812,W11,,int16,1,DeptRef_SF,% VRef,RW,,Point 11 Watts.,not supported
+40813,V12,,uint16,1,V_SF,% VRef,RW,,Point 12 Volts.,not supported
+40814,W12,,int16,1,DeptRef_SF,% VRef,RW,,Point 12 Watts.,not supported
+40815,V13,,uint16,1,V_SF,% VRef,RW,,Point 13 Volts.,not supported
+40816,W13,,int16,1,DeptRef_SF,% VRef,RW,,Point 13 Watts.,not supported
+40817,V14,,uint16,1,V_SF,% VRef,RW,,Point 14 Volts.,not supported
+40818,W14,,int16,1,DeptRef_SF,% VRef,RW,,Point 14 Watts.,not supported
+40819,V15,,uint16,1,V_SF,% VRef,RW,,Point 15 Volts.,not supported
+40820,W15,,int16,1,DeptRef_SF,% VRef,RW,,Point 15 Watts.,not supported
+40821,V16,,uint16,1,V_SF,% VRef,RW,,Point 16 Volts.,not supported
+40822,W16,,int16,1,DeptRef_SF,% VRef,RW,,Point 16 Watts.,not supported
+40823,V17,,uint16,1,V_SF,% VRef,RW,,Point 17 Volts.,not supported
+40824,W17,,int16,1,DeptRef_SF,% VRef,RW,,Point 17 Watts.,not supported
+40825,V18,,uint16,1,V_SF,% VRef,RW,,Point 18 Volts.,not supported
+40826,W18,,int16,1,DeptRef_SF,% VRef,RW,,Point 18 Watts.,not supported
+40827,V19,,uint16,1,V_SF,% VRef,RW,,Point 19 Volts.,not supported
+40828,W19,,int16,1,DeptRef_SF,% VRef,RW,,Point 19 Watts.,not supported
+40829,V20,,uint16,1,V_SF,% VRef,RW,,Point 20 Volts.,not supported
+40830,W20,,int16,1,DeptRef_SF,% VRef,RW,,Point 20 Watts.,not supported
+40831,CrvNam,,string,8,,,RW,,Optional description for curve.
+40839,RmpPt1Tms,,uint16,1,,Secs,RW,,The time of the PT1 in seconds (time to accomplish a change of 95%).,not supported
+40840,RmpDecTmm,,uint16,1,RmpIncDec_SF,% WMax/min,RW,,The maximum rate at which the watt value may be reduced in response to changes in the voltage value.,not supported
+40841,RmpIncTmm,,uint16,1,RmpIncDec_SF,% WMax/min,RW,,The maximum rate at which the watt value may be increased in response to changes in the voltage value.,not supported
+40842,ReadOnly,,enum16,1,,,,,Enumerated value indicates if curve is read-only or can be modified.,"0: READWRITE
+1: READONLY"
+40843,ActPt,,uint16,1,,,RW,,Number of active points in array.
+40844,DeptRef,,enum16,1,,,RW,,Defines the meaning of the Watts DeptRef.  1=% WMax 2=% WAvail,"1: %Wmax
+2: %Waval"
+40845,V1,,uint16,1,V_SF,% VRef,RW,,Point 1 Volts.
+40846,W1,,int16,1,DeptRef_SF,% VRef,RW,,Point 1 Watts.
+40847,V2,,uint16,1,V_SF,% VRef,RW,,Point 2 Volts.
+40848,W2,,int16,1,DeptRef_SF,% VRef,RW,,Point 2 Watts.
+40849,V3,,uint16,1,V_SF,% VRef,RW,,Point 3 Volts.
+40850,W3,,int16,1,DeptRef_SF,% VRef,RW,,Point 3 Watts.
+40851,V4,,uint16,1,V_SF,% VRef,RW,,Point 4 Volts.
+40852,W4,,int16,1,DeptRef_SF,% VRef,RW,,Point 4 Watts.
+40853,V5,,uint16,1,V_SF,% VRef,RW,,Point 5 Volts.
+40854,W5,,int16,1,DeptRef_SF,% VRef,RW,,Point 5 Watts.
+40855,V6,,uint16,1,V_SF,% VRef,RW,,Point 6 Volts.,not supported
+40856,W6,,int16,1,DeptRef_SF,% VRef,RW,,Point 6 Watts.,not supported
+40857,V7,,uint16,1,V_SF,% VRef,RW,,Point 7 Volts.,not supported
+40858,W7,,int16,1,DeptRef_SF,% VRef,RW,,Point 7 Watts.,not supported
+40859,V8,,uint16,1,V_SF,% VRef,RW,,Point 8 Volts.,not supported
+40860,W8,,int16,1,DeptRef_SF,% VRef,RW,,Point 8 Watts.,not supported
+40861,V9,,uint16,1,V_SF,% VRef,RW,,Point 9 Volts.,not supported
+40862,W9,,int16,1,DeptRef_SF,% VRef,RW,,Point 9 Watts.,not supported
+40863,V10,,uint16,1,V_SF,% VRef,RW,,Point 10 Volts.,not supported
+40864,W10,,int16,1,DeptRef_SF,% VRef,RW,,Point 10 Watts.,not supported
+40865,V11,,uint16,1,V_SF,% VRef,RW,,Point 11 Volts.,not supported
+40866,W11,,int16,1,DeptRef_SF,% VRef,RW,,Point 11 Watts.,not supported
+40867,V12,,uint16,1,V_SF,% VRef,RW,,Point 12 Volts.,not supported
+40868,W12,,int16,1,DeptRef_SF,% VRef,RW,,Point 12 Watts.,not supported
+40869,V13,,uint16,1,V_SF,% VRef,RW,,Point 13 Volts.,not supported
+40870,W13,,int16,1,DeptRef_SF,% VRef,RW,,Point 13 Watts.,not supported
+40871,V14,,uint16,1,V_SF,% VRef,RW,,Point 14 Volts.,not supported
+40872,W14,,int16,1,DeptRef_SF,% VRef,RW,,Point 14 Watts.,not supported
+40873,V15,,uint16,1,V_SF,% VRef,RW,,Point 15 Volts.,not supported
+40874,W15,,int16,1,DeptRef_SF,% VRef,RW,,Point 15 Watts.,not supported
+40875,V16,,uint16,1,V_SF,% VRef,RW,,Point 16 Volts.,not supported
+40876,W16,,int16,1,DeptRef_SF,% VRef,RW,,Point 16 Watts.,not supported
+40877,V17,,uint16,1,V_SF,% VRef,RW,,Point 17 Volts.,not supported
+40878,W17,,int16,1,DeptRef_SF,% VRef,RW,,Point 17 Watts.,not supported
+40879,V18,,uint16,1,V_SF,% VRef,RW,,Point 18 Volts.,not supported
+40880,W18,,int16,1,DeptRef_SF,% VRef,RW,,Point 18 Watts.,not supported
+40881,V19,,uint16,1,V_SF,% VRef,RW,,Point 19 Volts.,not supported
+40882,W19,,int16,1,DeptRef_SF,% VRef,RW,,Point 19 Watts.,not supported
+40883,V20,,uint16,1,V_SF,% VRef,RW,,Point 20 Volts.,not supported
+40884,W20,,int16,1,DeptRef_SF,% VRef,RW,,Point 20 Watts.,not supported
+40885,CrvNam,,string,8,,,RW,,Optional description for curve.
+40893,RmpPt1Tms,,uint16,1,,Secs,RW,,The time of the PT1 in seconds (time to accomplish a change of 95%).,not supported
+40894,RmpDecTmm,,uint16,1,RmpIncDec_SF,% WMax/min,RW,,The maximum rate at which the watt value may be reduced in response to changes in the voltage value.,not supported
+40895,RmpIncTmm,,uint16,1,RmpIncDec_SF,% WMax/min,RW,,The maximum rate at which the watt value may be increased in response to changes in the voltage value.,not supported
+40896,ReadOnly,0,enum16,1,,,,,Enumerated value indicates if curve is read-only or can be modified.,"0: READWRITE
+1: READONLY"

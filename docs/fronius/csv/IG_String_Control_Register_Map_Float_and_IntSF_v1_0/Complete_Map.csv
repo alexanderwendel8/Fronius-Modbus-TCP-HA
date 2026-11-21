@@ -1,0 +1,66 @@
+"Fronius Datamanager Register Map: IG String Control (1, 403)"
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40001,40002,2,R,0x03,SID,Well-known value. Uniquely identifies this as a SunSpec Modbus Map,uint32,,,0x53756e53 ('SunS')
+40003,40003,1,R,0x03,ID,Well-known value. Uniquely identifies this as a SunSpec Common Model block,uint16,,,1
+40004,40004,1,R,0x03,L,Length of Common Model block,uint16,Registers,,65
+40005,40020,16,R,0x03,Mn,Manufacturer,String32,,,Fronius
+40021,40036,16,R,0x03,Md,Device model,String32
+40037,40044,8,R,0x03,Opt,Options,String16
+40045,40052,8,R,0x03,Vr,SW version,String16
+40053,40068,16,R,0x03,SN,Serialnumber,String32
+40069,40069,1,R,0x03,DA,Modbus Device Address,uint16,,,1-247
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40070,40070,1,R,0x03,ID,Uniquely identifies this as a SunSpec String Combiner Modbus Register Model,uint16,,,403
+40071,40071,1,R,0x03,L,Length of Register Model,uint16,Registers,,56 (16 Registers for fixed size block + 5 * 8 Registers for repeating blocks)
+40072,40072,1,R,0x03,DCA_SF,Current scale factor,sunssf,,,-2
+40073,40073,1,R,0x03,DCAhr_SF,Amp-hour scale factor,sunssf,,,-3
+40074,40074,1,R,0x03,DCV_SF,Voltage scale factor,sunssf,,,not supported
+40075,40075,1,R,0x03,DCAMax,Maximum DC Current Rating,uint16,A
+40076,40076,1,R,0x03,N,Number of Inputs,count,,,up to 5 Inputs
+40077,40078,2,R,0x03,Evt,Bitmask value.  Events,bitfield32,,,"0: no bit set, no event pending
+0x8000: bit 15 is set indicating COMM_ERROR"
+40079,40080,2,R,0x03,EvtVnd,Bitmask value.  Vendor defined events,bitfield32,,,"0: no bit set, no event pending
+0x8000: bit 15 is set indicating COMM_ERROR"
+40081,40081,1,R,0x03,DCA,Total measured current,int16,A
+40082,40083,2,R,0x03,DCAhr,Total metered Amp-hours,acc32,Ah
+40084,40084,1,R,0x03,DCV,Output Voltage,int16,V,,not supported
+40085,40085,1,R,0x03,Tmp,Internal operating temperature,int16,°C,,not supported
+40086,40086,1,R,0x03,InDCA_SF,Current scale factor for inputs,sunssf,,,-3
+40087,40087,1,R,0x03,InDCAhr_SF,Amp-hour scale factor for inputs,sunssf,,,-3
+40088,40088,1,R,0x03,InID,Uniquely identifies this input set,uint16,,,1
+40089,40090,2,R,0x03,InEvt,String Input Event Flags,bitfield32,,,"Always 0, no bit set, no event pending"
+40091,40092,2,R,0x03,InEvtVnd,String Input Vendor Event Flags,bitfield32,,,"Always 0, no bit set, no event pending"
+40093,40093,1,R,0x03,InDCA,String Input Current,int16,A
+40094,40095,2,R,0x03,InDCAhr,String Input Amp-Hours,acc32,Ah
+40096,40096,1,R,0x03,InID,Uniquely identifies this input set,uint16,,,2
+40097,40098,2,R,0x03,InEvt,String Input Event Flags,bitfield32,,,"Always 0, no bit set, no event pending"
+40099,40100,2,R,0x03,InEvtVnd,String Input Vendor Event Flags,bitfield32,,,"Always 0, no bit set, no event pending"
+40101,40101,1,R,0x03,InDCA,String Input Current,int16,A
+40102,40103,2,R,0x03,InDCAhr,String Input Amp-Hours,acc32,Ah
+40104,40104,1,R,0x03,InID,Uniquely identifies this input set,uint16,,,3
+40105,40106,2,R,0x03,InEvt,String Input Event Flags,bitfield32,,,"Always 0, no bit set, no event pending"
+40107,40108,2,R,0x03,InEvtVnd,String Input Vendor Event Flags,bitfield32,,,"Always 0, no bit set, no event pending"
+40109,40109,1,R,0x03,InDCA,String Input Current,int16,A
+40110,40111,2,R,0x03,InDCAhr,String Input Amp-Hours,acc32,Ah
+40112,40112,1,R,0x03,InID,Uniquely identifies this input set,uint16,,,4
+40113,40114,2,R,0x03,InEvt,String Input Event Flags,bitfield32,,,"Always 0, no bit set, no event pending"
+40115,40116,2,R,0x03,InEvtVnd,String Input Vendor Event Flags,bitfield32,,,"Always 0, no bit set, no event pending"
+40117,40117,1,R,0x03,InDCA,String Input Current,int16,A
+40118,40119,2,R,0x03,InDCAhr,String Input Amp-Hours,acc32,Ah
+40120,40120,1,R,0x03,InID,Uniquely identifies this input set,uint16,,,5
+40121,40122,2,R,0x03,InEvt,String Input Event Flags,bitfield32,,,"Always 0, no bit set, no event pending"
+40123,40124,2,R,0x03,InEvtVnd,String Input Vendor Event Flags,bitfield32,,,"Always 0, no bit set, no event pending"
+40125,40125,1,R,0x03,InDCA,String Input Current,int16,A
+40126,40127,2,R,0x03,InDCAhr,String Input Amp-Hours,acc32,Ah
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40128,40128,1,R,0x03,ID,Identifies this as End block,uint16,,,0xFFFF
+40129,40129,1,R,0x03,L,Length of model block,uint16,Registers,,0

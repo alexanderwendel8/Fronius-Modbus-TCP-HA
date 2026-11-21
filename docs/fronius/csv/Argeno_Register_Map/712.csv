@@ -1,0 +1,41 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+42030,ID,712,uint16,1,,,,S,DER Watt-Var model ID.
+42031,L,36,uint16,1,,,,S,DER Watt-Var model length.
+42032,Ena,,enum16,1,,,RW,,DER Watt-Var control enable.,"0: DISABLED
+1: ENABLED"
+42033,AdptCrvReq,,uint16,1,,,RW,S,Set active curve. 0 = No active curve.
+42034,AdptCrvRslt,,enum16,1,,,,S,Result of last set active curve operation.,not supported
+42035,NPt,10,uint16,1,,,,S,Number of curve points supported.
+42036,NCrv,1,uint16,1,,,,S,Number of stored curves supported.
+42037,RvrtTms,,uint32,2,,Secs,RW,,Reversion time in seconds.  0 = No reversion time.,not supported
+42039,RvrtRem,,uint32,2,,Secs,,,Reversion time remaining in seconds.,not supported
+42041,RvrtCrv,,uint16,1,,,RW,,Default curve after reversion timeout.,not supported
+42042,W_SF,,sunssf,1,,,,S,Scale factor for curve active power points.
+42043,DeptRef_SF,,sunssf,1,,,,S,Scale factor for curve var points.
+42044,ActPt,,uint16,1,,,RW,,Number of active points.
+42045,DeptRef,,enum16,1,,,RW,,Curve dependent reference.,"0: Percent Max Watts
+1: Percent Max Vars
+2: Percent Available Vars
+3: Percent Max Apparent Power"
+42046,Pri,,enum16,1,,,RW,,Power priority.,not supported
+42047,ReadOnly,,enum16,1,,,,S,Curve read-write access.,not supported
+42048,W,,int16,1,W_SF,WMaxPct,RW,,Curve active power point as percentage.
+42049,Var,,int16,1,DeptRef_SF,VarPct,RW,,Curve reactive power point as set in DeptRef point.
+42050,W,,int16,1,W_SF,WMaxPct,RW,,Curve active power point as percentage.
+42051,Var,,int16,1,DeptRef_SF,VarPct,RW,,Curve reactive power point as set in DeptRef point.
+42052,W,,int16,1,W_SF,WMaxPct,RW,,Curve active power point as percentage.
+42053,Var,,int16,1,DeptRef_SF,VarPct,RW,,Curve reactive power point as set in DeptRef point.
+42054,W,,int16,1,W_SF,WMaxPct,RW,,Curve active power point as percentage.
+42055,Var,,int16,1,DeptRef_SF,VarPct,RW,,Curve reactive power point as set in DeptRef point.
+42056,W,,int16,1,W_SF,WMaxPct,RW,,Curve active power point as percentage.
+42057,Var,,int16,1,DeptRef_SF,VarPct,RW,,Curve reactive power point as set in DeptRef point.
+42058,W,,int16,1,W_SF,WMaxPct,RW,,Curve active power point as percentage.
+42059,Var,,int16,1,DeptRef_SF,VarPct,RW,,Curve reactive power point as set in DeptRef point.
+42060,W,,int16,1,W_SF,WMaxPct,RW,,Curve active power point as percentage.
+42061,Var,,int16,1,DeptRef_SF,VarPct,RW,,Curve reactive power point as set in DeptRef point.
+42062,W,,int16,1,W_SF,WMaxPct,RW,,Curve active power point as percentage.
+42063,Var,,int16,1,DeptRef_SF,VarPct,RW,,Curve reactive power point as set in DeptRef point.
+42064,W,,int16,1,W_SF,WMaxPct,RW,,Curve active power point as percentage.
+42065,Var,,int16,1,DeptRef_SF,VarPct,RW,,Curve reactive power point as set in DeptRef point.
+42066,W,,int16,1,W_SF,WMaxPct,RW,,Curve active power point as percentage.
+42067,Var,,int16,1,DeptRef_SF,VarPct,RW,,Curve reactive power point as set in DeptRef point.

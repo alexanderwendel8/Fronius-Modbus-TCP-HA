@@ -59,3 +59,8 @@ Anschließend unter *Einstellungen → Geräte & Dienste → Integration hinzuf�
    (für ein neues SunSpec-Modell zusätzlich in `FroniusModbusClient.read_data()` einlesen).
 2. Passende `SensorEntityDescription` mit gleichem `key` in `sensor.py` ergänzen.
 3. Namen unter `entity.sensor.<key>` in `strings.json` und `translations/*.json` eintragen.
+
+## Herstellerdokumentation
+
+Die Fronius-Registerkarten und State-Code-Tabellen liegen in [`docs/fronius/`](docs/fronius/README.md) –
+mit Dateiindex und Zusammenfassung der für diese Integration relevanten Punkte.

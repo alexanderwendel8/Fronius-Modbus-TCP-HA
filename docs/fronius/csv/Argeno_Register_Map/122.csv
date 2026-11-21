@@ -1,0 +1,23 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+40245,ID,122,uint16,1,,,,S,Inverter Controls Extended Measurements and Status,"Ref 3: 8.14.3.2, Ref 4: 17"
+40246,L,44,uint16,1,,,,S,Model length
+40247,PVConn,,bitfield16,1,,,,,PV inverter present/available status. Enumerated value.,not supported
+40248,StorConn,,bitfield16,1,,,,,Storage inverter present/available status. Enumerated value.,not supported
+40249,ECPConn,,bitfield16,1,,,,,ECP connection status: disconnected=0  connected=1.,not supported
+40250,ActWh,,acc64,4,,Wh,,,AC lifetime active (real) energy output.,not supported
+40254,ActVAh,,acc64,4,,VAh,,,AC lifetime apparent energy output.,not supported
+40258,ActVArhQ1,,acc64,4,,varh,,,AC lifetime reactive energy output in quadrant 1.,not supported
+40262,ActVArhQ2,,acc64,4,,varh,,,AC lifetime reactive energy output in quadrant 2.,not supported
+40266,ActVArhQ3,,acc64,4,,varh,,,AC lifetime negative energy output  in quadrant 3.,not supported
+40270,ActVArhQ4,,acc64,4,,varh,,,AC lifetime reactive energy output  in quadrant 4.,not supported
+40274,VArAval,,int16,1,VArAval_SF,var,,,Amount of VARs available without impacting watts output.,not supported
+40275,VArAval_SF,,sunssf,1,,,,,Scale factor for available VARs.,not supported
+40276,WAval,,uint16,1,WAval_SF,var,,,Amount of Watts available.,not supported
+40277,WAval_SF,,sunssf,1,,,,,Scale factor for available Watts.,not supported
+40278,StSetLimMsk,,bitfield32,2,,,,,Bit Mask indicating setpoint limit(s) reached.,not supported
+40280,StActCtl,,bitfield32,2,,,,,Bit Mask indicating which inverter controls are currently active.,not supported
+40282,TmSrc,,string,4,,,,,Source of time synchronization.
+40286,Tms,,uint32,2,,Secs,,,Seconds since 01-01-2000 00:00 UTC
+40288,RtSt,,bitfield16,1,,,,,Bit Mask indicating active ride-through status.,not supported
+40289,Ris,,uint16,1,Ris_SF,ohms,,,Isolation resistance.,not supported
+40290,Ris_SF,,sunssf,1,,,,,Scale factor for isolation resistance.,not supported

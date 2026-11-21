@@ -1,0 +1,58 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Description
+40607,ID,130,uint16,1,,,,S,HVRT Must Disconnect,Ref 4: 11
+40608,L,60,uint16,1,,,,S,Model length
+40609,ActCrv,1,uint16,1,,,RW,,Index of active curve. 0=no active curve.
+40610,ModEna,,bitfield16,1,,,RW,,HVRT control mode. Enable active curve.  Bitfield value.,"0: DISABLED
+1: ENABLED"
+40611,WinTms,,uint16,1,,Secs,RW,,Time window for HVRT change.,not supported
+40612,RvrtTms,,uint16,1,,Secs,RW,,Timeout period for HVRT curve selection.,not supported
+40613,RmpTms,,uint16,1,,Secs,RW,,Ramp time for moving from current mode to new mode.,not supported
+40614,NCrv,1,uint16,1,,,,,Number of curves supported (recommend 4).
+40615,NPt,5,uint16,1,,,,,Number of curve points supported (maximum of 20).
+40616,Tms_SF,,sunssf,1,,,,,Scale factor for duration.
+40617,V_SF,,sunssf,1,,,,,Scale factor for percent VRef.
+40618,Pad,,pad,1
+40619,ActPt,5,uint16,1,,,RW,,Number of active points in array.
+40620,Tms1,,uint16,1,Tms_SF,Secs,RW,,Point 1 must disconnect duration.
+40621,V1,,uint16,1,V_SF,% VRef,RW,,Point 1 must disconnect voltage.
+40622,Tms2,,uint16,1,Tms_SF,Secs,RW,,Point 2 must disconnect duration.
+40623,V2,,uint16,1,V_SF,% VRef,RW,,Point 2 must disconnect voltage.
+40624,Tms3,,uint16,1,Tms_SF,Secs,RW,,Point 3 must disconnect duration.
+40625,V3,,uint16,1,V_SF,% VRef,RW,,Point 3 must disconnect voltage.
+40626,Tms4,,uint16,1,Tms_SF,Secs,RW,,Point 4 must disconnect duration.
+40627,V4,,uint16,1,V_SF,% VRef,RW,,Point 4 must disconnect voltage.
+40628,Tms5,,uint16,1,Tms_SF,Secs,RW,,Point 5 must disconnect duration.
+40629,V5,,uint16,1,V_SF,% VRef,RW,,Point 5 must disconnect voltage.
+40630,Tms6,,uint16,1,Tms_SF,Secs,RW,,Point 6 must disconnect duration.,not supported
+40631,V6,,uint16,1,V_SF,% VRef,RW,,Point 6 must disconnect voltage.,not supported
+40632,Tms7,,uint16,1,Tms_SF,Secs,RW,,Point 7 must disconnect duration.,not supported
+40633,V7,,uint16,1,V_SF,% VRef,RW,,Point 7 must disconnect voltage.,not supported
+40634,Tms8,,uint16,1,Tms_SF,Secs,RW,,Point 8 must disconnect duration.,not supported
+40635,V8,,uint16,1,V_SF,% VRef,RW,,Point 8 must disconnect voltage.,not supported
+40636,Tms9,,uint16,1,Tms_SF,Secs,RW,,Point 9 must disconnect duration.,not supported
+40637,V9,,uint16,1,V_SF,% VRef,RW,,Point 9 must disconnect voltage.,not supported
+40638,Tms10,,uint16,1,Tms_SF,Secs,RW,,Point 10 must disconnect duration.,not supported
+40639,V10,,uint16,1,V_SF,% VRef,RW,,Point 10 must disconnect voltage.,not supported
+40640,Tms11,,uint16,1,Tms_SF,Secs,RW,,Point 11 must disconnect duration.,not supported
+40641,V11,,uint16,1,V_SF,% VRef,RW,,Point 11 must disconnect voltage.,not supported
+40642,Tms12,,uint16,1,Tms_SF,Secs,RW,,Point 12 must disconnect duration.,not supported
+40643,V12,,uint16,1,V_SF,% VRef,RW,,Point 12 must disconnect voltage.,not supported
+40644,Tms13,,uint16,1,Tms_SF,Secs,RW,,Point 13 must disconnect duration.,not supported
+40645,V13,,uint16,1,V_SF,% VRef,RW,,Point 13 must disconnect voltage.,not supported
+40646,Tms14,,uint16,1,Tms_SF,Secs,RW,,Point 14 must disconnect duration.,not supported
+40647,V14,,uint16,1,V_SF,% VRef,RW,,Point 14 must disconnect voltage.,not supported
+40648,Tms15,,uint16,1,Tms_SF,Secs,RW,,Point 15 must disconnect duration.,not supported
+40649,V15,,uint16,1,V_SF,% VRef,RW,,Point 15 must disconnect voltage.,not supported
+40650,Tms16,,uint16,1,Tms_SF,Secs,RW,,Point 16 must disconnect duration.,not supported
+40651,V16,,uint16,1,V_SF,% VRef,RW,,Point 16 must disconnect voltage.,not supported
+40652,Tms17,,uint16,1,Tms_SF,Secs,RW,,Point 17 must disconnect duration.,not supported
+40653,V17,,uint16,1,V_SF,% VRef,RW,,Point 17 must disconnect voltage.,not supported
+40654,Tms18,,uint16,1,Tms_SF,Secs,RW,,Point 18 must disconnect duration.,not supported
+40655,V18,,uint16,1,V_SF,% VRef,RW,,Point 18 must disconnect voltage.,not supported
+40656,Tms19,,uint16,1,Tms_SF,Secs,RW,,Point 19 must disconnect duration.,not supported
+40657,V19,,uint16,1,V_SF,% VRef,RW,,Point 19 must disconnect voltage.,not supported
+40658,Tms20,,uint16,1,Tms_SF,Secs,RW,,Point 20 must disconnect duration.,not supported
+40659,V20,,uint16,1,V_SF,% VRef,RW,,Point 20 must disconnect voltage.,not supported
+40660,CrvNam,,string,8,,,RW,,Optional description for curve.
+40668,ReadOnly,0,enum16,1,,,,,Enumerated value indicates if curve is read-only or can be modified.,"0: READWRITE
+1: READONLY"

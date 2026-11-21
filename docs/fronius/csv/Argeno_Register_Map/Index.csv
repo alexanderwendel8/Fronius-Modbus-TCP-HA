@@ -1,0 +1,30 @@
+Model,Label,Description,Start,End,Length
+-,SunSpec ID,"""SunS""",40001,40002,2
+1,Common,All SunSpec compliant devices must include this as the first model,40003,40070,66
+103,Inverter (Three Phase),Include this model for three phase inverter monitoring,40071,40122,50
+113,Inverter (Three Phase) FLOAT,Include this model for three phase inverter monitoring using float values,40123,40184,60
+120,Nameplate,Inverter Controls Nameplate Ratings,40185,40212,26
+121,Basic Settings,Inverter Controls Basic Settings,40213,40244,30
+122,Measurements_Status,Inverter Controls Extended Measurements and Status,40245,40290,44
+123,Immediate Controls,Immediate Inverter Controls,40291,40316,24
+126,Static Volt-VAR,Static Volt-VAR Arrays,40317,40544,226
+129,LVRTD,LVRT Must Disconnect,40545,40606,60
+130,HVRTD,HVRT Must Disconnect,40607,40668,60
+132,Volt-Watt,Volt-Watt,40669,40896,226
+135,LFRT,Low Frequency Ride-through,40897,40958,60
+136,HFRT,High Frequency Ride-through,40959,41020,60
+145,Extended Settings,Inverter controls extended settings,41021,41030,8
+160,Multiple MPPT Inverter Extension Model,Multiple MPPT Inverter Extension Model.,41031,41240,208
+701,DER AC Measurement,DER AC measurement model.,41241,41395,153
+702,DER Capacity,DER capacity model.,41396,41447,50
+703,Enter Service,Enter service model.,41448,41466,17
+704,DER AC Controls,DER AC controls model.,41467,41533,65
+705,DER Volt-Var,DER Volt-Var model.,41534,41668,133
+706,DER Volt-Watt,DER Volt-Watt model.,41669,41743,73
+707,DER Trip LV,DER low voltage trip model.,41744,41801,56
+708,DER Trip HV,DER high voltage trip model.,41802,41859,56
+709,DER Trip LF,DER low frequency trip model.,41860,41932,71
+710,DER Trip HF,DER high frequency trip model.,41933,42005,71
+711,DER Frequency Droop,DER Frequency Droop model.,42006,42029,22
+712,DER Watt-Var,DER Watt-Var model.,42030,42067,36
+714,DER DC Measurement,DER DC measurement.,42068,42337,268

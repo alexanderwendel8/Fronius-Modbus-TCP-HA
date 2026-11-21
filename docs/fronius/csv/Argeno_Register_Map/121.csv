@@ -1,0 +1,33 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+40213,ID,121,uint16,1,,,,S,Inverter Controls Basic Settings,"Ref 3: 8.4.2.1, Ref 4: 17"
+40214,L,30,uint16,1,,,,S,Model length
+40215,WMax,,uint16,1,WMax_SF,W,RW,,Setting for maximum power output. Default to WRtg.
+40216,VRef,,uint16,1,VRef_SF,V,RW,,Voltage at the PCC.
+40217,VRefOfs,,int16,1,VRefOfs_SF,V,RW,,Offset  from PCC to inverter.,not supported
+40218,VMax,,uint16,1,VMinMax_SF,V,RW,,Setpoint for maximum voltage.
+40219,VMin,,uint16,1,VMinMax_SF,V,RW,,Setpoint for minimum voltage.,not supported
+40220,VAMax,,uint16,1,VAMax_SF,VA,RW,,Setpoint for maximum apparent power. Default to VARtg.
+40221,VArMaxQ1,,int16,1,VArMax_SF,var,RW,,Setting for maximum reactive power in quadrant 1. Default to VArRtgQ1.,not supported
+40222,VArMaxQ2,,int16,1,VArMax_SF,var,RW,,Setting for maximum reactive power in quadrant 2. Default to VArRtgQ2.,not supported
+40223,VArMaxQ3,,int16,1,VArMax_SF,var,RW,,Setting for maximum reactive power in quadrant 3. Default to VArRtgQ3.,not supported
+40224,VArMaxQ4,,int16,1,VArMax_SF,var,RW,,Setting for maximum reactive power in quadrant 4. Default to VArRtgQ4.,not supported
+40225,WGra,,uint16,1,WGra_SF,% WMax/sec,RW,,Default ramp rate of change of active power due to command or internal action.,not supported
+40226,PFMinQ1,,int16,1,PFMin_SF,cos(),RW,,Setpoint for minimum power factor value in quadrant 1. Default to PFRtgQ1.,not supported
+40227,PFMinQ2,,int16,1,PFMin_SF,cos(),RW,,Setpoint for minimum power factor value in quadrant 2. Default to PFRtgQ2.,not supported
+40228,PFMinQ3,,int16,1,PFMin_SF,cos(),RW,,Setpoint for minimum power factor value in quadrant 3. Default to PFRtgQ3.,not supported
+40229,PFMinQ4,,int16,1,PFMin_SF,cos(),RW,,Setpoint for minimum power factor value in quadrant 4. Default to PFRtgQ4.,not supported
+40230,VArAct,,enum16,1,,,RW,,VAR action on change between charging and discharging: 1=switch 2=maintain VAR characterization.,not supported
+40231,ClcTotVA,,enum16,1,,,RW,,Calculation method for total apparent power. 1=vector 2=arithmetic.,not supported
+40232,MaxRmpRte,,uint16,1,MaxRmpRte_SF,% WGra,RW,,Setpoint for maximum ramp rate as percentage of nominal maximum ramp rate. This setting will limit the rate that watts delivery to the grid can increase or decrease in response to intermittent PV generation.,not supported
+40233,ECPNomHz,,uint16,1,ECPNomHz_SF,Hz,RW,,Setpoint for nominal frequency at the ECP.
+40234,ConnPh,,enum16,1,,,RW,,Identity of connected phase for single phase inverters. A=1 B=2 C=3.,not supported
+40235,WMax_SF,,sunssf,1,,,,,Scale factor for real power.
+40236,VRef_SF,,sunssf,1,,,,,Scale factor for voltage at the PCC.
+40237,VRefOfs_SF,,sunssf,1,,,,,Scale factor for offset voltage.,not supported
+40238,VMinMax_SF,,sunssf,1,,,,,Scale factor for min/max voltages.
+40239,VAMax_SF,,sunssf,1,,,,,Scale factor for apparent power.,not supported
+40240,VArMax_SF,,sunssf,1,,,,,Scale factor for reactive power.,not supported
+40241,WGra_SF,,sunssf,1,,,,,Scale factor for default ramp rate.,not supported
+40242,PFMin_SF,,sunssf,1,,,,,Scale factor for minimum power factor.,not supported
+40243,MaxRmpRte_SF,,sunssf,1,,,,,Scale factor for maximum ramp percentage.,not supported
+40244,ECPNomHz_SF,,sunssf,1,,,,,Scale factor for nominal frequency.
