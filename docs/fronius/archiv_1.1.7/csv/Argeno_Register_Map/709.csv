@@ -1,0 +1,46 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+41860,ID,709,uint16,1,,,,S,DER low frequency trip model ID.
+41861,L,71,uint16,1,,,,S,DER low frequency trip model length.
+41862,Ena,,enum16,1,,,RW,,DER low frequency trip control enable.,"0: DISABLED
+1: ENABLED"
+41863,AdptCrvReq,,uint16,1,,,RW,,Index of curve points to adopt. First curve index is 1.
+41864,AdptCrvRslt,,enum16,1,,,,,Result of last adopt curve operation.,not supported
+41865,NPt,5,uint16,1,,,,S,Number of curve points supported.
+41866,NCrvSet,1,uint16,1,,,,S,Number of stored curves supported.
+41867,Hz_SF,,sunssf,1,,,,S,Scale factor for curve frequency points.
+41868,Tms_SF,,sunssf,1,,,,S,Scale factor for curve time points.
+41869,ReadOnly,0,enum16,1,,,,S,Curve read-write access.,"0: Read-Write Access
+1: Read-Only Access"
+41870,ActPt,,uint16,1,,,RW,,Number of active points in must trip curve.,MustTrip
+41871,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,MustTrip
+41873,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,MustTrip
+41875,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,MustTrip
+41877,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,MustTrip
+41879,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,MustTrip
+41881,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,MustTrip
+41883,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,MustTrip
+41885,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,MustTrip
+41887,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,MustTrip
+41889,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,MustTrip
+41891,ActPt,,uint16,1,,,RW,,Number of active points in may trip curve.,not supported
+41892,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,not supported
+41894,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41896,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,not supported
+41898,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41900,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,not supported
+41902,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41904,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,not supported
+41906,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41908,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,not supported
+41910,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41912,ActPt,,uint16,1,,,RW,,Number of active points in the momentary cessation curve.,not supported
+41913,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,not supported
+41915,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41917,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,not supported
+41919,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41921,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,not supported
+41923,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41925,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,not supported
+41927,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41929,Hz,,uint32,2,Hz_SF,Hz,RW,,Curve frequency point.,not supported
+41931,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported

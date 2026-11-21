@@ -1,0 +1,323 @@
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERTripHF (710),uint16,,,710
+2,2,1,R,0x03,L,Length of sunspec model DERTripHF (710),uint16,Registers,,263
+3,3,1,RW,"0x03
+0x06
+0x10",Ena,DER high frequency trip control enable.,enum16,,,"0: Disabled
+1: Enabled"
+4,4,1,RW,"0x03
+0x06
+0x10",AdptCrvReq,Index of curve points to adopt. First curve index is 1.,uint16,,,2 to 4
+5,5,1,R,0x03,AdptCrvRslt,Result of last adopt curve operation.,enum16,,,"0: In Progress
+1: Completed
+2: Failed"
+6,6,1,R,0x03,NPt,Number of curve points supported.,uint16,,,5
+7,7,1,R,0x03,NCrvSet,Number of stored curves supported.,uint16,,,4
+8,8,1,R,0x03,Hz_SF,Scale factor for curve frequency points.,sunssf,,,-2
+9,9,1,R,0x03,Tms_SF,Scale factor for curve time points.,sunssf,,,-2
+10,10,1,R,0x03,Crv/1/ReadOnly,Curve read-write access.,enum16,,,1 (R)
+11,11,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+12,13,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+14,15,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+16,17,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+18,19,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+20,21,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+22,23,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+24,25,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+26,27,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+28,29,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+30,31,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+32,32,1,R,0x03,Crv/1/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+33,34,2,R,0x03,Crv/1/MayTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+35,36,2,R,0x03,Crv/1/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+37,38,2,R,0x03,Crv/1/MayTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+39,40,2,R,0x03,Crv/1/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41,42,2,R,0x03,Crv/1/MayTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+43,44,2,R,0x03,Crv/1/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+45,46,2,R,0x03,Crv/1/MayTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+47,48,2,R,0x03,Crv/1/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+49,50,2,R,0x03,Crv/1/MayTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+51,52,2,R,0x03,Crv/1/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+53,53,1,R,0x03,Crv/1/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+54,55,2,R,0x03,Crv/1/MomCess/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+56,57,2,R,0x03,Crv/1/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+58,59,2,R,0x03,Crv/1/MomCess/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+60,61,2,R,0x03,Crv/1/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+62,63,2,R,0x03,Crv/1/MomCess/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+64,65,2,R,0x03,Crv/1/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+66,67,2,R,0x03,Crv/1/MomCess/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+68,69,2,R,0x03,Crv/1/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+70,71,2,R,0x03,Crv/1/MomCess/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+72,73,2,R,0x03,Crv/1/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+74,74,1,R,0x03,Crv/2/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+75,75,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+76,77,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+78,79,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+80,81,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+82,83,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+84,85,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+86,87,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+88,89,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+90,91,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+92,93,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+94,95,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+96,96,1,R,0x03,Crv/2/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+97,98,2,R,0x03,Crv/2/MayTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+99,100,2,R,0x03,Crv/2/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+101,102,2,R,0x03,Crv/2/MayTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+103,104,2,R,0x03,Crv/2/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+105,106,2,R,0x03,Crv/2/MayTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+107,108,2,R,0x03,Crv/2/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+109,110,2,R,0x03,Crv/2/MayTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+111,112,2,R,0x03,Crv/2/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+113,114,2,R,0x03,Crv/2/MayTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+115,116,2,R,0x03,Crv/2/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+117,117,1,R,0x03,Crv/2/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+118,119,2,R,0x03,Crv/2/MomCess/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+120,121,2,R,0x03,Crv/2/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+122,123,2,R,0x03,Crv/2/MomCess/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+124,125,2,R,0x03,Crv/2/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+126,127,2,R,0x03,Crv/2/MomCess/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+128,129,2,R,0x03,Crv/2/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+130,131,2,R,0x03,Crv/2/MomCess/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+132,133,2,R,0x03,Crv/2/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+134,135,2,R,0x03,Crv/2/MomCess/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+136,137,2,R,0x03,Crv/2/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+138,138,1,R,0x03,Crv/3/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+139,139,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+140,141,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+142,143,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+144,145,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+146,147,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+148,149,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+150,151,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+152,153,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+154,155,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+156,157,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+158,159,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+160,160,1,R,0x03,Crv/3/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+161,162,2,R,0x03,Crv/3/MayTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+163,164,2,R,0x03,Crv/3/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+165,166,2,R,0x03,Crv/3/MayTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+167,168,2,R,0x03,Crv/3/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+169,170,2,R,0x03,Crv/3/MayTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+171,172,2,R,0x03,Crv/3/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+173,174,2,R,0x03,Crv/3/MayTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+175,176,2,R,0x03,Crv/3/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+177,178,2,R,0x03,Crv/3/MayTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+179,180,2,R,0x03,Crv/3/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+181,181,1,R,0x03,Crv/3/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+182,183,2,R,0x03,Crv/3/MomCess/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+184,185,2,R,0x03,Crv/3/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+186,187,2,R,0x03,Crv/3/MomCess/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+188,189,2,R,0x03,Crv/3/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+190,191,2,R,0x03,Crv/3/MomCess/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+192,193,2,R,0x03,Crv/3/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+194,195,2,R,0x03,Crv/3/MomCess/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+196,197,2,R,0x03,Crv/3/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+198,199,2,R,0x03,Crv/3/MomCess/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+200,201,2,R,0x03,Crv/3/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+202,202,1,R,0x03,Crv/4/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+203,203,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+204,205,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+206,207,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+208,209,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+210,211,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+212,213,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+214,215,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+216,217,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+218,219,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+220,221,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+222,223,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+224,224,1,R,0x03,Crv/4/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+225,226,2,R,0x03,Crv/4/MayTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+227,228,2,R,0x03,Crv/4/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+229,230,2,R,0x03,Crv/4/MayTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+231,232,2,R,0x03,Crv/4/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+233,234,2,R,0x03,Crv/4/MayTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+235,236,2,R,0x03,Crv/4/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+237,238,2,R,0x03,Crv/4/MayTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+239,240,2,R,0x03,Crv/4/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+241,242,2,R,0x03,Crv/4/MayTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+243,244,2,R,0x03,Crv/4/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+245,245,1,R,0x03,Crv/4/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+246,247,2,R,0x03,Crv/4/MomCess/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+248,249,2,R,0x03,Crv/4/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+250,251,2,R,0x03,Crv/4/MomCess/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+252,253,2,R,0x03,Crv/4/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+254,255,2,R,0x03,Crv/4/MomCess/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+256,257,2,R,0x03,Crv/4/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+258,259,2,R,0x03,Crv/4/MomCess/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+260,261,2,R,0x03,Crv/4/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+262,263,2,R,0x03,Crv/4/MomCess/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+264,265,2,R,0x03,Crv/4/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported

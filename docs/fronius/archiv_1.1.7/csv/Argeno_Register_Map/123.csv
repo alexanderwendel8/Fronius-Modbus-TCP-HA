@@ -1,0 +1,33 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+40291,ID,123,uint16,1,,,,S,Immediate Inverter Controls,"Ref 3: 8.7.1.2, 8.7.2.2, 8.7.3.2"
+40292,L,24,uint16,1,,,,S,Model length
+40293,Conn_WinTms,,uint16,1,,Secs,RW,,Time window for connect/disconnect.,not supported
+40294,Conn_RvrtTms,,uint16,1,,Secs,RW,,Timeout period for connect/disconnect.,not supported
+40295,Conn,,enum16,1,,,RW,,Enumerated valued.  Connection control.,"0: DISCONNECT
+1: CONNECT"
+40296,WMaxLimPct,,uint16,1,WMaxLimPct_SF,% WMax,RW,,Set power output to specified level.
+40297,WMaxLimPct_WinTms,,uint16,1,,Secs,RW,,Time window for power limit change.,not supported
+40298,WMaxLimPct_RvrtTms,,uint16,1,,Secs,RW,,Timeout period for power limit.
+40299,WMaxLimPct_RmpTms,,uint16,1,,Secs,RW,,Ramp time for moving from current setpoint to new setpoint.,not supported
+40300,WMaxLim_Ena,,enum16,1,,,RW,,Enumerated valued.  Throttle enable/disable control.,"0: DISABLED
+1: ENABLED"
+40301,OutPFSet,,int16,1,OutPFSet_SF,cos(),RW,,Set power factor to specific value - cosine of angle.
+40302,OutPFSet_WinTms,,uint16,1,,Secs,RW,,Time window for power factor change.,not supported
+40303,OutPFSet_RvrtTms,,uint16,1,,Secs,RW,,Timeout period for power factor.
+40304,OutPFSet_RmpTms,,uint16,1,,Secs,RW,,Ramp time for moving from current setpoint to new setpoint.,not supported
+40305,OutPFSet_Ena,,enum16,1,,,RW,,Enumerated valued.  Fixed power factor enable/disable control.,"0: DISABLED
+1: ENABLED"
+40306,VArWMaxPct,,int16,1,VArPct_SF,% WMax,RW,,Reactive power in percent of WMax.
+40307,VArMaxPct,,int16,1,VArPct_SF,% VArMax,RW,,Reactive power in percent of VArMax.
+40308,VArAvalPct,,int16,1,VArPct_SF,% VArAval,RW,,Reactive power in percent of VArAval.,not supported
+40309,VArPct_WinTms,,uint16,1,,Secs,RW,,Time window for VAR limit change.,not supported
+40310,VArPct_RvrtTms,,uint16,1,,Secs,RW,,Timeout period for VAR limit.
+40311,VArPct_RmpTms,,uint16,1,,Secs,RW,,Ramp time for moving from current setpoint to new setpoint.,not supported
+40312,VArPct_Mod,,enum16,1,,,RW,,Enumerated value. VAR percent limit mode.,"0: NONE
+1: WMAX
+2: VArMax"
+40313,VArPct_Ena,,enum16,1,,,RW,,Enumerated valued.  Percent limit VAr enable/disable control.,"0: DISABLED
+1: ENABLED"
+40314,WMaxLimPct_SF,,sunssf,1,,,,,Scale factor for power output percent.
+40315,OutPFSet_SF,,sunssf,1,,,,,Scale factor for power factor.
+40316,VArPct_SF,,sunssf,1,,,,,Scale factor for reactive power percent.

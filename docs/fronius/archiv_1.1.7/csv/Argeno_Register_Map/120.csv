@@ -1,0 +1,31 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+40185,ID,120,uint16,1,,,,S,Inverter Controls Nameplate Ratings,"Ref 3: 8.14.3.2, Ref 4: 17"
+40186,L,27,uint16,1,,,,S,Model length
+40187,DERTyp,,enum16,1,,,,,Type of DER device. Default value is 4 to indicate PV device.
+,PV,4
+,PV_STOR,82
+40188,WRtg,,uint16,1,WRtg_SF,W,,,Continuous power output capability of the inverter.
+40189,WRtg_SF,,sunssf,1,,,,,Scale factor
+40190,VARtg,,uint16,1,VARtg_SF,VA,,,Continuous Volt-Ampere capability of the inverter.
+40191,VARtg_SF,,sunssf,1,,,,,Scale factor
+40192,VArRtgQ1,,int16,1,VArRtg_SF,var,,,Continuous VAR capability of the inverter in quadrant 1.
+40193,VArRtgQ2,,int16,1,VArRtg_SF,var,,,Continuous VAR capability of the inverter in quadrant 2.,not supported
+40194,VArRtgQ3,,int16,1,VArRtg_SF,var,,,Continuous VAR capability of the inverter in quadrant 3.,not supported
+40195,VArRtgQ4,,int16,1,VArRtg_SF,var,,,Continuous VAR capability of the inverter in quadrant 4.
+40196,VArRtg_SF,,sunssf,1,,,,,Scale factor
+40197,ARtg,,uint16,1,ARtg_SF,A,,,Maximum RMS AC current level capability of the inverter.,not supported
+40198,ARtg_SF,,sunssf,1,,,,,Scale factor,not supported
+40199,PFRtgQ1,,int16,1,PFRtg_SF,cos(),,,Minimum power factor capability of the inverter in quadrant 1.,EEI sign convention.
+40200,PFRtgQ2,,int16,1,PFRtg_SF,cos(),,,Minimum power factor capability of the inverter in quadrant 2.,not supported
+40201,PFRtgQ3,,int16,1,PFRtg_SF,cos(),,,Minimum power factor capability of the inverter in quadrant 3.,not supported
+40202,PFRtgQ4,,int16,1,PFRtg_SF,cos(),,,Minimum power factor capability of the inverter in quadrant 4.,EEI sign convention.
+40203,PFRtg_SF,,sunssf,1,,,,,Scale factor
+40204,WHRtg,,uint16,1,WHRtg_SF,Wh,,,Nominal energy rating of storage device.,not supported
+40205,WHRtg_SF,,sunssf,1,,,,,Scale factor,not supported
+40206,AhrRtg,,uint16,1,AhrRtg_SF,AH,,,The usable capacity of the battery.  Maximum charge minus minimum charge from a technology capability perspective (Amp-hour capacity rating).,not supported
+40207,AhrRtg_SF,,sunssf,1,,,,,Scale factor for amp-hour rating.,not supported
+40208,MaxChaRte,,uint16,1,MaxChaRte_SF,W,,,Maximum rate of energy transfer into the storage device.,not supported
+40209,MaxChaRte_SF,,sunssf,1,,,,,Scale factor,not supported
+40210,MaxDisChaRte,,uint16,1,MaxDisChaRte_SF,W,,,Maximum rate of energy transfer out of the storage device.,not supported
+40211,MaxDisChaRte_SF,,sunssf,1,,,,,Scale factor,not supported
+40212,Pad,,pad,1,,,,,Pad register.

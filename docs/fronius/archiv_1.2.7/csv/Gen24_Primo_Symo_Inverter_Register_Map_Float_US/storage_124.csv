@@ -1,0 +1,29 @@
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model storage (124),uint16,,,124
+2,2,1,R,0x03,L,Length of sunspec model storage (124),uint16,Registers,,24
+3,3,1,R,0x03,WChaMax,Setpoint for maximum charge.,uint16,W,WChaMax_SF,not supported
+4,4,1,R,0x03,WChaGra,Setpoint for maximum charging rate. Default is MaxChaRte.,uint16,% WChaMax/sec,WChaDisChaGra_SF,not supported
+5,5,1,R,0x03,WDisChaGra,Setpoint for maximum discharge rate. Default is MaxDisChaRte.,uint16,% WChaMax/sec,WChaDisChaGra_SF,not supported
+6,6,1,R,0x03,StorCtl_Mod,Activate hold/discharge/charge storage control mode. Bitfield value.,bitfield16,,,not supported
+7,7,1,R,0x03,VAChaMax,Setpoint for maximum charging VA.,uint16,VA,VAChaMax_SF,not supported
+8,8,1,R,0x03,MinRsvPct,Setpoint for minimum reserve for storage as a percentage of the nominal maximum storage.,uint16,% WChaMax,MinRsvPct_SF,not supported
+9,9,1,R,0x03,ChaState,Currently available energy as a percent of the capacity rating.,uint16,% AhrRtg,ChaState_SF,not supported
+10,10,1,R,0x03,StorAval,State of charge (ChaState) minus storage reserve (MinRsvPct) times capacity rating (AhrRtg).,uint16,AH,StorAval_SF,not supported
+11,11,1,R,0x03,InBatV,Internal battery voltage.,uint16,V,InBatV_SF,not supported
+12,12,1,R,0x03,ChaSt,Charge status of storage device. Enumerated value.,enum16,,,not supported
+13,13,1,R,0x03,OutWRte,Percent of max discharge rate.,int16,% WChaMax,InOutWRte_SF,not supported
+14,14,1,R,0x03,InWRte,Percent of max charging rate.,int16,% WChaMax,InOutWRte_SF,not supported
+15,15,1,R,0x03,InOutWRte_WinTms,Time window for charge/discharge rate change.,uint16,Secs,,not supported
+16,16,1,R,0x03,InOutWRte_RvrtTms,Timeout period for charge/discharge rate.,uint16,Secs,,not supported
+17,17,1,R,0x03,InOutWRte_RmpTms,Ramp time for moving from current setpoint to new setpoint.,uint16,Secs,,not supported
+18,18,1,R,0x03,ChaGriSet,,enum16,,,not supported
+19,19,1,R,0x03,WChaMax_SF,Scale factor for maximum charge.,sunssf,,,not supported
+20,20,1,R,0x03,WChaDisChaGra_SF,Scale factor for maximum charge and discharge rate.,sunssf,,,not supported
+21,21,1,R,0x03,VAChaMax_SF,Scale factor for maximum charging VA.,sunssf,,,not supported
+22,22,1,R,0x03,MinRsvPct_SF,Scale factor for minimum reserve percentage.,sunssf,,,not supported
+23,23,1,R,0x03,ChaState_SF,Scale factor for available energy percent.,sunssf,,,not supported
+24,24,1,R,0x03,StorAval_SF,Scale factor for state of charge.,sunssf,,,not supported
+25,25,1,R,0x03,InBatV_SF,Scale factor for battery voltage.,sunssf,,,not supported
+26,26,1,R,0x03,InOutWRte_SF,Scale factor for percent charge/discharge rate.,sunssf,,,not supported

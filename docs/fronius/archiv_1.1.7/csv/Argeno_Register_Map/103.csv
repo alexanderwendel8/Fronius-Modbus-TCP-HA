@@ -1,0 +1,68 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+40071,ID,103,uint16,1,,,,S,Inverter (Three Phase)
+40072,L,50,uint16,1,,,,S,Model length
+40073,A,,uint16,1,A_SF,A,,,AC Current,Sum of active phases
+40074,AphA,,uint16,1,A_SF,A,,,Phase A Current,Connected Phase
+40075,AphB,,uint16,1,A_SF,A,,,Phase B Current,Connected Phase
+40076,AphC,,uint16,1,A_SF,A,,,Phase C Current,Connected Phase
+40077,A_SF,,sunssf,1
+40078,PPVphAB,,uint16,1,V_SF,V,,,Phase Voltage AB
+40079,PPVphBC,,uint16,1,V_SF,V,,,Phase Voltage BC
+40080,PPVphCA,,uint16,1,V_SF,V,,,Phase Voltage CA
+40081,PhVphA,,uint16,1,V_SF,V,,,Phase Voltage AN
+40082,PhVphB,,uint16,1,V_SF,V,,,Phase Voltage BN
+40083,PhVphC,,uint16,1,V_SF,V,,,Phase Voltage CN
+40084,V_SF,,sunssf,1
+40085,W,,int16,1,W_SF,W,,,AC Power
+40086,W_SF,,sunssf,1
+40087,Hz,,uint16,1,Hz_SF,Hz,,,Line Frequency
+40088,Hz_SF,,sunssf,1
+40089,VA,,int16,1,VA_SF,VA,,,AC Apparent Power
+40090,VA_SF,,sunssf,1
+40091,VAr,,int16,1,VAr_SF,var,,,AC Reactive Power
+40092,VAr_SF,,sunssf,1
+40093,PF,,int16,1,PF_SF,Pct,,,AC Power Factor
+40094,PF_SF,,sunssf,1
+40095,WH,,acc32,2,WH_SF,Wh,,,AC Energy
+40097,WH_SF,,sunssf,1
+40098,DCA,,uint16,1,DCA_SF,A,,,DC Current,not supported
+40099,DCA_SF,,sunssf,1,,,,,,not supported
+40100,DCV,,uint16,1,DCV_SF,V,,,DC Voltage,not supported
+40101,DCV_SF,,sunssf,1,,,,,,not supported
+40102,DCW,,int16,1,DCW_SF,W,,,DC Power
+40103,DCW_SF,,sunssf,1
+40104,TmpCab,,int16,1,Tmp_SF,C,,,Cabinet Temperature
+40105,TmpSnk,,int16,1,Tmp_SF,C,,,Heat Sink Temperature,not supported
+40106,TmpTrns,,int16,1,Tmp_SF,C,,,Transformer Temperature,not supported
+40107,TmpOt,,int16,1,Tmp_SF,C,,,Other Temperature,not supported
+40108,Tmp_SF,,sunssf,1
+40109,St,,enum16,1,,,,,Enumerated value.  Operating state,"1: OFF
+2: SLEEPING
+3: STARTING
+4: MPPT
+5: THROTTLED
+6: SHUTTING_DOWN
+7: FAULT
+8: STANDBY"
+40110,StVnd,,enum16,1,,,,,Vendor specific operating state code
+40111,Evt1,,bitfield32,2,,,,,Bitmask value. Event fields,"0: GROUND_FAULT
+1: DC_OVER_VOLT
+2: AC_DISCONNECT
+3: DC_DISCONNECT
+4: GRID_DISCONNECT
+5: CABINET_OPEN
+6: MANUAL_SHUTDOWN
+7: OVER_TEMP
+8: OVER_FREQUENCY
+9: UNDER_FREQUENCY
+10: AC_OVER_VOLT
+11: AC_UNDER_VOLT
+12: BLOWN_STRING_FUSE
+13: UNDER_TEMP
+14: MEMORY_LOSS
+15: HW_TEST_FAILURE"
+40113,Evt2,,bitfield32,2,,,,,Reserved for future use,not supported
+40115,EvtVnd1,,bitfield32,2,,,,,Vendor defined events,not supported
+40117,EvtVnd2,,bitfield32,2,,,,,Vendor defined events,not supported
+40119,EvtVnd3,,bitfield32,2,,,,,Vendor defined events,not supported
+40121,EvtVnd4,,bitfield32,2,,,,,Vendor defined events,not supported

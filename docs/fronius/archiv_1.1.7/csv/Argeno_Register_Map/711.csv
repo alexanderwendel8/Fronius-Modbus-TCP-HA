@@ -1,0 +1,21 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+42006,ID,711,uint16,1,,,,S,DER Frequency Droop model ID.
+42007,L,22,uint16,1,,,,S,DER Frequency Droop model length.
+42008,Ena,,enum16,1,,,RW,,DER Frequency-Watt (Frequency-Droop) control enable.,"0: DISABLED
+1: ENABLED"
+42009,AdptCtlReq,,uint16,1,,,RW,,Set active control. 0 = No active control.
+42010,AdptCtlRslt,,enum16,1,,,,,Result of last set active control operation.,not supported
+42011,NCtl,1,uint16,1,,,,S,Number of stored controls supported.
+42012,RvrtTms,,uint32,2,,Secs,RW,,Reversion time in seconds.  0 = No reversion time.,not supported
+42014,RvrtRem,,uint32,2,,Secs,,,Reversion time remaining in seconds.,not supported
+42016,RvrtCtl,,uint16,1,,,RW,,Default control after reversion timeout.,not supported
+42017,Db_SF,,sunssf,1,,,,S,Deadband scale factor.
+42018,K_SF,,sunssf,1,,,,S,Frequency change scale factor.
+42019,RspTms_SF,,sunssf,1,,,,S,Open loop response time scale factor.
+42020,DbOf,,uint32,2,Db_SF,Hz,RW,,The deadband value for over-frequency conditions in Hz.
+42022,DbUf,,uint32,2,Db_SF,Hz,RW,,The deadband value for under-frequency conditions in Hz.
+42024,KOf,,uint16,1,K_SF,,RW,,Frequency droop per-unit frequency change for over-frequency conditions corresponding to 1 per-unit power output change.
+42025,KUf,,uint16,1,K_SF,,RW,,Frequency droop per-unit frequency change for under-frequency conditions corresponding to 1 per-unit power output change.
+42026,RspTms,,uint32,2,RspTms_SF,Secs,RW,,The open-loop response time in seconds.
+42028,PMin,,int16,1,,Pct,RW,,"The minimum active power output due to DER prime mover constraints, in percent of the DER active power rating. The valid range is -100 to 100. This setting applies only to the frequency droop control.",not supported
+42029,ReadOnly,,enum16,1,,,,S,Control read-write access.,not supported

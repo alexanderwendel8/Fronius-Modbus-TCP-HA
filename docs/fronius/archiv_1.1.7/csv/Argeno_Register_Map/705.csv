@@ -1,0 +1,147 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+41534,ID,705,uint16,1,,,,S,DER Volt-Var model ID.
+41535,L,133,uint16,1,,,,S,DER Volt-Var model length.
+41536,Ena,,enum16,1,,,RW,,Volt-Var control enable.,"0: DISABLED
+1: ENABLED"
+41537,AdptCrvReq,,uint16,1,,,RW,,Index of curve points to adopt. First curve index is 1.
+41538,AdptCrvRslt,,enum16,1,,,,,Result of last adopt curve operation.,not supported
+41539,NPt,4,uint16,1,,,,S,Number of curve points supported.
+41540,NCrv,10,uint16,1,,,,S,Number of stored curves supported.
+41541,RvrtTms,,uint32,2,,Secs,RW,,Reversion time in seconds.  0 = No reversion time.,not supported
+41543,RvrtRem,,uint32,2,,Secs,,,Reversion time remaining in seconds.,not supported
+41545,RvrtCrv,,uint16,1,,,RW,,Default curve after reversion timeout.,not supported
+41546,V_SF,,sunssf,1,,,,S,Scale factor for curve voltage points.
+41547,DeptRef_SF,,sunssf,1,,,,S,Scale factor for curve var points.
+41548,RspTms_SF,,sunssf,1,,,,S,Open loop response time scale factor.
+41549,ActPt,,uint16,1,,,RW,,Number of active points.
+41550,DeptRef,,enum16,1,,,RW,,Curve dependent reference.,"0: Percent Max Watts
+1: Percent Max Vars
+2: Percent Available Vars
+3: Percent Max Apparent Power"
+41551,Pri,,enum16,1,,,RW,,Power priority.,not supported
+41552,VRef,,uint16,1,V_SF,VNomPct,RW,,Vref adjustment as percentage of nominal voltage.
+41553,VRefAuto,,uint16,1,V_SF,VNomPct,,,Autonomous vref value as a percentage of nominal voltage.,not supported
+41554,VRefAutoEna,,enum16,1,,,RW,,Enable autonomous vref.,"0: DISABLED
+1: ENABLED"
+41555,VRefAutoTms,,uint16,1,,Secs,RW,,Autonomous vref time constant.
+41556,RspTms,,uint32,2,RspTms_SF,Secs,RW,,Open loop response time.
+41558,ReadOnly,,enum16,1,,,,S,Curve read-write access.,not supported
+41559,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41560,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41561,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41562,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41563,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41564,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41565,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41566,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41567,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41568,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41569,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41570,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41571,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41572,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41573,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41574,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41575,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41576,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41577,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41578,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41579,ActPt,,uint16,1,,,RW,,Number of active points.
+41580,DeptRef,,enum16,1,,,RW,,Curve dependent reference.,"0: Percent Max Watts
+1: Percent Max Vars
+2: Percent Available Vars
+3: Percent Max Apparent Power"
+41581,Pri,,enum16,1,,,RW,,Power priority.,not supported
+41582,VRef,,uint16,1,V_SF,VNomPct,RW,,Vref adjustment as percentage of nominal voltage.
+41583,VRefAuto,,uint16,1,V_SF,VNomPct,,,Autonomous vref value as a percentage of nominal voltage.,not supported
+41584,VRefAutoEna,,enum16,1,,,RW,,Enable autonomous vref.,"0: DISABLED
+1: ENABLED"
+41585,VRefAutoTms,,uint16,1,,Secs,RW,,Autonomous vref time constant.
+41586,RspTms,,uint32,2,RspTms_SF,Secs,RW,,Open loop response time.
+41588,ReadOnly,,enum16,1,,,,S,Curve read-write access.,not supported
+41589,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41590,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41591,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41592,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41593,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41594,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41595,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41596,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41597,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41598,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41599,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41600,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41601,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41602,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41603,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41604,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41605,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41606,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41607,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41608,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41609,ActPt,,uint16,1,,,RW,,Number of active points.
+41610,DeptRef,,enum16,1,,,RW,,Curve dependent reference.,"0: Percent Max Watts
+1: Percent Max Vars
+2: Percent Available Vars
+3: Percent Max Apparent Power"
+41611,Pri,,enum16,1,,,RW,,Power priority.,not supported
+41612,VRef,,uint16,1,V_SF,VNomPct,RW,,Vref adjustment as percentage of nominal voltage.
+41613,VRefAuto,,uint16,1,V_SF,VNomPct,,,Autonomous vref value as a percentage of nominal voltage.,not supported
+41614,VRefAutoEna,,enum16,1,,,RW,,Enable autonomous vref.,"0: DISABLED
+1: ENABLED"
+41615,VRefAutoTms,,uint16,1,,Secs,RW,,Autonomous vref time constant.
+41616,RspTms,,uint32,2,RspTms_SF,Secs,RW,,Open loop response time.
+41618,ReadOnly,,enum16,1,,,,S,Curve read-write access.,not supported
+41619,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41620,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41621,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41622,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41623,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41624,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41625,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41626,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41627,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41628,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41629,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41630,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41631,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41632,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41633,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41634,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41635,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41636,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41637,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41638,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41639,ActPt,,uint16,1,,,RW,,Number of active points.
+41640,DeptRef,,enum16,1,,,RW,,Curve dependent reference.,"0: Percent Max Watts
+1: Percent Max Vars
+2: Percent Available Vars
+3: Percent Max Apparent Power"
+41641,Pri,,enum16,1,,,RW,,Power priority.,not supported
+41642,VRef,,uint16,1,V_SF,VNomPct,RW,,Vref adjustment as percentage of nominal voltage.
+41643,VRefAuto,,uint16,1,V_SF,VNomPct,,,Autonomous vref value as a percentage of nominal voltage.,not supported
+41644,VRefAutoEna,,enum16,1,,,RW,,Enable autonomous vref.,"0: DISABLED
+1: ENABLED"
+41645,VRefAutoTms,,uint16,1,,Secs,RW,,Autonomous vref time constant.
+41646,RspTms,,uint32,2,RspTms_SF,Secs,RW,,Open loop response time.
+41648,ReadOnly,,enum16,1,,,,S,Curve read-write access.,not supported
+41649,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41650,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41651,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41652,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41653,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41654,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41655,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41656,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41657,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41658,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41659,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41660,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41661,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41662,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41663,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41664,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41665,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41666,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.
+41667,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41668,Var,,int16,1,DeptRef_SF,DeptRef,RW,,Curve reactive power point as set in DeptRef point.

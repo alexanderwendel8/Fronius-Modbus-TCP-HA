@@ -1,0 +1,10 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Label,Description,Notes
+40003,ID,1,uint16,1,,,,S,Model ID,Common
+40004,L,66,uint16,1,,,,S,Model Length,Model length
+40005,Mn,Fronius,string,16,,,,S,Manufacturer,Well known value registered with SunSpec for compliance,Fronius
+40021,Md,Argeno 125,string,16,,,,S,Model,Manufacturer specific value (32 chars),Argeno 125
+40037,Opt,,string,8,,,,S,Options,Manufacturer specific value (16 chars)
+40045,Vr,,string,8,,,,S,Version,Manufacturer specific value (16 chars)
+40053,SN,,string,16,,,,S,Serial Number,Manufacturer specific value (32 chars)
+40069,DA,1,uint16,1,,,RW,,Device Address,Modbus device address
+40070,Pad,,pad,1,,,,S,,Force even alignment

@@ -1,0 +1,76 @@
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERCapacity (702),uint16,,,702
+2,2,1,R,0x03,L,Length of sunspec model DERCapacity (702),uint16,Registers,,50
+3,3,1,R,0x03,WMaxRtg,Maximum active power rating at unity power factor in watts.,uint16,W,W_SF
+4,4,1,R,0x03,WOvrExtRtg,Active power rating at specified over-excited power factor in watts.,uint16,W,W_SF
+5,5,1,R,0x03,WOvrExtRtgPF,Specified over-excited power factor.,uint16,,PF_SF,0 to 1.0
+6,6,1,R,0x03,WUndExtRtg,Active power rating at specified under-excited power factor in watts.,uint16,W,W_SF
+7,7,1,R,0x03,WUndExtRtgPF,Specified under-excited power factor.,uint16,,PF_SF,0 to 1.0
+8,8,1,R,0x03,VAMaxRtg,Maximum apparent power rating in voltamperes.,uint16,VA,VA_SF
+9,9,1,R,0x03,VarMaxInjRtg,Maximum injected reactive power rating in vars.,uint16,Var,Var_SF
+10,10,1,R,0x03,VarMaxAbsRtg,Maximum absorbed reactive power rating in vars.,uint16,Var,Var_SF
+11,11,1,R,0x03,WChaRteMaxRtg,Maximum active power charge rate in watts.,uint16,W,W_SF,"Battery Available: based on configured battery
+No Battery Available: 0"
+12,12,1,R,0x03,WDisChaRteMaxRtg,Maximum active power discharge rate in watts.,uint16,W,W_SF,"Battery Available: based on configured battery
+No Battery Available: 0"
+13,13,1,R,0x03,VAChaRteMaxRtg,Maximum apparent power charge rate in voltamperes.,uint16,VA,VA_SF,"Battery Available: based on configured battery
+No Battery Available: 0"
+14,14,1,R,0x03,VADisChaRteMaxRtg,Maximum apparent power discharge rate in voltamperes.,uint16,VA,VA_SF,not supported
+15,15,1,R,0x03,VNomRtg,AC voltage nominal rating.,uint16,V,V_SF,"208.0 *
+
+*Actual range may vary based on inverter configuration or country setup"
+16,16,1,R,0x03,VMaxRtg,AC voltage maximum rating.,uint16,V,V_SF,"228.8 *
+
+*Actual range may vary based on inverter configuration or country setup"
+17,17,1,R,0x03,VMinRtg,AC voltage minimum rating.,uint16,V,V_SF,"183.0 *
+
+*Actual range may vary based on inverter configuration or country setup"
+18,18,1,R,0x03,AMaxRtg,AC current maximum rating in amps.,uint16,A,A_SF,not supported
+19,19,1,R,0x03,PFOvrExtRtg,Power factor over-excited rating.,uint16,,PF_SF,not supported
+20,20,1,R,0x03,PFUndExtRtg,Power factor under-excited rating.,uint16,,PF_SF,not supported
+21,21,1,R,0x03,ReactSusceptRtg,Reactive susceptance that remains connected to the Area EPS in the cease to energize and trip state.,uint16,S,S_SF,"6kW: 0.000058
+10kW: 0.001830"
+22,22,1,R,0x03,NorOpCatRtg,Normal operating performance category as specified in IEEE 1547-2018.,enum16,,,1 (Category B)
+23,23,1,R,0x03,AbnOpCatRtg,Abnormal operating performance category as specified in IEEE 1547-2018.,enum16,,,2 (Category III)
+24,25,2,R,0x03,CtrlModes,Supported control mode functions.,bitfield32,,,"Bit 0: Limit Maximum Active Power
+Bit 1: Fixed Active Power
+Bit 2: Fixed Reactive Power
+Bit 3: Fixed Power Factor
+Bit 4: Volt Var Function
+Bit 5: Freq Watt Function
+Bit 6: Dynamic Reactive Current Function
+Bit 7: Low Voltage Trip
+Bit 8: High Voltage Trip
+Bit 9: Watt Var Function
+Bit 10: Volt Watt Function
+Bit 12: Low Frequency Trip
+Bit 13: High Frequency Trip"
+26,26,1,R,0x03,IntIslandCatRtg,Intentional island categories.,bitfield16,,,not supported
+27,27,1,R,0x03,WMax,Maximum active power setting used to adjust maximum active power setting.,uint16,W,W_SF,not supported
+28,28,1,R,0x03,WMaxOvrExt,Active power setting at specified over-excited power factor in watts.,uint16,W,W_SF,not supported
+29,29,1,R,0x03,WOvrExtPF,Specified over-excited power factor.,uint16,,PF_SF,not supported
+30,30,1,R,0x03,WMaxUndExt,Active power setting at specified under-excited power factor in watts.,uint16,W,W_SF,not supported
+31,31,1,R,0x03,WUndExtPF,Specified under-excited power factor.,uint16,,PF_SF,not supported
+32,32,1,R,0x03,VAMax,Maximum apparent power setting used to adjust maximum apparent power rating.,uint16,VA,VA_SF,not supported
+33,33,1,R,0x03,VarMaxInj,Maximum injected reactive power setting used to adjust maximum injected reactive power rating.,uint16,Var,Var_SF,not supported
+34,34,1,R,0x03,VarMaxAbs,Maximum absorbed reactive power setting used to adjust maximum absorbed reactive power rating.,uint16,Var,Var_SF,not supported
+35,35,1,R,0x03,WChaRteMax,Maximum active power charge rate setting used to adjust maximum active power charge rate rating.,uint16,W,W_SF,not supported
+36,36,1,R,0x03,WDisChaRteMax,Maximum active power discharge rate setting used to adjust maximum active power discharge rate rating.,uint16,W,W_SF,not supported
+37,37,1,R,0x03,VAChaRteMax,Maximum apparent power charge rate setting used to adjust maximum apparent power charge rate rating.,uint16,VA,VA_SF,not supported
+38,38,1,R,0x03,VADisChaRteMax,Maximum apparent power discharge rate setting used to adjust maximum apparent power discharge rate rating.,uint16,VA,VA_SF,not supported
+39,39,1,R,0x03,VNom,Nominal AC voltage setting.,uint16,V,V_SF,not supported
+40,40,1,R,0x03,VMax,AC voltage maximum setting used to adjust AC voltage maximum rating.,uint16,V,V_SF,not supported
+41,41,1,R,0x03,VMin,AC voltage minimum setting used to adjust AC voltage minimum rating.,uint16,V,V_SF,not supported
+42,42,1,R,0x03,AMax,Maximum AC current setting used to adjust maximum AC current rating.,uint16,A,A_SF,not supported
+43,43,1,R,0x03,PFOvrExt,Power factor over-excited setting.,uint16,,PF_SF,not supported
+44,44,1,R,0x03,PFUndExt,Power factor under-excited setting.,uint16,,PF_SF,not supported
+45,45,1,R,0x03,IntIslandCat,Intentional island categories.,bitfield16,,,not supported
+46,46,1,R,0x03,W_SF,Active power scale factor.,sunssf,,,0
+47,47,1,R,0x03,PF_SF,Power factor scale factor.,sunssf,,,-2
+48,48,1,R,0x03,VA_SF,Apparent power scale factor.,sunssf,,,0
+49,49,1,R,0x03,Var_SF,Reactive power scale factor.,sunssf,,,0
+50,50,1,R,0x03,V_SF,Voltage scale factor.,sunssf,,,-2
+51,51,1,R,0x03,A_SF,Current scale factor.,sunssf,,,not supported
+52,52,1,R,0x03,S_SF,Susceptance scale factor.,sunssf,,,-6

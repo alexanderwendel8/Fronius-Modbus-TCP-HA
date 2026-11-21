@@ -1,0 +1,93 @@
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERMeasureAC (701),uint16,,,701
+2,2,1,R,0x03,L,Length of sunspec model DERMeasureAC (701),uint16,Registers,,153
+3,3,1,R,0x03,ACType,AC wiring type.,enum16,,,"0: Single Phase
+1: Split Phase"
+4,4,1,R,0x03,St,Operating state of the DER.,enum16,,,"0: Off
+1: On"
+5,5,1,R,0x03,InvSt,Enumerated value.  Inverter state.,enum16,,,"0: Off
+1: Sleeping
+2: Starting
+3: Running
+4: Throttled
+5: Shutting Down
+6: Fault
+7: Standby"
+6,6,1,R,0x03,ConnSt,Grid connection state of the DER.,enum16,,,"0: Disconnected
+1: Connected"
+7,8,2,R,0x03,Alrm,Active alarms for the DER.,bitfield32,,,"Bit 0: Ground Fault
+Bit 2: AC Disconnect Open
+Bit 4: Grid Disconnect
+Bit 8: Frequency Above Limit
+Bit 9: Frequency Under Limit
+Bit 10: AC Voltage Above Limit
+Bit 11: AC Voltage Under Limit
+Bit 15: Hardware Test Failure
+Bit 16: Manufacturer Alarm"
+9,10,2,R,0x03,DERMode,Current operational characteristics of the DER.,bitfield32,,,not supported
+11,11,1,R,0x03,W,Total active power. Active power is positive for DER generation and negative for absorption.,int16,W,W_SF
+12,12,1,R,0x03,VA,Total apparent power.,int16,VA,VA_SF,not supported
+13,13,1,R,0x03,Var,Total reactive power.,int16,Var,Var_SF
+14,14,1,R,0x03,PF,Power factor. The sign of power factor should be the sign of active power.,int16,,PF_SF,not supported
+15,15,1,R,0x03,A,Total AC current.,int16,A,A_SF,not supported
+16,16,1,R,0x03,LLV,Line to line AC voltage as an average of active phases.,uint16,V,V_SF
+17,17,1,R,0x03,LNV,Line to neutral AC voltage as an average of active phases.,uint16,V,V_SF
+18,19,2,R,0x03,Hz,AC frequency.,uint32,Hz,Hz_SF
+20,23,4,R,0x03,TotWhInj,Total active energy injected (Quadrants 1 & 4).,uint64,Wh,TotWh_SF,not supported
+24,27,4,R,0x03,TotWhAbs,Total active energy absorbed (Quadrants 2 & 3).,uint64,Wh,TotWh_SF,not supported
+28,31,4,R,0x03,TotVarhInj,Total reactive energy injected (Quadrants 1 & 2).,uint64,Varh,TotVarh_SF,not supported
+32,35,4,R,0x03,TotVarhAbs,Total reactive energy absorbed (Quadrants 3 & 4).,uint64,Varh,TotVarh_SF,not supported
+36,36,1,R,0x03,TmpAmb,Ambient temperature.,int16,C,Tmp_SF,not supported
+37,37,1,R,0x03,TmpCab,Cabinet temperature.,int16,C,Tmp_SF,not supported
+38,38,1,R,0x03,TmpSnk,Heat sink temperature.,int16,C,Tmp_SF,not supported
+39,39,1,R,0x03,TmpTrns,Transformer temperature.,int16,C,Tmp_SF,not supported
+40,40,1,R,0x03,TmpSw,IGBT/MOSFET temperature.,int16,C,Tmp_SF,not supported
+41,41,1,R,0x03,TmpOt,Other temperature.,int16,C,Tmp_SF,not supported
+42,42,1,R,0x03,WL1,Active power L1.,int16,W,W_SF,not supported
+43,43,1,R,0x03,VAL1,Apparent power L1.,int16,VA,VA_SF,not supported
+44,44,1,R,0x03,VarL1,Reactive power L1.,int16,Var,Var_SF,not supported
+45,45,1,R,0x03,PFL1,Power factor phase L1.,int16,,PF_SF,not supported
+46,46,1,R,0x03,AL1,Current phase L1.,int16,A,A_SF,not supported
+47,47,1,R,0x03,VL1L2,Phase voltage L1-L2.,uint16,V,V_SF
+48,48,1,R,0x03,VL1,Phase voltage L1-N.,uint16,V,V_SF
+49,52,4,R,0x03,TotWhInjL1,Total active energy injected L1.,uint64,Wh,TotWh_SF,not supported
+53,56,4,R,0x03,TotWhAbsL1,Total active energy absorbed L1.,uint64,Wh,TotWh_SF,not supported
+57,60,4,R,0x03,TotVarhInjL1,Total reactive energy injected L1.,uint64,Varh,TotVarh_SF,not supported
+61,64,4,R,0x03,TotVarhAbsL1,Total reactive energy absorbed L1.,uint64,Varh,TotVarh_SF,not supported
+65,65,1,R,0x03,WL2,Active power L2.,int16,W,W_SF,not supported
+66,66,1,R,0x03,VAL2,Apparent power L2.,int16,VA,VA_SF,not supported
+67,67,1,R,0x03,VarL2,Reactive power L2.,int16,Var,Var_SF,not supported
+68,68,1,R,0x03,PFL2,Power factor L2.,int16,,PF_SF,not supported
+69,69,1,R,0x03,AL2,Current L2.,int16,A,A_SF,not supported
+70,70,1,R,0x03,VL2L3,Phase voltage L2-L3.,uint16,V,V_SF,not supported
+71,71,1,R,0x03,VL2,Phase voltage L2-N.,uint16,V,V_SF
+72,75,4,R,0x03,TotWhInjL2,Total active energy injected L2.,uint64,Wh,TotWh_SF,not supported
+76,79,4,R,0x03,TotWhAbsL2,Total active energy absorbed L2.,uint64,Wh,TotWh_SF,not supported
+80,83,4,R,0x03,TotVarhInjL2,Total reactive energy injected L2.,uint64,Varh,TotVarh_SF,not supported
+84,87,4,R,0x03,TotVarhAbsL2,Total reactive energy absorbed L2.,uint64,Varh,TotVarh_SF,not supported
+88,88,1,R,0x03,WL3,Active power L3.,int16,W,W_SF,not supported
+89,89,1,R,0x03,VAL3,Apparent power L3.,int16,VA,VA_SF,not supported
+90,90,1,R,0x03,VarL3,Reactive power L3.,int16,Var,Var_SF,not supported
+91,91,1,R,0x03,PFL3,Power factor L3.,int16,,PF_SF,not supported
+92,92,1,R,0x03,AL3,Current L3.,int16,A,A_SF,not supported
+93,93,1,R,0x03,VL3L1,Phase voltage L3-L1.,uint16,V,V_SF,not supported
+94,94,1,R,0x03,VL3,Phase voltage L3-N.,uint16,V,V_SF,not supported
+95,98,4,R,0x03,TotWhInjL3,Total active energy injected L3.,uint64,Wh,TotWh_SF,not supported
+99,102,4,R,0x03,TotWhAbsL3,Total active energy absorbed L3.,uint64,Wh,TotWh_SF,not supported
+103,106,4,R,0x03,TotVarhInjL3,Total reactive energy injected L3.,uint64,Varh,TotVarh_SF,not supported
+107,110,4,R,0x03,TotVarhAbsL3,Total reactive energy absorbed L3.,uint64,Varh,TotVarh_SF,not supported
+111,111,1,R,0x03,ThrotPct,Throttling in pct of maximum active power.,uint16,Pct,,not supported
+112,113,2,R,0x03,ThrotSrc,Active throttling source.,bitfield32,,,not supported
+114,114,1,R,0x03,A_SF,Current scale factor.,sunssf,,,not supported
+115,115,1,R,0x03,V_SF,Voltage scale factor.,sunssf,,,-2
+116,116,1,R,0x03,Hz_SF,Frequency scale factor.,sunssf,,,-2
+117,117,1,R,0x03,W_SF,Active power scale factor.,sunssf,,,0
+118,118,1,R,0x03,PF_SF,Power factor scale factor.,sunssf,,,not supported
+119,119,1,R,0x03,VA_SF,Apparent power scale factor.,sunssf,,,not supported
+120,120,1,R,0x03,Var_SF,Reactive power scale factor.,sunssf,,,0
+121,121,1,R,0x03,TotWh_SF,Active energy scale factor.,sunssf,,,not supported
+122,122,1,R,0x03,TotVarh_SF,Reactive energy scale factor.,sunssf,,,not supported
+123,123,1,R,0x03,Tmp_SF,Temperature scale factor.,sunssf,,,not supported
+124,155,32,R,0x03,MnAlrmInfo,Manufacturer alarm information. Valid if MANUFACTURER_ALRM indication is active.,string,,,not supported

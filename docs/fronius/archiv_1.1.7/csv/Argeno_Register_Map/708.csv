@@ -1,0 +1,46 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+41802,ID,708,uint16,1,,,,S,DER high voltage trip model ID.
+41803,L,56,uint16,1,,,,S,DER high voltage trip model length.
+41804,Ena,,enum16,1,,,RW,,DER high voltage trip control enable.,"0: DISABLED
+1: ENABLED"
+41805,AdptCrvReq,,uint16,1,,,RW,,Index of curve points to adopt. First curve index is 1.
+41806,AdptCrvRslt,,enum16,1,,,,,Result of last adopt curve operation.,not supported
+41807,NPt,5,uint16,1,,,,S,Number of curve points supported.
+41808,NCrvSet,1,uint16,1,,,,S,Number of stored curves supported.
+41809,V_SF,,sunssf,1,,,,S,Scale factor for curve voltage points.
+41810,Tms_SF,,sunssf,1,,,,S,Scale factor for curve time points.
+41811,ReadOnly,0,enum16,1,,,,S,Curve read-write access.,"0: Read-Write Access
+1: Read-Only Access"
+41812,ActPt,,uint16,1,,,RW,,Number of active points in must trip curve.,MustTrip
+41813,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,MustTrip
+41814,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,MustTrip
+41816,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,MustTrip
+41817,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,MustTrip
+41819,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,MustTrip
+41820,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,MustTrip
+41822,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,MustTrip
+41823,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,MustTrip
+41825,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,MustTrip
+41826,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,MustTrip
+41828,ActPt,,uint16,1,,,RW,,Number of active points in may trip curve.,not supported
+41829,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,not supported
+41830,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41832,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,not supported
+41833,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41835,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,not supported
+41836,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41838,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,not supported
+41839,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41841,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,not supported
+41842,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41844,ActPt,,uint16,1,,,RW,,Number of active points in the momentary cessation curve.,not supported
+41845,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,not supported
+41846,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41848,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,not supported
+41849,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41851,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,not supported
+41852,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41854,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,not supported
+41855,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported
+41857,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.,not supported
+41858,Tms,,uint32,2,Tms_SF,Secs,RW,,Curve time point in seconds.,not supported

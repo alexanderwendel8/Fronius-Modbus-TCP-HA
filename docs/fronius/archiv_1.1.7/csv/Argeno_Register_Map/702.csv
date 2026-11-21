@@ -1,0 +1,68 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+41396,ID,702,uint16,1,,,,S,DER capacity model ID.
+41397,L,50,uint16,1,,,,S,DER capacity model length.
+41398,WMaxRtg,,uint16,1,W_SF,W,,S,Maximum active power rating at unity power factor in watts.
+41399,WOvrExtRtg,,uint16,1,W_SF,W,,S,Active power rating at specified over-excited power factor in watts.
+41400,WOvrExtRtgPF,,uint16,1,PF_SF,,,S,Specified over-excited power factor.
+41401,WUndExtRtg,,uint16,1,W_SF,W,,S,Active power rating at specified under-excited power factor in watts.
+41402,WUndExtRtgPF,,uint16,1,PF_SF,,,S,Specified under-excited power factor.
+41403,VAMaxRtg,,uint16,1,VA_SF,VA,,S,Maximum apparent power rating in voltamperes.
+41404,VarMaxInjRtg,,uint16,1,Var_SF,Var,,S,Maximum injected reactive power rating in vars.
+41405,VarMaxAbsRtg,,uint16,1,Var_SF,Var,,S,Maximum absorbed reactive power rating in vars.
+41406,WChaRteMaxRtg,,uint16,1,W_SF,W,,S,Maximum active power charge rate in watts.
+41407,WDisChaRteMaxRtg,,uint16,1,W_SF,W,,S,Maximum active power discharge rate in watts.
+41408,VAChaRteMaxRtg,,uint16,1,VA_SF,VA,,S,Maximum apparent power charge rate in voltamperes.
+41409,VADisChaRteMaxRtg,,uint16,1,VA_SF,VA,,S,Maximum apparent power discharge rate in voltamperes.
+41410,VNomRtg,,uint16,1,V_SF,V,,S,AC voltage nominal rating.
+41411,VMaxRtg,,uint16,1,V_SF,V,,S,AC voltage maximum rating.
+41412,VMinRtg,,uint16,1,V_SF,V,,S,AC voltage minimum rating.
+41413,AMaxRtg,,uint16,1,A_SF,A,,S,AC current maximum rating in amps.,not supported
+41414,PFOvrExtRtg,,uint16,1,PF_SF,,,S,Power factor over-excited rating.
+41415,PFUndExtRtg,,uint16,1,PF_SF,,,S,Power factor under-excited rating.
+41416,ReactSusceptRtg,,uint16,1,S_SF,S,,S,Reactive susceptance that remains connected to the Area EPS in the cease to energize and trip state.
+41417,NorOpCatRtg,,enum16,1,,,,S,Normal operating performance category as specified in IEEE 1547-2018.,"0: Category A
+1: Category B"
+41418,AbnOpCatRtg,,enum16,1,,,,S,Abnormal operating performance category as specified in IEEE 1547-2018.,"0: Category I
+1: Category II
+2: Category III"
+41419,CtrlModes,,bitfield32,2,,,,S,Supported control mode functions.,"0: Limit Maximum Active Power
+1: Fixed Active Power
+2: Fixed Reactive Power
+3: Fixed Power Factor
+4: Volt-Var Function
+5: Freq-Watt Function
+6: Dynamic Reactive Current Function
+7: Low-Voltage Trip
+8: High-Voltage Trip
+9: Watt-Var Function
+10: Volt-Watt Function
+11: Scheduling
+12: Low-Frequency Trip
+13: High-Frequency Trip"
+41421,IntIslandCatRtg,,bitfield16,1,,,,S,Intentional island categories.,not supported
+41422,WMax,,uint16,1,W_SF,W,RW,,Maximum active power setting used to adjust maximum active power setting.
+41423,WMaxOvrExt,,uint16,1,W_SF,W,RW,,Active power setting at specified over-excited power factor in watts.,not supported
+41424,WOvrExtPF,,uint16,1,PF_SF,,RW,,Specified over-excited power factor.,not supported
+41425,WMaxUndExt,,uint16,1,W_SF,W,RW,,Active power setting at specified under-excited power factor in watts.,not supported
+41426,WUndExtPF,,uint16,1,PF_SF,,RW,,Specified under-excited power factor.,not supported
+41427,VAMax,,uint16,1,VA_SF,VA,RW,,Maximum apparent power setting used to adjust maximum apparent power rating.
+41428,VarMaxInj,,uint16,1,Var_SF,Var,RW,,Maximum injected reactive power setting used to adjust maximum injected reactive power rating.,not supported
+41429,VarMaxAbs,,uint16,1,Var_SF,Var,RW,,Maximum absorbed reactive power setting used to adjust maximum absorbed reactive power rating.,not supported
+41430,WChaRteMax,,uint16,1,W_SF,W,RW,,Maximum active power charge rate setting used to adjust maximum active power charge rate rating.,not supported
+41431,WDisChaRteMax,,uint16,1,W_SF,W,RW,,Maximum active power discharge rate setting used to adjust maximum active power discharge rate rating.,not supported
+41432,VAChaRteMax,,uint16,1,VA_SF,VA,RW,,Maximum apparent power charge rate setting used to adjust maximum apparent power charge rate rating.,not supported
+41433,VADisChaRteMax,,uint16,1,VA_SF,VA,RW,,Maximum apparent power discharge rate setting used to adjust maximum apparent power discharge rate rating.,not supported
+41434,VNom,,uint16,1,V_SF,V,RW,,Nominal AC voltage setting.,not supported
+41435,VMax,,uint16,1,V_SF,V,RW,,AC voltage maximum setting used to adjust AC voltage maximum rating.,not supported
+41436,VMin,,uint16,1,V_SF,V,RW,,AC voltage minimum setting used to adjust AC voltage minimum rating.,not supported
+41437,AMax,,uint16,1,A_SF,A,RW,,Maximum AC current setting used to adjust maximum AC current rating.,not supported
+41438,PFOvrExt,,uint16,1,PF_SF,,RW,,Power factor over-excited setting.,not supported
+41439,PFUndExt,,uint16,1,PF_SF,,RW,,Power factor under-excited setting.,not supported
+41440,IntIslandCat,,bitfield16,1,,,RW,,Intentional island categories.,not supported
+41441,W_SF,,sunssf,1,,,,S,Active power scale factor.
+41442,PF_SF,,sunssf,1,,,,S,Power factor scale factor.
+41443,VA_SF,,sunssf,1,,,,S,Apparent power scale factor.
+41444,Var_SF,,sunssf,1,,,,S,Reactive power scale factor.
+41445,V_SF,,sunssf,1,,,,S,Voltage scale factor.
+41446,A_SF,,sunssf,1,,,,S,Current scale factor.,not supported
+41447,S_SF,,sunssf,1,,,,S,Susceptance scale factor.,not supported

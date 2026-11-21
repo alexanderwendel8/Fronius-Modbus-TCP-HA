@@ -1,0 +1,69 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+41467,ID,704,uint16,1,,,,S,DER AC controls model ID.
+41468,L,65,uint16,1,,,,S,DER AC controls model length.
+41469,PFWInjEna,,enum16,1,,,RW,,Power factor enable when injecting active power.,"0: DISABLED
+1: ENABLED"
+41470,PFWInjEnaRvrt,,enum16,1,,,RW,,Power factor reversion timer when injecting active power enable.,not supported
+41471,PFWInjRvrtTms,,uint32,2,,Secs,RW,,Power factor reversion timer when injecting active power.
+41473,PFWInjRvrtRem,,uint32,2,,Secs,,,Power factor reversion time remaining when injecting active power.,not supported
+41475,PFWAbsEna,,enum16,1,,,RW,,Power factor enable when absorbing active power.,not supported
+41476,PFWAbsEnaRvrt,,enum16,1,,,RW,,Power factor reversion timer when absorbing active power enable.,not supported
+41477,PFWAbsRvrtTms,,uint32,2,,Secs,RW,,Power factor reversion timer when absorbing active power.,not supported
+41479,PFWAbsRvrtRem,,uint32,2,,Secs,,,Power factor reversion time remaining when absorbing active power.,not supported
+41481,WMaxLimPctEna,,enum16,1,,,RW,,Limit maximum active power percent enable.,"0: DISABLED
+1: ENABLED"
+,DISABLED,0,,,,,,,Function is disabled.
+,ENABLED,1,,,,,,,Function is enabled.
+41482,WMaxLimPct,,uint16,1,WMaxLimPct_SF,Pct,RW,,Limit maximum active power percent value.
+41483,WMaxLimPctRvrt,,uint16,1,WMaxLimPct_SF,Pct,RW,,Reversion limit maximum active power percent value.,not supported
+41484,WMaxLimPctEnaRvrt,,enum16,1,,,RW,,Reversion limit maximum active power percent value enable.,not supported
+41485,WMaxLimPctRvrtTms,,uint32,2,,Secs,RW,,Limit maximum active power percent reversion time.
+41487,WMaxLimPctRvrtRem,,uint32,2,,Secs,,,Limit maximum active power percent reversion time remaining.,not supported
+41489,WSetEna,,enum16,1,,,RW,,Set active power enable.,"0: DISABLED
+1: ENABLED"
+,DISABLED,0,,,,,,,Function is disabled.
+,ENABLED,1,,,,,,,Function is enabled.
+41490,WSetMod,,enum16,1,,,RW,,Set active power mode.
+,W_MAX_PCT,0,,,,,,,Active power setting is percentage of maximum active power.
+,WATTS,1,,,,,,,Active power setting is in watts.
+41491,WSet,,int32,2,WSet_SF,W,RW,,Active power setting value in watts.,not supported
+41493,WSetRvrt,,int32,2,WSet_SF,W,RW,,Reversion active power setting value in watts.,not supported
+41495,WSetPct,,int16,1,WSetPct_SF,Pct,RW,,Active power setting value as percent.
+41496,WSetPctRvrt,,int16,1,WSetPct_SF,Pct,RW,,Reversion active power setting value as percent.,not supported
+41497,WSetEnaRvrt,,enum16,1,,,RW,,Reversion active power function enable.,not supported
+41498,WSetRvrtTms,,uint32,2,,Secs,RW,,Set active power reversion time.,not supported
+41500,WSetRvrtRem,,uint32,2,,Secs,,,Set active power reversion time remaining.,not supported
+41502,VarSetEna,,enum16,1,,,RW,,Set reactive power enable.,"0: DISABLED
+1: ENABLED"
+41503,VarSetMod,0,enum16,1,,,RW,,Set reactive power mode.,"0: Reactive Power As Watt Max Pct
+1: Reactive Power As Var Max Pct
+2: Reactive Power As Var Avail Pct
+3: Reactive Power As VA Max Pct
+4: Reactive Power As Vars"
+41504,VarSetPri,,enum16,1,,,RW,,Reactive power priority.,not supported
+41505,VarSet,,int32,2,VarSet_SF,Var,RW,,Reactive power setting value in vars.,not supported
+41507,VarSetRvrt,,int32,2,VarSet_SF,Var,RW,,Reversion reactive power setting value in vars.,not supported
+41509,VarSetPct,,int16,1,VarSetPct_SF,Pct,RW,,Reactive power setting value as percent.
+41510,VarSetPctRvrt,,int16,1,VarSetPct_SF,Pct,RW,,Reversion reactive power setting value as percent.,not supported
+41511,VarSetEnaRvrt,,enum16,1,,,RW,,Reversion reactive power function enable.,not supported
+41512,VarSetRvrtTms,,uint32,2,,Secs,RW,,Set reactive power reversion time.
+41514,VarSetRvrtRem,,uint32,2,,Secs,,,Set reactive power reversion time remaining.,not supported
+41516,WRmp,,uint16,1,,%Max/Sec,RW,,Ramp rate for increases in active power during normal generation.,not supported
+41517,WRmpRef,,enum16,1,,,RW,,Ramp rate reference unit for increases in active power or current during normal generation.,not supported
+41518,VarRmp,,uint16,1,,%Max/Sec,RW,,Ramp rate based on max reactive power per second.,not supported
+41519,AntiIslEna,,enum16,1,,,RW,,Anti-islanding enable.,not supported
+41520,PF_SF,,sunssf,1,,,,S,Power factor scale factor.
+41521,WMaxLimPct_SF,,sunssf,1,,,,S,Limit maximum power scale factor.
+41522,WSet_SF,,sunssf,1,,,,S,Active power scale factor.,not supported
+41523,WSetPct_SF,,sunssf,1,,,,S,Active power pct scale factor.
+41524,VarSet_SF,,sunssf,1,,,,S,Reactive power scale factor.,not supported
+41525,VarSetPct_SF,,sunssf,1,,,,S,Reactive power pct scale factor.
+41526,PF,,uint16,1,PF_SF,,RW,,Power factor setpoint when injecting active power.
+41527,Ext,,enum16,1,,,RW,,Power factor excitation setpoint when injecting active power.,"0: Over-Excited
+1: Under-Excited"
+41528,PF,,uint16,1,PF_SF,,RW,,Reversion power factor setpoint when injecting active power.,not supported
+41529,Ext,,enum16,1,,,RW,,Reversion power factor excitation setpoint when injecting active power.,not supported
+41530,PF,,uint16,1,PF_SF,,RW,,Power factor setpoint when absorbing active power.,not supported
+41531,Ext,,enum16,1,,,RW,,Power factor excitation setpoint when absorbing active power.,not supported
+41532,PF,,uint16,1,PF_SF,,RW,,Reversion power factor setpoint when absorbing active power.,not supported
+41533,Ext,,enum16,1,,,RW,,Reversion power factor excitation setpoint when absorbing active power.,not supported

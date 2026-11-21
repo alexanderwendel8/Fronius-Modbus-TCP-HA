@@ -1,0 +1,2893 @@
+Fronius Gen24 Primo/Symo Inverter Register Map  with Integer+SF Inverter Model for US use
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40001,40002,2,R,0x03,SID,Well-known value. Uniquely identifies this as a SunSpec Modbus Map,uint32,,,0x53756e53 ('SunS')
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40003,40003,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model common (1),uint16,,,1
+40004,40004,1,R,0x03,L,Length of sunspec model common (1),uint16,Registers,,65
+40005,40020,16,R,0x03,Mn,Manufacturer,string,,,Fronius
+40021,40036,16,R,0x03,Md,Device,string,,,"e.g. Primo GEN24 6.0
+Primo GEN24 10.0
+Primo GEN24 10.0 208-240
+Primo GEN24 3.0
+Primo GEN24 3.6
+Primo GEN24 3.8 208-240
+Primo GEN24 4.0
+Primo GEN24 4.6
+Primo GEN24 5.0
+Primo GEN24 6.0 208-240
+Symo GEN24 10.0
+Symo GEN24 3.0
+Symo GEN24 4.0
+Symo GEN24 5.0
+Symo GEN24 6.0
+Symo GEN24 8.0"
+40037,40044,8,R,0x03,Opt,Options,string,,,not supported
+40045,40052,8,R,0x03,Vr,SW version of inverter,string,,,e.g. 1.8.10-0
+40053,40068,16,R,0x03,SN,Serialnumber of the inverter,string,,,e.g. 12345678
+40069,40069,1,R,0x03,DA,Modbus Device Address,uint16,,,1 - 247
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40070,40070,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model inverter (10x),uint16,,,"101, 103"
+40071,40071,1,R,0x03,L,Length of sunspec model inverter (10x),uint16,Registers,,50
+40072,40072,1,R,0x03,A,AC Current,uint16,A,A_SF
+40073,40073,1,R,0x03,AphA,Phase A Current,uint16,A,A_SF
+40074,40074,1,R,0x03,AphB,Phase B Current,uint16,A,A_SF,This data-point is supported/not-supported depending on the grid connection.
+40075,40075,1,R,0x03,AphC,Phase C Current,uint16,A,A_SF,This data-point is supported/not-supported depending on the grid connection.
+40076,40076,1,R,0x03,A_SF,,sunssf,,,"auto-scaled on A, AphA, AphB, AphC"
+40077,40077,1,R,0x03,PPVphAB,Phase Voltage AB,uint16,V,V_SF,This data-point is supported/not-supported depending on the grid connection.
+40078,40078,1,R,0x03,PPVphBC,Phase Voltage BC,uint16,V,V_SF,This data-point is supported/not-supported depending on the grid connection.
+40079,40079,1,R,0x03,PPVphCA,Phase Voltage CA,uint16,V,V_SF,This data-point is supported/not-supported depending on the grid connection.
+40080,40080,1,R,0x03,PhVphA,Phase Voltage AN,uint16,V,V_SF
+40081,40081,1,R,0x03,PhVphB,Phase Voltage BN,uint16,V,V_SF,This data-point is supported/not-supported depending on the grid connection.
+40082,40082,1,R,0x03,PhVphC,Phase Voltage CN,uint16,V,V_SF,This data-point is supported/not-supported depending on the grid connection.
+40083,40083,1,R,0x03,V_SF,,sunssf,,,-1
+40084,40084,1,R,0x03,W,AC Power,int16,W,W_SF
+40085,40085,1,R,0x03,W_SF,,sunssf,,,auto-scaled on W
+40086,40086,1,R,0x03,Hz,Line Frequency,uint16,Hz,Hz_SF
+40087,40087,1,R,0x03,Hz_SF,,sunssf,,,-2
+40088,40088,1,R,0x03,VA,AC Apparent Power,int16,VA,VA_SF
+40089,40089,1,R,0x03,VA_SF,,sunssf,,,auto-scaled on VA
+40090,40090,1,R,0x03,VAr,AC Reactive Power,int16,var,VAr_SF
+40091,40091,1,R,0x03,VAr_SF,,sunssf,,,auto-scaled on VAr
+40092,40092,1,R,0x03,PF,AC Power Factor,int16,Pct,PF_SF
+40093,40093,1,R,0x03,PF_SF,,sunssf,,,-1
+40094,40095,2,R,0x03,WH,AC Energy,acc32,Wh,WH_SF
+40096,40096,1,R,0x03,WH_SF,,sunssf,,,auto-scaled
+40097,40097,1,R,0x03,DCA,DC Current,uint16,A,DCA_SF,"not supported if the inverter has multiple DC inputs
+current of DC-strings can be found in MPPT model 160"
+40098,40098,1,R,0x03,DCA_SF,,sunssf,,,not supported
+40099,40099,1,R,0x03,DCV,DC Voltage,uint16,V,DCV_SF,"not supported if the inverter has multiple DC inputs
+current of DC-strings can be found in MPPT model 160"
+40100,40100,1,R,0x03,DCV_SF,,sunssf,,,not supported
+40101,40101,1,R,0x03,DCW,DC Power,int16,W,DCW_SF
+40102,40102,1,R,0x03,DCW_SF,,sunssf,,,auto-scaled on DCW
+40103,40103,1,R,0x03,TmpCab,Cabinet Temperature,int16,C,Tmp_SF
+40104,40104,1,R,0x03,TmpSnk,Heat Sink Temperature,int16,C,Tmp_SF,not supported
+40105,40105,1,R,0x03,TmpTrns,Transformer Temperature,int16,C,Tmp_SF,not supported
+40106,40106,1,R,0x03,TmpOt,Other Temperature,int16,C,Tmp_SF,not supported
+40107,40107,1,R,0x03,Tmp_SF,,sunssf,,,-1
+40108,40108,1,R,0x03,St,Enumerated value.  Operating state,enum16,,,see all states in our Modbus TCP & RTU user manual under SunSpec Operating Codes
+40109,40109,1,R,0x03,StVnd,Vendor specific operating state code,enum16,,,"same as register ""St"""
+40110,40111,2,R,0x03,Evt1,Bitmask value. Event fields,bitfield32
+40112,40113,2,R,0x03,Evt2,Reserved for future use,bitfield32
+40114,40115,2,R,0x03,EvtVnd1,Vendor defined events,bitfield32,,,"""Customer"" event severity level bitfield
+  bit 0 -> Error
+  bit 1 -> Warning
+  bit 2 -> Info
+
+This bitfield is composed as a superposition for the severity-levels of all currently active events on view level ""Customer"".
+If a bit is set it means that currently there is at least one active event with this severity level.
+Multiple bits can be set at once indicating several active events with different severity-levels."
+40116,40117,2,R,0x03,EvtVnd2,Vendor defined events,bitfield32,,,"""Technician"" event severity level bitfield
+  bit 0 -> Error
+  bit 1 -> Warning
+  bit 2 -> Info
+
+This bitfield is composed as a superposition for the severity-levels of all currently active events on view level ""Technician""
+If a bit is set it means that currently there is at least one active event with this severity level.
+Multiple bits can be set at once indicating several active events with different severity-levels.
+
+View level ""Technician"" is a superset of view level ""Customer"". This means that all events visible
+for view level ""Customer"" are also visible for view level ""Technician""."
+40118,40119,2,R,0x03,EvtVnd3,Vendor defined events,bitfield32,,,not supported
+40120,40121,2,R,0x03,EvtVnd4,Vendor defined events,bitfield32,,,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40122,40122,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model nameplate (120),uint16,,,120
+40123,40123,1,R,0x03,L,Length of sunspec model nameplate (120),uint16,Registers,,26
+40124,40124,1,R,0x03,DERTyp,Type of DER device. Default value is 4 to indicate PV device.,enum16,,,4 (PV)
+40125,40125,1,R,0x03,WRtg,Continuous power output capability of the inverter.,uint16,W,WRtg_SF
+40126,40126,1,R,0x03,WRtg_SF,Scale factor,sunssf,,,1
+40127,40127,1,R,0x03,VARtg,Continuous Volt-Ampere capability of the inverter.,uint16,VA,VARtg_SF
+40128,40128,1,R,0x03,VARtg_SF,Scale factor,sunssf,,,1
+40129,40129,1,R,0x03,VArRtgQ1,Continuous VAR capability of the inverter in quadrant 1.,int16,var,VArRtg_SF
+40130,40130,1,R,0x03,VArRtgQ2,Continuous VAR capability of the inverter in quadrant 2.,int16,var,VArRtg_SF,0.0
+40131,40131,1,R,0x03,VArRtgQ3,Continuous VAR capability of the inverter in quadrant 3.,int16,var,VArRtg_SF,0.0
+40132,40132,1,R,0x03,VArRtgQ4,Continuous VAR capability of the inverter in quadrant 4.,int16,var,VArRtg_SF
+40133,40133,1,R,0x03,VArRtg_SF,Scale factor,sunssf,,,1
+40134,40134,1,R,0x03,ARtg,Maximum RMS AC current level capability of the inverter.,uint16,A,ARtg_SF
+40135,40135,1,R,0x03,ARtg_SF,Scale factor,sunssf,,,-2
+40136,40136,1,R,0x03,PFRtgQ1,Minimum power factor capability of the inverter in quadrant 1.,int16,cos(),PFRtg_SF,from -1.0 to 0
+40137,40137,1,R,0x03,PFRtgQ2,Minimum power factor capability of the inverter in quadrant 2.,int16,cos(),PFRtg_SF,1.0
+40138,40138,1,R,0x03,PFRtgQ3,Minimum power factor capability of the inverter in quadrant 3.,int16,cos(),PFRtg_SF,1.0
+40139,40139,1,R,0x03,PFRtgQ4,Minimum power factor capability of the inverter in quadrant 4.,int16,cos(),PFRtg_SF,from 0 to 1.0
+40140,40140,1,R,0x03,PFRtg_SF,Scale factor,sunssf,,,-3
+40141,40141,1,R,0x03,WHRtg,Nominal energy rating of storage device.,uint16,Wh,WHRtg_SF,not supported
+40142,40142,1,R,0x03,WHRtg_SF,Scale factor,sunssf,,,not supported
+40143,40143,1,R,0x03,AhrRtg,The usable capacity of the battery.  Maximum charge minus minimum charge from a technology capability perspective (Amp-hour capacity rating).,uint16,AH,AhrRtg_SF,not supported
+40144,40144,1,R,0x03,AhrRtg_SF,Scale factor for amp-hour rating.,sunssf,,,not supported
+40145,40145,1,R,0x03,MaxChaRte,Maximum rate of energy transfer into the storage device.,uint16,W,MaxChaRte_SF,not supported
+40146,40146,1,R,0x03,MaxChaRte_SF,Scale factor,sunssf,,,not supported
+40147,40147,1,R,0x03,MaxDisChaRte,Maximum rate of energy transfer out of the storage device.,uint16,W,MaxDisChaRte_SF,not supported
+40148,40148,1,R,0x03,MaxDisChaRte_SF,Scale factor,sunssf,,,not supported
+40149,40149,1,R,0x03,Pad,Pad register.,pad
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40150,40150,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model settings (121),uint16,,,121
+40151,40151,1,R,0x03,L,Length of sunspec model settings (121),uint16,Registers,,30
+40152,40152,1,R,0x03,WMax,Setting for maximum power output. Default to WRtg.,uint16,W,WMax_SF
+40153,40153,1,R,0x03,VRef,Voltage at the PCC.,uint16,V,VRef_SF
+40154,40154,1,R,0x03,VRefOfs,Offset  from PCC to inverter.,int16,V,VRefOfs_SF,0.0
+40155,40155,1,R,0x03,VMax,Setpoint for maximum voltage.,uint16,V,VMinMax_SF,not supported
+40156,40156,1,R,0x03,VMin,Setpoint for minimum voltage.,uint16,V,VMinMax_SF,not supported
+40157,40157,1,R,0x03,VAMax,Setpoint for maximum apparent power. Default to VARtg.,uint16,VA,VAMax_SF,same as nameplate.VARtg
+40158,40158,1,R,0x03,VArMaxQ1,Setting for maximum reactive power in quadrant 1. Default to VArRtgQ1.,int16,var,VArMax_SF,same as nameplate.VArRtgQ1
+40159,40159,1,R,0x03,VArMaxQ2,Setting for maximum reactive power in quadrant 2. Default to VArRtgQ2.,int16,var,VArMax_SF,same as nameplate.VArRtgQ2
+40160,40160,1,R,0x03,VArMaxQ3,Setting for maximum reactive power in quadrant 3. Default to VArRtgQ3.,int16,var,VArMax_SF,same as nameplate.VArRtgQ3
+40161,40161,1,R,0x03,VArMaxQ4,Setting for maximum reactive power in quadrant 4. Default to VArRtgQ4.,int16,var,VArMax_SF,same as nameplate.VArRtgQ4
+40162,40162,1,R,0x03,WGra,Default ramp rate of change of active power due to command or internal action.,uint16,% WMax/sec,WGra_SF,not supported
+40163,40163,1,R,0x03,PFMinQ1,Setpoint for minimum power factor value in quadrant 1. Default to PFRtgQ1.,int16,cos(),PFMin_SF,same as nameplate.PFRtgQ1
+40164,40164,1,R,0x03,PFMinQ2,Setpoint for minimum power factor value in quadrant 2. Default to PFRtgQ2.,int16,cos(),PFMin_SF,same as nameplate.PFRtgQ2
+40165,40165,1,R,0x03,PFMinQ3,Setpoint for minimum power factor value in quadrant 3. Default to PFRtgQ3.,int16,cos(),PFMin_SF,same as nameplate.PFRtgQ3
+40166,40166,1,R,0x03,PFMinQ4,Setpoint for minimum power factor value in quadrant 4. Default to PFRtgQ4.,int16,cos(),PFMin_SF,same as nameplate.PFRtgQ4
+40167,40167,1,R,0x03,VArAct,VAR action on change between charging and discharging: 1=switch 2=maintain VAR characterization.,enum16,,,not supported
+40168,40168,1,R,0x03,ClcTotVA,Calculation method for total apparent power. 1=vector 2=arithmetic.,enum16,,,not supported
+40169,40169,1,R,0x03,MaxRmpRte,Setpoint for maximum ramp rate as percentage of nominal maximum ramp rate. This setting will limit the rate that watts delivery to the grid can increase or decrease in response to intermittent PV generation.,uint16,% WGra,MaxRmpRte_SF,not supported
+40170,40170,1,R,0x03,ECPNomHz,Setpoint for nominal frequency at the ECP.,uint16,Hz,ECPNomHz_SF,not supported
+40171,40171,1,R,0x03,ConnPh,Identity of connected phase for single phase inverters. A=1 B=2 C=3.,enum16,,,not supported
+40172,40172,1,R,0x03,WMax_SF,Scale factor for real power.,sunssf,,,1
+40173,40173,1,R,0x03,VRef_SF,Scale factor for voltage at the PCC.,sunssf,,,0
+40174,40174,1,R,0x03,VRefOfs_SF,Scale factor for offset voltage.,sunssf,,,0
+40175,40175,1,R,0x03,VMinMax_SF,Scale factor for min/max voltages.,sunssf,,,not supported
+40176,40176,1,R,0x03,VAMax_SF,Scale factor for apparent power.,sunssf,,,1
+40177,40177,1,R,0x03,VArMax_SF,Scale factor for reactive power.,sunssf,,,1
+40178,40178,1,R,0x03,WGra_SF,Scale factor for default ramp rate.,sunssf,,,not supported
+40179,40179,1,R,0x03,PFMin_SF,Scale factor for minimum power factor.,sunssf,,,-3
+40180,40180,1,R,0x03,MaxRmpRte_SF,Scale factor for maximum ramp percentage.,sunssf,,,not supported
+40181,40181,1,R,0x03,ECPNomHz_SF,Scale factor for nominal frequency.,sunssf,,,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40182,40182,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model status (122),uint16,,,122
+40183,40183,1,R,0x03,L,Length of sunspec model status (122),uint16,Registers,,44
+40184,40184,1,R,0x03,PVConn,PV inverter present/available status. Enumerated value.,bitfield16,,,"Bit 0: Connected 
+Bit 1: Available
+Bit 2: Operating"
+40185,40185,1,R,0x03,StorConn,Storage inverter present/available status. Enumerated value.,bitfield16,,,"Bit 0: Connected 
+Bit 1: Available
+Bit 2: Operating"
+40186,40186,1,R,0x03,ECPConn,ECP connection status: disconnected=0  connected=1.,bitfield16,,,Bit 0: Connected
+40187,40190,4,R,0x03,ActWh,AC lifetime active (real) energy output.,acc64,Wh
+40191,40194,4,R,0x03,ActVAh,AC lifetime apparent energy output.,acc64,VAh,,not supported
+40195,40198,4,R,0x03,ActVArhQ1,AC lifetime reactive energy output in quadrant 1.,acc64,varh,,not supported
+40199,40202,4,R,0x03,ActVArhQ2,AC lifetime reactive energy output in quadrant 2.,acc64,varh,,not supported
+40203,40206,4,R,0x03,ActVArhQ3,AC lifetime negative energy output  in quadrant 3.,acc64,varh,,not supported
+40207,40210,4,R,0x03,ActVArhQ4,AC lifetime reactive energy output  in quadrant 4.,acc64,varh,,not supported
+40211,40211,1,R,0x03,VArAval,Amount of VARs available without impacting watts output.,int16,var,VArAval_SF,not supported
+40212,40212,1,R,0x03,VArAval_SF,Scale factor for available VARs.,sunssf,,,not supported
+40213,40213,1,R,0x03,WAval,Amount of Watts available.,uint16,var,WAval_SF,not supported
+40214,40214,1,R,0x03,WAval_SF,Scale factor for available Watts.,sunssf,,,not supported
+40215,40216,2,R,0x03,StSetLimMsk,Bit Mask indicating setpoint limit(s) reached.,bitfield32,,,not supported
+40217,40218,2,R,0x03,StActCtl,Bit Mask indicating which inverter controls are currently active.,bitfield32,,,"bits are set according to enabled controls in immediate controls model 123
+
+Bit 0: FixedW 
+Bit 1: FixedVAR
+Bit 2: FixedPF"
+40219,40222,4,R,0x03,TmSrc,Source of time synchronization.,string,,,RTC
+40223,40224,2,R,0x03,Tms,Seconds since 01-01-2000 00:00 UTC,uint32,Secs
+40225,40225,1,R,0x03,RtSt,Bit Mask indicating active ride-through status.,bitfield16,,,not supported
+40226,40226,1,R,0x03,Ris,Isolation resistance.,uint16,ohms,Ris_SF
+40227,40227,1,R,0x03,Ris_SF,Scale factor for isolation resistance.,sunssf,,,auto-scaled on Ris
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40228,40228,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model controls (123),uint16,,,123
+40229,40229,1,R,0x03,L,Length of sunspec model controls (123),uint16,Registers,,24
+40230,40230,1,RW,"0x03
+0x06
+0x10",Conn_WinTms,Time window for connect/disconnect.,uint16,Secs,,0 - 300
+40231,40231,1,RW,"0x03
+0x06
+0x10",Conn_RvrtTms,Timeout period for connect/disconnect.,uint16,Secs,,0 - 28800
+40232,40232,1,RW,"0x03
+0x06
+0x10",Conn,Enumerated valued.  Connection control.,enum16,,,"0: Disconnected
+1: Connected"
+40233,40233,1,RW,"0x03
+0x06
+0x10",WMaxLimPct,Set power output to specified level.,uint16,% WMax,WMaxLimPct_SF,0% - 100%
+40234,40234,1,RW,"0x03
+0x06
+0x10",WMaxLimPct_WinTms,Time window for power limit change.,uint16,Secs,,0 - 300
+40235,40235,1,RW,"0x03
+0x06
+0x10",WMaxLimPct_RvrtTms,Timeout period for power limit.,uint16,Secs,,0 - 28800
+40236,40236,1,RW,"0x03
+0x06
+0x10",WMaxLimPct_RmpTms,Ramp time for moving from current setpoint to new setpoint.,uint16,Secs,,0 - 65534
+40237,40237,1,RW,"0x03
+0x06
+0x10",WMaxLim_Ena,Enumerated valued.  Throttle enable/disable control.,enum16,,,"0: Disabled
+1: Enabled"
+40238,40238,1,RW,"0x03
+0x06
+0x10",OutPFSet,Set power factor to specific value - cosine of angle.,int16,cos(),OutPFSet_SF,"from -1.0 to nameplate.PFRtgQ1
+and
+from nameplate.PFRtgQ4 to +1.0"
+40239,40239,1,RW,"0x03
+0x06
+0x10",OutPFSet_WinTms,Time window for power factor change.,uint16,Secs,,0 - 300
+40240,40240,1,RW,"0x03
+0x06
+0x10",OutPFSet_RvrtTms,Timeout period for power factor.,uint16,Secs,,0 - 28800
+40241,40241,1,RW,"0x03
+0x06
+0x10",OutPFSet_RmpTms,Ramp time for moving from current setpoint to new setpoint.,uint16,Secs,,0 - 65534
+40242,40242,1,RW,"0x03
+0x06
+0x10",OutPFSet_Ena,Enumerated valued.  Fixed power factor enable/disable control.,enum16,,,"0: Disabled
+1: Enabled"
+40243,40243,1,R,0x03,VArWMaxPct,Reactive power in percent of WMax.,int16,% WMax,VArPct_SF,not supported
+40244,40244,1,RW,"0x03
+0x06
+0x10",VArMaxPct,Reactive power in percent of VArMax.,int16,% VArMax,VArPct_SF,-100% - +100%
+40245,40245,1,R,0x03,VArAvalPct,Reactive power in percent of VArAval.,int16,% VArAval,VArPct_SF,not supported
+40246,40246,1,RW,"0x03
+0x06
+0x10",VArPct_WinTms,Time window for VAR limit change.,uint16,Secs,,0 - 300
+40247,40247,1,RW,"0x03
+0x06
+0x10",VArPct_RvrtTms,Timeout period for VAR limit.,uint16,Secs,,0 - 28800
+40248,40248,1,RW,"0x03
+0x06
+0x10",VArPct_RmpTms,Ramp time for moving from current setpoint to new setpoint.,uint16,Secs,,0 - 65534
+40249,40249,1,R,0x03,VArPct_Mod,Enumerated value. VAR percent limit mode.,enum16,,,2: VAR limit as a % of VArMax
+40250,40250,1,RW,"0x03
+0x06
+0x10",VArPct_Ena,Enumerated valued.  Percent limit VAr enable/disable control.,enum16,,,"0: Disabled
+1: Enabled"
+40251,40251,1,R,0x03,WMaxLimPct_SF,Scale factor for power output percent.,sunssf,,,-2
+40252,40252,1,R,0x03,OutPFSet_SF,Scale factor for power factor.,sunssf,,,-3
+40253,40253,1,R,0x03,VArPct_SF,Scale factor for reactive power percent.,sunssf,,,0
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40254,40254,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model mppt (160),uint16,,,160
+40255,40255,1,R,0x03,L,Length of sunspec model mppt (160),uint16,Registers,,88
+40256,40256,1,R,0x03,DCA_SF,Current Scale Factor,sunssf,,,auto-scaled on DCA 1-N
+40257,40257,1,R,0x03,DCV_SF,Voltage Scale Factor,sunssf,,,auto-scaled on DCV 1-N
+40258,40258,1,R,0x03,DCW_SF,Power Scale Factor,sunssf,,,auto-scaled on DCW 1-N
+40259,40259,1,R,0x03,DCWH_SF,Energy Scale Factor,sunssf,,,auto-scaled on DCWH 1-N
+40260,40261,2,R,0x03,Evt,Global Events,bitfield32,,,not supported
+40262,40262,1,R,0x03,N,Number of Modules,count,,,4
+40263,40263,1,R,0x03,TmsPer,Timestamp Period,uint16,,,not supported
+40264,40264,1,R,0x03,module/1/ID,Input ID,uint16,,,1
+40265,40272,8,R,0x03,module/1/IDStr,Input ID Sting,string,,,'MPPT 1'
+40273,40273,1,R,0x03,module/1/DCA,DC Current,uint16,A,DCA_SF
+40274,40274,1,R,0x03,module/1/DCV,DC Voltage,uint16,V,DCV_SF
+40275,40275,1,R,0x03,module/1/DCW,DC Power,uint16,W,DCW_SF
+40276,40277,2,R,0x03,module/1/DCWH,Lifetime Energy,acc32,Wh,DCWH_SF
+40278,40279,2,R,0x03,module/1/Tms,Timestamp,uint32,Secs,,number of seconds since Jan 1st 2000 00:00 am
+40280,40280,1,R,0x03,module/1/Tmp,Temperature,int16,C,,not supported
+40281,40281,1,R,0x03,module/1/DCSt,Operating State,enum16,,,not supported
+40282,40283,2,R,0x03,module/1/DCEvt,Module Events,bitfield32,,,not supported
+40284,40284,1,R,0x03,module/2/ID,Input ID,uint16,,,2
+40285,40292,8,R,0x03,module/2/IDStr,Input ID Sting,string,,,'MPPT 2'
+40293,40293,1,R,0x03,module/2/DCA,DC Current,uint16,A,DCA_SF
+40294,40294,1,R,0x03,module/2/DCV,DC Voltage,uint16,V,DCV_SF
+40295,40295,1,R,0x03,module/2/DCW,DC Power,uint16,W,DCW_SF
+40296,40297,2,R,0x03,module/2/DCWH,Lifetime Energy,acc32,Wh,DCWH_SF
+40298,40299,2,R,0x03,module/2/Tms,Timestamp,uint32,Secs,,number of seconds since Jan 1st 2000 00:00 am
+40300,40300,1,R,0x03,module/2/Tmp,Temperature,int16,C,,not supported
+40301,40301,1,R,0x03,module/2/DCSt,Operating State,enum16,,,not supported
+40302,40303,2,R,0x03,module/2/DCEvt,Module Events,bitfield32,,,not supported
+40304,40304,1,R,0x03,module/3/ID,Input ID,uint16,,,not supported
+40305,40312,8,R,0x03,module/3/IDStr,Input ID Sting,string,,,not supported
+40313,40313,1,R,0x03,module/3/DCA,DC Current,uint16,A,DCA_SF,not supported
+40314,40314,1,R,0x03,module/3/DCV,DC Voltage,uint16,V,DCV_SF,not supported
+40315,40315,1,R,0x03,module/3/DCW,DC Power,uint16,W,DCW_SF,not supported
+40316,40317,2,R,0x03,module/3/DCWH,Lifetime Energy,acc32,Wh,DCWH_SF,not supported
+40318,40319,2,R,0x03,module/3/Tms,Timestamp,uint32,Secs,,not supported
+40320,40320,1,R,0x03,module/3/Tmp,Temperature,int16,C,,not supported
+40321,40321,1,R,0x03,module/3/DCSt,Operating State,enum16,,,not supported
+40322,40323,2,R,0x03,module/3/DCEvt,Module Events,bitfield32,,,not supported
+40324,40324,1,R,0x03,module/4/ID,Input ID,uint16,,,not supported
+40325,40332,8,R,0x03,module/4/IDStr,Input ID Sting,string,,,not supported
+40333,40333,1,R,0x03,module/4/DCA,DC Current,uint16,A,DCA_SF,not supported
+40334,40334,1,R,0x03,module/4/DCV,DC Voltage,uint16,V,DCV_SF,not supported
+40335,40335,1,R,0x03,module/4/DCW,DC Power,uint16,W,DCW_SF,not supported
+40336,40337,2,R,0x03,module/4/DCWH,Lifetime Energy,acc32,Wh,DCWH_SF,not supported
+40338,40339,2,R,0x03,module/4/Tms,Timestamp,uint32,Secs,,not supported
+40340,40340,1,R,0x03,module/4/Tmp,Temperature,int16,C,,not supported
+40341,40341,1,R,0x03,module/4/DCSt,Operating State,enum16,,,not supported
+40342,40343,2,R,0x03,module/4/DCEvt,Module Events,bitfield32,,,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40344,40344,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model storage (124),uint16,,,124
+40345,40345,1,R,0x03,L,Length of sunspec model storage (124),uint16,Registers,,24
+40346,40346,1,R,0x03,WChaMax,Setpoint for maximum charge.,uint16,W,WChaMax_SF,not supported
+40347,40347,1,R,0x03,WChaGra,Setpoint for maximum charging rate. Default is MaxChaRte.,uint16,% WChaMax/sec,WChaDisChaGra_SF,not supported
+40348,40348,1,R,0x03,WDisChaGra,Setpoint for maximum discharge rate. Default is MaxDisChaRte.,uint16,% WChaMax/sec,WChaDisChaGra_SF,not supported
+40349,40349,1,R,0x03,StorCtl_Mod,Activate hold/discharge/charge storage control mode. Bitfield value.,bitfield16,,,not supported
+40350,40350,1,R,0x03,VAChaMax,Setpoint for maximum charging VA.,uint16,VA,VAChaMax_SF,not supported
+40351,40351,1,R,0x03,MinRsvPct,Setpoint for minimum reserve for storage as a percentage of the nominal maximum storage.,uint16,% WChaMax,MinRsvPct_SF,not supported
+40352,40352,1,R,0x03,ChaState,Currently available energy as a percent of the capacity rating.,uint16,% AhrRtg,ChaState_SF,not supported
+40353,40353,1,R,0x03,StorAval,State of charge (ChaState) minus storage reserve (MinRsvPct) times capacity rating (AhrRtg).,uint16,AH,StorAval_SF,not supported
+40354,40354,1,R,0x03,InBatV,Internal battery voltage.,uint16,V,InBatV_SF,not supported
+40355,40355,1,R,0x03,ChaSt,Charge status of storage device. Enumerated value.,enum16,,,not supported
+40356,40356,1,R,0x03,OutWRte,Percent of max discharge rate.,int16,% WChaMax,InOutWRte_SF,not supported
+40357,40357,1,R,0x03,InWRte,Percent of max charging rate.,int16,% WChaMax,InOutWRte_SF,not supported
+40358,40358,1,R,0x03,InOutWRte_WinTms,Time window for charge/discharge rate change.,uint16,Secs,,not supported
+40359,40359,1,R,0x03,InOutWRte_RvrtTms,Timeout period for charge/discharge rate.,uint16,Secs,,not supported
+40360,40360,1,R,0x03,InOutWRte_RmpTms,Ramp time for moving from current setpoint to new setpoint.,uint16,Secs,,not supported
+40361,40361,1,R,0x03,ChaGriSet,,enum16,,,not supported
+40362,40362,1,R,0x03,WChaMax_SF,Scale factor for maximum charge.,sunssf,,,not supported
+40363,40363,1,R,0x03,WChaDisChaGra_SF,Scale factor for maximum charge and discharge rate.,sunssf,,,not supported
+40364,40364,1,R,0x03,VAChaMax_SF,Scale factor for maximum charging VA.,sunssf,,,not supported
+40365,40365,1,R,0x03,MinRsvPct_SF,Scale factor for minimum reserve percentage.,sunssf,,,not supported
+40366,40366,1,R,0x03,ChaState_SF,Scale factor for available energy percent.,sunssf,,,not supported
+40367,40367,1,R,0x03,StorAval_SF,Scale factor for state of charge.,sunssf,,,not supported
+40368,40368,1,R,0x03,InBatV_SF,Scale factor for battery voltage.,sunssf,,,not supported
+40369,40369,1,R,0x03,InOutWRte_SF,Scale factor for percent charge/discharge rate.,sunssf,,,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40370,40370,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERMeasureAC (701),uint16,,,701
+40371,40371,1,R,0x03,L,Length of sunspec model DERMeasureAC (701),uint16,Registers,,153
+40372,40372,1,R,0x03,ACType,AC wiring type.,enum16,,,"0: Single Phase
+1: Split Phase"
+40373,40373,1,R,0x03,St,Operating state of the DER.,enum16,,,"0: Off
+1: On"
+40374,40374,1,R,0x03,InvSt,Enumerated value.  Inverter state.,enum16,,,"0: Off
+1: Sleeping
+2: Starting
+3: Running
+4: Throttled
+5: Shutting Down
+6: Fault
+7: Standby"
+40375,40375,1,R,0x03,ConnSt,Grid connection state of the DER.,enum16,,,"0: Disconnected
+1: Connected"
+40376,40377,2,R,0x03,Alrm,Active alarms for the DER.,bitfield32,,,"Bit 0: Ground Fault
+Bit 2: AC Disconnect Open
+Bit 4: Grid Disconnect
+Bit 8: Frequency Above Limit
+Bit 9: Frequency Under Limit
+Bit 10: AC Voltage Above Limit
+Bit 11: AC Voltage Under Limit
+Bit 15: Hardware Test Failure
+Bit 16: Manufacturer Alarm"
+40378,40379,2,R,0x03,DERMode,Current operational characteristics of the DER.,bitfield32,,,not supported
+40380,40380,1,R,0x03,W,Total active power. Active power is positive for DER generation and negative for absorption.,int16,W,W_SF
+40381,40381,1,R,0x03,VA,Total apparent power.,int16,VA,VA_SF,not supported
+40382,40382,1,R,0x03,Var,Total reactive power.,int16,Var,Var_SF
+40383,40383,1,R,0x03,PF,Power factor. The sign of power factor should be the sign of active power.,int16,,PF_SF,not supported
+40384,40384,1,R,0x03,A,Total AC current.,int16,A,A_SF,not supported
+40385,40385,1,R,0x03,LLV,Line to line AC voltage as an average of active phases.,uint16,V,V_SF
+40386,40386,1,R,0x03,LNV,Line to neutral AC voltage as an average of active phases.,uint16,V,V_SF
+40387,40388,2,R,0x03,Hz,AC frequency.,uint32,Hz,Hz_SF
+40389,40392,4,R,0x03,TotWhInj,Total active energy injected (Quadrants 1 & 4).,uint64,Wh,TotWh_SF,not supported
+40393,40396,4,R,0x03,TotWhAbs,Total active energy absorbed (Quadrants 2 & 3).,uint64,Wh,TotWh_SF,not supported
+40397,40400,4,R,0x03,TotVarhInj,Total reactive energy injected (Quadrants 1 & 2).,uint64,Varh,TotVarh_SF,not supported
+40401,40404,4,R,0x03,TotVarhAbs,Total reactive energy absorbed (Quadrants 3 & 4).,uint64,Varh,TotVarh_SF,not supported
+40405,40405,1,R,0x03,TmpAmb,Ambient temperature.,int16,C,Tmp_SF,not supported
+40406,40406,1,R,0x03,TmpCab,Cabinet temperature.,int16,C,Tmp_SF,not supported
+40407,40407,1,R,0x03,TmpSnk,Heat sink temperature.,int16,C,Tmp_SF,not supported
+40408,40408,1,R,0x03,TmpTrns,Transformer temperature.,int16,C,Tmp_SF,not supported
+40409,40409,1,R,0x03,TmpSw,IGBT/MOSFET temperature.,int16,C,Tmp_SF,not supported
+40410,40410,1,R,0x03,TmpOt,Other temperature.,int16,C,Tmp_SF,not supported
+40411,40411,1,R,0x03,WL1,Active power L1.,int16,W,W_SF,not supported
+40412,40412,1,R,0x03,VAL1,Apparent power L1.,int16,VA,VA_SF,not supported
+40413,40413,1,R,0x03,VarL1,Reactive power L1.,int16,Var,Var_SF,not supported
+40414,40414,1,R,0x03,PFL1,Power factor phase L1.,int16,,PF_SF,not supported
+40415,40415,1,R,0x03,AL1,Current phase L1.,int16,A,A_SF,not supported
+40416,40416,1,R,0x03,VL1L2,Phase voltage L1-L2.,uint16,V,V_SF
+40417,40417,1,R,0x03,VL1,Phase voltage L1-N.,uint16,V,V_SF
+40418,40421,4,R,0x03,TotWhInjL1,Total active energy injected L1.,uint64,Wh,TotWh_SF,not supported
+40422,40425,4,R,0x03,TotWhAbsL1,Total active energy absorbed L1.,uint64,Wh,TotWh_SF,not supported
+40426,40429,4,R,0x03,TotVarhInjL1,Total reactive energy injected L1.,uint64,Varh,TotVarh_SF,not supported
+40430,40433,4,R,0x03,TotVarhAbsL1,Total reactive energy absorbed L1.,uint64,Varh,TotVarh_SF,not supported
+40434,40434,1,R,0x03,WL2,Active power L2.,int16,W,W_SF,not supported
+40435,40435,1,R,0x03,VAL2,Apparent power L2.,int16,VA,VA_SF,not supported
+40436,40436,1,R,0x03,VarL2,Reactive power L2.,int16,Var,Var_SF,not supported
+40437,40437,1,R,0x03,PFL2,Power factor L2.,int16,,PF_SF,not supported
+40438,40438,1,R,0x03,AL2,Current L2.,int16,A,A_SF,not supported
+40439,40439,1,R,0x03,VL2L3,Phase voltage L2-L3.,uint16,V,V_SF,not supported
+40440,40440,1,R,0x03,VL2,Phase voltage L2-N.,uint16,V,V_SF
+40441,40444,4,R,0x03,TotWhInjL2,Total active energy injected L2.,uint64,Wh,TotWh_SF,not supported
+40445,40448,4,R,0x03,TotWhAbsL2,Total active energy absorbed L2.,uint64,Wh,TotWh_SF,not supported
+40449,40452,4,R,0x03,TotVarhInjL2,Total reactive energy injected L2.,uint64,Varh,TotVarh_SF,not supported
+40453,40456,4,R,0x03,TotVarhAbsL2,Total reactive energy absorbed L2.,uint64,Varh,TotVarh_SF,not supported
+40457,40457,1,R,0x03,WL3,Active power L3.,int16,W,W_SF,not supported
+40458,40458,1,R,0x03,VAL3,Apparent power L3.,int16,VA,VA_SF,not supported
+40459,40459,1,R,0x03,VarL3,Reactive power L3.,int16,Var,Var_SF,not supported
+40460,40460,1,R,0x03,PFL3,Power factor L3.,int16,,PF_SF,not supported
+40461,40461,1,R,0x03,AL3,Current L3.,int16,A,A_SF,not supported
+40462,40462,1,R,0x03,VL3L1,Phase voltage L3-L1.,uint16,V,V_SF,not supported
+40463,40463,1,R,0x03,VL3,Phase voltage L3-N.,uint16,V,V_SF,not supported
+40464,40467,4,R,0x03,TotWhInjL3,Total active energy injected L3.,uint64,Wh,TotWh_SF,not supported
+40468,40471,4,R,0x03,TotWhAbsL3,Total active energy absorbed L3.,uint64,Wh,TotWh_SF,not supported
+40472,40475,4,R,0x03,TotVarhInjL3,Total reactive energy injected L3.,uint64,Varh,TotVarh_SF,not supported
+40476,40479,4,R,0x03,TotVarhAbsL3,Total reactive energy absorbed L3.,uint64,Varh,TotVarh_SF,not supported
+40480,40480,1,R,0x03,ThrotPct,Throttling in pct of maximum active power.,uint16,Pct,,not supported
+40481,40482,2,R,0x03,ThrotSrc,Active throttling source.,bitfield32,,,not supported
+40483,40483,1,R,0x03,A_SF,Current scale factor.,sunssf,,,not supported
+40484,40484,1,R,0x03,V_SF,Voltage scale factor.,sunssf,,,-2
+40485,40485,1,R,0x03,Hz_SF,Frequency scale factor.,sunssf,,,-2
+40486,40486,1,R,0x03,W_SF,Active power scale factor.,sunssf,,,0
+40487,40487,1,R,0x03,PF_SF,Power factor scale factor.,sunssf,,,not supported
+40488,40488,1,R,0x03,VA_SF,Apparent power scale factor.,sunssf,,,not supported
+40489,40489,1,R,0x03,Var_SF,Reactive power scale factor.,sunssf,,,0
+40490,40490,1,R,0x03,TotWh_SF,Active energy scale factor.,sunssf,,,not supported
+40491,40491,1,R,0x03,TotVarh_SF,Reactive energy scale factor.,sunssf,,,not supported
+40492,40492,1,R,0x03,Tmp_SF,Temperature scale factor.,sunssf,,,not supported
+40493,40524,32,R,0x03,MnAlrmInfo,Manufacturer alarm information. Valid if MANUFACTURER_ALRM indication is active.,string,,,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40525,40525,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERCapacity (702),uint16,,,702
+40526,40526,1,R,0x03,L,Length of sunspec model DERCapacity (702),uint16,Registers,,50
+40527,40527,1,R,0x03,WMaxRtg,Maximum active power rating at unity power factor in watts.,uint16,W,W_SF
+40528,40528,1,R,0x03,WOvrExtRtg,Active power rating at specified over-excited power factor in watts.,uint16,W,W_SF
+40529,40529,1,R,0x03,WOvrExtRtgPF,Specified over-excited power factor.,uint16,,PF_SF,0 to 1.0
+40530,40530,1,R,0x03,WUndExtRtg,Active power rating at specified under-excited power factor in watts.,uint16,W,W_SF
+40531,40531,1,R,0x03,WUndExtRtgPF,Specified under-excited power factor.,uint16,,PF_SF,0 to 1.0
+40532,40532,1,R,0x03,VAMaxRtg,Maximum apparent power rating in voltamperes.,uint16,VA,VA_SF
+40533,40533,1,R,0x03,VarMaxInjRtg,Maximum injected reactive power rating in vars.,uint16,Var,Var_SF
+40534,40534,1,R,0x03,VarMaxAbsRtg,Maximum absorbed reactive power rating in vars.,uint16,Var,Var_SF
+40535,40535,1,R,0x03,WChaRteMaxRtg,Maximum active power charge rate in watts.,uint16,W,W_SF,"Battery Available: based on configured battery
+No Battery Available: 0"
+40536,40536,1,R,0x03,WDisChaRteMaxRtg,Maximum active power discharge rate in watts.,uint16,W,W_SF,"Battery Available: based on configured battery
+No Battery Available: 0"
+40537,40537,1,R,0x03,VAChaRteMaxRtg,Maximum apparent power charge rate in voltamperes.,uint16,VA,VA_SF,"Battery Available: based on configured battery
+No Battery Available: 0"
+40538,40538,1,R,0x03,VADisChaRteMaxRtg,Maximum apparent power discharge rate in voltamperes.,uint16,VA,VA_SF,not supported
+40539,40539,1,R,0x03,VNomRtg,AC voltage nominal rating.,uint16,V,V_SF,"208.0 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40540,40540,1,R,0x03,VMaxRtg,AC voltage maximum rating.,uint16,V,V_SF,"228.8 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40541,40541,1,R,0x03,VMinRtg,AC voltage minimum rating.,uint16,V,V_SF,"183.0 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40542,40542,1,R,0x03,AMaxRtg,AC current maximum rating in amps.,uint16,A,A_SF,not supported
+40543,40543,1,R,0x03,PFOvrExtRtg,Power factor over-excited rating.,uint16,,PF_SF,not supported
+40544,40544,1,R,0x03,PFUndExtRtg,Power factor under-excited rating.,uint16,,PF_SF,not supported
+40545,40545,1,R,0x03,ReactSusceptRtg,Reactive susceptance that remains connected to the Area EPS in the cease to energize and trip state.,uint16,S,S_SF,"6kW: 0.000058
+10kW: 0.001830"
+40546,40546,1,R,0x03,NorOpCatRtg,Normal operating performance category as specified in IEEE 1547-2018.,enum16,,,1 (Category B)
+40547,40547,1,R,0x03,AbnOpCatRtg,Abnormal operating performance category as specified in IEEE 1547-2018.,enum16,,,2 (Category III)
+40548,40549,2,R,0x03,CtrlModes,Supported control mode functions.,bitfield32,,,"Bit 0: Limit Maximum Active Power
+Bit 1: Fixed Active Power
+Bit 2: Fixed Reactive Power
+Bit 3: Fixed Power Factor
+Bit 4: Volt Var Function
+Bit 5: Freq Watt Function
+Bit 6: Dynamic Reactive Current Function
+Bit 7: Low Voltage Trip
+Bit 8: High Voltage Trip
+Bit 9: Watt Var Function
+Bit 10: Volt Watt Function
+Bit 12: Low Frequency Trip
+Bit 13: High Frequency Trip"
+40550,40550,1,R,0x03,IntIslandCatRtg,Intentional island categories.,bitfield16,,,not supported
+40551,40551,1,R,0x03,WMax,Maximum active power setting used to adjust maximum active power setting.,uint16,W,W_SF,not supported
+40552,40552,1,R,0x03,WMaxOvrExt,Active power setting at specified over-excited power factor in watts.,uint16,W,W_SF,not supported
+40553,40553,1,R,0x03,WOvrExtPF,Specified over-excited power factor.,uint16,,PF_SF,not supported
+40554,40554,1,R,0x03,WMaxUndExt,Active power setting at specified under-excited power factor in watts.,uint16,W,W_SF,not supported
+40555,40555,1,R,0x03,WUndExtPF,Specified under-excited power factor.,uint16,,PF_SF,not supported
+40556,40556,1,R,0x03,VAMax,Maximum apparent power setting used to adjust maximum apparent power rating.,uint16,VA,VA_SF,not supported
+40557,40557,1,R,0x03,VarMaxInj,Maximum injected reactive power setting used to adjust maximum injected reactive power rating.,uint16,Var,Var_SF,not supported
+40558,40558,1,R,0x03,VarMaxAbs,Maximum absorbed reactive power setting used to adjust maximum absorbed reactive power rating.,uint16,Var,Var_SF,not supported
+40559,40559,1,R,0x03,WChaRteMax,Maximum active power charge rate setting used to adjust maximum active power charge rate rating.,uint16,W,W_SF,not supported
+40560,40560,1,R,0x03,WDisChaRteMax,Maximum active power discharge rate setting used to adjust maximum active power discharge rate rating.,uint16,W,W_SF,not supported
+40561,40561,1,R,0x03,VAChaRteMax,Maximum apparent power charge rate setting used to adjust maximum apparent power charge rate rating.,uint16,VA,VA_SF,not supported
+40562,40562,1,R,0x03,VADisChaRteMax,Maximum apparent power discharge rate setting used to adjust maximum apparent power discharge rate rating.,uint16,VA,VA_SF,not supported
+40563,40563,1,R,0x03,VNom,Nominal AC voltage setting.,uint16,V,V_SF,not supported
+40564,40564,1,R,0x03,VMax,AC voltage maximum setting used to adjust AC voltage maximum rating.,uint16,V,V_SF,not supported
+40565,40565,1,R,0x03,VMin,AC voltage minimum setting used to adjust AC voltage minimum rating.,uint16,V,V_SF,not supported
+40566,40566,1,R,0x03,AMax,Maximum AC current setting used to adjust maximum AC current rating.,uint16,A,A_SF,not supported
+40567,40567,1,R,0x03,PFOvrExt,Power factor over-excited setting.,uint16,,PF_SF,not supported
+40568,40568,1,R,0x03,PFUndExt,Power factor under-excited setting.,uint16,,PF_SF,not supported
+40569,40569,1,R,0x03,IntIslandCat,Intentional island categories.,bitfield16,,,not supported
+40570,40570,1,R,0x03,W_SF,Active power scale factor.,sunssf,,,0
+40571,40571,1,R,0x03,PF_SF,Power factor scale factor.,sunssf,,,-2
+40572,40572,1,R,0x03,VA_SF,Apparent power scale factor.,sunssf,,,0
+40573,40573,1,R,0x03,Var_SF,Reactive power scale factor.,sunssf,,,0
+40574,40574,1,R,0x03,V_SF,Voltage scale factor.,sunssf,,,-2
+40575,40575,1,R,0x03,A_SF,Current scale factor.,sunssf,,,not supported
+40576,40576,1,R,0x03,S_SF,Susceptance scale factor.,sunssf,,,-6
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40577,40577,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DEREnterService (703),uint16,,,703
+40578,40578,1,R,0x03,L,Length of sunspec model DEREnterService (703),uint16,Registers,,17
+40579,40579,1,RW,"0x03
+0x06
+0x10",ES,Permit enter service.,enum16,,,"0: Disabled
+1: Enabled"
+40580,40580,1,RW,"0x03
+0x06
+0x10",ESVHi,Enter service voltage high threshold as percent of normal voltage.,uint16,Pct,V_SF,"0% to 149.51 % *
+
+*Actual range may vary based on inverter configuration or country setup"
+40581,40581,1,RW,"0x03
+0x06
+0x10",ESVLo,Enter service voltage low threshold as percent of normal voltage.,uint16,Pct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40582,40583,2,RW,"0x03
+0x06
+0x10",ESHzHi,Enter service frequency high threshold.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40584,40585,2,RW,"0x03
+0x06
+0x10",ESHzLo,Enter service frequency low threshold.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40586,40587,2,RW,"0x03
+0x06
+0x10",ESDlyTms,Enter service delay time in seconds.,uint32,Secs,,"0 to 900 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40588,40589,2,R,0x03,ESRndTms,Enter service random delay in seconds.,uint32,Secs,,not supported
+40590,40591,2,RW,"0x03
+0x06
+0x10",ESRmpTms,Enter service ramp time in seconds.,uint32,Secs,,"1 to 100000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40592,40593,2,R,0x03,ESDlyRemTms,Enter service delay time remaining in seconds.,uint32,Secs,,not supported
+40594,40594,1,R,0x03,V_SF,Voltage percentage scale factor.,sunssf,,,-2
+40595,40595,1,R,0x03,Hz_SF,Frequency scale factor.,sunssf,,,-2
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40596,40596,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERCtlAC (704),uint16,,,704
+40597,40597,1,R,0x03,L,Length of sunspec model DERCtlAC (704),uint16,Registers,,65
+40598,40598,1,RW,"0x03
+0x06
+0x10",PFWInjEna,Power factor enable when injecting active power.,enum16,,,"0: Disabled
+1: Enabled"
+40599,40599,1,RW,"0x03
+0x06
+0x10",PFWInjEnaRvrt,Power factor reversion timer when injecting active power enable.,enum16,,,"0: Disabled
+1: Enabled"
+40600,40601,2,RW,"0x03
+0x06
+0x10",PFWInjRvrtTms,Power factor reversion timer when injecting active power.,uint32,Secs,,0 to 4294967294
+40602,40603,2,R,0x03,PFWInjRvrtRem,Power factor reversion time remaining when injecting active power.,uint32,Secs,,0 to 4294967294
+40604,40604,1,R,0x03,PFWAbsEna,Power factor enable when absorbing active power.,enum16,,,not supported
+40605,40605,1,R,0x03,PFWAbsEnaRvrt,Power factor reversion timer when absorbing active power enable.,enum16,,,not supported
+40606,40607,2,R,0x03,PFWAbsRvrtTms,Power factor reversion timer when absorbing active power.,uint32,Secs,,not supported
+40608,40609,2,R,0x03,PFWAbsRvrtRem,Power factor reversion time remaining when absorbing active power.,uint32,Secs,,not supported
+40610,40610,1,RW,"0x03
+0x06
+0x10",WMaxLimPctEna,Limit maximum active power percent enable.,enum16,,,"0: Disabled
+1: Enabled"
+40611,40611,1,RW,"0x03
+0x06
+0x10",WMaxLimPct,Limit maximum active power percent value.,uint16,Pct,WMaxLimPct_SF,0% to 100%
+40612,40612,1,RW,"0x03
+0x06
+0x10",WMaxLimPctRvrt,Reversion limit maximum active power percent value.,uint16,Pct,WMaxLimPct_SF,0% to 100%
+40613,40613,1,RW,"0x03
+0x06
+0x10",WMaxLimPctEnaRvrt,Reversion limit maximum active power percent value enable.,enum16,,,"0: Disabled
+1: Enabled"
+40614,40615,2,RW,"0x03
+0x06
+0x10",WMaxLimPctRvrtTms,Limit maximum active power percent reversion time.,uint32,Secs,,0 to 4294967294
+40616,40617,2,R,0x03,WMaxLimPctRvrtRem,Limit maximum active power percent reversion time remaining.,uint32,Secs,,0 to 4294967294
+40618,40618,1,R,0x03,WSetEna,Set active power enable.,enum16,,,not supported
+40619,40619,1,R,0x03,WSetMod,Set active power mode.,enum16,,,not supported
+40620,40621,2,R,0x03,WSet,Active power setting value in watts.,int32,W,WSet_SF,not supported
+40622,40623,2,R,0x03,WSetRvrt,Reversion active power setting value in watts.,int32,W,WSet_SF,not supported
+40624,40624,1,R,0x03,WSetPct,Active power setting value as percent.,int16,Pct,WSetPct_SF,not supported
+40625,40625,1,R,0x03,WSetPctRvrt,Reversion active power setting value as percent.,int16,Pct,WSetPct_SF,not supported
+40626,40626,1,R,0x03,WSetEnaRvrt,Reversion active power function enable.,enum16,,,not supported
+40627,40628,2,R,0x03,WSetRvrtTms,Set active power reversion time.,uint32,Secs,,not supported
+40629,40630,2,R,0x03,WSetRvrtRem,Set active power reversion time remaining.,uint32,Secs,,not supported
+40631,40631,1,RW,"0x03
+0x06
+0x10",VarSetEna,Set reactive power enable.,enum16,,,"0: Disabled
+1: Enabled"
+40632,40632,1,RW,"0x03
+0x06
+0x10",VarSetMod,Set reactive power mode.,enum16,,,0 to 3
+40633,40633,1,RW,"0x03
+0x06
+0x10",VarSetPri,Reactive power priority.,enum16,,,1 (Reactive)
+40634,40635,2,R,0x03,VarSet,Reactive power setting value in vars.,int32,Var,VarSet_SF,not supported
+40636,40637,2,R,0x03,VarSetRvrt,Reversion reactive power setting value in vars.,int32,Var,VarSet_SF,not supported
+40638,40638,1,RW,"0x03
+0x06
+0x10",VarSetPct,Reactive power setting value as percent.,int16,Pct,VarSetPct_SF,-100% to 100%
+40639,40639,1,RW,"0x03
+0x06
+0x10",VarSetPctRvrt,Reversion reactive power setting value as percent.,int16,Pct,VarSetPct_SF,-100% to 100%
+40640,40640,1,RW,"0x03
+0x06
+0x10",VarSetEnaRvrt,Reversion reactive power function enable.,enum16,,,"0: Disabled
+1: Enabled"
+40641,40642,2,RW,"0x03
+0x06
+0x10",VarSetRvrtTms,Set reactive power reversion time.,uint32,Secs,,0 to 4294967294
+40643,40644,2,R,0x03,VarSetRvrtRem,Set reactive power reversion time remaining.,uint32,Secs,,0 to 4294967294
+40645,40645,1,R,0x03,WRmp,Ramp rate for increases in active power during normal generation.,uint16,%Max/Sec,,not supported
+40646,40646,1,R,0x03,WRmpRef,Ramp rate reference unit for increases in active power or current during normal generation.,enum16,,,not supported
+40647,40647,1,R,0x03,VarRmp,Ramp rate based on max reactive power per second.,uint16,%Max/Sec,,not supported
+40648,40648,1,R,0x03,AntiIslEna,Anti-islanding enable.,enum16,,,not supported
+40649,40649,1,R,0x03,PF_SF,Power factor scale factor.,sunssf,,,-2
+40650,40650,1,R,0x03,WMaxLimPct_SF,Limit maximum power scale factor.,sunssf,,,-2
+40651,40651,1,R,0x03,WSet_SF,Active power scale factor.,sunssf,,,not supported
+40652,40652,1,R,0x03,WSetPct_SF,Active power pct scale factor.,sunssf,,,not supported
+40653,40653,1,R,0x03,VarSet_SF,Reactive power scale factor.,sunssf,,,not supported
+40654,40654,1,R,0x03,VarSetPct_SF,Reactive power pct scale factor.,sunssf,,,-2
+40655,40655,1,RW,"0x03
+0x06
+0x10",PFWInj/PF,Power factor setpoint when injecting active power.,uint16,,PF_SF,"0.8 to 1 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40656,40656,1,RW,"0x03
+0x06
+0x10",PFWInj/Ext,Power factor excitation setpoint when injecting active power.,enum16,,,"0: Over Excited
+1: Under Excited"
+40657,40657,1,RW,"0x03
+0x06
+0x10",PFWInjRvrt/PF,Reversion power factor setpoint when injecting active power.,uint16,,PF_SF,"0.8 to 1 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40658,40658,1,RW,"0x03
+0x06
+0x10",PFWInjRvrt/Ext,Reversion power factor excitation setpoint when injecting active power.,enum16,,,"0: Over Excited
+1: Under Excited"
+40659,40659,1,R,0x03,PFWAbs/PF,Power factor setpoint when absorbing active power.,uint16,,PF_SF,not supported
+40660,40660,1,R,0x03,PFWAbs/Ext,Power factor excitation setpoint when absorbing active power.,enum16,,,not supported
+40661,40661,1,R,0x03,PFWAbsRvrt/PF,Reversion power factor setpoint when absorbing active power.,uint16,,PF_SF,not supported
+40662,40662,1,R,0x03,PFWAbsRvrt/Ext,Reversion power factor excitation setpoint when absorbing active power.,enum16,,,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40663,40663,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERVoltVar (705),uint16,,,705
+40664,40664,1,R,0x03,L,Length of sunspec model DERVoltVar (705),uint16,Registers,,85
+40665,40665,1,RW,"0x03
+0x06
+0x10",Ena,Volt-Var control enable.,enum16,,,"0: Disabled
+1: Enabled"
+40666,40666,1,RW,"0x03
+0x06
+0x10",AdptCrvReq,Index of curve points to adopt. First curve index is 1.,uint16,,,2 to 4
+40667,40667,1,R,0x03,AdptCrvRslt,Result of last adopt curve operation.,enum16,,,"0: In Progress
+1: Completed
+2: Failed"
+40668,40668,1,R,0x03,NPt,Number of curve points supported.,uint16,,,4
+40669,40669,1,R,0x03,NCrv,Number of stored curves supported.,uint16,,,4
+40670,40671,2,RW,"0x03
+0x06
+0x10",RvrtTms,Reversion time in seconds.  0 = No reversion time.,uint32,Secs,,0 to 4294967294
+40672,40673,2,R,0x03,RvrtRem,Reversion time remaining in seconds.,uint32,Secs,,0 to 4294967294
+40674,40674,1,RW,"0x03
+0x06
+0x10",RvrtCrv,Default curve after reversion timeout.,uint16,,,2 to 4
+40675,40675,1,R,0x03,V_SF,Scale factor for curve voltage points.,sunssf,,,-2
+40676,40676,1,R,0x03,DeptRef_SF,Scale factor for curve var points.,sunssf,,,-2
+40677,40677,1,R,0x03,RspTms_SF,Open loop response time scale factor.,sunssf,,,-3
+40678,40678,1,RW,"0x03
+0x06
+0x10",Crv/1/ActPt,Number of active points.,uint16,,,4
+40679,40679,1,RW,"0x03
+0x06
+0x10",Crv/1/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+40680,40680,1,RW,"0x03
+0x06
+0x10",Crv/1/Pri,Power priority.,enum16,,,1
+40681,40681,1,RW,"0x03
+0x06
+0x10",Crv/1/VRef,Vref adjustment as percentage of nominal voltage.,uint16,VRefPct,V_SF,"95 to 105 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40682,40682,1,R,0x03,Crv/1/VRefAuto,Autonomous vref value as a percentage of nominal voltage.,uint16,VRefPct,V_SF,not supported
+40683,40683,1,RW,"0x03
+0x06
+0x10",Crv/1/VRefAutoEna,Enable autonomous vref.,enum16,,,"0: Disabled
+1: Enabled"
+40684,40684,1,RW,"0x03
+0x06
+0x10",Crv/1/VRefAutoTms,Autonomous vref time constant.,uint16,Secs,,"299 to 11500 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40685,40686,2,RW,"0x03
+0x06
+0x10",Crv/1/RspTms,Open loop response time.,uint32,Secs,RspTms_SF,"0.023 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40687,40687,1,R,0x03,Crv/1/ReadOnly,Curve read-write access.,enum16,,,1 (R)
+40688,40688,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40689,40689,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40690,40690,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40691,40691,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40692,40692,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40693,40693,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40694,40694,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40695,40695,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40696,40696,1,RW,"0x03
+0x06
+0x10",Crv/2/ActPt,Number of active points.,uint16,,,4
+40697,40697,1,RW,"0x03
+0x06
+0x10",Crv/2/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+40698,40698,1,RW,"0x03
+0x06
+0x10",Crv/2/Pri,Power priority.,enum16,,,1
+40699,40699,1,RW,"0x03
+0x06
+0x10",Crv/2/VRef,Vref adjustment as percentage of nominal voltage.,uint16,VRefPct,V_SF,"95 to 105 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40700,40700,1,R,0x03,Crv/2/VRefAuto,Autonomous vref value as a percentage of nominal voltage.,uint16,VRefPct,V_SF,not supported
+40701,40701,1,RW,"0x03
+0x06
+0x10",Crv/2/VRefAutoEna,Enable autonomous vref.,enum16,,,"0: Disabled
+1: Enabled"
+40702,40702,1,RW,"0x03
+0x06
+0x10",Crv/2/VRefAutoTms,Autonomous vref time constant.,uint16,Secs,,"299 to 11500 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40703,40704,2,RW,"0x03
+0x06
+0x10",Crv/2/RspTms,Open loop response time.,uint32,Secs,RspTms_SF,"0.023 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40705,40705,1,R,0x03,Crv/2/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+40706,40706,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40707,40707,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40708,40708,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40709,40709,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40710,40710,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40711,40711,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40712,40712,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40713,40713,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40714,40714,1,RW,"0x03
+0x06
+0x10",Crv/3/ActPt,Number of active points.,uint16,,,4
+40715,40715,1,RW,"0x03
+0x06
+0x10",Crv/3/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+40716,40716,1,RW,"0x03
+0x06
+0x10",Crv/3/Pri,Power priority.,enum16,,,1
+40717,40717,1,RW,"0x03
+0x06
+0x10",Crv/3/VRef,Vref adjustment as percentage of nominal voltage.,uint16,VRefPct,V_SF,"95 to 105 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40718,40718,1,R,0x03,Crv/3/VRefAuto,Autonomous vref value as a percentage of nominal voltage.,uint16,VRefPct,V_SF,not supported
+40719,40719,1,RW,"0x03
+0x06
+0x10",Crv/3/VRefAutoEna,Enable autonomous vref.,enum16,,,"0: Disabled
+1: Enabled"
+40720,40720,1,RW,"0x03
+0x06
+0x10",Crv/3/VRefAutoTms,Autonomous vref time constant.,uint16,Secs,,"299 to 11500 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40721,40722,2,RW,"0x03
+0x06
+0x10",Crv/3/RspTms,Open loop response time.,uint32,Secs,RspTms_SF,"0.023 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40723,40723,1,R,0x03,Crv/3/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+40724,40724,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40725,40725,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40726,40726,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40727,40727,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40728,40728,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40729,40729,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40730,40730,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40731,40731,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40732,40732,1,RW,"0x03
+0x06
+0x10",Crv/4/ActPt,Number of active points.,uint16,,,4
+40733,40733,1,RW,"0x03
+0x06
+0x10",Crv/4/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+40734,40734,1,RW,"0x03
+0x06
+0x10",Crv/4/Pri,Power priority.,enum16,,,1
+40735,40735,1,RW,"0x03
+0x06
+0x10",Crv/4/VRef,Vref adjustment as percentage of nominal voltage.,uint16,VRefPct,V_SF,"95 to 105 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40736,40736,1,R,0x03,Crv/4/VRefAuto,Autonomous vref value as a percentage of nominal voltage.,uint16,VRefPct,V_SF,not supported
+40737,40737,1,RW,"0x03
+0x06
+0x10",Crv/4/VRefAutoEna,Enable autonomous vref.,enum16,,,"0: Disabled
+1: Enabled"
+40738,40738,1,RW,"0x03
+0x06
+0x10",Crv/4/VRefAutoTms,Autonomous vref time constant.,uint16,Secs,,"299 to 11500 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40739,40740,2,RW,"0x03
+0x06
+0x10",Crv/4/RspTms,Open loop response time.,uint32,Secs,RspTms_SF,"0.023 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40741,40741,1,R,0x03,Crv/4/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+40742,40742,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40743,40743,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40744,40744,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40745,40745,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40746,40746,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40747,40747,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40748,40748,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40749,40749,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40750,40750,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERVoltWatt (706),uint16,,,706
+40751,40751,1,R,0x03,L,Length of sunspec model DERVoltWatt (706),uint16,Registers,,57
+40752,40752,1,RW,"0x03
+0x06
+0x10",Ena,Volt-Watt control enable.,enum16,,,"0: Disabled
+1: Enabled"
+40753,40753,1,RW,"0x03
+0x06
+0x10",AdptCrvReq,Index of curve points to adopt. First curve index is 1.,uint16,,,2 to 4
+40754,40754,1,R,0x03,AdptCrvRslt,Result of last adopt curve operation.,enum16,,,"0: In Progress
+1: Completed
+2: Failed"
+40755,40755,1,R,0x03,NPt,Number of curve points supported.,uint16,,,3
+40756,40756,1,R,0x03,NCrv,Number of stored curves supported.,uint16,,,4
+40757,40758,2,RW,"0x03
+0x06
+0x10",RvrtTms,Reversion time in seconds.  0 = No reversion time.,uint32,Secs,,0 to 4294967294
+40759,40760,2,R,0x03,RvrtRem,Reversion time remaining in seconds.,uint32,Secs,,0 to 4294967294
+40761,40761,1,RW,"0x03
+0x06
+0x10",RvrtCrv,Default curve after reversion timeout.,uint16,,,2 to 4
+40762,40762,1,R,0x03,V_SF,Scale factor for curve voltage points.,sunssf,,,-2
+40763,40763,1,R,0x03,DeptRef_SF,Scale factor for curve watt points.,sunssf,,,-2
+40764,40764,1,R,0x03,RspTms_SF,Open loop response time scale factor.,sunssf,,,-1
+40765,40765,1,RW,"0x03
+0x06
+0x10",Crv/1/ActPt,Number of active points.,uint16,,,2 to 3
+40766,40766,1,RW,"0x03
+0x06
+0x10",Crv/1/DeptRef,Curve dependent reference.,enum16,,,0
+40767,40768,2,RW,"0x03
+0x06
+0x10",Crv/1/RspTms,Open loop response time.,uint32,Secs,RspTms_SF,"0 to 1380 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40769,40769,1,R,0x03,Crv/1/ReadOnly,Curve read-write access.,enum16,,,1 (R)
+40770,40770,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,100% to 149.51%
+40771,40771,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/1/W,Active power in percent of rated active power.,int16,DeptRef,DeptRef_SF,100%
+40772,40772,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,0% to 149.51%
+40773,40773,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/2/W,Active power in percent of rated active power.,int16,DeptRef,DeptRef_SF,-100% to 100%
+40774,40774,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,0% to 149.51%
+40775,40775,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/3/W,Active power in percent of rated active power.,int16,DeptRef,DeptRef_SF,-100% to 100%
+40776,40776,1,RW,"0x03
+0x06
+0x10",Crv/2/ActPt,Number of active points.,uint16,,,2 to 3
+40777,40777,1,RW,"0x03
+0x06
+0x10",Crv/2/DeptRef,Curve dependent reference.,enum16,,,0
+40778,40779,2,RW,"0x03
+0x06
+0x10",Crv/2/RspTms,Open loop response time.,uint32,Secs,RspTms_SF,"0 to 1380 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40780,40780,1,R,0x03,Crv/2/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+40781,40781,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,100% to 149.51%
+40782,40782,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/1/W,Active power in percent of rated active power.,int16,DeptRef,DeptRef_SF,100%
+40783,40783,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,0% to 149.51%
+40784,40784,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/2/W,Active power in percent of rated active power.,int16,DeptRef,DeptRef_SF,-100% to 100%
+40785,40785,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,0% to 149.51%
+40786,40786,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/3/W,Active power in percent of rated active power.,int16,DeptRef,DeptRef_SF,-100% to 100%
+40787,40787,1,RW,"0x03
+0x06
+0x10",Crv/3/ActPt,Number of active points.,uint16,,,2 to 3
+40788,40788,1,RW,"0x03
+0x06
+0x10",Crv/3/DeptRef,Curve dependent reference.,enum16,,,0
+40789,40790,2,RW,"0x03
+0x06
+0x10",Crv/3/RspTms,Open loop response time.,uint32,Secs,RspTms_SF,"0 to 1380 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40791,40791,1,R,0x03,Crv/3/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+40792,40792,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,100% to 149.51%
+40793,40793,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/1/W,Active power in percent of rated active power.,int16,DeptRef,DeptRef_SF,100%
+40794,40794,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,0% to 149.51%
+40795,40795,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/2/W,Active power in percent of rated active power.,int16,DeptRef,DeptRef_SF,-100% to 100%
+40796,40796,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,0% to 149.51%
+40797,40797,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/3/W,Active power in percent of rated active power.,int16,DeptRef,DeptRef_SF,-100% to 100%
+40798,40798,1,RW,"0x03
+0x06
+0x10",Crv/4/ActPt,Number of active points.,uint16,,,2 to 3
+40799,40799,1,RW,"0x03
+0x06
+0x10",Crv/4/DeptRef,Curve dependent reference.,enum16,,,0
+40800,40801,2,RW,"0x03
+0x06
+0x10",Crv/4/RspTms,Open loop response time.,uint32,Secs,RspTms_SF,"0 to 1380 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40802,40802,1,R,0x03,Crv/4/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+40803,40803,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,100% to 149.51%
+40804,40804,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/1/W,Active power in percent of rated active power.,int16,DeptRef,DeptRef_SF,100%
+40805,40805,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,0% to 149.51%
+40806,40806,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/2/W,Active power in percent of rated active power.,int16,DeptRef,DeptRef_SF,-100% to 100%
+40807,40807,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,0% to 149.51%
+40808,40808,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/3/W,Active power in percent of rated active power.,int16,DeptRef,DeptRef_SF,-100% to 100%
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40809,40809,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERTripLV (707),uint16,,,707
+40810,40810,1,R,0x03,L,Length of sunspec model DERTripLV (707),uint16,Registers,,203
+40811,40811,1,RW,"0x03
+0x06
+0x10",Ena,DER low voltage trip control enable.,enum16,,,"0: Disabled
+1: Enabled"
+40812,40812,1,RW,"0x03
+0x06
+0x10",AdptCrvReq,Index of curve points to adopt. First curve index is 1.,uint16,,,2 to 4
+40813,40813,1,R,0x03,AdptCrvRslt,Result of last adopt curve operation.,enum16,,,"0: In Progress
+1: Completed
+2: Failed"
+40814,40814,1,R,0x03,NPt,Number of curve points supported.,uint16,,,5
+40815,40815,1,R,0x03,NCrvSet,Number of stored curves supported.,uint16,,,4
+40816,40816,1,R,0x03,V_SF,Scale factor for curve voltage points.,sunssf,,,-2
+40817,40817,1,R,0x03,Tms_SF,Scale factor for curve time points.,sunssf,,,-2
+40818,40818,1,R,0x03,Crv/1/ReadOnly,Curve read-write access.,enum16,,,1 (R)
+40819,40819,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+40820,40820,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40821,40822,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40823,40823,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40824,40825,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40826,40826,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40827,40828,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40829,40829,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40830,40831,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40832,40832,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40833,40834,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40835,40835,1,R,0x03,Crv/1/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+40836,40836,1,R,0x03,Crv/1/MayTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40837,40838,2,R,0x03,Crv/1/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40839,40839,1,R,0x03,Crv/1/MayTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40840,40841,2,R,0x03,Crv/1/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40842,40842,1,R,0x03,Crv/1/MayTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40843,40844,2,R,0x03,Crv/1/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40845,40845,1,R,0x03,Crv/1/MayTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40846,40847,2,R,0x03,Crv/1/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40848,40848,1,R,0x03,Crv/1/MayTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40849,40850,2,R,0x03,Crv/1/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40851,40851,1,R,0x03,Crv/1/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+40852,40852,1,R,0x03,Crv/1/MomCess/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40853,40854,2,R,0x03,Crv/1/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40855,40855,1,R,0x03,Crv/1/MomCess/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40856,40857,2,R,0x03,Crv/1/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40858,40858,1,R,0x03,Crv/1/MomCess/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40859,40860,2,R,0x03,Crv/1/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40861,40861,1,R,0x03,Crv/1/MomCess/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40862,40863,2,R,0x03,Crv/1/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40864,40864,1,R,0x03,Crv/1/MomCess/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40865,40866,2,R,0x03,Crv/1/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40867,40867,1,R,0x03,Crv/2/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+40868,40868,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+40869,40869,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40870,40871,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40872,40872,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40873,40874,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40875,40875,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40876,40877,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40878,40878,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40879,40880,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40881,40881,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40882,40883,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40884,40884,1,R,0x03,Crv/2/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+40885,40885,1,R,0x03,Crv/2/MayTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40886,40887,2,R,0x03,Crv/2/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40888,40888,1,R,0x03,Crv/2/MayTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40889,40890,2,R,0x03,Crv/2/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40891,40891,1,R,0x03,Crv/2/MayTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40892,40893,2,R,0x03,Crv/2/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40894,40894,1,R,0x03,Crv/2/MayTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40895,40896,2,R,0x03,Crv/2/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40897,40897,1,R,0x03,Crv/2/MayTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40898,40899,2,R,0x03,Crv/2/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40900,40900,1,R,0x03,Crv/2/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+40901,40901,1,R,0x03,Crv/2/MomCess/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40902,40903,2,R,0x03,Crv/2/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40904,40904,1,R,0x03,Crv/2/MomCess/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40905,40906,2,R,0x03,Crv/2/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40907,40907,1,R,0x03,Crv/2/MomCess/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40908,40909,2,R,0x03,Crv/2/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40910,40910,1,R,0x03,Crv/2/MomCess/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40911,40912,2,R,0x03,Crv/2/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40913,40913,1,R,0x03,Crv/2/MomCess/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40914,40915,2,R,0x03,Crv/2/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40916,40916,1,R,0x03,Crv/3/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+40917,40917,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+40918,40918,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40919,40920,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40921,40921,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40922,40923,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40924,40924,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40925,40926,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40927,40927,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40928,40929,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40930,40930,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40931,40932,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40933,40933,1,R,0x03,Crv/3/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+40934,40934,1,R,0x03,Crv/3/MayTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40935,40936,2,R,0x03,Crv/3/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40937,40937,1,R,0x03,Crv/3/MayTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40938,40939,2,R,0x03,Crv/3/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40940,40940,1,R,0x03,Crv/3/MayTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40941,40942,2,R,0x03,Crv/3/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40943,40943,1,R,0x03,Crv/3/MayTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40944,40945,2,R,0x03,Crv/3/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40946,40946,1,R,0x03,Crv/3/MayTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40947,40948,2,R,0x03,Crv/3/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40949,40949,1,R,0x03,Crv/3/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+40950,40950,1,R,0x03,Crv/3/MomCess/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40951,40952,2,R,0x03,Crv/3/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40953,40953,1,R,0x03,Crv/3/MomCess/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40954,40955,2,R,0x03,Crv/3/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40956,40956,1,R,0x03,Crv/3/MomCess/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40957,40958,2,R,0x03,Crv/3/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40959,40959,1,R,0x03,Crv/3/MomCess/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40960,40961,2,R,0x03,Crv/3/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40962,40962,1,R,0x03,Crv/3/MomCess/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40963,40964,2,R,0x03,Crv/3/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40965,40965,1,R,0x03,Crv/4/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+40966,40966,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+40967,40967,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40968,40969,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40970,40970,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40971,40972,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40973,40973,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40974,40975,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40976,40976,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40977,40978,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40979,40979,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+40980,40981,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+40982,40982,1,R,0x03,Crv/4/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+40983,40983,1,R,0x03,Crv/4/MayTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40984,40985,2,R,0x03,Crv/4/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40986,40986,1,R,0x03,Crv/4/MayTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40987,40988,2,R,0x03,Crv/4/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40989,40989,1,R,0x03,Crv/4/MayTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40990,40991,2,R,0x03,Crv/4/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40992,40992,1,R,0x03,Crv/4/MayTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40993,40994,2,R,0x03,Crv/4/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40995,40995,1,R,0x03,Crv/4/MayTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+40996,40997,2,R,0x03,Crv/4/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+40998,40998,1,R,0x03,Crv/4/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+40999,40999,1,R,0x03,Crv/4/MomCess/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41000,41001,2,R,0x03,Crv/4/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41002,41002,1,R,0x03,Crv/4/MomCess/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41003,41004,2,R,0x03,Crv/4/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41005,41005,1,R,0x03,Crv/4/MomCess/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41006,41007,2,R,0x03,Crv/4/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41008,41008,1,R,0x03,Crv/4/MomCess/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41009,41010,2,R,0x03,Crv/4/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41011,41011,1,R,0x03,Crv/4/MomCess/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41012,41013,2,R,0x03,Crv/4/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+41014,41014,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERTripHV (708),uint16,,,708
+41015,41015,1,R,0x03,L,Length of sunspec model DERTripHV (708),uint16,Registers,,203
+41016,41016,1,RW,"0x03
+0x06
+0x10",Ena,DER high voltage trip control enable.,enum16,,,"0: Disabled
+1: Enabled"
+41017,41017,1,RW,"0x03
+0x06
+0x10",AdptCrvReq,Index of curve points to adopt. First curve index is 1.,uint16,,,2 to 4
+41018,41018,1,R,0x03,AdptCrvRslt,Result of last adopt curve operation.,enum16,,,"0: In Progress
+1: Completed
+2: Failed"
+41019,41019,1,R,0x03,NPt,Number of curve points supported.,uint16,,,5
+41020,41020,1,R,0x03,NCrvSet,Number of stored curves supported.,uint16,,,4
+41021,41021,1,R,0x03,V_SF,Scale factor for curve voltage points.,sunssf,,,-2
+41022,41022,1,R,0x03,Tms_SF,Scale factor for curve time points.,sunssf,,,-2
+41023,41023,1,R,0x03,Crv/1/ReadOnly,Curve read-write access.,enum16,,,1 (R)
+41024,41024,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+41025,41025,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41026,41027,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41028,41028,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41029,41030,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41031,41031,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41032,41033,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41034,41034,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41035,41036,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41037,41037,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41038,41039,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41040,41040,1,R,0x03,Crv/1/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+41041,41041,1,R,0x03,Crv/1/MayTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41042,41043,2,R,0x03,Crv/1/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41044,41044,1,R,0x03,Crv/1/MayTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41045,41046,2,R,0x03,Crv/1/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41047,41047,1,R,0x03,Crv/1/MayTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41048,41049,2,R,0x03,Crv/1/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41050,41050,1,R,0x03,Crv/1/MayTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41051,41052,2,R,0x03,Crv/1/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41053,41053,1,R,0x03,Crv/1/MayTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41054,41055,2,R,0x03,Crv/1/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41056,41056,1,R,0x03,Crv/1/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+41057,41057,1,R,0x03,Crv/1/MomCess/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41058,41059,2,R,0x03,Crv/1/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41060,41060,1,R,0x03,Crv/1/MomCess/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41061,41062,2,R,0x03,Crv/1/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41063,41063,1,R,0x03,Crv/1/MomCess/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41064,41065,2,R,0x03,Crv/1/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41066,41066,1,R,0x03,Crv/1/MomCess/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41067,41068,2,R,0x03,Crv/1/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41069,41069,1,R,0x03,Crv/1/MomCess/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41070,41071,2,R,0x03,Crv/1/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41072,41072,1,R,0x03,Crv/2/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+41073,41073,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+41074,41074,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41075,41076,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41077,41077,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41078,41079,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41080,41080,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41081,41082,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41083,41083,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41084,41085,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41086,41086,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41087,41088,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41089,41089,1,R,0x03,Crv/2/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+41090,41090,1,R,0x03,Crv/2/MayTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41091,41092,2,R,0x03,Crv/2/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41093,41093,1,R,0x03,Crv/2/MayTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41094,41095,2,R,0x03,Crv/2/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41096,41096,1,R,0x03,Crv/2/MayTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41097,41098,2,R,0x03,Crv/2/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41099,41099,1,R,0x03,Crv/2/MayTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41100,41101,2,R,0x03,Crv/2/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41102,41102,1,R,0x03,Crv/2/MayTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41103,41104,2,R,0x03,Crv/2/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41105,41105,1,R,0x03,Crv/2/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+41106,41106,1,R,0x03,Crv/2/MomCess/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41107,41108,2,R,0x03,Crv/2/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41109,41109,1,R,0x03,Crv/2/MomCess/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41110,41111,2,R,0x03,Crv/2/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41112,41112,1,R,0x03,Crv/2/MomCess/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41113,41114,2,R,0x03,Crv/2/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41115,41115,1,R,0x03,Crv/2/MomCess/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41116,41117,2,R,0x03,Crv/2/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41118,41118,1,R,0x03,Crv/2/MomCess/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41119,41120,2,R,0x03,Crv/2/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41121,41121,1,R,0x03,Crv/3/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+41122,41122,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+41123,41123,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41124,41125,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41126,41126,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41127,41128,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41129,41129,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41130,41131,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41132,41132,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41133,41134,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41135,41135,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41136,41137,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41138,41138,1,R,0x03,Crv/3/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+41139,41139,1,R,0x03,Crv/3/MayTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41140,41141,2,R,0x03,Crv/3/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41142,41142,1,R,0x03,Crv/3/MayTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41143,41144,2,R,0x03,Crv/3/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41145,41145,1,R,0x03,Crv/3/MayTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41146,41147,2,R,0x03,Crv/3/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41148,41148,1,R,0x03,Crv/3/MayTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41149,41150,2,R,0x03,Crv/3/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41151,41151,1,R,0x03,Crv/3/MayTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41152,41153,2,R,0x03,Crv/3/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41154,41154,1,R,0x03,Crv/3/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+41155,41155,1,R,0x03,Crv/3/MomCess/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41156,41157,2,R,0x03,Crv/3/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41158,41158,1,R,0x03,Crv/3/MomCess/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41159,41160,2,R,0x03,Crv/3/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41161,41161,1,R,0x03,Crv/3/MomCess/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41162,41163,2,R,0x03,Crv/3/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41164,41164,1,R,0x03,Crv/3/MomCess/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41165,41166,2,R,0x03,Crv/3/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41167,41167,1,R,0x03,Crv/3/MomCess/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41168,41169,2,R,0x03,Crv/3/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41170,41170,1,R,0x03,Crv/4/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+41171,41171,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+41172,41172,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41173,41174,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41175,41175,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41176,41177,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41178,41178,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41179,41180,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41181,41181,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41182,41183,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41184,41184,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41185,41186,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41187,41187,1,R,0x03,Crv/4/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+41188,41188,1,R,0x03,Crv/4/MayTrip/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41189,41190,2,R,0x03,Crv/4/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41191,41191,1,R,0x03,Crv/4/MayTrip/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41192,41193,2,R,0x03,Crv/4/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41194,41194,1,R,0x03,Crv/4/MayTrip/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41195,41196,2,R,0x03,Crv/4/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41197,41197,1,R,0x03,Crv/4/MayTrip/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41198,41199,2,R,0x03,Crv/4/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41200,41200,1,R,0x03,Crv/4/MayTrip/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41201,41202,2,R,0x03,Crv/4/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41203,41203,1,R,0x03,Crv/4/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+41204,41204,1,R,0x03,Crv/4/MomCess/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41205,41206,2,R,0x03,Crv/4/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41207,41207,1,R,0x03,Crv/4/MomCess/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41208,41209,2,R,0x03,Crv/4/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41210,41210,1,R,0x03,Crv/4/MomCess/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41211,41212,2,R,0x03,Crv/4/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41213,41213,1,R,0x03,Crv/4/MomCess/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41214,41215,2,R,0x03,Crv/4/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41216,41216,1,R,0x03,Crv/4/MomCess/Pt/5/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,not supported
+41217,41218,2,R,0x03,Crv/4/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+41219,41219,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERTripLF (709),uint16,,,709
+41220,41220,1,R,0x03,L,Length of sunspec model DERTripLF (709),uint16,Registers,,263
+41221,41221,1,RW,"0x03
+0x06
+0x10",Ena,DER low frequency trip control enable.,enum16,,,"0: Disabled
+1: Enabled"
+41222,41222,1,RW,"0x03
+0x06
+0x10",AdptCrvReq,Index of curve points to adopt. First curve index is 1.,uint16,,,2 to 4
+41223,41223,1,R,0x03,AdptCrvRslt,Result of last adopt curve operation.,enum16,,,"0: In Progress
+1: Completed
+2: Failed"
+41224,41224,1,R,0x03,NPt,Number of curve points supported.,uint16,,,5
+41225,41225,1,R,0x03,NCrvSet,Number of stored curves supported.,uint16,,,4
+41226,41226,1,R,0x03,Hz_SF,Scale factor for curve frequency points.,sunssf,,,-2
+41227,41227,1,R,0x03,Tms_SF,Scale factor for curve time points.,sunssf,,,-2
+41228,41228,1,R,0x03,Crv/1/ReadOnly,Curve read-write access.,enum16,,,1 (R)
+41229,41229,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+41230,41231,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41232,41233,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41234,41235,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41236,41237,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41238,41239,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41240,41241,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41242,41243,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41244,41245,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41246,41247,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41248,41249,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41250,41250,1,R,0x03,Crv/1/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+41251,41252,2,R,0x03,Crv/1/MayTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41253,41254,2,R,0x03,Crv/1/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41255,41256,2,R,0x03,Crv/1/MayTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41257,41258,2,R,0x03,Crv/1/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41259,41260,2,R,0x03,Crv/1/MayTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41261,41262,2,R,0x03,Crv/1/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41263,41264,2,R,0x03,Crv/1/MayTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41265,41266,2,R,0x03,Crv/1/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41267,41268,2,R,0x03,Crv/1/MayTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41269,41270,2,R,0x03,Crv/1/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41271,41271,1,R,0x03,Crv/1/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+41272,41273,2,R,0x03,Crv/1/MomCess/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41274,41275,2,R,0x03,Crv/1/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41276,41277,2,R,0x03,Crv/1/MomCess/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41278,41279,2,R,0x03,Crv/1/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41280,41281,2,R,0x03,Crv/1/MomCess/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41282,41283,2,R,0x03,Crv/1/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41284,41285,2,R,0x03,Crv/1/MomCess/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41286,41287,2,R,0x03,Crv/1/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41288,41289,2,R,0x03,Crv/1/MomCess/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41290,41291,2,R,0x03,Crv/1/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41292,41292,1,R,0x03,Crv/2/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+41293,41293,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+41294,41295,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41296,41297,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41298,41299,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41300,41301,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41302,41303,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41304,41305,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41306,41307,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41308,41309,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41310,41311,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41312,41313,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41314,41314,1,R,0x03,Crv/2/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+41315,41316,2,R,0x03,Crv/2/MayTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41317,41318,2,R,0x03,Crv/2/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41319,41320,2,R,0x03,Crv/2/MayTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41321,41322,2,R,0x03,Crv/2/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41323,41324,2,R,0x03,Crv/2/MayTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41325,41326,2,R,0x03,Crv/2/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41327,41328,2,R,0x03,Crv/2/MayTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41329,41330,2,R,0x03,Crv/2/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41331,41332,2,R,0x03,Crv/2/MayTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41333,41334,2,R,0x03,Crv/2/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41335,41335,1,R,0x03,Crv/2/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+41336,41337,2,R,0x03,Crv/2/MomCess/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41338,41339,2,R,0x03,Crv/2/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41340,41341,2,R,0x03,Crv/2/MomCess/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41342,41343,2,R,0x03,Crv/2/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41344,41345,2,R,0x03,Crv/2/MomCess/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41346,41347,2,R,0x03,Crv/2/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41348,41349,2,R,0x03,Crv/2/MomCess/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41350,41351,2,R,0x03,Crv/2/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41352,41353,2,R,0x03,Crv/2/MomCess/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41354,41355,2,R,0x03,Crv/2/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41356,41356,1,R,0x03,Crv/3/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+41357,41357,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+41358,41359,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41360,41361,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41362,41363,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41364,41365,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41366,41367,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41368,41369,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41370,41371,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41372,41373,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41374,41375,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41376,41377,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41378,41378,1,R,0x03,Crv/3/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+41379,41380,2,R,0x03,Crv/3/MayTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41381,41382,2,R,0x03,Crv/3/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41383,41384,2,R,0x03,Crv/3/MayTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41385,41386,2,R,0x03,Crv/3/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41387,41388,2,R,0x03,Crv/3/MayTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41389,41390,2,R,0x03,Crv/3/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41391,41392,2,R,0x03,Crv/3/MayTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41393,41394,2,R,0x03,Crv/3/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41395,41396,2,R,0x03,Crv/3/MayTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41397,41398,2,R,0x03,Crv/3/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41399,41399,1,R,0x03,Crv/3/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+41400,41401,2,R,0x03,Crv/3/MomCess/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41402,41403,2,R,0x03,Crv/3/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41404,41405,2,R,0x03,Crv/3/MomCess/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41406,41407,2,R,0x03,Crv/3/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41408,41409,2,R,0x03,Crv/3/MomCess/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41410,41411,2,R,0x03,Crv/3/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41412,41413,2,R,0x03,Crv/3/MomCess/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41414,41415,2,R,0x03,Crv/3/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41416,41417,2,R,0x03,Crv/3/MomCess/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41418,41419,2,R,0x03,Crv/3/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41420,41420,1,R,0x03,Crv/4/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+41421,41421,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+41422,41423,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41424,41425,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41426,41427,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41428,41429,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41430,41431,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41432,41433,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41434,41435,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41436,41437,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41438,41439,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41440,41441,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41442,41442,1,R,0x03,Crv/4/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+41443,41444,2,R,0x03,Crv/4/MayTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41445,41446,2,R,0x03,Crv/4/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41447,41448,2,R,0x03,Crv/4/MayTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41449,41450,2,R,0x03,Crv/4/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41451,41452,2,R,0x03,Crv/4/MayTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41453,41454,2,R,0x03,Crv/4/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41455,41456,2,R,0x03,Crv/4/MayTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41457,41458,2,R,0x03,Crv/4/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41459,41460,2,R,0x03,Crv/4/MayTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41461,41462,2,R,0x03,Crv/4/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41463,41463,1,R,0x03,Crv/4/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+41464,41465,2,R,0x03,Crv/4/MomCess/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41466,41467,2,R,0x03,Crv/4/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41468,41469,2,R,0x03,Crv/4/MomCess/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41470,41471,2,R,0x03,Crv/4/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41472,41473,2,R,0x03,Crv/4/MomCess/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41474,41475,2,R,0x03,Crv/4/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41476,41477,2,R,0x03,Crv/4/MomCess/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41478,41479,2,R,0x03,Crv/4/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41480,41481,2,R,0x03,Crv/4/MomCess/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41482,41483,2,R,0x03,Crv/4/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+41484,41484,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERTripHF (710),uint16,,,710
+41485,41485,1,R,0x03,L,Length of sunspec model DERTripHF (710),uint16,Registers,,263
+41486,41486,1,RW,"0x03
+0x06
+0x10",Ena,DER high frequency trip control enable.,enum16,,,"0: Disabled
+1: Enabled"
+41487,41487,1,RW,"0x03
+0x06
+0x10",AdptCrvReq,Index of curve points to adopt. First curve index is 1.,uint16,,,2 to 4
+41488,41488,1,R,0x03,AdptCrvRslt,Result of last adopt curve operation.,enum16,,,"0: In Progress
+1: Completed
+2: Failed"
+41489,41489,1,R,0x03,NPt,Number of curve points supported.,uint16,,,5
+41490,41490,1,R,0x03,NCrvSet,Number of stored curves supported.,uint16,,,4
+41491,41491,1,R,0x03,Hz_SF,Scale factor for curve frequency points.,sunssf,,,-2
+41492,41492,1,R,0x03,Tms_SF,Scale factor for curve time points.,sunssf,,,-2
+41493,41493,1,R,0x03,Crv/1/ReadOnly,Curve read-write access.,enum16,,,1 (R)
+41494,41494,1,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+41495,41496,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41497,41498,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41499,41500,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41501,41502,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41503,41504,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41505,41506,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41507,41508,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41509,41510,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41511,41512,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41513,41514,2,RW,"0x03
+0x06
+0x10",Crv/1/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41515,41515,1,R,0x03,Crv/1/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+41516,41517,2,R,0x03,Crv/1/MayTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41518,41519,2,R,0x03,Crv/1/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41520,41521,2,R,0x03,Crv/1/MayTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41522,41523,2,R,0x03,Crv/1/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41524,41525,2,R,0x03,Crv/1/MayTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41526,41527,2,R,0x03,Crv/1/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41528,41529,2,R,0x03,Crv/1/MayTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41530,41531,2,R,0x03,Crv/1/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41532,41533,2,R,0x03,Crv/1/MayTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41534,41535,2,R,0x03,Crv/1/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41536,41536,1,R,0x03,Crv/1/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+41537,41538,2,R,0x03,Crv/1/MomCess/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41539,41540,2,R,0x03,Crv/1/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41541,41542,2,R,0x03,Crv/1/MomCess/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41543,41544,2,R,0x03,Crv/1/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41545,41546,2,R,0x03,Crv/1/MomCess/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41547,41548,2,R,0x03,Crv/1/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41549,41550,2,R,0x03,Crv/1/MomCess/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41551,41552,2,R,0x03,Crv/1/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41553,41554,2,R,0x03,Crv/1/MomCess/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41555,41556,2,R,0x03,Crv/1/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41557,41557,1,R,0x03,Crv/2/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+41558,41558,1,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+41559,41560,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41561,41562,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41563,41564,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41565,41566,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41567,41568,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41569,41570,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41571,41572,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41573,41574,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41575,41576,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41577,41578,2,RW,"0x03
+0x06
+0x10",Crv/2/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41579,41579,1,R,0x03,Crv/2/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+41580,41581,2,R,0x03,Crv/2/MayTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41582,41583,2,R,0x03,Crv/2/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41584,41585,2,R,0x03,Crv/2/MayTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41586,41587,2,R,0x03,Crv/2/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41588,41589,2,R,0x03,Crv/2/MayTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41590,41591,2,R,0x03,Crv/2/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41592,41593,2,R,0x03,Crv/2/MayTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41594,41595,2,R,0x03,Crv/2/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41596,41597,2,R,0x03,Crv/2/MayTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41598,41599,2,R,0x03,Crv/2/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41600,41600,1,R,0x03,Crv/2/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+41601,41602,2,R,0x03,Crv/2/MomCess/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41603,41604,2,R,0x03,Crv/2/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41605,41606,2,R,0x03,Crv/2/MomCess/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41607,41608,2,R,0x03,Crv/2/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41609,41610,2,R,0x03,Crv/2/MomCess/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41611,41612,2,R,0x03,Crv/2/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41613,41614,2,R,0x03,Crv/2/MomCess/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41615,41616,2,R,0x03,Crv/2/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41617,41618,2,R,0x03,Crv/2/MomCess/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41619,41620,2,R,0x03,Crv/2/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41621,41621,1,R,0x03,Crv/3/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+41622,41622,1,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+41623,41624,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41625,41626,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41627,41628,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41629,41630,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41631,41632,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41633,41634,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41635,41636,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41637,41638,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41639,41640,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41641,41642,2,RW,"0x03
+0x06
+0x10",Crv/3/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41643,41643,1,R,0x03,Crv/3/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+41644,41645,2,R,0x03,Crv/3/MayTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41646,41647,2,R,0x03,Crv/3/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41648,41649,2,R,0x03,Crv/3/MayTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41650,41651,2,R,0x03,Crv/3/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41652,41653,2,R,0x03,Crv/3/MayTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41654,41655,2,R,0x03,Crv/3/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41656,41657,2,R,0x03,Crv/3/MayTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41658,41659,2,R,0x03,Crv/3/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41660,41661,2,R,0x03,Crv/3/MayTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41662,41663,2,R,0x03,Crv/3/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41664,41664,1,R,0x03,Crv/3/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+41665,41666,2,R,0x03,Crv/3/MomCess/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41667,41668,2,R,0x03,Crv/3/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41669,41670,2,R,0x03,Crv/3/MomCess/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41671,41672,2,R,0x03,Crv/3/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41673,41674,2,R,0x03,Crv/3/MomCess/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41675,41676,2,R,0x03,Crv/3/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41677,41678,2,R,0x03,Crv/3/MomCess/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41679,41680,2,R,0x03,Crv/3/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41681,41682,2,R,0x03,Crv/3/MomCess/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41683,41684,2,R,0x03,Crv/3/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41685,41685,1,R,0x03,Crv/4/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+41686,41686,1,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/ActPt,Number of active points in must trip curve.,uint16,,,5
+41687,41688,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41689,41690,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41691,41692,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41693,41694,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41695,41696,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41697,41698,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41699,41700,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41701,41702,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41703,41704,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41705,41706,2,RW,"0x03
+0x06
+0x10",Crv/4/MustTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,"0 to 1000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41707,41707,1,R,0x03,Crv/4/MayTrip/ActPt,Number of active points in may trip curve.,uint16,,,not supported
+41708,41709,2,R,0x03,Crv/4/MayTrip/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41710,41711,2,R,0x03,Crv/4/MayTrip/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41712,41713,2,R,0x03,Crv/4/MayTrip/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41714,41715,2,R,0x03,Crv/4/MayTrip/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41716,41717,2,R,0x03,Crv/4/MayTrip/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41718,41719,2,R,0x03,Crv/4/MayTrip/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41720,41721,2,R,0x03,Crv/4/MayTrip/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41722,41723,2,R,0x03,Crv/4/MayTrip/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41724,41725,2,R,0x03,Crv/4/MayTrip/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41726,41727,2,R,0x03,Crv/4/MayTrip/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41728,41728,1,R,0x03,Crv/4/MomCess/ActPt,Number of active points in the momentary cessation curve.,uint16,,,not supported
+41729,41730,2,R,0x03,Crv/4/MomCess/Pt/1/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41731,41732,2,R,0x03,Crv/4/MomCess/Pt/1/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41733,41734,2,R,0x03,Crv/4/MomCess/Pt/2/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41735,41736,2,R,0x03,Crv/4/MomCess/Pt/2/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41737,41738,2,R,0x03,Crv/4/MomCess/Pt/3/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41739,41740,2,R,0x03,Crv/4/MomCess/Pt/3/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41741,41742,2,R,0x03,Crv/4/MomCess/Pt/4/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41743,41744,2,R,0x03,Crv/4/MomCess/Pt/4/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+41745,41746,2,R,0x03,Crv/4/MomCess/Pt/5/Hz,Curve frequency point.,uint32,Hz,Hz_SF,not supported
+41747,41748,2,R,0x03,Crv/4/MomCess/Pt/5/Tms,Curve time point in seconds.,uint32,Secs,Tms_SF,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+41749,41749,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERFreqDroop (711),uint16,,,711
+41750,41750,1,R,0x03,L,Length of sunspec model DERFreqDroop (711),uint16,Registers,,52
+41751,41751,1,RW,"0x03
+0x06
+0x10",Ena,DER Frequency-Watt (Frequency-Droop) control enable.,enum16,,,"0: Disabled
+1: Enabled"
+41752,41752,1,RW,"0x03
+0x06
+0x10",AdptCtlReq,Set active control. 0 = No active control.,uint16,,,2 to 4
+41753,41753,1,R,0x03,AdptCtlRslt,Result of last set active control operation.,enum16,,,"0: In Progress
+1: Completed
+2: Failed"
+41754,41754,1,R,0x03,NCtl,Number of stored controls supported.,uint16,,,4
+41755,41756,2,RW,"0x03
+0x06
+0x10",RvrtTms,Reversion time in seconds.  0 = No reversion time.,uint32,Secs,,0 to 4294967294
+41757,41758,2,R,0x03,RvrtRem,Reversion time remaining in seconds.,uint32,Secs,,0 to 4294967294
+41759,41759,1,RW,"0x03
+0x06
+0x10",RvrtCtl,Default control after reversion timeout.,uint16,,,2 to 4
+41760,41760,1,R,0x03,Db_SF,Deadband scale factor.,sunssf,,,-3
+41761,41761,1,R,0x03,K_SF,Frequency change scale factor.,sunssf,,,-3
+41762,41762,1,R,0x03,RspTms_SF,Open loop response time scale factor.,sunssf,,,-2
+41763,41764,2,RW,"0x03
+0x06
+0x10",Ctl/1/DbOf,The deadband value for over-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 6 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41765,41766,2,RW,"0x03
+0x06
+0x10",Ctl/1/DbUf,The deadband value for under-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 15 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41767,41767,1,RW,"0x03
+0x06
+0x10",Ctl/1/KOf,Frequency droop per-unit frequency change for over-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.006 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41768,41768,1,RW,"0x03
+0x06
+0x10",Ctl/1/KUf,Frequency droop per-unit frequency change for under-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.017 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41769,41770,2,RW,"0x03
+0x06
+0x10",Ctl/1/RspTms,The open-loop response time in seconds.,uint32,Secs,RspTms_SF,"0 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41771,41771,1,R,0x03,Ctl/1/PMin,"The minimum active power output due to DER prime mover constraints, in percent of the DER active power rating. The valid range is -100 to 100. This setting applies only to the frequency droop control.",int16,Pct,,not supported
+41772,41772,1,R,0x03,Ctl/1/ReadOnly,Control read-write access.,enum16,,,1 (R)
+41773,41774,2,RW,"0x03
+0x06
+0x10",Ctl/2/DbOf,The deadband value for over-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 6 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41775,41776,2,RW,"0x03
+0x06
+0x10",Ctl/2/DbUf,The deadband value for under-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 15 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41777,41777,1,RW,"0x03
+0x06
+0x10",Ctl/2/KOf,Frequency droop per-unit frequency change for over-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.006 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41778,41778,1,RW,"0x03
+0x06
+0x10",Ctl/2/KUf,Frequency droop per-unit frequency change for under-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.017 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41779,41780,2,RW,"0x03
+0x06
+0x10",Ctl/2/RspTms,The open-loop response time in seconds.,uint32,Secs,RspTms_SF,"0 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41781,41781,1,R,0x03,Ctl/2/PMin,"The minimum active power output due to DER prime mover constraints, in percent of the DER active power rating. The valid range is -100 to 100. This setting applies only to the frequency droop control.",int16,Pct,,not supported
+41782,41782,1,R,0x03,Ctl/2/ReadOnly,Control read-write access.,enum16,,,0 (RW)
+41783,41784,2,RW,"0x03
+0x06
+0x10",Ctl/3/DbOf,The deadband value for over-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 6 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41785,41786,2,RW,"0x03
+0x06
+0x10",Ctl/3/DbUf,The deadband value for under-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 15 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41787,41787,1,RW,"0x03
+0x06
+0x10",Ctl/3/KOf,Frequency droop per-unit frequency change for over-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.006 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41788,41788,1,RW,"0x03
+0x06
+0x10",Ctl/3/KUf,Frequency droop per-unit frequency change for under-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.017 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41789,41790,2,RW,"0x03
+0x06
+0x10",Ctl/3/RspTms,The open-loop response time in seconds.,uint32,Secs,RspTms_SF,"0 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41791,41791,1,R,0x03,Ctl/3/PMin,"The minimum active power output due to DER prime mover constraints, in percent of the DER active power rating. The valid range is -100 to 100. This setting applies only to the frequency droop control.",int16,Pct,,not supported
+41792,41792,1,R,0x03,Ctl/3/ReadOnly,Control read-write access.,enum16,,,0 (RW)
+41793,41794,2,RW,"0x03
+0x06
+0x10",Ctl/4/DbOf,The deadband value for over-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 6 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41795,41796,2,RW,"0x03
+0x06
+0x10",Ctl/4/DbUf,The deadband value for under-frequency conditions in Hz.,uint32,Hz,Db_SF,"0 to 15 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41797,41797,1,RW,"0x03
+0x06
+0x10",Ctl/4/KOf,Frequency droop per-unit frequency change for over-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.006 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41798,41798,1,RW,"0x03
+0x06
+0x10",Ctl/4/KUf,Frequency droop per-unit frequency change for under-frequency conditions corresponding to 1 per-unit power output change.,uint16,,K_SF,"0.017 to 65.534 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41799,41800,2,RW,"0x03
+0x06
+0x10",Ctl/4/RspTms,The open-loop response time in seconds.,uint32,Secs,RspTms_SF,"0 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41801,41801,1,R,0x03,Ctl/4/PMin,"The minimum active power output due to DER prime mover constraints, in percent of the DER active power rating. The valid range is -100 to 100. This setting applies only to the frequency droop control.",int16,Pct,,not supported
+41802,41802,1,R,0x03,Ctl/4/ReadOnly,Control read-write access.,enum16,,,0 (RW)
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+41803,41803,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERWattVar (712),uint16,,,712
+41804,41804,1,R,0x03,L,Length of sunspec model DERWattVar (712),uint16,Registers,,76
+41805,41805,1,RW,"0x03
+0x06
+0x10",Ena,DER Watt-Var control enable.,enum16,,,"0: Disabled
+1: Enabled"
+41806,41806,1,RW,"0x03
+0x06
+0x10",AdptCrvReq,Set active curve. 0 = No active curve.,uint16,,,2 to 4
+41807,41807,1,R,0x03,AdptCrvRslt,Result of last set active curve operation.,enum16,,,"0: In Progress
+1: Completed
+2: Failed"
+41808,41808,1,R,0x03,NPt,Number of curve points supported.,uint16,,,6
+41809,41809,1,R,0x03,NCrv,Number of stored curves supported.,uint16,,,4
+41810,41811,2,RW,"0x03
+0x06
+0x10",RvrtTms,Reversion time in seconds.  0 = No reversion time.,uint32,Secs,,0 to 4294967294
+41812,41813,2,R,0x03,RvrtRem,Reversion time remaining in seconds.,uint32,Secs,,0 to 4294967294
+41814,41814,1,RW,"0x03
+0x06
+0x10",RvrtCrv,Default curve after reversion timeout.,uint16,,,2 to 4
+41815,41815,1,R,0x03,W_SF,Scale factor for curve active power points.,sunssf,,,-2
+41816,41816,1,R,0x03,DeptRef_SF,Scale factor for curve var points.,sunssf,,,-2
+41817,41817,1,RW,"0x03
+0x06
+0x10",Crv/1/ActPt,Number of active points.,uint16,,,6
+41818,41818,1,RW,"0x03
+0x06
+0x10",Crv/1/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+41819,41819,1,RW,"0x03
+0x06
+0x10",Crv/1/Pri,Power priority.,enum16,,,1
+41820,41820,1,R,0x03,Crv/1/ReadOnly,Curve read-write access.,enum16,,,1 (R)
+41821,41821,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/1/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41822,41822,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41823,41823,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/2/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41824,41824,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41825,41825,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/3/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41826,41826,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41827,41827,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/4/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41828,41828,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41829,41829,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/5/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41830,41830,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/5/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41831,41831,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/6/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41832,41832,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/6/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41833,41833,1,RW,"0x03
+0x06
+0x10",Crv/2/ActPt,Number of active points.,uint16,,,6
+41834,41834,1,RW,"0x03
+0x06
+0x10",Crv/2/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+41835,41835,1,RW,"0x03
+0x06
+0x10",Crv/2/Pri,Power priority.,enum16,,,1
+41836,41836,1,R,0x03,Crv/2/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+41837,41837,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/1/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41838,41838,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41839,41839,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/2/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41840,41840,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41841,41841,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/3/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41842,41842,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41843,41843,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/4/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41844,41844,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41845,41845,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/5/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41846,41846,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/5/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41847,41847,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/6/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41848,41848,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/6/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41849,41849,1,RW,"0x03
+0x06
+0x10",Crv/3/ActPt,Number of active points.,uint16,,,6
+41850,41850,1,RW,"0x03
+0x06
+0x10",Crv/3/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+41851,41851,1,RW,"0x03
+0x06
+0x10",Crv/3/Pri,Power priority.,enum16,,,1
+41852,41852,1,R,0x03,Crv/3/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+41853,41853,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/1/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41854,41854,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41855,41855,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/2/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41856,41856,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41857,41857,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/3/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41858,41858,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41859,41859,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/4/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41860,41860,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41861,41861,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/5/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41862,41862,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/5/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41863,41863,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/6/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41864,41864,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/6/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41865,41865,1,RW,"0x03
+0x06
+0x10",Crv/4/ActPt,Number of active points.,uint16,,,6
+41866,41866,1,RW,"0x03
+0x06
+0x10",Crv/4/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+41867,41867,1,RW,"0x03
+0x06
+0x10",Crv/4/Pri,Power priority.,enum16,,,1
+41868,41868,1,R,0x03,Crv/4/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+41869,41869,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/1/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41870,41870,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41871,41871,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/2/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41872,41872,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41873,41873,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/3/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"-100% to 0% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41874,41874,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41875,41875,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/4/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41876,41876,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41877,41877,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/5/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41878,41878,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/5/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41879,41879,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/6/W,Curve active power point as percentage.,int16,WMaxPct,W_SF,"0% to 100% *
+
+*Actual range may vary based on inverter configuration or country setup"
+41880,41880,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/6/Var,Curve reactive power point as set in DeptRef point.,int16,VarPct,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+41881,41881,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERStorageCapacity (713),uint16,,,713
+41882,41882,1,R,0x03,L,Length of sunspec model DERStorageCapacity (713),uint16,Registers,,7
+41883,41883,1,R,0x03,WHRtg,Energy rating of the DER storage.,uint16,WH,WH_SF,not supported
+41884,41884,1,R,0x03,WHAvail,Energy available of the DER storage (WHAvail = WHRtg * SoC * SoH),uint16,WH,WH_SF,not supported
+41885,41885,1,R,0x03,SoC,State of charge of the DER storage.,uint16,Pct,Pct_SF,0% to 100%
+41886,41886,1,R,0x03,SoH,State of health of the DER storage.,uint16,Pct,Pct_SF,not supported
+41887,41887,1,R,0x03,Sta,Storage status.,enum16,,,not supported
+41888,41888,1,R,0x03,WH_SF,Scale factor for energy capacity.,sunssf,,,not supported
+41889,41889,1,R,0x03,Pct_SF,Scale factor for percentage.,sunssf,,,-2
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+41890,41890,1,R,0x03,ID,Identifies this as End block,uint16,,,0xFFFF
+41891,41891,1,R,0x03,L,Length of model block,uint16,,,0x0

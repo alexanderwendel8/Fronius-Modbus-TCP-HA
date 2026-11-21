@@ -1,0 +1,58 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+40959,ID,136,uint16,1,,,,S,High Frequency Ride-through,Ref 4: 11
+40960,L,60,uint16,1,,,,S,Model length
+40961,ActCrv,,uint16,1,,,RW,,Index of active curve. 0=no active curve.
+40962,ModEna,,bitfield16,1,,,RW,,HFRT control mode. Enable active curve.  Bitfield value.,"0: DISABLED
+1: ENABLED"
+40963,WinTms,,uint16,1,,Secs,RW,,Time window for HFRT change.,not supported
+40964,RvrtTms,,uint16,1,,Secs,RW,,Timeout period for HFRT curve selection.,not supported
+40965,RmpTms,,uint16,1,,Secs,RW,,Ramp time for moving from current mode to new mode.,not supported
+40966,NCrv,1,uint16,1,,,,,Number of curves supported (recommend 4).
+40967,NPt,5,uint16,1,,,,,Number of curve points supported (maximum of 20).
+40968,Tms_SF,,sunssf,1,,,,,Scale factor for duration.
+40969,Hz_SF,,sunssf,1,,,,,Scale factor for frequency.
+40970,Pad,,pad,1
+40971,ActPt,,uint16,1,,,RW,,Number of active points in array.
+40972,Tms1,,uint16,1,Tms_SF,Secs,RW,,Point 1 must disconnect duration.
+40973,Hz1,,uint16,1,Hz_SF,Hz,RW,,Point 1 must disconnect frequency.
+40974,Tms2,,uint16,1,Tms_SF,Secs,RW,,Point 2 must disconnect duration.
+40975,Hz2,,uint16,1,Hz_SF,Hz,RW,,Point 2 must disconnect frequency.
+40976,Tms3,,uint16,1,Tms_SF,Secs,RW,,Point 3 must disconnect duration.
+40977,Hz3,,uint16,1,Hz_SF,Hz,RW,,Point 3 must disconnect frequency.
+40978,Tms4,,uint16,1,Tms_SF,Secs,RW,,Point 4 must disconnect duration.
+40979,Hz4,,uint16,1,Hz_SF,Hz,RW,,Point 4 must disconnect frequency.
+40980,Tms5,,uint16,1,Tms_SF,Secs,RW,,Point 5 must disconnect duration.
+40981,Hz5,,uint16,1,Hz_SF,Hz,RW,,Point 5 must disconnect frequency.
+40982,Tms6,,uint16,1,Tms_SF,Secs,RW,,Point 6 must disconnect duration.,not supported
+40983,Hz6,,uint16,1,Hz_SF,Hz,RW,,Point 6 must disconnect frequency.,not supported
+40984,Tms7,,uint16,1,Tms_SF,Secs,RW,,Point 7 must disconnect duration.,not supported
+40985,Hz7,,uint16,1,Hz_SF,Hz,RW,,Point 7 must disconnect frequency.,not supported
+40986,Tms8,,uint16,1,Tms_SF,Secs,RW,,Point 8 must disconnect duration.,not supported
+40987,Hz8,,uint16,1,Hz_SF,Hz,RW,,Point 8 must disconnect frequency.,not supported
+40988,Tms9,,uint16,1,Tms_SF,Secs,RW,,Point 9 must disconnect duration.,not supported
+40989,Hz9,,uint16,1,Hz_SF,Hz,RW,,Point 9 must disconnect frequency.,not supported
+40990,Tms10,,uint16,1,Tms_SF,Secs,RW,,Point 10 must disconnect duration.,not supported
+40991,Hz10,,uint16,1,Hz_SF,Hz,RW,,Point 10 must disconnect frequency.,not supported
+40992,Tms11,,uint16,1,Tms_SF,Secs,RW,,Point 11 must disconnect duration.,not supported
+40993,Hz11,,uint16,1,Hz_SF,Hz,RW,,Point 11 must disconnect frequency.,not supported
+40994,Tms12,,uint16,1,Tms_SF,Secs,RW,,Point 12 must disconnect duration.,not supported
+40995,Hz12,,uint16,1,Hz_SF,Hz,RW,,Point 12 must disconnect frequency.,not supported
+40996,Tms13,,uint16,1,Tms_SF,Secs,RW,,Point 13 must disconnect duration.,not supported
+40997,Hz13,,uint16,1,Hz_SF,Hz,RW,,Point 13 must disconnect frequency.,not supported
+40998,Tms14,,uint16,1,Tms_SF,Secs,RW,,Point 14 must disconnect duration.,not supported
+40999,Hz14,,uint16,1,Hz_SF,Hz,RW,,Point 14 must disconnect frequency.,not supported
+41000,Tms15,,uint16,1,Tms_SF,Secs,RW,,Point 15 must disconnect duration.,not supported
+41001,Hz15,,uint16,1,Hz_SF,Hz,RW,,Point 15 must disconnect frequency.,not supported
+41002,Tms16,,uint16,1,Tms_SF,Secs,RW,,Point 16 must disconnect duration.,not supported
+41003,Hz16,,uint16,1,Hz_SF,Hz,RW,,Point 16 must disconnect frequency.,not supported
+41004,Tms17,,uint16,1,Tms_SF,Secs,RW,,Point 17 must disconnect duration.,not supported
+41005,Hz17,,uint16,1,Hz_SF,Hz,RW,,Point 17 must disconnect frequency.,not supported
+41006,Tms18,,uint16,1,Tms_SF,Secs,RW,,Point 18 must disconnect duration.,not supported
+41007,Hz18,,uint16,1,Hz_SF,Hz,RW,,Point 18 must disconnect frequency.,not supported
+41008,Tms19,,uint16,1,Tms_SF,Secs,RW,,Point 19 must disconnect duration.,not supported
+41009,Hz19,,uint16,1,Hz_SF,Hz,RW,,Point 19 must disconnect frequency.,not supported
+41010,Tms20,,uint16,1,Tms_SF,Secs,RW,,Point 20 must disconnect duration.,not supported
+41011,Hz20,,uint16,1,Hz_SF,Hz,RW,,Point 20 must disconnect frequency.,not supported
+41012,CrvNam,,string,8,,,RW,,Optional description for curve.
+41020,ReadOnly,0,enum16,1,,,,,Enumerated value indicates if curve is read-only or can be modified.,"0: READWRITE
+1: READONLY"

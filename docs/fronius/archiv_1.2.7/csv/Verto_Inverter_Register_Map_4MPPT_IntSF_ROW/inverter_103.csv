@@ -1,0 +1,67 @@
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model inverter (103),uint16,,,103
+2,2,1,R,0x03,L,Length of sunspec model inverter (103),uint16,Registers,,50
+3,3,1,R,0x03,A,AC Current,uint16,A,A_SF
+4,4,1,R,0x03,AphA,Phase A Current,uint16,A,A_SF
+5,5,1,R,0x03,AphB,Phase B Current,uint16,A,A_SF
+6,6,1,R,0x03,AphC,Phase C Current,uint16,A,A_SF
+7,7,1,R,0x03,A_SF,,sunssf,,,"auto-scaled on A, AphA, AphB, AphC"
+8,8,1,R,0x03,PPVphAB,Phase Voltage AB,uint16,V,V_SF
+9,9,1,R,0x03,PPVphBC,Phase Voltage BC,uint16,V,V_SF
+10,10,1,R,0x03,PPVphCA,Phase Voltage CA,uint16,V,V_SF
+11,11,1,R,0x03,PhVphA,Phase Voltage AN,uint16,V,V_SF
+12,12,1,R,0x03,PhVphB,Phase Voltage BN,uint16,V,V_SF
+13,13,1,R,0x03,PhVphC,Phase Voltage CN,uint16,V,V_SF
+14,14,1,R,0x03,V_SF,,sunssf,,,-1
+15,15,1,R,0x03,W,AC Power,int16,W,W_SF
+16,16,1,R,0x03,W_SF,,sunssf,,,auto-scaled on W
+17,17,1,R,0x03,Hz,Line Frequency,uint16,Hz,Hz_SF
+18,18,1,R,0x03,Hz_SF,,sunssf,,,-2
+19,19,1,R,0x03,VA,AC Apparent Power,int16,VA,VA_SF
+20,20,1,R,0x03,VA_SF,,sunssf,,,auto-scaled on VA
+21,21,1,R,0x03,VAr,AC Reactive Power,int16,var,VAr_SF
+22,22,1,R,0x03,VAr_SF,,sunssf,,,auto-scaled on VAr
+23,23,1,R,0x03,PF,AC Power Factor,int16,Pct,PF_SF
+24,24,1,R,0x03,PF_SF,,sunssf,,,-1
+25,26,2,R,0x03,WH,AC Energy,acc32,Wh,WH_SF
+27,27,1,R,0x03,WH_SF,,sunssf,,,auto-scaled
+28,28,1,R,0x03,DCA,DC Current,uint16,A,DCA_SF,"not supported if the inverter has multiple DC inputs
+current of DC-strings can be found in MPPT model 160"
+29,29,1,R,0x03,DCA_SF,,sunssf,,,not supported
+30,30,1,R,0x03,DCV,DC Voltage,uint16,V,DCV_SF,"not supported if the inverter has multiple DC inputs
+current of DC-strings can be found in MPPT model 160"
+31,31,1,R,0x03,DCV_SF,,sunssf,,,not supported
+32,32,1,R,0x03,DCW,DC Power,int16,W,DCW_SF
+33,33,1,R,0x03,DCW_SF,,sunssf,,,auto-scaled on DCW
+34,34,1,R,0x03,TmpCab,Cabinet Temperature,int16,C,Tmp_SF
+35,35,1,R,0x03,TmpSnk,Heat Sink Temperature,int16,C,Tmp_SF,not supported
+36,36,1,R,0x03,TmpTrns,Transformer Temperature,int16,C,Tmp_SF,not supported
+37,37,1,R,0x03,TmpOt,Other Temperature,int16,C,Tmp_SF,not supported
+38,38,1,R,0x03,Tmp_SF,,sunssf,,,-1
+39,39,1,R,0x03,St,Enumerated value.  Operating state,enum16,,,see all states in our Modbus TCP & RTU user manual under SunSpec Operating Codes
+40,40,1,R,0x03,StVnd,Vendor specific operating state code,enum16,,,"same as register ""St"""
+41,42,2,R,0x03,Evt1,Bitmask value. Event fields,bitfield32
+43,44,2,R,0x03,Evt2,Reserved for future use,bitfield32
+45,46,2,R,0x03,EvtVnd1,Vendor defined events,bitfield32,,,"""Customer"" event severity level bitfield
+  bit 0 -> Error
+  bit 1 -> Warning
+  bit 2 -> Info
+
+This bitfield is composed as a superposition for the severity-levels of all currently active events on view level ""Customer"".
+If a bit is set it means that currently there is at least one active event with this severity level.
+Multiple bits can be set at once indicating several active events with different severity-levels."
+47,48,2,R,0x03,EvtVnd2,Vendor defined events,bitfield32,,,"""Technician"" event severity level bitfield
+  bit 0 -> Error
+  bit 1 -> Warning
+  bit 2 -> Info
+
+This bitfield is composed as a superposition for the severity-levels of all currently active events on view level ""Technician""
+If a bit is set it means that currently there is at least one active event with this severity level.
+Multiple bits can be set at once indicating several active events with different severity-levels.
+
+View level ""Technician"" is a superset of view level ""Customer"". This means that all events visible
+for view level ""Customer"" are also visible for view level ""Technician""."
+49,50,2,R,0x03,EvtVnd3,Vendor defined events,bitfield32,,,not supported
+51,52,2,R,0x03,EvtVnd4,Vendor defined events,bitfield32,,,not supported

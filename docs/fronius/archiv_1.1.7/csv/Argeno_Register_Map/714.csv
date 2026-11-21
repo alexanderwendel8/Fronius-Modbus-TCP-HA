@@ -1,0 +1,184 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+42068,ID,714,uint16,1,,,,S,DER DC measurement model ID.
+42069,L,268,uint16,1,,,,S,DER DC measurement model length.
+42070,PrtAlrms,,bitfield32,2,,,,,Bitfield of ports with active alarms. Bit is 1 if port has an active alarm. Bit 0 is first port.,not supported
+42072,NPrt,10,uint16,1,,,,S,Number of DC ports.
+42073,DCA,,int16,1,DCA_SF,A,,,Total DC current for all ports.
+42074,DCW,,int16,1,DCW_SF,W,,,Total DC power for all ports.
+42075,DCWhInj,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy injected for all ports.,not supported
+42079,DCWhAbs,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy absorbed for all ports.,not supported
+42083,DCA_SF,,sunssf,1,,,,S,DC current scale factor.
+42084,DCV_SF,,sunssf,1,,,,S,DC voltage scale factor.
+42085,DCW_SF,,sunssf,1,,,,S,DC power scale factor.
+42086,DCWH_SF,,sunssf,1,,,,S,DC energy scale factor.,not supported
+42087,Tmp_SF,,sunssf,1,,,,S,Temperature Scale Factor.
+42088,PrtTyp,0,enum16,1,,,,,Port type.,"0: Photovoltaic
+1: Energy Storage System
+2: Electric Vehicle
+3: Generic Injecting
+4: Generic Absorbing
+5: Generic Bidirectional
+6: DC to DC"
+42089,ID,1,uint16,1,,,,,Port ID.
+42090,IDStr,,string,8,,,,,Port ID string.
+42098,DCA,,int16,1,DCA_SF,A,,,DC current for the port.
+42099,DCV,,uint16,1,DCV_SF,V,,,DC voltage for the port.
+42100,DCW,,int16,1,DCW_SF,W,,,DC power for the port.
+42101,DCWhInj,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy injected for the port.,not supported
+42105,DCWhAbs,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy absorbed for the port.,not supported
+42109,Tmp,,int16,1,Tmp_SF,C,,,DC port temperature.,not supported
+42110,DCSta,,enum16,1,,,,,DC port status.,not supported
+42111,DCAlrm,,bitfield32,2,,,,,DC port alarm.,not supported
+42113,PrtTyp,0,enum16,1,,,,,Port type.,"0: Photovoltaic
+1: Energy Storage System
+2: Electric Vehicle
+3: Generic Injecting
+4: Generic Absorbing
+5: Generic Bidirectional
+6: DC to DC"
+42114,ID,2,uint16,1,,,,,Port ID.
+42115,IDStr,,string,8,,,,,Port ID string.
+42123,DCA,,int16,1,DCA_SF,A,,,DC current for the port.
+42124,DCV,,uint16,1,DCV_SF,V,,,DC voltage for the port.
+42125,DCW,,int16,1,DCW_SF,W,,,DC power for the port.
+42126,DCWhInj,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy injected for the port.,not supported
+42130,DCWhAbs,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy absorbed for the port.,not supported
+42134,Tmp,,int16,1,Tmp_SF,C,,,DC port temperature.,not supported
+42135,DCSta,,enum16,1,,,,,DC port status.,not supported
+42136,DCAlrm,,bitfield32,2,,,,,DC port alarm.,not supported
+42138,PrtTyp,0,enum16,1,,,,,Port type.,"0: Photovoltaic
+1: Energy Storage System
+2: Electric Vehicle
+3: Generic Injecting
+4: Generic Absorbing
+5: Generic Bidirectional
+6: DC to DC"
+42139,ID,3,uint16,1,,,,,Port ID.
+42140,IDStr,,string,8,,,,,Port ID string.
+42148,DCA,,int16,1,DCA_SF,A,,,DC current for the port.
+42149,DCV,,uint16,1,DCV_SF,V,,,DC voltage for the port.
+42150,DCW,,int16,1,DCW_SF,W,,,DC power for the port.
+42151,DCWhInj,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy injected for the port.,not supported
+42155,DCWhAbs,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy absorbed for the port.,not supported
+42159,Tmp,,int16,1,Tmp_SF,C,,,DC port temperature.,not supported
+42160,DCSta,,enum16,1,,,,,DC port status.,not supported
+42161,DCAlrm,,bitfield32,2,,,,,DC port alarm.,not supported
+42163,PrtTyp,0,enum16,1,,,,,Port type.,"0: Photovoltaic
+1: Energy Storage System
+2: Electric Vehicle
+3: Generic Injecting
+4: Generic Absorbing
+5: Generic Bidirectional
+6: DC to DC"
+42164,ID,4,uint16,1,,,,,Port ID.
+42165,IDStr,,string,8,,,,,Port ID string.
+42173,DCA,,int16,1,DCA_SF,A,,,DC current for the port.
+42174,DCV,,uint16,1,DCV_SF,V,,,DC voltage for the port.
+42175,DCW,,int16,1,DCW_SF,W,,,DC power for the port.
+42176,DCWhInj,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy injected for the port.,not supported
+42180,DCWhAbs,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy absorbed for the port.,not supported
+42184,Tmp,,int16,1,Tmp_SF,C,,,DC port temperature.,not supported
+42185,DCSta,,enum16,1,,,,,DC port status.,not supported
+42186,DCAlrm,,bitfield32,2,,,,,DC port alarm.,not supported
+42188,PrtTyp,0,enum16,1,,,,,Port type.,"0: Photovoltaic
+1: Energy Storage System
+2: Electric Vehicle
+3: Generic Injecting
+4: Generic Absorbing
+5: Generic Bidirectional
+6: DC to DC"
+42189,ID,5,uint16,1,,,,,Port ID.
+42190,IDStr,,string,8,,,,,Port ID string.
+42198,DCA,,int16,1,DCA_SF,A,,,DC current for the port.
+42199,DCV,,uint16,1,DCV_SF,V,,,DC voltage for the port.
+42200,DCW,,int16,1,DCW_SF,W,,,DC power for the port.
+42201,DCWhInj,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy injected for the port.,not supported
+42205,DCWhAbs,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy absorbed for the port.,not supported
+42209,Tmp,,int16,1,Tmp_SF,C,,,DC port temperature.,not supported
+42210,DCSta,,enum16,1,,,,,DC port status.,not supported
+42211,DCAlrm,,bitfield32,2,,,,,DC port alarm.,not supported
+42213,PrtTyp,0,enum16,1,,,,,Port type.,"0: Photovoltaic
+1: Energy Storage System
+2: Electric Vehicle
+3: Generic Injecting
+4: Generic Absorbing
+5: Generic Bidirectional
+6: DC to DC"
+42214,ID,6,uint16,1,,,,,Port ID.
+42215,IDStr,,string,8,,,,,Port ID string.
+42223,DCA,,int16,1,DCA_SF,A,,,DC current for the port.
+42224,DCV,,uint16,1,DCV_SF,V,,,DC voltage for the port.
+42225,DCW,,int16,1,DCW_SF,W,,,DC power for the port.
+42226,DCWhInj,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy injected for the port.,not supported
+42230,DCWhAbs,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy absorbed for the port.,not supported
+42234,Tmp,,int16,1,Tmp_SF,C,,,DC port temperature.,not supported
+42235,DCSta,,enum16,1,,,,,DC port status.,not supported
+42236,DCAlrm,,bitfield32,2,,,,,DC port alarm.,not supported
+42238,PrtTyp,0,enum16,1,,,,,Port type.,"0: Photovoltaic
+1: Energy Storage System
+2: Electric Vehicle
+3: Generic Injecting
+4: Generic Absorbing
+5: Generic Bidirectional
+6: DC to DC"
+42239,ID,7,uint16,1,,,,,Port ID.
+42240,IDStr,,string,8,,,,,Port ID string.
+42248,DCA,,int16,1,DCA_SF,A,,,DC current for the port.
+42249,DCV,,uint16,1,DCV_SF,V,,,DC voltage for the port.
+42250,DCW,,int16,1,DCW_SF,W,,,DC power for the port.
+42251,DCWhInj,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy injected for the port.,not supported
+42255,DCWhAbs,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy absorbed for the port.,not supported
+42259,Tmp,,int16,1,Tmp_SF,C,,,DC port temperature.,not supported
+42260,DCSta,,enum16,1,,,,,DC port status.,not supported
+42261,DCAlrm,,bitfield32,2,,,,,DC port alarm.,not supported
+42263,PrtTyp,0,enum16,1,,,,,Port type.,"0: Photovoltaic
+1: Energy Storage System
+2: Electric Vehicle
+3: Generic Injecting
+4: Generic Absorbing
+5: Generic Bidirectional
+6: DC to DC"
+42264,ID,8,uint16,1,,,,,Port ID.
+42265,IDStr,,string,8,,,,,Port ID string.
+42273,DCA,,int16,1,DCA_SF,A,,,DC current for the port.
+42274,DCV,,uint16,1,DCV_SF,V,,,DC voltage for the port.
+42275,DCW,,int16,1,DCW_SF,W,,,DC power for the port.
+42276,DCWhInj,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy injected for the port.,not supported
+42280,DCWhAbs,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy absorbed for the port.,not supported
+42284,Tmp,,int16,1,Tmp_SF,C,,,DC port temperature.,not supported
+42285,DCSta,,enum16,1,,,,,DC port status.,not supported
+42286,DCAlrm,,bitfield32,2,,,,,DC port alarm.,not supported
+42288,PrtTyp,0,enum16,1,,,,,Port type.,"0: Photovoltaic
+1: Energy Storage System
+2: Electric Vehicle
+3: Generic Injecting
+4: Generic Absorbing
+5: Generic Bidirectional
+6: DC to DC"
+42289,ID,9,uint16,1,,,,,Port ID.
+42290,IDStr,,string,8,,,,,Port ID string.
+42298,DCA,,int16,1,DCA_SF,A,,,DC current for the port.
+42299,DCV,,uint16,1,DCV_SF,V,,,DC voltage for the port.
+42300,DCW,,int16,1,DCW_SF,W,,,DC power for the port.
+42301,DCWhInj,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy injected for the port.,not supported
+42305,DCWhAbs,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy absorbed for the port.,not supported
+42309,Tmp,,int16,1,Tmp_SF,C,,,DC port temperature.,not supported
+42310,DCSta,,enum16,1,,,,,DC port status.,not supported
+42311,DCAlrm,,bitfield32,2,,,,,DC port alarm.,not supported
+42313,PrtTyp,0,enum16,1,,,,,Port type.,"0: Photovoltaic
+1: Energy Storage System
+2: Electric Vehicle
+3: Generic Injecting
+4: Generic Absorbing
+5: Generic Bidirectional
+6: DC to DC"
+42314,ID,10,uint16,1,,,,,Port ID.
+42315,IDStr,,string,8,,,,,Port ID string.
+42323,DCA,,int16,1,DCA_SF,A,,,DC current for the port.
+42324,DCV,,uint16,1,DCV_SF,V,,,DC voltage for the port.
+42325,DCW,,int16,1,DCW_SF,W,,,DC power for the port.
+42326,DCWhInj,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy injected for the port.,not supported
+42330,DCWhAbs,,uint64,4,DCWH_SF,Wh,,,Total cumulative DC energy absorbed for the port.,not supported
+42334,Tmp,,int16,1,Tmp_SF,C,,,DC port temperature.,not supported
+42335,DCSta,,enum16,1,,,,,DC port status.,not supported
+42336,DCAlrm,,bitfield32,2,,,,,DC port alarm.,not supported

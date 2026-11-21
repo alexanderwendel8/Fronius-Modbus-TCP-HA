@@ -1,0 +1,292 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Fronius Modbus TCP",
+        "description": "Connect to a Fronius inverter via Modbus TCP. Modbus TCP must be enabled in the Fronius web interface (GEN24: Communication → Modbus, Datamanager: Settings → Modbus, data output \"tcp\").",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "unit_id": "Inverter Modbus address",
+          "meter_unit_id": "Smart Meter Modbus address"
+        },
+        "data_description": {
+          "host": "Hostname or IP address of the inverter or Datamanager.",
+          "port": "Modbus TCP port: 502 (default) or 1502 (GEN24 option).",
+          "unit_id": "GEN24, Tauro, Verto: always 1. Datamanager (Symo, Primo, Galvo, Eco …): the inverter number from the inverter display; number 00 = address 100.",
+          "meter_unit_id": "Leave empty for automatic detection (GEN24: 200, Datamanager: 240). Enter 0 if no Smart Meter should be read."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "not_sunspec": "The device responded but no SunSpec inverter data was found. Check the Modbus address.",
+      "unknown": "Unexpected error",
+      "meter_not_found": "No Smart Meter found at this Modbus address."
+    },
+    "abort": {
+      "already_configured": "Device is already configured"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "ac_power": {
+        "name": "AC power"
+      },
+      "ac_energy": {
+        "name": "Total energy"
+      },
+      "ac_current": {
+        "name": "AC current"
+      },
+      "ac_current_a": {
+        "name": "AC current L1"
+      },
+      "ac_current_b": {
+        "name": "AC current L2"
+      },
+      "ac_current_c": {
+        "name": "AC current L3"
+      },
+      "ac_voltage_an": {
+        "name": "AC voltage L1-N"
+      },
+      "ac_voltage_bn": {
+        "name": "AC voltage L2-N"
+      },
+      "ac_voltage_cn": {
+        "name": "AC voltage L3-N"
+      },
+      "ac_voltage_ab": {
+        "name": "AC voltage L1-L2"
+      },
+      "ac_voltage_bc": {
+        "name": "AC voltage L2-L3"
+      },
+      "ac_voltage_ca": {
+        "name": "AC voltage L3-L1"
+      },
+      "ac_frequency": {
+        "name": "Grid frequency"
+      },
+      "ac_apparent_power": {
+        "name": "Apparent power"
+      },
+      "ac_reactive_power": {
+        "name": "Reactive power"
+      },
+      "ac_power_factor": {
+        "name": "Power factor"
+      },
+      "dc_power": {
+        "name": "DC power"
+      },
+      "dc_current": {
+        "name": "DC current"
+      },
+      "dc_voltage": {
+        "name": "DC voltage"
+      },
+      "temperature_cabinet": {
+        "name": "Cabinet temperature"
+      },
+      "temperature_heatsink": {
+        "name": "Heat sink temperature"
+      },
+      "temperature_transformer": {
+        "name": "Transformer temperature"
+      },
+      "temperature_other": {
+        "name": "Other temperature"
+      },
+      "status": {
+        "name": "Operating state",
+        "state": {
+          "off": "Off",
+          "sleeping": "Sleeping",
+          "starting": "Starting",
+          "mppt": "MPPT",
+          "throttled": "Throttled",
+          "shutting_down": "Shutting down",
+          "fault": "Fault",
+          "standby": "Standby"
+        }
+      },
+      "status_vendor": {
+        "name": "Fronius state",
+        "state": {
+          "off": "Off",
+          "sleeping": "Sleeping",
+          "starting": "Starting",
+          "mppt": "MPPT",
+          "throttled": "Throttled",
+          "shutting_down": "Shutting down",
+          "fault": "Fault",
+          "standby": "Standby",
+          "no_solarnet": "No Solar Net communication",
+          "no_inverter_comm": "No inverter communication",
+          "sn_overcurrent": "Solar Net overcurrent",
+          "bootload": "Updating firmware",
+          "afci": "Arc fault detected (AFCI)"
+        }
+      },
+      "events": {
+        "name": "Event flags"
+      },
+      "mppt_dc_power": {
+        "name": "{module} DC power"
+      },
+      "mppt_dc_current": {
+        "name": "{module} DC current"
+      },
+      "mppt_dc_voltage": {
+        "name": "{module} DC voltage"
+      },
+      "mppt_dc_energy": {
+        "name": "{module} DC energy"
+      },
+      "battery_power": {
+        "name": "Battery power"
+      },
+      "battery_charge_power": {
+        "name": "Battery charge power"
+      },
+      "battery_discharge_power": {
+        "name": "Battery discharge power"
+      },
+      "battery_voltage": {
+        "name": "Battery voltage"
+      },
+      "battery_charge_energy": {
+        "name": "Battery charged energy"
+      },
+      "battery_discharge_energy": {
+        "name": "Battery discharged energy"
+      },
+      "battery_soc": {
+        "name": "Battery state of charge"
+      },
+      "battery_state": {
+        "name": "Battery state",
+        "state": {
+          "off": "Off",
+          "empty": "Empty",
+          "discharging": "Discharging",
+          "charging": "Charging",
+          "full": "Full",
+          "holding": "Holding",
+          "testing": "Calibration / service charge"
+        }
+      },
+      "battery_min_reserve": {
+        "name": "Battery minimum reserve"
+      },
+      "battery_grid_charging": {
+        "name": "Battery charging source",
+        "state": {
+          "pv": "PV only",
+          "grid": "PV and grid"
+        }
+      },
+      "battery_control_mode": {
+        "name": "Battery control mode",
+        "state": {
+          "none": "No limits",
+          "charge_limit": "Charge limit active",
+          "discharge_limit": "Discharge limit active",
+          "charge_and_discharge_limit": "Charge and discharge limits active"
+        }
+      },
+      "battery_charge_limit": {
+        "name": "Battery charge limit"
+      },
+      "battery_discharge_limit": {
+        "name": "Battery discharge limit"
+      },
+      "battery_max_power": {
+        "name": "Battery maximum power"
+      },
+      "pv_power": {
+        "name": "PV power"
+      },
+      "meter_power": {
+        "name": "Power"
+      },
+      "meter_power_a": {
+        "name": "Power L1"
+      },
+      "meter_power_b": {
+        "name": "Power L2"
+      },
+      "meter_power_c": {
+        "name": "Power L3"
+      },
+      "meter_energy_import": {
+        "name": "Energy imported"
+      },
+      "meter_energy_export": {
+        "name": "Energy exported"
+      },
+      "meter_energy_import_a": {
+        "name": "Energy imported L1"
+      },
+      "meter_energy_import_b": {
+        "name": "Energy imported L2"
+      },
+      "meter_energy_import_c": {
+        "name": "Energy imported L3"
+      },
+      "meter_energy_export_a": {
+        "name": "Energy exported L1"
+      },
+      "meter_energy_export_b": {
+        "name": "Energy exported L2"
+      },
+      "meter_energy_export_c": {
+        "name": "Energy exported L3"
+      },
+      "meter_current": {
+        "name": "Current"
+      },
+      "meter_current_a": {
+        "name": "Current L1"
+      },
+      "meter_current_b": {
+        "name": "Current L2"
+      },
+      "meter_current_c": {
+        "name": "Current L3"
+      },
+      "meter_voltage_an": {
+        "name": "Voltage L1-N"
+      },
+      "meter_voltage_bn": {
+        "name": "Voltage L2-N"
+      },
+      "meter_voltage_cn": {
+        "name": "Voltage L3-N"
+      },
+      "meter_voltage_ab": {
+        "name": "Voltage L1-L2"
+      },
+      "meter_voltage_bc": {
+        "name": "Voltage L2-L3"
+      },
+      "meter_voltage_ca": {
+        "name": "Voltage L3-L1"
+      },
+      "meter_frequency": {
+        "name": "Frequency"
+      },
+      "meter_apparent_power": {
+        "name": "Apparent power"
+      },
+      "meter_reactive_power": {
+        "name": "Reactive power"
+      },
+      "meter_power_factor": {
+        "name": "Power factor"
+      }
+    }
+  }
+}

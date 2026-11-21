@@ -1,0 +1,79 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+41669,ID,706,uint16,1,,,,S,DER Volt-Watt model ID.
+41670,L,73,uint16,1,,,,S,DER Volt-Watt model length.
+41671,Ena,,enum16,1,,,RW,,Volt-Watt control enable.,"0: DISABLED
+1: ENABLED"
+41672,AdptCrvReq,,uint16,1,,,RW,,Index of curve points to adopt. First curve index is 1.
+41673,AdptCrvRslt,,enum16,1,,,,,Result of last adopt curve operation.,not supported
+41674,NPt,4,uint16,1,,,,S,Number of curve points supported.
+41675,NCrv,5,uint16,1,,,,S,Number of stored curves supported.
+41676,RvrtTms,,uint32,2,,Secs,RW,,Reversion time in seconds.  0 = No reversion time.,not supported
+41678,RvrtRem,,uint32,2,,Secs,,,Reversion time remaining in seconds.,not supported
+41680,RvrtCrv,,uint16,1,,,RW,,Default curve after reversion timeout.,not supported
+41681,V_SF,,sunssf,1,,,,S,Scale factor for curve voltage points.
+41682,DeptRef_SF,,sunssf,1,,,,S,Scale factor for curve watt points.
+41683,RspTms_SF,,sunssf,1,,,,S,Open loop response time scale factor.
+41684,ActPt,,uint16,1,,,RW,,Number of active points.
+41685,DeptRef,,enum16,1,,,RW,,Curve dependent reference.,"0: W_MAX_PCT
+1: W_AVAL_PCT"
+41686,RspTms,,uint32,2,RspTms_SF,Secs,RW,,Open loop response time.
+41688,ReadOnly,0,enum16,1,,,,S,Curve read-write access.,"0: Read-Write Access
+1: Read-Only Access"
+41689,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41690,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41691,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41692,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41693,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41694,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41695,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41696,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41697,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41698,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41699,ActPt,,uint16,1,,,RW,,Number of active points.
+41700,DeptRef,,enum16,1,,,RW,,Curve dependent reference.,"0: W_MAX_PCT
+1: W_AVAL_PCT"
+41701,RspTms,,uint32,2,RspTms_SF,Secs,RW,,Open loop response time.
+41703,ReadOnly,0,enum16,1,,,,S,Curve read-write access.,"0: Read-Write Access
+1: Read-Only Access"
+41704,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41705,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41706,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41707,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41708,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41709,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41710,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41711,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41712,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41713,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41714,ActPt,,uint16,1,,,RW,,Number of active points.
+41715,DeptRef,,enum16,1,,,RW,,Curve dependent reference.,"0: W_MAX_PCT
+1: W_AVAL_PCT"
+41716,RspTms,,uint32,2,RspTms_SF,Secs,RW,,Open loop response time.
+41718,ReadOnly,0,enum16,1,,,,S,Curve read-write access.,"0: Read-Write Access
+1: Read-Only Access"
+41719,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41720,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41721,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41722,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41723,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41724,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41725,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41726,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41727,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41728,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41729,ActPt,,uint16,1,,,RW,,Number of active points.
+41730,DeptRef,,enum16,1,,,RW,,Curve dependent reference.,"0: W_MAX_PCT
+1: W_AVAL_PCT"
+41731,RspTms,,uint32,2,RspTms_SF,Secs,RW,,Open loop response time.
+41733,ReadOnly,0,enum16,1,,,,S,Curve read-write access.,"0: Read-Write Access
+1: Read-Only Access"
+41734,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41735,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41736,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41737,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41738,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41739,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41740,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41741,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.
+41742,V,,uint16,1,V_SF,VNomPct,RW,,Curve voltage point as percentage.
+41743,W,,int16,1,DeptRef_SF,DeptRef,RW,,Active power in percent of rated active power.

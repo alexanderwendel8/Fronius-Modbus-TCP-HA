@@ -1,0 +1,3981 @@
+Operating
+Instructions
+Fronius Datamanager 2.0
+Fronius Datamanager Box 2.0
+
+
+
+
+   DE Bedienungsanleitung
+
+
+       42,0426,0191,DE      032-24022026
+Inhaltsverzeichnis
+
+Allgemeine Informationen                                                                      7
+  Allgemeines                                                                                  9
+     Allgemeines                                                                               9
+     Territoriale Beschränkungen                                                               9
+     Datensicherheit                                                                           9
+     Verfügbare Ausführungen des Fronius Datamanager 2.0                                     10
+     Verwendbare DATCOM-Komponenten                                                          10
+     Voraussetzung für den Betrieb                                                            11
+     Erforderliche Wechselrichter-Software                                                   12
+     Hinweise zur Funkkennzeichnung                                                          12
+     Lieferumfang                                                                            13
+     Verwendung der Klebeetiketten                                                           14
+     Konfigurationsbeispiele                                                                 15
+  Datenvolumen berechnen                                                                      17
+     Allgemeines                                                                              17
+     Datenvolumen berechnen                                                                   17
+  Generelle Informationen für den Netzwerk-Administrator                                     18
+     Voraussetzungen                                                                         18
+     Allgemeine Firewall Einstellungen                                                       18
+     Versenden von Servicemeldungen bei DSL Internet-Verbindung                              19
+     Fronius Solar.web nutzen und Servicemeldungen versenden                                 19
+  Bedienelemente, Anschlüsse und Anzeigen                                                    20
+     Sicherheit                                                                              20
+     Bedienelemente, Anschlüsse und Anzeigen                                                 21
+     Schematische Verschaltung der I/Os                                                      26
+  Technische Daten                                                                           28
+     Technische Daten                                                                        28
+     WLAN                                                                                    29
+
+Fronius Datamanager 2.0 installieren                                                         31
+  Fronius Datamanager 2.0 in den Wechselrichter einsetzen                                    33
+     Allgemeines                                                                             33
+     Sicherheit                                                                              33
+     Einsteckpositionen des Fronius Datamanager 2.0                                          33
+  WLAN Antenne montieren und anschließen                                                     35
+     Allgemeines                                                                             35
+     Fronius IG, Fronius IG Plus, Fronius IG Plus V, Fronius CL: Antenne montieren und an-   35
+     schließen
+     Fronius IG USA, Fronius IG Plus USA, Fronius IG Plus V USA: Antenne montieren und an-   36
+     schließen
+  Fronius Datamanager 2.0 im Fronius Solar Net installieren                                  39
+     Sicherheit                                                                              39
+     Wechselrichter mit Fronius Datamanager 2.0 im Fronius Solar Net installieren            39
+     Fronius Datamanager Box 2.0 im Fronius Solar Net installieren                           40
+  Verkabelung Fronius Solar Net                                                              42
+     Fronius Solar Net Teilnehmer                                                            42
+     Verkabelung der Fronius Solar Net Teilnehmer                                            42
+     Voraussetzungen für die Solar Net Datenkabel                                            42
+     Vorkonfektionierte Datenkabel                                                           43
+  Fronius Datamanager 2.0 installieren - Übersicht                                           44
+     Sicherheit                                                                              44
+     Erst-Inbetriebnahme mittels Web-Browser                                                 44
+
+Verbindung zum Fronius Datamanager 2.0 herstellen                                            47
+  Verbindung zum Fronius Datamanager 2.0 via Web-Browser                                     49
+    Allgemeines                                                                              49
+
+
+
+                                                                                              3
+      Voraussetzungen                                                                49
+      Verbindung zum Fronius Datamanager 2.0 via Web-Browser herstellen              49
+    Verbindung zum Fronius Datamanager 2.0 via Internet und Fronius Solar.web        50
+      Allgemeines                                                                    50
+      Funktionsbeschreibung                                                          50
+      Voraussetzungen                                                                50
+      Daten vom Fronius Datamanager 2.0 via Internet und Fronius Solar.web abrufen   50
+
+Aktuelldaten, Services und Einstellungen am Fronius Datamanager 2.0                  51
+    Die Web-Seite des Fronius Datamanager 2.0                                        53
+       Web-Seite des Fronius Datamanager 2.0 - Übersicht                             53
+       Login                                                                         53
+       Passwort zurücksetzen                                                         54
+       Das Menü Einstellungen                                                        54
+       Weitere Einstellmöglichkeiten                                                 54
+    Aktuelldaten am Fronius Datamanager 2.0                                          56
+       Aktuelle Vergleichsansicht                                                    56
+       Anlagenübersicht                                                              56
+       Ansicht Wechselrichter / Sensoren                                             56
+    Services - Systeminformationen                                                   57
+       Systeminformationen                                                           57
+    Services - Netzwerkdiagnose                                                      58
+       Netzwerkdiagnose                                                              58
+    Services - Firmware-Update                                                       59
+       Allgemeines                                                                   59
+       Automatisch nach Updates suchen                                               59
+       Manuell nach Updates suchen                                                   59
+       Firmware-Update via Web ausführen                                             59
+       Firmware-Update via LAN ausführen                                             59
+    Services - Assistenten aufrufen                                                  61
+       Assistenten aufrufen                                                          61
+    Einstellungen - Allgemein                                                        62
+       Allgemein                                                                     62
+    Einstellungen - Passwörter                                                       63
+       Allgemeines                                                                   63
+       Passwörter                                                                    63
+    Einstellungen - Netzwerk                                                         64
+       Internet via WLAN                                                             64
+       Internet via LAN                                                              64
+       Lokales Netzwerk via Access-Point                                             65
+    Einstellungen - Fronius Solar.web                                                66
+       Solar.web                                                                     66
+       Speicherkapazität                                                             66
+       Speicherkapazität berechnen                                                   66
+       Berechnungsbeispiel                                                           67
+    Einstellungen - IO Zuordnung                                                     69
+       Allgemeines                                                                   69
+       AUS - Demand Response Modes (DRM)                                             69
+       IO-Steuerung                                                                  70
+       Lastmanagement                                                                70
+    Einstellungen - Lastmanagement                                                   71
+       Allgemeines                                                                   71
+       Lastmanagement                                                                71
+    Einstellungen - Push Service                                                     72
+       Push Service                                                                  72
+    Einstellungen - Modbus                                                           73
+       Allgemeines                                                                   73
+       Weitere Informationen zur Modbus-Funktion                                     73
+       Datenausgabe über Modbus                                                      73
+       Steuerung einschränken                                                        75
+       Änderungen speichern oder verwerfen                                           75
+
+
+
+4
+Einstellungen - Wechselrichter                                    76
+   Wechselrichter                                                 76
+Einstellungen - Fronius Sensor Cards                              77
+   Sensor Cards                                                   77
+Einstellungen - Zähler                                            78
+   Allgemeines                                                    78
+   Fronius Smart Meter                                            78
+   Anschluss des Fronius Smart Meter am Fronius Datamanager 2.0   79
+   S0-Wechselrichter                                              79
+Einstellungen - EVU Editor                                        81
+   Allgemeines                                                    81
+   EVU Editor - IO-Steuerung                                      81
+   Anschluss-Schema - 4 Relais                                    82
+   Anschluss-Schema - 3 Relais                                    83
+   Anschluss-Schema - 1 Relais                                    84
+   Anschluss-Schema - Alternative mit 2 Relais                    86
+   Awendungsbeispiel 2 Rundsteuer-Empfänger                       87
+   Rundsteuer-Empfänger mit mehreren Wechselrichtern verbinden    89
+   EVU Editor - AUS - Demand Response Modes (DRM)                 89
+   EVU Editor - Dynamische Leistungsreduzierung                   90
+   Dynamische Einspeisebegrenzung mit mehreren Wechselrichtern    91
+   EVU Editor - Steuerungs-Prioritäten                            92
+
+
+
+
+                                                                   5
+6
+Allgemeine Informationen
+
+
+
+
+                           7
+8
+Allgemeines
+
+Allgemeines        Der Fronius Datamanager 2.0 ist ein netzwerkfähiger Datenlogger, der die Funk-
+                   tionalität der Fronius Com Card, des Fronius Datalogger Web, der Fronius Power
+                   Control Card und der Fronius Modbus Card auf einer Steckkarte vereint.
+                   Die Web-Seite des Fronius Datamanager 2.0 liefert einen schnellen Überblick
+                   über die Photovoltaik-Anlage.
+                   Die Web-Seite kann mittels Web-Browser über eine Direktverbindung oder bei
+                   entsprechender Konfiguration über das Internet aufgerufen werden.
+
+                   In Verbindung mit Fronius Solar.web können aktuelle Daten und Archivdaten ei-
+                   ner Photovoltaik-Anlage ohne aufwändige Konfigurationstätigkeiten über das
+                   Internet oder die Fronius Solar.web App abgerufen werden. Die Daten werden
+                   vom Fronius Datamanager 2.0 automatisch an das Fronius Solar.web versendet.
+                   Fronius Solar.web ist mit einer einfach zu konfigurierenden Anlagenüberwa-
+                   chung mit automatischer Alarmierung ausgestattet. Die Alarmierung kann über
+                   SMS oder E-Mail erfolgen.
+
+
+
+Territoriale Be-   Dieses Produkt ist für den Verkauf und Gebrauch außerhalb der Provinz Québec
+schränkungen       bestimmt. Es erfüllt nicht die Anforderungen der Charta der französischen Spra-
+                   che von Québec hinsichtlich der Dokumentation und Kennzeichnung in französi-
+                   scher Sprache. Dementsprechend bietet Fronius International GmbH dieses
+                   Produkt nicht zum Verkauf oder zur Lieferung an Adressen innerhalb der Provinz
+                   Québec an.
+
+                   Mit der Aufgabe einer Bestellung versichert und garantiert der Kunde, dass er
+                   das Produkt nicht zum Gebrauch oder Weiterverkauf innerhalb von Québec er-
+                   wirbt. Fronius International GmbH lehnt jegliche Haftung und Gewährleistungs-
+                   pflichten für Produkte ab, die unter Verstoß gegen diese Beschränkungen in
+                   Québec betrieben werden.
+
+
+
+Datensicherheit    Der Anwender ist hinsichtlich Datensicherheit verantwortlich für:
+                   -   Die Datensicherung von Änderungen gegenüber den Werkseinstellungen
+                   -   Das Speichern und Aufbewahren von persönlichen Einstellungen.
+
+
+
+
+                                                                                                   9
+                   HINWEIS!
+                   Datensicherheit für Netzwerk- und Internet-Verbindung
+                   Ungesicherte Netzwerke und fehlende Schutzmaßnahmen können Datenver-
+                   lust und unerlaubten Zugriff zur Folge haben. Folgende Punkte für den siche-
+                   ren Betrieb beachten:
+                  ▶     Wechselrichter und Systemkomponenten in einem privaten, gesicherten
+                        Netzwerk betreiben.
+                  ▶     Die Netzwerkgeräte (z. B. den WLAN-Router) auf dem neuesten Stand der
+                        Technik halten.
+                  ▶     Die Software und/oder Firmware aktualisiert halten.
+                  ▶     Ein kabelgebundenes Netzwerk verwenden, um eine stabile Datenverbin-
+                        dung zu gewährleisten.
+                  ▶     Wechselrichter und Systemkomponenten aus Sicherheitsgründen nicht
+                        über Portweiterleitung oder Port Adress Translation (PAT) vom Internet
+                        aus zugänglich machen.
+                  ▶     Die von Fronius zur Verfügung gestellten Lösungen zur Überwachung und
+                        Fern-Konfiguration verwenden.
+                  ▶     Das optionale Kommunikationsprotokoll Modbus TCP/IP1) ist eine ungesi-
+                        cherte Schnittstelle. Modbus TCP/IP nur verwenden, wenn kein anderes
+                        gesichertes Datenkommunikations-Protokoll (MQTT2)) möglich ist (z. B.
+                        Kompatibilität mit älteren Smart Metern).
+
+                  1) TCP/IP - Transmission Control Protocol/Internet Protocol
+                  2) MQTT - Message Queuing Telemetry Protocol
+
+
+
+
+Verfügbare        Der Fronius Datamanager 2.0 ist in folgenden Ausführungen verfügbar:
+Ausführungen      -   ohne Fronius Com Card Funktion
+des Fronius Da-       (für die Wechselrichter Fronius Galvo, Fronius Symo und Fronius Primo)
+tamanager 2.0     -   mit Fronius Com Card Funktion
+                      (für die Wechselrichter Fronius IG, Fronius IG Plus, Fronius IG Plus V,
+                      Fronius IG Plus A, Fronius CL, Fronius CL USA, Fronius IG 300 - 500)
+                  -   in einem externen Gehäuse mit Solar Net IN und Solar Net OUT Anschluss
+                      (Fronius Datamanager Box 2.0, z. B. für Wechselrichter ohne Steckkarten-
+                      plätze oder für Photovoltaik-Anlagen mit einem separaten Fronius Datama-
+                      nager 2.0)
+
+                  Sofern der Wechselrichter nicht serienmäßig mit dem Fronius Datamanager 2.0
+                  ausgestattet ist, können bestehende Wechselrichter mit der Fronius Datamana-
+                  ger 2.0 Steckkarte nachgerüstet werden.
+
+
+
+Verwendbare       Die im Wechselrichter eingebaute Fronius Datamanager 2.0 Steckkarte oder die
+DATCOM-Kom-       separate Fronius Datamanager Box 2.0 kann mit folgenden DATCOM-Kompo-
+ponenten          nenten betrieben werden:
+
+                   - bis zu 100   x   Fronius-Wechselrichter
+                                      (inkl. dem Wechselrichter, in dem der Fronius Datama-
+                                      nager 2.0 eingebaut ist)
+                   - bis zu 10    x   Fronius Sensor Card oder Fronius Sensor Box
+                   - bis zu 10    x   Fronius Public Display Card oder Fronius Public Display
+                                      Box
+                   - bis zu 1     x   Fronius Interface Card oder Fronius Interface Box
+
+
+
+
+10
+                   - bis zu     x     Fronius String Control
+                   200
+
+
+
+
+Voraussetzung     Für einen einwandfreien Datenaustausch via Internet ist eine entsprechende In-
+für den Betrieb   ternet-Verbindung erforderlich:
+                  -   Bei Kabel-gebundenen Internet-Lösungen empfiehlt Fronius eine Download-
+                      Geschwindigkeit von min. 512 kBit/s und eine Upload-Geschwindigkeit von
+                      min. 256 kBit/s.
+                  -   Für Lösungen mit mobilen Internet-Diensten empfiehlt Fronius min. 3G
+                      Übertragungsstandard mit zuverlässiger Signalstärke.
+
+                  Diese Angaben stellen keine absolute Garantie für eine einwandfreie Funktion
+                  dar.
+                  Hohe Fehlerraten in der Übertragung, Empfangsschwankungen oder Übertra-
+                  gungsaussetzer können den Online-Betrieb des Fronius Datamanager 2.0 nega-
+                  tiv beeinflussen.
+                  Fronius empfiehlt, Verbindungen mit Mindestanforderungen vor Ort zu testen.
+
+                  Für den Betrieb mit einer Antennenverlängerung
+                  Wenn Sie Ihre(n) Wechselrichter mittels WLAN mit dem Internet verbinden wol-
+                  len, empfehlen wir folgende Vorgehensweise:
+                  -    Testen Sie Ihre Signalstärke an der genauen Position, an der der Wechsel-
+                       richter mit aktivierter Datamanager 2.0 Karte installiert wird.
+                  -    Stellen Sie mittels Smartphone, Laptop oder Tablet eine Verbindung zum
+                       WLAN-Netzwerk her und testen Sie die Verbindung.
+                       Durch Aufrufen der kostenlosen Web-Seite "www.speedtest.net" kann
+                       überprüft werden, ob die Verbindung unsere empfohlene Download-Ge-
+                       schwindigkeit von mindestens 512 kbit/s und eine Upload-Geschwindigkeit
+                       von 256 kbit/s erfüllt.
+
+                  Da der Fronius Datamanager 2.0 als Datalogger fungiert, darf kein anderer Da-
+                  tenlogger im Fronius Solar Net Ring sein.
+                  Pro Fronius Solar Net Ring darf nur ein Fronius Datamanager 2.0 enthalten sein.
+                  Eventuell in den Wechselrichtern Fronius Galvo und Fronius Symo vorhandene
+                  Fronius Datamanager 2.0 müssen sich im Slave-Modus befinden.
+
+                  Folgende DATCOM-Komponenten dürfen nicht gemeinsam mit dem Fronius
+                  Datamanager 2.0 in einem Fronius Solar Net Ring betrieben werden:
+                  -   Fronius Power Control Card / Box
+                  -   Fronius Modbus Card
+                  -   Fronius Datalogger Web
+                  -   Fronius Personal Display DL Box
+                  -   Fronius Datalogger easy / pro
+                  -   Fronius Datamanager
+                  -   Fronius Datamanager 2.0 Box
+
+                  Für den Betrieb des Fronius Datamanager 2.0
+                  -   muss die Steckkarte in einem Wechselrichter eingebaut sein,
+                      oder
+                  -   eine Fronius Datamanager Box 2.0 muss sich im Fronius Solar Net Ring be-
+                      finden.
+
+                  Die Fronius Datamanager 2.0 Steckkarte und die Fronius Com Card dürfen nicht
+                  gemeinsam in einem Wechselrichter betrieben werden.
+
+
+
+
+                                                                                                11
+Erforderliche     Der Betrieb des Fronius Datamanager 2.0 erfordert folgende Versionen der
+Wechselrichter-   Wechselrichter-Software:
+Software
+                                              erforderliche Software-Version laut Display
+                      Wechselrichter          (MainControl)
+                      Fronius IG 15 - 60      V2.9.4 oder höher
+                      Fronius IG 2000 -       ab Serien-Nr. 19153444
+                      5100
+                      Fronius IG 300 - 500    V3.6.4.0 oder höher
+                      Fronius IG Plus 35 -    V4.22.00 oder höher
+                      150
+                      Fronius IG-TL *         -
+                      Fronius CL              V4.22.00 oder höher
+                      Fronius Agilo *         -
+                      Fronius Agilo Out-      -
+                      door *
+                      Fronius Agilo TL *      -
+                      Fronius Galvo           -
+                      Fronius Symo            -
+                      Fronius Symo Hybrid     -
+                      Fronius Primo           -
+                      Fronius Eco             -
+
+
+
+                  *         Nur in Verbindung mit Fronius Datamanager Box 2.0
+
+                  Die jeweilige Version der Wechselrichter-Software finden Sie zum kostenlosen
+                  Download auf unserer Homepage unter http://www.fronius.com.
+
+                  Bei weiteren Fragen wenden Sie sich bitte an pv-support@fronius.com.
+
+
+
+Hinweise zur      Die Fronius Datamanager 2.0 Steckkarte und die Fronius Datamanager Box 2.0
+Funkkennzeich-    sind mit einem Funkmodul ausgestattet.
+nung
+                  Funkmodule unterliegen in den USA der Kennzeichnungspflicht nach FCC:
+
+
+
+
+12
+                               FCC
+
+                               Dieses Gerät entspricht den Grenzwerten für ein digitales Gerät
+                               der Klasse B gemäß Teil 15 der FCC-Bestimmungen. Diese Grenz-
+                               werte sollen einen angemessenen Schutz vor schädlichen Störun-
+                               gen in Wohnräumen bieten. Dieses Gerät erzeugt und verwendet
+                               Hochfrequenz-Energie und kann im Funkverkehr Störungen verur-
+                               sachen, wenn es nicht in Übereinstimmung mit den Anweisungen
+                               verwendet wird. Es gibt jedoch keine Garantie, dass Störungen in
+                               einer bestimmten Installation nicht auftreten.
+                               Wenn dieses Gerät Störungen des Radio-oder Fernsehempfanges
+                               verursacht, die durch Aus- und Einschalten des Geräts festgestellt
+                               werden können, wird dem Benutzer empfohlen, die Störungen
+                               durch eine oder mehrere der folgenden Maßnahmen zu beheben:
+                               -   Richten Sie die Empfangsantenne aus oder positionieren Sie
+                                   die Empfangsantenne anders.
+                               -   Erhöhen Sie den Abstand zwischen Gerät und Empfänger.
+                               -   Schließen Sie das Gerät an einem anderen Stromkreis an, an
+                                   dem der Empfänger nicht angeschlossen ist.
+                               -   Für weitere Unterstützung kontaktieren Sie den Händler oder
+                                   einen erfahrenen Radio / TV -Techniker.
+
+                               FCC ID: PV7-WIBEAR11N-DF1
+
+                               Industry Canada RSS
+
+                               Dieses Gerät entspricht den lizenzfreien Industry Canada RSS Nor-
+                               men. Der Betrieb unterliegt folgenden Bedingungen:
+                               (1) Das Gerät darf keine schädlichen Störungen verursachen
+                               (2) Das Gerät muss jede erhaltene Störbeeinflussung verkraften,
+                               einschließlich Störbeeinflussungen, die zu einer Beeinträchtigung
+                               des Betriebes führen können.
+
+                               IC ID: 7738A-WB11NDF1
+
+               Sofern vom Hersteller nicht ausdrücklich genehmigt sind Änderungen oder Mo-
+               difikationen des Funkmoduls nicht erlaubt und führen zum Verlust der Betriebs-
+               berechtigung des Gerätes durch den Benutzer.
+
+
+
+Lieferumfang   Fronius Datamanager 2.0 Steckkarte
+
+               -       1 x Fronius Datamanager 2.0 Steckkarte
+               -       1 x Fronius Solar Net Endstecker
+               -       1 x Stecker 16-polig
+               -       1 x Klebeetikette FCC, 3-teilig
+
+               Zusätzlich je nach Wechselrichter:
+
+                   -   1 x Antenne                          Fronius Galvo
+                   -   1 x Fronius Solar Net Endstecker     Fronius Symo
+                                                            Fronius Primo
+                   -   1 x Antenne                          Fronius IG
+                   -   1 x 1 m Antennenkabel RG58           Fronius IG Plus
+                   -   1 x Befestigungswinkel               Fronius IG Plus V
+                   -   1 x Doppelklebeband
+
+
+
+
+                                                                                                13
+                     -   1 x Antenne                         Fronius IG 300 - 500
+                     -   1 x 3 m Antennenkabel RG58          Fronius CL
+                     -   1 x Befestigungswinkel              Fronius CL - USA
+                     -   1 x Doppelklebeband
+                     -   1 x Antenne                         Fronius IG 2000 - 5100 - USA
+                     -   1 x 0,4 m Antennenkabel RG58        Fronius IG Plus - USA
+                     -   1 x 3/4 in. Verschraubung           Fronius IG Plus V - USA
+                     -   1 x 3/4 in. Sechskant-Mutter
+                     -   1 x 3/4 in. Dichtung
+
+                 Fronius Datamanager Box 2.0
+
+                 -       1 x Fronius Datamanager Box 2.0 mit Wandhalterung
+                 -       2 x Fronius Solar Net Endstecker
+                 -       1 x Stecker 16-polig
+                 -       1 x Antenne
+                 -       1 x 3 m Antennenkabel RG58
+                 -       1 x Befestigungswinkel
+                 -       1 x Doppelklebeband
+                 -       2 x Montagedübel + Schrauben
+                 -       1 x Beiblatt DATCOM-Verkabelung
+
+
+
+Verwendung der   WICHTIG! Sofern die im Lieferumfang des Datamanager 2.0 enthaltene 3-teilige
+Klebeetiketten   Klebeetikette nicht schon werksseitig aufgeklebt wurde, muss diese am Wech-
+                 selrichter aufgeklebt werden.
+
+                 Position der Klebeetikette am Wechselrichter:
+
+
+
+
+                     Fronius IG Plus
+                     Fronius IG Plus V
+                     Fronius IG Plus A
+
+
+
+
+                                                             Fronius Galvo
+                                                             Fronius Symo
+                                                             Fronius Primo
+                     Fronius IG
+
+
+                 Bei den Wechselrichter Fronius Galvo, Fronius Symo und Fronius Primo ist die
+                 Information der Klebeetikette am Leistungsschild enthalten.
+
+                 Verwendung der Klebeetiketten:
+                                   (1)          (2) (3)     (1)   An der Kartonverpackung von
+                                                                  Wechselrichter oder Fronius
+                                                                  Datamanager 2.0
+                                                            (2)   An der Fronius Datamanager
+                                                                  2.0 Steckkarte
+                                                            (3)   Am Wechselrichter
+
+
+
+
+14
+Konfigurations-   Wechselrichter mit Fronius Datamanager 2.0 Steckkarte vernetzt mit einem
+beispiele         PC:
+
+
+                                                                   (1)         Wechselrichter
+                               (1)                                 (2)         Fronius Datamanager 2.0
+                                                                   (3)         Fronius Solar Net Endstecker
+                                                                   (4)         PC / Laptop
+                                                      (4)
+
+
+
+
+                                   (2)
+                                          WLAN
+                        IN
+                               OUT
+                        (3)
+
+
+
+
+                  WICHTIG!Bei Vernetzung eines Wechselrichters mit Fronius Datamanager 2.0
+                  mit einem PC muss an jedem freien IN- oder OUT-Anschluss je ein Fronius Solar
+                  Net Endstecker angesteckt sein.
+
+                  Wechselrichter mit Fronius Datamanager 2.0 Steckkarte vernetzt mit weite-
+                  ren Wechselrichtern, einer Fronius Sensor Box und einem PC:
+
+
+
+
+                             (1)                             (4)                                  (7)
+                                                      (3)                        (6)
+                                                                                            OUT
+
+                                                                                       IN
+                                         LAN / WLAN
+                                                                         IN                             IN
+                              IN                                                                  OUT
+                                         (2)                OUT          (5)                            (8)
+
+
+                                                                                                              (9)
+
+
+
+
+                  (1)          Wechselrichter mit                  (6)         Fronius Sensor Box
+                  (2)          Fronius Datamanager 2.0             (7)         Wechselrichter
+                  (3)          PC / Laptop                         (8)         Fronius Com Card
+                  (4)          Wechselrichter mit                  (9)         Fronius Solar Net Endstecker
+                  (5)          Fronius Com Card
+
+
+                  Bei einer Vernetzung von mehreren DATCOM-Komponenten in Verbindung mit
+                  einem Fronius Datamanager 2.0:
+                  mit dem Datenkabel den IN-Anschluss des Fronius Datamanager 2.0 und den
+                  OUT-Anschluss der nächsten DATCOM-Komponente verbinden. Am freien IN-
+                  Anschluss der letzten DATCOM-Komponente muss ein Fronius Solar Net End-
+                  stecker angesteckt sein.
+                  Bei folgenden Wechselrichtern muss der Wechselrichter mit dem Fronius Data-
+
+
+                                                                                                               15
+     manager 2.0 dabei immer am Anfang oder am Ende der Datenkette sein:
+     Fronius IG, Fronius IG Plus, Fronius IG Plus V, Fronius IG Plus A, Fronius CL, Froni-
+     us CL USA, und Fronius IG 300 - 500.
+
+      2 Wechselrichter mit Fronius Com Card oder Com Card Funktion vernetzt mit
+      einer Fronius Datamanager Box 2.0 und einem Smartphone:
+
+
+
+
+                 (1)              (2)
+                                                                                         Fronius
+             =                =                                                          Solar.web App
+
+                                               Fronius                                           (4)
+                       ~                ~      Datamanager Box 2.0
+
+                       OUT              OUT
+                                                               IP
+                                                           B        A
+
+
+
+
+               IN                IN            (3)
+                                                                                        WLAN
+                                                                          IN     OUT
+
+
+                                                                               (5)
+                  (5)
+
+
+
+      (1)    Wechselrichter mit Fronius              (4)                Smartphone mit Fronius So-
+             Com Card oder Com Card                                     lar.web App
+             Funktion                                (5)                Fronius Solar Net Endstecker
+      (2)    Wechselrichter mit Fronius
+             Com Card oder Com Card
+             Funktion
+      (3)    Fronius Datamanager Box 2.0
+
+
+     Bei einer Vernetzung von mehreren DATCOM-Komponenten in Verbindung mit
+     einer Fronius Datamanager Box 2.0, muss die Verkabelung der DATCOM-Kom-
+     ponenten jeweils vom IN-Anschluss zum OUT-Anschluss der nächsten DAT-
+     COM-Komponente erfolgen.
+     An freien IN-oder OUT-Anschlüssen der letzten DATCOM-Komponenten müssen
+     Fronius Solar Net Endstecker angesteckt sein.
+
+
+
+
+16
+Datenvolumen berechnen
+
+Allgemeines    Beim Betrieb des Fronius Datamanager 2.0 fallen Daten an, die über das Internet
+               übertragen werden müssen.
+               Die Berechnung des Datenvolumens ist für die Auswahl eines entsprechenden
+               Internet-Anschlusses erforderlich.
+
+
+
+Datenvolumen   Die folgenden Angaben dienen zur Berechnung des Datenvolumens pro Monat
+berechnen      beim Betrieb des Fronius Datamanagers 2.0.
+
+                                                             bis Firmware-    ab Firmware-
+                Stündlicher Upload                           Version 3.17     Version 3.25.2
+                Gesamt                                            8 MB             350 MB
+                + für jeden weiteren Fronius Wechselrich-                 5 MB
+                ter
+                + für jeden weiteren Fronius Smart Meter                  7 MB
+
+                Täglicher/Wöchentlicher Upload               bis Firmware-    ab Firmware-
+                (ohne Nacht Modus)                           Version 3.17     Version 3.25.2
+                Gesamt                                           307 kB            350 MB
+                + für jeden weiteren Fronius Wechselrich-                 520 kB
+                ter
+                + für jeden weiteren Fronius Smart Meter                  769 kB
+
+                Täglicher/Wöchentlicher Upload               bis Firmware-    ab Firmware-
+                (mit aktiven Nacht Modus)                    Version 3.17     Version 3.25.2
+                Gesamt                                           100 kB            350 MB
+                + für jeden weiteren Fronius Wechselrich-                 520 kB
+                ter
+                + für jeden weiteren Fronius Smart Meter                  769 kB
+
+               Berechnung der Speichersektoren pro Tag gemäß Kapitel „Speicherkapazität
+               berechnen“ auf Seite 66.
+
+               Das Datenvolumen kann sich durch folgende Faktoren erhöhen:
+               -  Verbindungsabbrüche
+               -  Neustart des Wechselrichters
+               -  Firmware-Updates
+               -  Fernsteuerung (VPP, Cloud Control)
+               -  Fehlerdiagnose durch den technischen Support
+               -  Anlagen-Fernüberwachung via Solar.web
+
+               WICHTIG! Fronius empfiehlt eine Flatrate, um Kosten für Datenmengen, die in
+               der Vorberechnung nicht berücksichtigt wurden, zu vermeiden.
+
+
+
+
+                                                                                             17
+Generelle Informationen für den Netzwerk-Admi-
+nistrator
+
+Voraussetzun-      Die Netzwerk-Konfiguration des Fronius Datamanager 2.0 setzt Kenntnisse aus
+gen                der Netzwerk-Technologie voraus.
+
+                   Wird der Fronius Datamanager 2.0 in ein bestehendes Netzwerk integriert, muss
+                   die Adressierung des Fronius Datamanager 2.0 an die des Netzwerkes ange-
+                   passt werden.
+
+                   z. B.: Netzwerk-Adressbereich = 192.168.1.x, Subnet-Mask = 255.255.255.0
+
+                   -   Dem Fronius Datamanager 2.0 muss eine IP-Adresse zwischen 192.168.1.1
+                       und 192.168.1.254 zugewiesen werden.
+                   -   Die gewählte IP-Adresse darf im Netzwerk noch nicht in Verwendung sein.
+                   -   Die Subnet-Mask muss dem bestehenden Netzwerk entsprechen (z. B.
+                       255.255.255.0).
+
+                   Soll der Fronius Datamanager 2.0 Servicemeldungen versenden oder Daten an
+                   Fronius Solar.web senden, muss eine Gateway-Adresse und eine DNS-Server
+                   Adresse eingegeben werden. Über die Gateway-Adresse bekommt der Fronius
+                   Datamanager 2.0 eine Verbindung zum Internet. Als Gateway-Adresse eignet
+                   sich z. B. die IP-Adresse des DSL-Routers.
+
+                   WICHTIG!
+                   -  Der Fronius Datamanager 2.0 darf nicht die selbe IP-Adresse wie der PC /
+                      Laptop haben!
+                   -  Der Fronius Datamanager 2.0 kann sich nicht selbst ins Internet verbinden.
+                      Bei einem DSL-Anschluss muss ein Router die Verbindung ins Internet auf-
+                      bauen.
+
+
+
+Allgemeine Fire-   DSL-Router ermöglichen zumeist den Versand von Daten ins Internet und
+wall Einstellun-   müssen daher normalerweise nicht konfiguriert werden.
+gen
+                   Server-Adressen für die Datenübertragung
+                   In Fall der Verwendung einer Firewall für ausgehende Verbindungen müssen die
+                   nachfolgenden Protokolle, Server-Adressen und Ports für die erfolgreiche Da-
+                   tenübertragung erlaubt sein:
+                   -   Tcp fronius-se-iot-dm-1.azure.devices.net:8883
+                   -   Tcp fronius-se-iot-dm-1.azure.devices.net:443
+                   -   Tcp fronius-se-iot-dm-2.azure.devices.net:8883
+                   -   Tcp fronius-se-iot-dm-2.azure.devices.net:443
+                   -   Tcp fronius-se-iot-dm-1.telemetry.azure.devices.net:8883
+                   -   Tcp fronius-se-iot-dm-1.telemetry.azure.devices.net:443
+                   -   Tcp fronius-se-iot-dm-2.telemetry.azure.devices.net:8883
+                   -   Tcp fronius-se-iot-dm-2.telemetry.azure.devices.net:443
+                   -   Fdmp-solarweb.com:49049 (dm local port 54321)
+                   -   Tcp http://www3.fronius.com:80
+                   -   Tcp http://firmware-download.fronius.com:80
+                   -   Tcp ftp://transfer.fronius.com:21
+                   -   Tcp provisioning-lite.solarweb.com:443
+                   -   Tcp froniusseiot.blob.core.windows.net:443
+                   -   Upd/Tcp 0.time.fronius.com:123
+
+
+
+
+18
+                  Falls bestehende Firewall-Regeln die Verbindung zur Fronius Anlagenüberwa-
+                  chung blockieren, müssen folgende Firewall-Regeln ergänzt werden:
+
+                                                                     49049/UDP        80/TCP *)
+
+                                                                      Ausgang         Eingang
+                   Servicemeldungen versenden                             x               -
+                   Verbindung zum Datamanager via Fronius So-
+                                                                          x               -
+                   lar.web
+                   Verbindung zum Datamanager via Fronius So-
+                                                                          -               x
+                   lar.access oder Fronius Solar.service
+                   Zugriff auf die Web-Seite des Datamanagers             -               x
+
+                  Die Firewall so konfigurieren, dass die IP-Adresse der Fronius Anlagenüberwa-
+                  chung an Port 49049/UDP von „fdmp.solarweb.com“ Daten schicken kann.
+
+                  *) Wir empfehlen den Zugriff auf die Web-Schnittstelle der Fronius Anla-
+                  genüberwachung nur von gesicherten Netzwerken zuzulassen. Sollte ein Zugriff
+                  aus dem Internet unbedingt benötigt werden (z. B.: für Servicezwecke in einem
+                  begrenzten Zeitraum), den Netzwerkrouter so konfigurieren, dass Anfragen auf
+                  einen beliebigen externen Port auf den Port 80/TCP weitergeleitet werden.
+                  Vorsicht - der Wechselrichter ist damit im Internet sichtbar und es wird mit ho-
+                  her Wahrscheinlichkeit zu Netzwerkangriffen kommen.
+
+
+
+Versenden von     Bei einer herkömmlichen DSL Internet-Verbindung sind Fronius Solar.web und
+Servicemeldun-    das Versenden von Servicemeldungen zumeist ohne extra Konfiguration des
+gen bei DSL In-   Routers möglich, da Verbindungen vom LAN zum Internet offen sind.
+ternet-Verbin-
+dung
+
+
+
+Fronius So-       Für die Nutzung von Fronius Solar.web oder das Versenden von Servicemeldun-
+lar.web nutzen    gen muss eine Internet-Verbindung bestehen.
+und Servicemel-
+dungen versen-    Der Fronius Datamanager 2.0 kann sich nicht selbst ins Internet verbinden. Bei
+den               einem DSL-Anschluss muss ein Router die Verbindung ins Internet aufbauen.
+
+
+
+
+                                                                                                   19
+Bedienelemente, Anschlüsse und Anzeigen
+
+Sicherheit
+                  WARNUNG!
+
+             Gefahr durch Fehlbedienung.
+             Schwerwiegende Personen- und Sachschäden möglich.
+             ▶  Beschriebene Funktionen erst anwenden, wenn diese Bedienungsanlei-
+                tung vollständig gelesen und verstanden wurde.
+             ▶  Beschriebene Funktionen erst anwenden, wenn sämtliche Bedienungsan-
+                leitungen der Systemkomponenten, insbesondere Sicherheitsvorschriften
+                vollständig gelesen und verstanden wurden!
+
+
+
+
+20
+Bedienelemente,
+Anschlüsse und
+Anzeigen
+
+                                                                                      (5)
+                                                                                      (4)
+
+
+                    (6)                      (1)                                            (6)
+
+
+
+
+                        (7)                                                    (7)
+                                                       (2) (3)
+                        (8)                                                     (8)
+                        (9)
+                                                                                (9)
+                   (10)
+                                                                              (11)
+
+
+                                                                    Fronius IG
+                                                                    Fronius IG Plus
+                    Fronius Galvo
+                                                                    Fronius IG Plus V
+                    Fronius Symo
+                                                                    Fronius IG Plus A
+                    Fronius Primo
+                                                                    Fronius CL
+                                                                    Fronius CL USA
+                                                                    Fronius IG 300 - 500
+
+
+
+
+                   (13)
+
+
+
+
+                        (4)                  (3)
+                                                     (1)   (6)   (7) (8) (9)(11) (12)
+                        (5)                  (2)
+
+
+
+
+                  Nr.         Funktion
+                  (1)         Schalter IP
+                              zum Umschalten der IP-Adresse:
+
+
+
+
+                                                                                                  21
+     Nr.   Funktion
+     A     vorgegebene IP-Adresse und Öffnen des WLAN Access Point
+
+           Für eine direkte Verbindung mit einem PC via LAN arbeitet der Fro-
+           nius Datamanager 2.0 mit der fixen IP-Adresse 169.254.0.180.
+
+           Befindet sich der Schalter IP in Position A wird zusätzlich ein Access
+           Point für eine direkte WLAN Verbindung zum Fronius Datamanager
+           2.0 geöffnet.
+
+           Zugangsdaten zu diesem Access Point:
+           Netzwerk-Name: FRONIUS_240.XXXXXX
+           Schlüssel: Das am Display des Wechselrichters angezeigte Pass-
+           wort eingeben.
+
+           WICHTIG!
+           Bei Fronius Datamanager 2.0 Steckkarten, die nach Juni 2024 ge-
+           kauft wurden, individuelles Passwort vom Display des Wechselrich-
+           ters eingeben.
+
+           Der Zugriff auf den Fronius Datamanager 2.0 ist möglich:
+           -   per DNS-Name „http://datamanager“
+           -   mittels IP-Adresse 169.254.0.180 für die LAN Schnittstelle
+           -   mittels IP-Adresse 192.168.250.181 für den WLAN Access Point
+
+     B     zugewiesene IP-Adresse
+
+           Der Fronius Datamanager 2.0 arbeitet mit einer zugewiesenen IP-
+           Adresse Werkseinstellung dynamisch (DHCP)
+
+           Die IP-Adresse kann auf der Web-Seite des Fronius Datamanager
+           2.0 eingestellt werden.
+
+           Der Schalter IP befindet sich bei den Fronius Datamanager 2.0
+           Steckkarten unterhalb der LEDs und ist bei der Fronius Datamana-
+           ger Box 2.0 separat ausgeführt.
+     (2)   LED WLAN
+           -  blinkt grün: der Fronius Datamanager 2.0 befindet sich im Ser-
+              vice-Modus
+              (Schalter IP an der Fronius Datamanager 2.0 Steckkarte ist in
+              Position A oder der Service-Modus wurde über das Wechsel-
+              richter-Display aktiviert, der WLAN Acces Point ist geöffnet)
+           -  leuchtet grün: bei bestehender WLAN-Verbindung
+           -  blinkt abwechselnd grün/rot: Überschreitung der Zeit, wie lang
+              der WLAN Access Point nach dem Aktivieren geöffnet ist (1
+              Stunde)
+           -  leuchtet rot: bei nicht bestehender WLAN-Verbindung
+           -  blinkt rot: fehlerhafte WLAN-Verbindung
+           -  leuchtet nicht, wenn sich der Fronius Datamanager 2.0 im
+              Slave-Modus befindet
+     (3)   LED Verbindung Solar.web
+           -  leuchtet grün: bei bestehender Verbindung zu Fronius So-
+              lar.web
+           -  leuchtet rot: bei erforderlicher, aber nicht bestehender Verbin-
+              dung zu Fronius Solar.web
+           -  leuchtet nicht: wenn keine Verbindung zu Fronius Solar.web er-
+              forderlich ist
+
+
+
+
+22
+Nr.   Funktion
+(4)   LED Versorgung
+      -  leuchtet grün: bei ausreichender Stromversorgung durch das
+         Fronius Solar Net; Der Fronius Datamanager 2.0 ist betriebsbe-
+         reit.
+      -  leuchtet nicht: bei mangelhafter oder nicht vorhandener
+         Stromversorgung durch das Fronius Solar Net - eine externe
+         Stromversorgung ist erforderlich
+         oder
+         wenn sich der Fronius Datamanager 2.0 im Slave-Modus befin-
+         det
+      -  blinkt rot: während eines Update-Vorganges
+
+           WICHTIG! Während eines Update-Vorganges die Stromversor-
+           gung nicht unterbrechen.
+      -    leuchtet rot: der Update-Vorgang ist fehlgeschlagen
+(5)   LED Verbindung
+      -  leuchtet grün: bei aufrechter Verbindung innerhalb des ‘Fronius
+         Solar Net’
+      -  leuchtet rot: bei unterbrochener Verbindung innerhalb des ‘Fro-
+         nius Solar Net’
+      -  leuchtet nicht, wenn sich der Fronius Datamanager 2.0 im
+         Slave-Modus befindet
+(6)   Anschluss LAN
+      Ethernet-Schnittstelle mit blauer Farbmarkierung, zum Anschließen
+      des Ethernet-Kabels
+(7)   I/Os
+      digitale Ein- und Ausgänge
+
+
+
+                                           D- D+
+                                           9 8
+                                           7 6
+                                           5 4
+                                           3 2
+                                           1 0
+                                           - +
+                                           - +
+
+
+
+
+                                             I     IO      RS485
+
+
+
+
+      Modbus RTU 2-Draht (RS485):
+      D-     Modbus Daten -
+      D+     Modbus Daten +
+
+
+
+
+                                                                           23
+     Nr.   Funktion
+           Int./ext. Versorgung
+           -      GND
+           +      Uint / Uext
+                  Ausgang der internen Spannung 10,8 V / 12,8 V
+                  oder
+                  Eingang für eine externe Versorgungsspannung
+                  >12,8 - 24 V DC (+ 20 %)
+
+                  10,8 V:
+                  Fronius IG, Fronius IG Plus, Fronius IG Plus V,
+                  Fronius IG Plus A, Fronius CL, Fronius CL USA,
+                  Fronius IG 300 - 500
+
+                  12, 8 V:
+                  Fronius Galvo, Fronius Symo
+
+
+           Digitale Eingänge: 0 - 3, 4 - 9
+           Spannungspegel: low = min. 0 V - max. 1,8 V; high = min. 3 V - max.
+           24 V Dc (+ 20 %)
+           Eingangsströme: je nach Eingangsspannung; Eingangswiderstand =
+           46 kOhm
+
+           Digitale Ausgänge: 0 - 3
+           Schaltvermögen bei Versorgung durch die Fronius Datamanager
+           2.0 Steckkarte: 3,2 W, 10,8 / 12,8 V in Summe für alle 4 digitalen
+           Ausgänge
+
+           10,8 V:
+           Fronius IG, Fronius IG Plus, Fronius IG Plus V, Fronius IG Plus A,
+           Fronius CL, Fronius CL USA, Fronius IG 300 - 500
+
+           12, 8 V:
+           Fronius Galvo, Fronius Symo
+
+           Schaltvermögen bei Versorgung durch ein externes Netzteil mit
+           min. 12,8 - max. 24 V DC (+ 20 %), angeschlossen an Uint / Uext und
+           GND: 1 A, 12,8 - 24 V DC (je nach externem Netzteil) pro digitalem
+           Ausgang
+
+           Der Anschluss an die I/Os erfolgt über den mitgelieferten Gegen-
+           stecker.
+     (8)   Antennensockel
+           zum Aufschrauben der WLAN Antenne oder des WLAN Antennen-
+           Verlängerungskabels, je nach Wechselrichter
+
+
+
+
+24
+Nr.    Funktion
+(9)    Schalter Modbus-Terminierung (für Modbus RTU)
+       interner Busabschluss mit 120 Ohm Widerstand (ja/nein)
+
+       Schalter in Position „on“: Abschluss-Widerstand 120 Ohm aktiv
+       Schalter in Position „off“: kein Abschluss-Widerstand aktiv
+
+
+
+
+       WICHTIG! In einem RS485 Bus muss der Abschluss-Widerstand
+       beim ersten und letzten Gerät aktiv sein.
+(10)   Fronius Solar Net Master / Slave Schalter
+       zum Umschalten von Master- auf Slave-Betrieb innerhalb eines Fro-
+       nius Solar Net Ringes
+
+       WICHTIG! Im Slave-Betrieb sind alle LEDs an der Fronius Datamana-
+       ger 2.0 Steckkarte aus.
+(11)   Anschluss Solar Net IN
+       Fronius Solar Net Eingang mit roter Farbmarkierung, für die Verbin-
+       dung mit anderen DATCOM-Komponenten (z. B. Wechselrichter,
+       Sensorkarten, etc.)
+
+       Nur bei Fronius Datamanager 2.0 mit Fronius Com Card Funktion!
+       (für die Wechselrichter Fronius IG, Fronius IG Plus, Fronius IG Plus V,
+       Fronius IG Plus A, Fronius CL, Fronius CL USA, Fronius IG 300 - 500)
+(12)   Anschluss Solar Net OUT
+       Fronius Solar Net Ausgang mit roter Farbmarkierung, für die Ver-
+       bindung mit anderen DATCOM-Komponenten (z.B. Wechselrichter,
+       Sensorkarten, etc.)
+
+       Nur bei Fronius Datamanager Box 2.0!
+(13)   Anschluss externe Stromversorgung
+       zum Anschließen einer externen Stromversorgung, wenn die
+       Stromversorgung innerhalb des Fronius Solar Net nicht ausreicht (z.
+       B. wenn sich zu viele DATCOM-Komponenten im Fronius Solar Net
+       befinden).
+
+       WICHTIG! Für eine externe Stromversorgung der Fronius Datama-
+       nager Box 2.0 muss das Netzteil eine sichere Trennung gegenüber
+       Netzspannungs-führenden Teilen aufweisen (SELV oder Class 2 für
+       USA / Canada).
+       Die Ausgangsleistung des Netzteils darf max. 15 VA / 1,25 A betra-
+       gen.
+       Bei ausreichender Stromversorgung leuchtet die LED Versorgung
+       (4) grün.
+       Für eine externe Stromversorgung ausschließlich das Fronius-Netz-
+       gerät verwenden!
+
+       Nur bei Fronius Datamanager Box 2.0!
+
+
+
+
+                                                                                 25
+Schematische       Versorgung durch die Fronius Datamanager 2.0 Steckkarte:
+Verschaltung der
+I/Os
+
+                                                10,7 / 12,8 V DC
+                                                                       (1)         115 - 230 V AC
+                                                                                   12 V DC
+                                                      (2) 300 mA
+
+
+
+
+                                                 D+    +       +         0     2        4         6   8
+
+
+                                                                                                          (3)
+                                                 D-        -       -     1         3    5         7   9
+
+
+
+                   (1)    Netzteil
+                          (nur bei Fronius Datamanager 2.0 mit Fronius Com Card Funktion)
+                   (2)    Strombegrenzung
+                   (3)    Anschluss Solar Net IN
+
+                   115 - 230 V AC:
+                   Fronius IG, Fronius IG Plus, Fronius IG Plus V, Fronius IG Plus A, Fronius CL, Fro-
+                   nius CL USA, Fronius IG 300 - 500
+
+                   12,8 V DC:
+                   Fronius Galvo, Fronius Symo, Fronius Primo
+
+                   Versorgung durch ein externes Netzteil:
+
+
+
+
+                                                                                            (6)
+
+
+                                                 D+    +       +         0     2       4          6   8
+                                     (4)
+
+                    10,7 / 12,8 - 24 V DC        D-    -       -         1         3    5         7   9
+
+
+
+                                                                             (5)
+
+
+
+
+                   (4)    externes Netzteil
+                   (5)    Last
+                   (6)    Schalter
+
+                   Bei Versorgung durch ein externes Netzteil muss das externe Netzteil galvanisch
+                   getrennt sein.
+
+
+
+
+26
+10,7 V DC:
+Fronius IG, Fronius IG Plus, Fronius IG Plus V, Fronius IG Plus A, Fronius CL, Fro-
+nius CL USA, Fronius IG 300 - 500
+
+12, 8 V DC:
+Fronius Galvo, Fronius Symo, Fronius Primo
+
+
+
+
+                                                                                 27
+Technische Daten
+
+Technische Da-   Speicherkapazität                                          bis zu 4096 Tage
+ten
+                 Versorgungsspannung
+                 mit Fronius Com Card Funktion                                 115 - 230 V AC
+                 ohne Fronius Com Card Funktion                                       12 V DC
+                 Energieverbrauch                                                        <2W
+                 Abmessungen
+
+                 Steckkarte                                                132 x 103 x 22 mm
+                                                                             5.2 x 4.1 x 0.9 in.
+
+                 Box                                                       190 x 114 x 53 mm
+                                                                         4.69 x 4.49 x 2.09 in.
+                 Schutzart (Box)                                                          IP 20
+                 Anschluss externe Versorgung (Box)                 12 V DC, max. 1 A, Class 2
+                 Kabelquerschnitt für Anschluss exter-                         0,13 - 1,5 mm²
+                 ne Versorgung (Box)                             AWG 16 - 24 (USA / Canada)
+                 Ethernet (LAN)                                               RJ 45, 100 MBit
+                 WLAN                                                 IEEE 802.11b/g/n Client
+                 RS 422 (Fronius Solar Net)                                              RJ 45
+                 Umgebungstemperatur
+
+                 Steckkarte                                                      -20 - +65 ° C
+                                                                                  -4 - +149 °F
+
+                 Box                                                                0 - 50 ° C
+                                                                                   32 - 122 °F
+                 Solar Net Leistung                                            ca. 3 W
+                                                           max. 3 DATCOM-Komponenten *
+                 I/O Anschuss-Spezifikationen
+
+                 Spannungspegel digitale Eingänge                  low = min. 0 V - max. 1,8 V
+                                                           high = min. 3 V - max. 24 V (+20 %)
+
+                 Eingangsströme digitale Eingänge               je nach Eingangsspannung;
+                                                            Eingangswiderstand = 46 kOhm
+
+                 Schaltvermögen digitale Ausgänge                                        3,2 W
+                 bei Versorgung durch die Datamana-
+                 ger-Steckkarte
+
+                 Fronius IG, Fronius IG Plus, Fronius IG                                 10,8 V
+                 Plus V, Fronius IG Plus A, Fronius CL,
+                 Fronius CL USA, Fronius IG 300 - 500
+
+
+
+
+28
+           Fronius Galvo, Fronius Symo, Fronius                                  12,8 V
+           Primo                                          in Summe für alle 4 digitalen
+                                                                             Ausgänge
+                                                      (abzüglich anderer Solar Net Teil-
+                                                                               nehmer)
+
+           Schaltvermögen digitale Ausgänge                            1 A, 10,7 - 24 V DC
+           bei Versorgung durch ein externes                (je nach externem Netzteil)
+           Netzteil mit min. 10,7 - max. 24 V DC                 pro digitalem Ausgang
+
+           max. schaltbare induktive Lasten an                                    76 mJ
+           den digitalen Ausgängen                                        (pro Ausgang)
+           Modbus RTU                                                    RS485 2-Draht
+
+           Werkseinstellung der RS485-Schnitt-
+           stelle:                                                          9600 Baud
+           Geschwindigkeit                                                     1 Startbit
+           Datenrahmen                                                      8 Datenbits
+                                                                           keine Parität
+                                                                             1 Stoppbit
+
+       *         Bei ausreichender Stromversorgung im Fronius Solar Net leuchtet an je-
+                 der DATCOM-Komponente die grüne LED.
+                 Sollte die grüne LED nicht leuchten, am 12 V Netzgerät-Anschluss einer
+                 externen DATCOM-Komponente das bei Fronius erhältliche Netzgerät
+                 anstecken.
+                 Gegebenenfalls Kabel- und Steckverbindungen überprüfen.
+
+                 Beispiele für externe DATCOM-Komponenten: Fronius String Control,
+                 Fronius Sensor Box, etc.
+
+
+
+
+WLAN       Frequenzbereich                                               2412 - 2462 MHz
+           Benützte Kanäle / Leistung                              Kanal: 1-11 b,g,n HT20
+                                                                       Kanal: 3-9 HT40
+                                                                                 <18 dBm
+           Modulation                              802.11b: DSSS (1Mbps DBPSK, 2Mbps
+                                                               DQPSK, 5.5/11Mbps CCK)
+                                                         802.11g: OFDM (6/9Mbps BPSK,
+                                                      12/18Mbps QPSK, 24/36Mbps 16-
+                                                             QAM, 48/54Mbps 64-QAM)
+                                                    802.11n: OFDM (6.5 BPSK, QPSK, 16-
+                                                                        QAM, 64-QAM)
+
+
+
+
+                                                                                         29
+30
+Fronius Datamanager 2.0 installie-
+              ren
+
+
+
+
+                                     31
+32
+Fronius Datamanager 2.0 in den Wechselrichter
+einsetzen
+
+Allgemeines        Generell muss das Einsetzen der Steckkarten in den Wechselrichter gemäß Be-
+                   dienungsanleitung des jeweiligen Wechselrichters erfolgen. Beachten Sie Si-
+                   cherheitshinweise und Warnhinweise in den Bedienungsanleitungen der Wech-
+                   selrichter.
+
+
+
+Sicherheit
+                         WARNUNG!
+
+                    Gefahr durch Netzspannung und DC-Spannung von den Solarmodulen.
+                    Ein elektrischer Schlag kann tödlich sein.
+                   ▶    Der Anschlussbereich darf nur von lizenzierten Elektro-Installateuren
+                        geöffnet werden.
+                   ▶    Der separate Bereich der Leistungsteile darf nur im spannungsfreien Zu-
+                        stand vom Anschlussbereich getrennt werden.
+                   ▶    Der separate Bereich der Leistungsteile darf nur durch Fronius-geschul-
+                        tes Servicepersonal geöffnet werden.
+                   ▶    Vor sämtlichen Anschlussarbeiten dafür sorgen, dass AC- und DC-Seite
+                        vor dem Wechselrichter spannungsfrei sind, z. B.:
+                   ▶    AC-Sicherungsautomat für den Wechselrichter spannungsfrei schalten
+                   ▶    Solarmodule abdecken
+                   ▶    Die 5 Sicherheitsregeln beachten!
+
+
+                         WARNUNG!
+
+                    Gefahr durch Restspannung von Kondensatoren.
+                    Ein elektrischer Schlag kann tödlich sein.
+                   ▶    Entladezeit der Kondensatoren abwarten.
+
+
+                   Beim Umgang mit Steckkarten die allgemeinen ESD-Bestimmungen beachten.
+
+
+
+Einsteckpositio-   Je nach Wechselrichter ist die Einsteckposition des Fronius Datamanager 2.0
+nen des Fronius    vorgegeben:
+Datamanager 2.0
+                   Wechselrichter         Einsteckposition
+                   Fronius IG 15 - 60     ENS-Steckplatz *)
+                   Fronius IG 300 - 500   ENS-Steckplatz *)
+                   Fronius IG Plus,       äußerst rechts, außer wenn eine NL-MON Steckkarte
+                   Fronius IG Plus V      vorhanden ist
+                   Fronius CL             äußerst rechts, außer wenn eine NL-MON Steckkarte
+                                          vorhanden ist
+                   Fronius Galvo          egal
+                   Fronius Symo           egal
+
+
+
+
+                                                                                                  33
+      Wechselrichter      Einsteckposition
+      Fronius Primo       egal
+
+     *)    Falls am ENS-Steckplatz eine ENS-Steckkarte vorhanden ist: Fronius Da-
+           tamanager 2.0 in den nächsten Steckplatz rechts neben dem ENS-Steck-
+           platz einstecken.
+
+           WICHTIG!
+           Der nächste Steckplatz muss frei bleiben!
+           Eine vorhandene ENS-Steckkarte keinesfalls entfernen!
+
+
+
+
+                            Datamanager
+               ENS
+
+
+
+
+34
+WLAN Antenne montieren und anschließen
+
+Allgemeines          Je nach Wechselrichter muss die WLAN-Antenne im Wechselrichter eingebaut
+                     oder im Außenbereich des Wechselrichters montiert werden.
+
+                     WICHTIG! Öffnen eines Wechselrichters nur entsprechend der Bedienungsanlei-
+                     tung des jeweiligen Wechselrichters! Sicherheitsvorschriften beachten!
+
+
+
+Fronius IG, Froni-                                          1   Befestigungswinkel mittels Dop-
+us IG Plus, Froni-                                              pelklebeband außen am Wechsel-
+us IG Plus V, Fro-                                              richter-Gehäuse oder entspre-
+nius CL: Antenne                                                chend dem Antennenkabel in der
+montieren und                                                   Wechselrichter-Umgebung aufkle-
+anschließen                                                     ben
+
+                              2                                 WICHTIG! Das Doppelklebeband
+                                                                erreicht seine max. Klebefestigkeit
+                                       1
+                                                                erst nach 24 h.
+
+                                                                WICHTIG! Der Befestigungswinkel
+                                                                darf nicht am Wechselrichter-
+                                                                Gehäuse angeschraubt werden.
+                                                                Das Anschrauben des Befesti-
+                                                                gungswinkels in der Wechselrich-
+                                                                ter-Umgebung ist möglich.
+                                                                Schrauben hierfür sind nicht im
+                                                                Lieferumfang enthalten und
+                                                                müssen vom Installateur selbst
+                                                                ausgewählt werden.
+
+                                                            2   Antennenkabel am Antennenso-
+                                                                ckel der Fronius Datamanager 2.0
+                                                                Steckkarte anschließen
+                                                            3   Antennenkabel durch die DAT-
+                                                                COM-Öffnung des Wechselrich-
+                                                                ters nach außen führen
+                                                            4   Falls möglich, Kabel in Zugentlas-
+                                                                tung fixieren
+                                                            5   DATCOM-Öffnung entsprechend
+                                                                der Wechselrichter-Bedienungs-
+                                                                anleitung schließen oder abdich-
+                                                                ten
+                                   2
+
+                                           1
+                         0,9 Nm
+
+
+
+
+                                                                                                 35
+                                                   6   Sechskant-Mutter und Scheibe
+                                                       vom Außengewinde des Anten-
+                                                       nenkabels entfernen
+
+
+
+
+                                       2
+                               1
+
+
+
+
+                                                   7   Antennenkabel durch die Bohrung
+                                                       am Befestigungswinkel führen
+                                   3
+                                                       Scheibe aufsetzen und Sechskant-
+                      4
+
+
+
+
+                                                   8
+                  0,9 Nm                               Mutter aufschrauben
+                                   2
+
+                                                   9   Antenne aufschrauben
+
+
+                           1
+
+
+
+                                               5
+                                           6
+
+
+
+
+Fronius IG USA,   1                                2
+Fronius IG Plus
+                                                                        1
+USA, Fronius IG
+Plus V USA: An-
+tenne montieren
+und anschließen
+
+
+
+
+                                       2
+                               1
+
+
+
+
+36
+        VORSICHT!
+
+Kurzschluss-Gefahr durch ausgebrochene Metallstücke von einer Soll-Bruch-
+stelle.
+Ausgebrochene Metallstücke im Wechselrichter können zu Kurzschlüssen
+führen, wenn der Wechselrichter unter Spannung steht. Beim Ausbrechen von
+Soll-Bruchstellen darauf achten, dass
+▶    keine ausgebrochenen Metallstücke in den Wechselrichter fallen,
+▶    in den Wechselrichter gefallene Metallstücke sofort entfernt werden.
+
+3                                       4
+
+
+
+
+                                                1
+                                                                       19 mm
+                                                                       3/4 in.
+
+
+
+
+           1
+    2
+          0.6 Nm
+          0.74 ft. lb.
+
+
+
+HINWEIS!
+Um beim Einsetzen der Antennenverschraubung in das Wechselrichter-
+Gehäuse die Dichtheit zu gewährleisten, muss der Dichtungsring an der An-
+tennenverschraubung angebracht sein.
+
+5                                       6
+
+
+
+
+                                                         1
+
+                  2
+
+
+
+                             !    !
+
+
+
+
+                         1
+
+
+
+
+                                                                            37
+     7                             8
+
+
+
+
+         8 Nm                              *
+         5.90 ft. lb.
+                                                 1
+
+                                       2                                  3
+                                                                          3
+
+
+
+
+                                  * Biegeradius des Antennenkabels: min. 25,4
+                                  mm / 1 in.
+
+     9                            10
+                        0.9 Nm
+                        8 in-lb
+                                                                      1
+
+                         1
+
+
+
+
+38
+Fronius Datamanager 2.0 im Fronius Solar Net in-
+stallieren
+
+Sicherheit
+                                VORSICHT!
+
+                     Gefahr von schweren Sachbeschädigungen an DATCOM-Komponenten oder
+                     am PC / Laptop durch am Fronius Datamanager 2.0 falsch angeschlossene
+                     Ethernet oder Solar Net Kabel.
+                    ▶    Ethernet-Kabel ausschließlich am Anschluss LAN (blaue Farbmarkierung)
+                         anschließen
+                    ▶    Solar Net Kabel ausschließlich am Anschluss Solar Net IN (rote Farbmar-
+                         kierung) anschließen
+
+
+
+
+Wechselrichter      Fronius IG, Fronius IG Plus, Fronius IG Plus V, Fronius IG Plus A, Fronius CL, Froni-
+mit Fronius Data-   us CL USA, Fronius IG 300 - 500:
+manager 2.0 im
+Fronius Solar Net
+installieren                                                          LAN ***
+                                              2
+
+
+                                                               WLAN
+                                                                                         1
+
+                        DATCOM
+                         IN OUT
+                                                                                 *
+                            5        4                                          IN
+                                                                                         3
+                                                                                **
+
+
+
+
+                    Fronius Galvo, Fronius Symo, Fronius Primo:
+
+
+                                                                                             LAN ***
+
+
+
+                                                                                     1
+
+                                         IN 4
+                                                      3
+                      DATCOM
+                       IN OUT                             OUT
+                                         **
+                                                                                                       2
+                        6        5
+                                                               *
+
+                                                          2x (IN + OUT)
+                                                                                                  WLAN
+                                                  7
+                                                          IN
+
+
+
+
+                                                                                                           39
+                    *             Fronius Solar Net Endstecker, wenn nur ein Wechselrichter mit Fronius
+                                  Datamanager 2.0 mit einem PC vernetzt wird
+                    **            Fronius Solar Net Kabel, wenn ein Wechselrichter mit Fronius Datamana-
+                                  ger 2.0 mit einem PC und weiteren DATCOM-Komponenten vernetzt wird
+                    ***           Ethernet-Kabel nicht im Lieferumfang von Fronius Datamanager 2.0 /
+                                  Fronius Datamanager Box 2.0 enthalten
+
+                                  Verbindung zwischen Datamanager 2.0 und PC via LAN oder WLAN
+
+                        1   Ethernet-Kabel entsprechend der Bedienungsanleitung des Wechselrichters
+                            wie ein Datenkommunikations-Kabel in den Wechselrichter einführen und
+                            verlegen
+                    2       Ethernet-Kabel am Anschluss LAN anstecken
+                    3       Ethernet-Kabel am PC / Laptop oder an einem entsprechenden Netzwerk-
+                            Anschluss anstecken
+                    4       Falls nur ein Wechselrichter mit Fronius Datamanager 2.0 mit einem PC ver-
+                            netzt wird:
+
+                            bei Fronius IG, Fronius IG Plus, Fronius IG Plus V, Fronius IG Plus A, Fronius
+                            CL, Fronius CL USA, Fronius IG 300 - 500:
+                            Fronius Solar Net Endstecker am Anschluss Solar Net IN anstecken
+
+                            bei Fronius Galvo, Fronius Symo, Fronius Primo:
+                            je einen Fronius Solar Net Endstecker am Anschluss Solar Net IN und Solar
+                            Net OUT anstecken
+
+                            Falls außer dem Wechselrichter mit Fronius Datamanager 2.0 noch weitere
+                            DATCOM-Komponenten im Netz folgen:
+                            Fronius Solar Net Kabel am Anschluss Solar Net IN des Fronius Datamanager
+                            2.0 anstecken
+
+                    5       Weitere DATCOM-Komponenten miteinander verkabeln
+
+                            WICHTIG! Am freien IN-Anschluss der letzten DATCOM-Komponente muss
+                            ein Fronius Solar Net Endstecker angesteckt sein.
+
+
+
+Fronius Datama-                            WLAN
+nager Box 2.0 im
+Fronius Solar Net
+installieren
+                                                                                         =
+                                                                2
+
+
+
+
+                                       6
+                                                                          2
+
+
+
+
+                                                                     *
+                                                                              2
+
+
+
+
+                            DATCOM
+                             IN OUT
+                                                                         **
+                                                                                  OUT
+                                                                                                      ~
+                                                                    IN                                OUT
+                                                      LAN ***                                IN
+                              3        3                                                          3   3
+                                                                                                          **
+                    *                                                                                          *
+
+                                  **
+
+
+
+
+                    *             Fronius Solar Net Endstecker bei der letzten DATCOM-Komponente
+                    **            Fronius Solar Net Kabel, wenn eine Fronius Datamanager Box 2.0 mit ei-
+                                  nem PC und weiteren DATCOM-Komponenten vernetzt wird
+
+
+
+40
+***      Ethernet-Kabel nicht im Lieferumfang von Fronius Datamanager 2.0 /
+         Fronius Datamanager Box 2.0 enthalten
+
+         Verbindung zwischen Datamanager 2.0 und PC via LAN oder WLAN
+
+ 1    Ethernet-Kabel am Anschluss LAN anstecken
+2     Ethernet-Kabel am PC / Laptop oder an einem entsprechenden Netzwerk-
+      Anschluss anstecken
+3     Fronius Solar Net Kabel am Anschluss Solar Net OUT der Fronius Datamana-
+      ger Box 2.0 anstecken
+4     Fronius Solar Net Kabel gemäß Bedienungsanleitung des Wechselrichters
+      am Anschluss Solar Net IN des Wechselrichters anstecken
+5     Weitere DATCOM-Komponenten miteinander verkabeln
+
+      WICHTIG! An jedem freien IN- oder OUT-Anschluss der letzten DATCOM-
+      Komponenten muss ein Fronius Solar Net Endstecker angesteckt sein.
+
+
+
+
+                                                                              41
+Verkabelung Fronius Solar Net
+
+Fronius Solar Net   Wechselrichter mit Fronius Datamanager, Fronius Com Card, DATCOM Kompo-
+Teilnehmer          nenten mit externem Gehäuse oder andere DATCOM-Komponenten werden im
+                    folgenden als Fronius Solar Net Teilnehmer bezeichnet.
+
+
+
+Verkabelung der     Die Datenverbindung der Fronius Solar Net Teilnehmer erfolgt über eine 1:1-Ver-
+Fronius Solar Net   bindung mit 8-poligen Datenkabeln und RJ-45 Steckern.
+Teilnehmer          Die Gesamt-Leitungslänge in einem Fronius Solar Net Ring darf max. 1000 m be-
+                    tragen.
+
+
+
+Voraussetzun-       Für die Verkabelung der Fronius Solar Net Teilnehmer dürfen ausschließlich ge-
+gen für die Solar   schirmte CAT5 (neu) und CAT5e (alt) Kabeln nach ISO 11801 und EN50173 ver-
+Net Datenkabel      wendet werden.
+
+                    WICHTIG! U/UTP Kabel nach ISO/IEC-11801 dürfen nicht verwendet werden!
+
+                     Zulässige Kabel:
+                     -   S/STP                      -     F/FTP              -   F/UTP
+                     -   F/STP                      -     SF/FTP             -   U/FTP
+                     -   S/FTP                      -     S/UTP              -   U/STP
+
+                    Der Schirm muss dabei auf einen für CAT5 zugelassenen geschirmten Stecker
+                    gecrimpt werden.
+
+                    Da die Adern in Ethernet-Kabeln verdrillt sind, die korrekte Zuteilung der verdrill-
+                    ten Adernpaare gemäß Verkabelung nach TIA/EIA-568B beachten:
+
+                     Kontakt Fronius Solar Net          Paar-Nr.   Farbe
+
+                     1    +12 V                            3                 weiß / oranger Strich
+
+                                                                             orange / weißer Strich
+                     2    GND                              3
+                                                                             oder orange
+
+                     3    TX+ IN, RX+ OUT                  2                 weiß / grüner Strich
+
+                                                                             blau / weißer Strich
+                     4    RX+ IN, TX+ OUT                  1
+                                                                             oder blau
+
+                     5    RX- IN, TX- OUT                  1                 weiß / blauer Strich
+
+                                                                             grün / weißer Strich
+                     6    TX- IN, RX- OUT                  2
+                                                                             oder grün
+
+                     7    GND                              4                 weiß / brauner Strich
+
+                                                                             braun / weißer Strich
+                     8    +12 V                            4
+                                                                             oder braun
+                    Verkabelung nach TIA/EIA-568B
+
+
+
+
+42
+                  -   Die korrekte Adernbelegung beachten.
+                  -   Bei selbstständiger Erdanbindung (z. B. in Patch-Panelen) darauf achten,
+                      dass der Schirm nur auf einer Seite des Kabels geerdet ist.
+
+                  Generell die folgenden Normen für strukturierte Verkabelung einhalten:
+                  -  für Europa die EN50173-1
+                  -  international die ISO/IEC 11801:2002.
+                  -  für Nordamerika die TIA/EIA 568
+
+                  Es gelten die Regeln für die Anwendung für Kupferkabel.
+
+
+
+Vorkonfektio-     Bei Fronius sind folgende vorkonfektionierte Datenkabel verfügbar:
+nierte Datenka-   -   CAT5 Kabel 1 m ... 43,0004,2435
+bel               -   CAT5 Kabel 20 m ... 43,0004,2434
+                  -   CAT5 Kabel 60 m ... 43,0004,2436
+
+                  Bei den angeführten Kabeln handelt es sich um 8-polige 1:1 LAN Netzwerk-Kabel,
+                  geschirmt und verdrillt, inkl. RJ45 Steckern.
+
+                  WICHTIG! Die Datenkabel sind nicht UV-beständig. Beim Verlegen im Freien die
+                  Datenkabel vor Sonnenbestrahlung schützen.
+
+
+
+
+                                                                                                 43
+Fronius Datamanager 2.0 installieren - Übersicht
+
+Sicherheit
+                          WARNUNG!
+
+                   Gefahr durch Fehlbedienung.
+                   Schwerwiegende Personen- und Sachschäden möglich.
+                  ▶   Beschriebene Funktionen erst anwenden, wenn diese Bedienungsanlei-
+                      tung vollständig gelesen und verstanden wurde.
+                  ▶   Beschriebene Funktionen erst anwenden, wenn sämtliche Bedienungsan-
+                      leitungen der Systemkomponenten, insbesondere Sicherheitsvorschriften
+                      vollständig gelesen und verstanden wurden!
+
+
+                  Die Installation des Fronius Datamanager 2.0 setzt Kenntnisse aus der Netzwerk-
+                  Technologie voraus.
+
+
+
+Erst-Inbetrieb-   Mit der Fronius Solar.start App kann die Erst-Inbetriebnahme des Fronius Data-
+nahme mittels     manager 2.0 wesentlich erleichtert werden. Die Fronius Solar.start App ist im je-
+Web-Browser       weiligen App-Store verfügbar.
+
+
+
+
+                  Für die Erst-Inbetriebnahme des Fronius Datamanager 2.0
+                  -   muss die Fronius Datamanager 2.0 Steckkarte im Wechselrichter eingebaut
+                      sein,
+                      oder
+                  -   eine Fronius Datamanager Box 2.0 muss sich im Fronius Solar Net Ring be-
+                      finden.
+
+                  WICHTIG! Für den Verbindungsaufbau zum Fronius Datamanager 2.0 muss das
+                  jeweilige Endgerät (z. B. Laptop, Tablet, etc.) wie folgt eingestellt sein:
+                  -  „IP-Adresse automatisch beziehen (DHCP)“ muss aktiviert sein
+
+
+                          WARNUNG!
+
+                   Gefahr durch Netzspannung und DC-Spannung von den Solarmodulen.
+                   Ein elektrischer Schlag kann tödlich sein.
+                  ▶    Vor dem Öffnen des Wechselrichters Entladezeit der Kondensatoren ab-
+                       warten.
+                  ▶    Wechselrichter nur entsprechend der Bedienungsanleitung des Wechsel-
+                       richters öffnen.
+                  ▶    Sicherheitsvorschriften und Sicherheitshinweise in der Bedienungsanlei-
+                       tung des Wechselrichters beachten und befolgen.
+
+
+                   1   Wechselrichter mit Fronius Datamanager 2.0 oder Fronius Datamanager Box
+                       2.0 im Fronius Solar Net verkabeln
+
+                       WICHTIG! Die Wechselrichter Fronius IG, Fronius IG Plus, Fronius IG Plus V,
+                       Fronius IG Plus A, Fronius CL, Fronius CL USA und Fronius IG 300 - 500
+                       müssen sich immer am Anfang oder Ende des Fronius Solar Net Ringes be-
+                       finden.
+
+
+
+
+44
+2   Nur bei Fronius Galvo / Fronius Symo / Fronius Primo und bei Vernetzung
+    mehrerer Wechselrichter im Fronius Solar Net:
+    Fronius Solar Net Master / Slave Schalter an der Fronius Datamanager 2.0
+    Steckkarte richtig setzen
+    -   ein Wechselrichter mit Fronius Datamanager 2.0 = Master
+    -   alle anderen Wechselrichter mit Fronius Datamanager 2.0 = Slave (die
+        LEDs an den Fronius Datamanager 2.0 Steckkarten sind aus)
+
+3   Gerät in den Service-Modus schalten
+
+    Wechselrichter mit Fronius Datamanager 2.0 Steckkarte:
+    -  IP-Schalter an der Fronius Datamanager 2.0 Steckkarte in Position A
+       schalten
+
+
+
+
+    oder
+    -  WIFI Access Point über das Setup-Menü des Wechselrichters aktivieren
+       (das Ausführen dieser Funktion ist von der Wechselrichter-Software
+       abhängig)
+
+
+                             Stand by
+                             WiFi Access Point
+                             DATCOM
+                             USB
+                             Clock
+
+
+
+
+    Fronius Datamanager Box 2.0:
+    -   IP-Schalter an der Fronius Datamanager Box 2.0 in Position A schalten
+
+
+
+
+Der Wechselrichter / die Fronius Datamanager Box 2.0 baut den WLAN Access
+Point auf. Der WLAN Access Point bleibt 1 Stunde geöffnet.
+
+4   Endgerät mit dem WLAN Access Point verbinden
+
+    SSID = FRONIUS_240.xxxxx (5-8 stellig)
+
+    -   nach einem Netz mit dem Namen „FRONIUS_240.xxxxx“ suchen
+    -   Verbindung zu diesem Netz herstellen
+    -   Passwort vom Display des Wechselrichters eingeben
+
+    (oder Endgerät und Wechselrichter mittels Ethernet-Kabel verbinden)
+
+
+
+                                                                                45
+     5   Im Browser eingeben:
+         http://datamanager
+         oder
+         192.168.250.181 (IP-Adresse für WLAN-Verbindung)
+         oder
+         169.254.0.180 (IP-Adresse für LAN-Verbindung)
+
+     Die Startseite des Inbetriebnahme-Assistenten wird angezeigt.
+
+
+
+
+     Der Techniker Assistent ist für den Installateur vorgesehen und enthält Normen-
+     spezifische Einstellungen.
+     Wird der Techniker Assistent ausgeführt, unbedingt das vergebene Service-
+     Passwort notieren. Dieses Service-Passwort ist für die Einstellung der
+     Menüpunkte EVU-Editor und Zähler erforderlich.
+     Wird der Techniker Assistent nicht ausgeführt, sind keinerlei Vorgaben zur Leis-
+     tungsreduzierung eingestellt.
+
+     Die Ausführung des Solar.web Assistenten ist obligatorisch!
+
+     6   Bei Bedarf den Techniker Assistenten ausführen und den Anweisungen fol-
+         gen
+
+     7   Den Solar.web Assistenten ausführen und den Anweisungen folgen
+
+     Die Fronius Solar.web Startseite wird angezeigt.
+     oder
+     Die Webseite des Fronius Datamanager 2.0 wird angezeigt.
+
+
+
+
+46
+Verbindung zum Fronius Datamana-
+        ger 2.0 herstellen
+
+
+
+
+                               47
+48
+Verbindung zum Fronius Datamanager 2.0 via
+Web-Browser
+
+Allgemeines       Die Verbindung zum Fronius Datamanager 2.0 via Web-Browser eignet sich vor
+                  allem für das Abrufen aktueller Werte durch viele PC-Nutzer in einem LAN (z. B.
+                  Firmen-Netzwerke, Schulen, etc.).
+
+                  Auf der Web-Seite des Fronius Datamanager 2.0 können z. B. Gesamt- und Ta-
+                  geserträge abgelesen oder Wechselrichter verglichen werden.
+
+
+
+Voraussetzun-     -       mindestens LAN- oder WLAN-Verbindung
+gen               -       Web-Browser (z. B. Microsoft Internet Explorer IE >/= 9.0, Firefox 4, Google
+                          Chrome 27.0, etc.)
+                  -       PC / Laptop im selben Netzwerk-Segment, wie der Fronius Datamanager 2.0
+
+
+
+Verbindung zum        1   Web-Browser öffnen
+Fronius Datama-       2   Im Adressfeld die IP Adresse oder den Hostnamen und den Domainnamen
+nager 2.0 via             des Fronius Datamanager 2.0 eingeben
+Web-Browser
+herstellen                Die Web-Seite des Fronius Datamanager 2.0 wird angezeigt.
+
+
+
+
+                           Verbrauch         1727,9 W
+                           Netzeinspeisung   2464,1 W
+
+
+
+
+                                                                                                    49
+Verbindung zum Fronius Datamanager 2.0 via In-
+ternet und Fronius Solar.web
+
+Allgemeines        Durch die Verbindung zum Fronius Datamanager 2.0 via Internet und Fronius
+                   Solar.web können von jedem Punkt der Erde mit Internet-Zugang Archivdaten
+                   und aktuelle Daten einer Photovoltaik-Anlage über das Internet abgerufen wer-
+                   den.
+                   Weiters besteht die Möglichkeit, anderen Benutzern mittels Gastzugriff Einblick
+                   in die Photovoltaik-Anlage zu geben sowie mehrere Anlagen miteinander zu ver-
+                   gleichen.
+
+
+
+Funktionsbe-       Der Fronius Datamanager 2.0 ist mit dem Internet verbunden (z. B. über einen
+schreibung         DSL Router). Der Fronius Datamanager 2.0 meldet sich regelmäßig beim Fronius
+                   Solar.web an und schickt täglich die gespeicherten Daten.
+                   Fronius Solar.web kann aktiv Kontakt mit dem Fronius Datamanager aufnehmen,
+                   z. B. um aktuelle Daten anzuzeigen.
+
+
+
+Voraussetzun-      -       Internet-Zugang
+gen                -       Web-Browser
+
+                           WICHTIG! Der Fronius Datamanager 2.0 kann sich nicht selbst ins Internet
+                           verbinden. Bei einem DSL-Anschluss muss ein Router die Verbindung ins In-
+                           ternet aufbauen.
+
+                   -       Registrierung der Photovoltaik-Anlage bei Fronius Solar.web.
+
+                   -       Für das Abrufen aktueller Daten im Fronius Solar.web muss beim Fronius
+                           Datamanager 2.0 in den Einstellungen unter Solar.web die Auswahlmöglich-
+                           keit „ja“ bei „Aktuelle Daten an Solar.web senden“ aktiviert sein.
+
+                   -       Für das Abrufen von Archivdaten im Fronius Solar.web muss beim Fronius
+                           Datamanager 2.0 die Auswahlmöglichkeit „täglich“ oder „stündlich“ unter
+                           „Archivdaten an Solar.web senden“ aktiviert sein.
+
+
+
+Daten vom Froni-   Um aktuelle Daten und Archivdaten vom Fronius Datamanager 2.0 mittels Froni-
+us Datamanager     us Solar.web abzurufen:
+2.0 via Internet
+und Fronius So-        1   Fronius Solar.web starten: http://www.solarweb.com
+lar.web abrufen
+                           Nähere Informationen zu Fronius Solar.web gemäß Online-Hilfe.
+
+
+
+
+50
+ Aktuelldaten, Services und Einstel-
+lungen am Fronius Datamanager 2.0
+
+
+
+
+                                   51
+52
+Die Web-Seite des Fronius Datamanager 2.0
+
+Web-Seite des       Auf der Web-Seite des Fronius Datamanager 2.0 werden folgende Daten ange-
+Fronius Datama-     zeigt:
+nager 2.0 - Über-
+sicht               (1)     Aktuelle Vergleichsansicht aller Wechselrichter im Fronius Solar Net
+                            Ring
+                    (2)     Anlagenübersicht: Aktuell / Tag / Jahr / Gesamt
+                    (3)     Wechselrichter
+                    (4)     Sensoren
+                    (5)     Services
+                            Systeminformationen, Netzwerkdiagnose, Firmware-Update, Assisten-
+                            ten aufrufen
+                    (6)     Kontakt
+                            Feedback senden
+                    (7)     Das Menü Einstellungen
+                    (8)     Weitere Einstellmöglichkeiten
+
+
+
+                                                                    (8)
+                                                                                               (5)
+                                    (2)
+
+
+
+
+                                                                   (1)                         (6)
+
+                                                                                               (7)
+
+
+
+
+                                   (3)
+                                   (4)
+
+
+
+
+Login               Die Einstellmöglichkeiten auf der Web-Seite des Fronius Datamanager 2.0 sind
+                    abhängig von der Berechtigung des Benutzers (siehe Kapitel Einstellungen -
+                    Passwörter auf Seite 63).
+
+                    Mit Benutzernamen und Passwort anmelden:
+                     1    Benutzer für die Anmeldung auswählen.
+                    2     Passwort für den gewählten Benutzer eingeben.
+                    3     Die Schaltfläche Login anklicken.
+
+                    Der Benutzer ist angemeldet.
+
+
+
+                                                                                                     53
+Passwort           Über die Funktion Passwort vergessen? im Login-Fenster kann das Passwort für
+zurücksetzen       den gewählten Benutzer zurückgesetzt werden.
+
+                   Entsperrungsschlüssel beantragen und neues Passwort speichern:
+                    1   Benutzer, für den das Passwort zurückgesetzt werden soll, auswählen.
+                    2   Die „Challenge“ (sechsstellige Nummer) und Datalogger-ID (unter dem Sym-
+                        bol zu finden, siehe Kapitel Weitere Einstellmöglichkeiten auf Seite 54)
+                        notieren.
+                    3   Fronius TechSupport kontaktieren und die „Challenge“ sowie die Datalogger-
+                        ID bekannt geben.
+                    4   Den von Fronius TechSupport erhaltenen Entsperrungsschlüssel in das Ein-
+                        gabefeld Schlüssel eingeben.
+                    5   Ein neues Passwort in die Eingabefelder Passwort und Passwort wiederho-
+                        len eingeben.
+                    6   Die Schaltfläche Speichern anklicken.
+
+                   Das neue Passwort ist gespeichert.
+
+
+
+Das Menü Ein-      Nach dem Anklicken von Einstellungen wird auf der Web-Seite des Fronius Da-
+stellungen         tamanager 2.0 das Menü Einstellungen geöffnet.
+                   Im Menü Einstellungen erfolgt die Konfiguration des Fronius Datamanager 2.0.
+
+                   ALLGEMEIN *             Einstellen und Ansehen von Menüpunkten generell
+
+                   PASSWÖRTER
+                                           1    Verbindung zum Fronius Datamanager 2.0 herstellen
+                   NETZWERK
+                                           2    Einstellungen anklicken
+                   FRONIUS SOLAR.WEB       3    Mit den Benutzernamen (admin oder service) anmel-
+                                                den (siehe Kapitel Login auf Seite 53)
+                   IO-ZUORDNUNG
+                                           4    Gewünschten Menüpunkt anklicken
+                   LASTMANAGEMENT
+                                                Der gewünschte Menüpunkt wird geöffnet.
+                   PUSH SERVICE
+                                           5    Menüpunkt ansehen oder entsprechend bearbeiten.
+                   MODBUS                  6    Falls vorhanden, die Ausführ-Schaltfläche klicken (z.
+                                                B. Speichern, Synchronisieren, etc.)
+                   WECHSELRICHTER
+
+                                                Die geänderten Daten werden übernommen.
+                   FRONIUS SENSOR CARDS
+                                     DS
+
+
+                   ZÄHLER **
+
+
+                   EVU-EDITOR **
+                                           *        ausgewählter Menüpunkt
+                   Menüpunkte im Menü
+                   Einstellungen           **       Die Menüpunkte Zähler und EVU Editor sind
+                                                    durch das Service-Passwort geschützt.
+
+
+
+
+Weitere Ein-       Auf der Web-Seite des Fronius Datamanager 2.0 befinden sich im rechten obe-
+stellmöglichkei-   ren Bereich folgende weitere Einstellmöglichkeiten:
+ten
+
+
+
+54
+Systeminformationen:
+Datalogger-ID, Software-Version, Firmware-Update suchen, Solar
+Net Verbindung, Solar.web Verbindung
+Hilfe:
+-   Software Betriebsanleitung
+-   Fronius Solar-Channel
+Inhalt erweitern:
+Der Bereich des Menüs Aktuelldaten / Einstellungen wird ausge-
+blendet
+
+Benachrichtigungen anzeigen
+
+Sprache:
+zum Einstellen der Sprache
+
+Die Web-Seite des Fronius Datamanager 2.0 wird entweder in der
+Sprache des vorhandenen Browsers oder in der zuletzt ausgewähl-
+ten Sprache angezeigt.
+
+
+
+
+                                                                  55
+Aktuelldaten am Fronius Datamanager 2.0
+
+Aktuelle Ver-       In der aktuellen Vergleichsansicht werden mehrere Wechselrichter einer Photo-
+gleichsansicht      voltaikanlage miteinander verglichen.
+
+                    Die aktuelle AC-Leistung der Wechselrichter wird als Prozentwert der an den je-
+                    weiligen Wechselrichter angeschlossenen Solarmodul-Leistung als Balken in ei-
+                    nem Diagramm angezeigt. Für jeden Wechselrichter wird ein Balken angezeigt.
+                    Die Balkenfarbe signalisiert den Leistungsbereich der Wechselrichter:
+
+                     blau:        die Wechselrichter-Leistung entspricht der Durchschnittsleis-
+                                  tung aller Wechselrichter
+                     gelb:        die Wechselrichter-Leistung weicht geringfügig von der Durch-
+                                  schnittsleistung aller Wechselrichter ab
+                                  (50 - 90 % vom Durchschnitt)
+                     rot:         die Wechselrichter-Leistung weicht stark von der Durch-
+                                  schnittsleistung aller Wechselrichter ab oder ein Fehler ist im
+                                  Wechselrichter aufgetreten
+                                  (< 50 % vom Durchschnitt)
+
+
+
+
+Anlagenüber-        Die Anlagenübersicht enthält:
+sicht               -   die aktuellen Leistungsdaten einer Photovoltaikanlage
+                    -   die aktiven Geräte
+                    -   die produzierte Energie pro Tag, pro Jahr und gesamt
+                    -   den Ertrag pro Tag, pro Jahr und gesamt
+
+                    Die Werte für Verbrauch und Netzeinspeisung werden nur angezeigt, wenn am
+                    Wechselrichter ein Zähler konfiguriert wird und wenn der Zähler gültige Daten
+                    schickt.
+
+
+
+Ansicht Wech-       Ansicht Wechselrichter
+selrichter / Sen-   In der Ansicht Wechselrichter werden alle im System befindlichen Wechselrich-
+soren               ter angezeigt.
+                    Durch Anklicken eines Wechselrichters oder des entsprechenden Balkens in der
+                    Vergleichsansicht werden die aktuellen Daten des Wechselrichters angezeigt.
+
+
+                    Ansicht Sensoren
+                    In der Ansicht Sensoren werden alle im System befindlichen Sensor Cards / Bo-
+                    xes angezeigt.
+
+
+
+
+56
+Services - Systeminformationen
+
+Systeminforma-   Die Seite Systeminformationen enthält verschiedene Informationen zum Sys-
+tionen           tem.
+
+                 Zusätzlich gibt es folgende Schaltflächen:
+                 -  Schaltfläche Datalogger Neustart
+                    zum Neustarten des Datamanagers / der Anlagenüberwachung
+                 -  Schaltfläche Auf Werkseinstellungen zurücksetzen mit den Aus-
+                    wahlmöglichkeiten:
+                    -    alle Einstellungen außer Netzwerk
+                         zum Zurücksetzen des Datamanagers (Anlagenüberwachung) auf
+                         Werkseinstellungen.
+                         Die Netzwerk-Einstellungen sowie alle durch den Service-User
+                         geschützten Punkte (EVU-Editor, Zählereinstellungen und das Service-
+                         Passwort) bleiben erhalten
+                    -    alle Einstellungen
+                         zum Zurücksetzen des Datamanagers (Anlagenüberwachung) und der
+                         Netzwerkeinstellungen auf Werkseinstellungen.
+                         Alle durch den Service-User geschützten Punkte (EVU-Editor, Zählerein-
+                         stellungen und das Service-Passwort) bleiben erhalten
+
+                 WICHTIG! Wird der Datamanager (Anlagenüberwachung) auf Werkseinstellun-
+                 gen zurückgesetzt, müssen die Zeit- und Datumseinstellungen kontrolliert wer-
+                 den.
+
+
+
+
+                                                                                             57
+Services - Netzwerkdiagnose
+
+Netzwerkdiagno-   Unter Services / Netzwerkdiagnose befinden sich Funktionen, die zur Diagnose
+se                und Behebung von Netzwerk-Problemen hilfreich sind. Es können Ping- und
+                  Traceroute-Befehle ausgeführt werden.
+
+                  Ping-Befehl
+                  mit einem Ping-Befehl kann überprüft werden, ob ein Host erreichbar ist und
+                  wieviel Zeit die Datenübertragung in Anspruch nimmt.
+
+                  Ping-Befehl senden:
+                   1   In das Feld Host: einen Hostnamen oder eine IP-Adresse eingeben
+                  2    Schaltfläche ping klicken
+                       -  Ping-Befehl wird gesendet
+                       -  die ermittelten Daten werden angezeigt
+
+                  Traceroute-Befehl
+                  mit einem Traceroute-Befehl kann ermittelt werden, über welche Zwischensta-
+                  tionen Daten zum Host übermittelt werden.
+
+                  Traceroute-Befehl senden:
+                   1   In das Feld Host: einen Hostnamen oder eine IP-Adresse eingeben
+                  2    Schaltfläche traceroute klicken
+                       -  Traceroute-Befehl wird gesendet
+                       -  die ermittelten Daten werden angezeigt
+
+
+
+
+58
+Services - Firmware-Update
+
+Allgemeines      Unter Services / Firmware-Update kann die Firmware des Datamanagers aktua-
+                 lisiert werden. Ein Firmware-Update kann via LAN oder Web ausgeführt werden.
+
+
+
+Automatisch      WICHTIG! Für das Automatische Suchen nach Updates ist eine Internet-Verbin-
+nach Updates     dung erforderlich.
+suchen
+                 Ist die Auswahlmöglichkeit automatisch nach Updates suchen aktiviert, sucht
+                 der Datamanager einmal pro Tag automatisch nach Updates. Sind neue Updates
+                 verfügbar, werden diese als Nachricht bei den weiteren Einstellmöglichkeiten
+                 der Webseite angezeigt.
+
+
+
+Manuell nach     Ist die Auswahlmöglichkeit automatisch nach Updates suchen deaktiviert, wer-
+Updates suchen   den Updates nicht automatisch gesucht.
+
+                  1   Um manuell nach Updates zu suchen, die Schaltfläche jetzt prüfen drücken
+
+
+
+Firmware-Up-      1   Mittels Web-Browser die Webseite des Datamanagers öffnen
+date via Web     2    Unter Services Firmware-Update öffnen
+ausführen
+                 3    Update via Web auswählen
+                 4    Schaltfläche Update durchführen klicken
+
+                      Die Sicherheitsabfrage für das Update wird angezeigt
+                 5    Schaltfläche Ja klicken
+
+                      Das Update wird durchgeführt, der Update-Fortschritt wird als Balken und
+                      als Prozentwert angezeigt.
+                 6    Nach einem erfolgreich durchgeführten Update die Schaltfläche Überneh-
+                      men / Speichern       klicken
+
+                 Sollte die Verbindung zum Server fehlschlagen:
+                 -   für die Dauer des Updates die Firewall deaktivieren
+                 -   erneut versuchen
+
+                 WICHTIG!
+                 Wird für die Verbindung zum Internet ein Proxyserver verwendet:
+                 ▶  muss die Auswahlmöglichkeit Proxyserver für Web-Update verwenden
+                    aktiviert sein
+                 ▶  müssen die geforderten Daten eingegeben werden
+
+
+
+
+Firmware-Up-      1   LAN-Verbindung zwischen PC / Laptop und Datamanager herstellen
+date via LAN     2    Aktuelle Firmware von der Fronius-Homepage herunterladen
+ausführen
+
+
+
+
+                                                                                                 59
+     3    Die heruntergeladene Update-Datei auf dem PC / Laptop ausführen
+
+          Ein Webserver wird gestartet, von dem der Datamanager die benötigten Da-
+          teien herunterlädt.
+     4    Mittels Web-Browser die Webseite des Datamanagers öffnen
+     5    Unter ServicesFirmware-Update öffnen
+     6    Update via LAN auswählen
+     7    IP-Adresse des PC / Laptops eingeben
+     8    Schaltfläche Update durchführen klicken
+
+          Die Sicherheitsabfrage für das Update wird angezeigt.
+     9    Schaltfläche Ja klicken
+
+          Das Update wird durchgeführt, der Update-Fortschritt wird als Balken und
+          als Prozentwert angezeigt.
+     10   Nach einem erfolgreich durchgeführten Update die Schaltfläche Überneh-
+          men / Speichern       klicken
+
+     Das Update ist beendet, wenn die „LED Versorgung“ wieder grün leuchtet.
+
+     Sollte die Verbindung zum Server fehlschlagen:
+     -   für die Dauer des Updates die Firewall deaktivieren
+     -   erneut versuchen
+
+
+
+
+60
+Services - Assistenten aufrufen
+
+Assistenten auf-   Unter Assistenten aufrufen können der Solar.web Assistent und der Techniker
+rufen              Assistent erneut aufgerufen und ausgeführt werden.
+
+
+
+
+                                                                                                 61
+Einstellungen - Allgemein
+
+Allgemein   Unter Vergütung kann der Verrechnungssatz pro kWh, die Währung und die Be-
+            zugskosten pro kWh für die Errechnung des Ertrages eingegeben werden. Der
+            Ertrag wird in der aktuellen Gesamtansicht angezeigt.
+
+            Unter Systemzeit kann das Datum, die Stunde und die Minuten eingegeben wer-
+            den.
+            Durch Klicken der Schaltfläche Synchronisieren wird die in den Eingabefeldern
+            der Webseite des Datamanagers angezeigte Zeit an die Zeit des Betriebssyste-
+            mes angepasst.
+            Zum Übernehmen der Zeit Schaltfläche Übernehmen / Speichern           klicken.
+
+            Unter Zeitzonen Einstellungen kann die Region und der Ort für die Zeitzone ein-
+            gestellt werden.
+
+            Die Eingabe der mit * gekennzeichneten Felder ist obligatorisch.
+
+
+
+
+62
+Einstellungen - Passwörter
+
+Allgemeines   Durch die Vergabe von Passwörtern wird der Zugriff auf den Fronius Datamana-
+              ger 2.0 geregelt.
+              Hierfür stehen 3 unterschiedliche Passwort-Typen zur Verfügung:
+              -   das Administrator-Passwort
+              -   das Service-Passwort
+              -   das Benutzer-Passwort
+
+
+
+Passwörter    Administrator-Passwort
+              Benutzername = admin
+
+              Mit dem bei der Inbetriebnahme gesetzten Administrator-Passwort hat der Be-
+              nutzer sowohl Lese- als auch Einstellrechte. Der Menüpunkt Einstellungen lässt
+              sich vom Benutzer öffnen, alle Einstellungen mit Ausnahme von EVU-Editor und
+              Zähler lassen sich durchführen.
+
+              Bei gesetztem Administrator-Passwortes muss der Benutzer Benutzernamen
+              und Passwort angeben, wenn er den Menüpunkt Einstellungen öffnen will.
+
+              Service-Passwort
+              Benutzername = service
+
+              Das Service-Passwort wird üblicherweise beim Inbetriebnahme-Assistenten
+              vom Servicetechniker oder Anlagen-Installateur vergeben und bietet Zugriff auf
+              Anlagen-spezifische Parameter. Das Service-Passwort ist erforderlich, um Ein-
+              stellungen am Zähler und am EVU Editor durchzuführen. Solange kein Service-
+              Passwort vergeben wurde, ist kein Zugriff auf die Menüpunkte Zähler und EVU
+              Editor möglich.
+
+              Benutzer-Passwort
+              Nach Aktivieren des Auswahlfeldes Lokale Anlagenseite sichern wird das Benut-
+              zer-Passwort angezeigt, Benutzername = user.
+
+              Wird ein Benutzerpasswort vergeben, so hat der Benutzer nur Leserechte. Der
+              Menüpunkt Einstellungen lässt sich vom Benutzer nicht öffnen.
+
+              Bei Vergabe eines Benutzer-Passwortes muss der Benutzer bei jeder Verbin-
+              dung Benutzernamen und Kennwort angeben.
+
+
+
+
+                                                                                            63
+Einstellungen - Netzwerk
+
+Internet via                                                Die gefundenen Netzwerke werden
+WLAN                                                        angezeigt.
+
+
+
+                   Mit einem Klick auf den Refresh-Button wird eine erneute Suche nach
+                   verfügbaren WLAN-Netzwerken ausgeführt.
+
+                   Versteckte Netzwerke können über das Menü WLAN Einstellungen > WLAN hin-
+                   zufügen hinzugefügt werden.
+
+                   Schaltfläche Einrichten - zum Speichern eines ausgewählten WLAN-Netzwer-
+                   kes.
+                   Nach Klicken der Schaltfläche öffnet sich das Fenster „WLAN Verbindung“
+
+                   Schaltfläche Entfernen - zum Löschen eines gespeicherten WLAN-Netzwerkes.
+
+                   Schaltfläche WLAN IP konfigurieren - Nach Klicken der Schaltfläche öffnet sich
+                   das Fenster IP konfigurieren mit den gleichen Einstellmöglichkeiten wie bei einer
+                   LAN-Verbindung.
+
+                   Schaltfläche Verbinden via WPS - zum Verbinden ins WLAN via WPS ohne
+                   WLAN Passwort:
+                   1. WPS am WLAN Router aktivieren (siehe Dokumentation des WLAN Routers)
+                   2. Schaltfläche Verbinden via WPS klicken
+                   3. Die WLAN Verbindung wird automatisch hergestellt
+
+
+
+Internet via LAN
+
+
+
+
+                   Einstellmöglichkeiten:
+                   -   Adresse beziehen - statisch
+                       Der Anwender muss eine fixe IP-Adresse für den Datamanager (Anla-
+                       genüberwachung), die Subnet-Mask, die Gateway-Adresse und die DNS-
+                       Server Adresse (vom Provider) eingeben.
+                   -   Adresse beziehen - dynamisch
+                       Der Datamanager (Anlagenüberwachung) holt sich die IP-Adresse von ei-
+                       nem DHCP-Server (DHCP = Dynamic Host Configuration Protocol).
+                       Der DHCP-Server muss so konfiguriert sein, dass der Datamanager (Anla-
+                       genüberwachung) immer die selbe IP-Adresse zugewiesen bekommt. Somit
+                       weiß man immer, unter welcher IP-Adresse der Datamanager (Anlagenüber-
+                       wachung) erreichbar ist.
+                       Falls der DHCP-Server die Funktion DNS dynamic updates unterstützt, kann
+                       dem Datamanager (Anlagenüberwachung) im Feld Hostname ein Name ge-
+                       geben werden. Die Verbindung zum Datamanager (Anlagenüberwachung)
+                       kann anstelle der IP-Adresse über den Namen erfolgen.
+                       z. B.: Hostname = musteranlage, Domainname = fronius.com
+                       Der Datamanager (Anlagenüberwachung) ist über die Adresse „musteranla-
+                       ge.fronius.com“ erreichbar.
+
+
+
+
+64
+Lokales Netz-
+werk via Access-
+Point
+
+                   Der Datamanager (Anlagenüberwachung) dient als Access-Point. Ein PC oder
+                   Smart Device verbindet sich direkt mit dem Datamanager (Anlagenüberwa-
+                   chung). Es ist keine Verbindung mit dem Internet möglich.
+
+
+
+
+                                                                                              65
+Einstellungen - Fronius Solar.web
+
+Solar.web         Über den Menüpunkt Fronius Solar.web kann eine direkte Verbindung zu Fronius
+                  Solar.web aufgebaut werden.
+
+                  Die Auswahl des Speicherintervalls bei den Feldern Abfragezyklus Wechselrich-
+                  ter und Abfragezyklus Fronius Sensor Cards hat Auswirkungen auf die benötigte
+                  Speicherkapazität.
+
+                  Schaltfläche Solar.web registrieren - durch Klicken der Schaltfläche wird die
+                  Fronius Solar.web Startseite geöffnet, für Fronius Solar.web relevante Daten
+                  werden automatisch mitgeschickt.
+
+                  Cloud Control
+                  Ein virtuelles Kraftwerk ist ein Zusammenschaltung mehrerer Erzeuger zu einem
+                  Verbund. Dieser Verbund kann über die Cloud-Steuerung per Internet gesteuert
+                  werden. Eine aktive Internetverbindung des Wechselrichters ist Voraussetzung
+                  dafür. Es werden Daten der Anlage übermittelt.
+                  Wenn die Funktion Cloud-Steuerung für Anforderungen des Netzbetreibers/
+                  Energieversorgers zulassen aktiviert ist (service-Zugang erforderlich), ist die
+                  Funktion Cloud-Steuerung für virtuelle Kraftwerke zulassen automatisch akti-
+                  viert und kann nicht deaktiviert werden.
+                  Die Funktion Cloud-Steuerung für Anforderungen des Netzbetreibers/Energie-
+                  versorgers zulassen kann für den ordnungsgemäßen Betrieb der Anlage ver-
+                  pflichtend sein.
+
+
+
+Speicherkapa-     Bei einer Photovoltaikanlage mit einem Wechselrichter hat der Fronius Datama-
+zität             nager bei einem Speicherintervall von 15 Minuten eine Speicherkapazität von bis
+                  zu 5 Jahren und 7 Monaten.
+                  Je nach Anzahl der in das System eingebundenen Wechselrichter oder Fronius
+                  Sensor Cards / Boxen verringert sich die Speicherkapazität des Fronius Datama-
+                  nager entsprechend.
+
+
+
+Speicherkapa-      1   Logging-Punkte für Wechselrichter und Fronius Sensor Cards / Boxen ermit-
+zität berechnen        teln
+
+                                                        Logging-Dauer [min]
+                        Logging-Punkte pro Tag =
+                                                       Speicherintervall [min]
+
+
+                        Logging-Dauer [min]
+                        -  für Wechselrichter: z. B. 14 Stunden = 840 Minuten
+                        -  für Fronius Sensor Card / Fronius Sensor Box: 24 Stunden = 1440 Mi-
+                           nuten
+
+                  2    Summe der Logging-Punkte bilden
+
+                       Summe der Logging-Punkte =
+                       = (Anzahl der Wechselrichter x Logging-Punkte pro Tag) + (Anzahl der Froni-
+                       us Sensor Cards / Boxen x Logging-Punkte pro Tag)
+
+                  3    Speichersektoren pro Tag ermitteln
+
+
+
+66
+                                                      Summe der Logging-
+                       Speichersektoren pro Tag =         Punkte
+                                                              114
+
+                  4   Aufrunden auf ganze Zahlen
+                  5   Speicherkapazität ermitteln
+
+                                                             2048
+                       Speicherkapazität [Tage] =
+                                                    Speichersektoren pro Tag
+
+
+
+
+Berechnungsbei-   2 Wechselrichter, Loggingdauer = 14 Stunden (840 Minuten)
+spiel             1 Fronius Sensor Card, Loggingdauer = 24 Stunden (1440 Minuten)
+
+                  Speicherintervall = 15 Minuten
+
+
+
+
+                                                                                    67
+     1.   Loggingpunkte pro Tag:
+
+                       Loggingpunkte Wech-                       840 min
+                                                                                      = 56
+                       selrichter =                               15 min
+
+
+                       Loggingpunkte Sensor                     1440 min
+                                                                                      = 96
+                       Card =                                     15 min
+
+
+     2.   Summe der Loggingpunkte:
+
+
+                       Summe der Loggingpunkte = (2 x 56) + (1 x 96) = 208
+
+
+                       (2 x 56) ... 2 Wechselrichter, (1 x 96) ... 1 Sensor Card
+
+     3.   Speichersektoren pro Tag:
+
+                                                                   208
+                       Speichersektoren =                                             = 1,825
+                                                                    114
+
+
+     4.   Aufrunden:
+
+                       1,825                            2
+
+
+     5.   Speicherkapazität [Tagen]:
+
+                       Speicherka-                2048              = 1024 Tage (= 2 Jahre, 9
+                       pazität =                    2               Monate, 18 Tage)
+
+
+                                                                2048
+                       Speicherkapazität
+                       [Tage] =                          Speichersektoren
+                                                              pro Tag
+
+
+
+
+68
+Einstellungen - IO Zuordnung
+
+Allgemeines      In diesem Menüpunkt können die Eigenschaften der einzelnen Ein- und
+                 Ausgänge (I/O) des Wechselrichters konfiguriert werden. Je nach Funktionalität
+                 und Systemkonfiguration können nur jene Einstellungen gewählt werden, wel-
+                 che mit dem jeweiligen System möglich sind.
+
+                 Ein aktiv geschalteter Ausgang, welcher nicht zugeordnet ist („frei“), bleibt bis
+                 zum Neustart des Wechselrichters aktiv. Der Zustand eines Ausganges ändert
+                 sich nur durch neue Vorgaben von zugeordneten Diensten.
+
+
+
+AUS - Demand     Demand Response Modes für Australien
+Response Modes
+(DRM)            Hier können die Pins für eine Steuerung via DRM eingestellt werden:
+
+                  WICHTIG! Für eine Steuerung des Wechselrichters via DRM ist ein Fronius
+                  DRM Interface (Artikelnummer 4,240,005) im Wechselrichter erforderlich.
+                  Einbau und Installation sind in der Installationsanleitung des Fronius DRM In-
+                  terface beschrieben. Die Installationsanleitung für das Fronius DRM Interface
+                  ist auf der Fronius Homepage unter folgendem Link verfügbar:
+
+
+
+                                 http://www.fronius.com/QR-link/4204102292
+
+
+
+
+                                                                                              De-
+                                                                                             fault-
+                  Mode        Beschreibung                   Information                      Pin
+                  DRM0        Wechselrichter trennt sich     Netzrelais öffnen
+                              vom Netz
+
+                              REF GEN                        geschlossen                      FDI
+                              COM LOAD                       geschlossen                      FDI
+
+                                                             oder
+
+                                                             Kombinationen von
+                                                             ungültigen DRM1 - DRM8
+                  DRM1        -Pnom ≤ 0 % ohne Trennung      begrenzt die Wirkleistungs-       6
+                              vom Netz                       Aufnahme
+                  DRM2        -Pnom ≤ 50 %                   begrenzt die Wirkleistungs-       7
+                                                             Aufnahme
+                  DRM3        -Pnom ≤ 75 % & +Qrel* ≥ 0 %    begrenzt die Wirkleistungs-       8
+                                                             Aufnahme
+
+                                                             und
+
+                                                             setzt die Blindleistung
+
+
+
+
+                                                                                                     69
+                                                                                         De-
+                                                                                        fault-
+                Mode       Beschreibung                   Information                    Pin
+                DRM4       -Pnom ≤ 100 %                  Normalbetrieb ohne Be-          9
+                                                          grenzung
+                DRM5       +Pnom ≤ 0 % ohne Trennung      begrenzt die Wirkleistungs-
+                                                                                          6
+                           vom Netz                       Abgabe
+                DRM6       +Pnom ≤ 50 %                   begrenzt die Wirkleistungs-     7
+                                                          Abgabe
+                DRM7       +Pnom ≤ 75 % & -Qrel* ≥ 0 %    begrenzt die Wirkleistungs-     8
+                                                          Abgabe
+
+                                                          und
+
+                                                          setzt die Blindleistung
+                DRM8       +Pnom ≤ 100 %                  Normalbetrieb ohne Be-          9
+                                                          grenzung
+
+
+                FDI        am Fronius DRM Interface
+                *          Die Werte für Qrel können im Menüpunkt EVU Editor eingestellt
+                           werden.
+
+               Die Fernsteuerbarkeit der Wechselrichter bezieht sich immer auf die nominale
+               Geräteleistung.
+
+               WICHTIG! Ist am Datamanager keine DRM Steuerung (DRED) angeschlossen
+               und die Funktion AUS - Demand Response Mode (DRM) ist aktiviert, wechselt der
+               Wechselrichter in den Standby-Betrieb.
+
+
+
+IO-Steuerung   Hier können die Pins für die IO-Steuerung eingestellt werden. Weitere Einstel-
+               lungen sind im Menü EVU-Editor > IO-Steuerung möglich.
+
+                                                 De-                                     De-
+                                                fault-                                  fault-
+                IO-Steuerung                     Pin     IO-Steuerung                    Pin
+                IO-Steuerung 1 (optional)         2      IO-Steuerung 6 (optional)        7
+                IO-Steuerung 2 (optional)         3      IO-Steuerung 7 (optional)        8
+                IO-Steuerung 3 (optional)         4      IO-Steuerung 8 (optional)        9
+                IO-Steuerung 4 (optional)         5      IO-Steuerung Rückmeldung
+                                                                                          0
+                IO-Steuerung 5 (optional)         6      (optional)
+
+
+
+
+Lastmanage-    Hier können bis zu vier Pins für das Lastmanagement ausgewählt werden. Wei-
+ment           tere Einstellungen für das Lastmanagement sind im Menüpunkt Lastmanage-
+               ment verfügbar.
+               Default-Pin: 1
+
+
+
+
+70
+Einstellungen - Lastmanagement
+
+Allgemeines   Über die Funktion Lastmanagement können die Ausgänge I/O 0 - I/O 3 so ge-
+              nutzt werden, dass diese einen Aktor (z. B. Relais, Schütz) ansteuern.
+              Ein angeschlossener Verbraucher kann somit durch die Vorgabe eines von der
+              Einspeise-Leistung abhängigen Ein- oder Ausschalt-Punktes gesteuert werden.
+
+
+
+Lastmanage-   Steuerung
+ment          deaktiviert: Steuerung via Energiemanagement ist deaktiviert.
+              durch die produzierte Leistung: Steuerung via Energiemanagement erfolgt
+              durch die produzierte Leistung
+              per Leistungsüberschuss (bei Einspeise-Limits): Steuerung via Energiemanage-
+              ment erfolgt per Leistungsüberschuss (bei Einspeise-Limits).
+              Diese Option ist nur auswählbar, wenn ein Zähler angeschlossen wurde. Sollten
+              die I/Os eine höhere Priorität als die Batterie haben, wird die eventuelle Ladeleis-
+              tung der Batterie als Überschuss betrachtet. In diesem Fall ist die Schaltschwel-
+              le nicht auf den Netzübergang festzumachen.
+
+              Schwellen
+              ein: Zum Eingeben eines Wirkleistungs-Limit, ab dem der Ausgang I/O aktiviert
+              wird
+              aus: Zum Eingeben eines Wirkleistungs-Limit, ab dem der Ausgang I/O deakti-
+              viert wird.
+              Ist unter Steuerungper Leistungsüberschuss ausgewählt, wird unter Schwellen
+              zusätzlich ein Auswahlfeld für Einspeisung und Bezug angezeigt.
+
+              Laufzeiten
+              Mindestlaufzeit je Einschaltvorgang: Feld zum Eingeben einer Zeit, wie lange der
+              Ausgang I/O je Einschaltvorgang mindestens aktiviert sein soll.
+              Maximale Laufzeit je Tag: Feld zum Eingeben einer Maximalzeit, wie lange der
+              Ausgang I/O pro Tag insgesamt aktiviert sein soll (mehrere Einschaltvorgänge
+              werden berücksichtigt).
+
+              Soll-Laufzeit
+              je Tag: Feld zum Eingeben einer Zeit, wie lange der Ausgang I/O je Tag mindes-
+              tens aktiviert sein soll.
+              erreicht bis: Feld zur Auswahl der Zeit, falls die Soll-Laufzeit bis zu einer be-
+              stimmten Uhrzeit erreicht werden soll
+
+              Status
+              Wird der Mauszeiger über den Status gebracht, wird der Grund für den aktuellen
+              Status angezeigt.
+
+              WICHTIG!
+              Bei Verwendung von mehreren Lastausgängen werden diese je nach Priorität
+              mit einem Abstand von einer Minute geschaltet (max. 4 Regel = max. 4 Minuten).
+
+
+
+
+                                                                                                71
+Einstellungen - Push Service
+
+Push Service   Mit Hilfe dieser Funktion können Aktuell- und Log-Daten in unterschiedlichen
+               Formaten oder mit unterschiedlichen Protokollen auf einen externen Server ex-
+               portiert werden.
+
+               Weitere Informationen zur Push Service Funktion finden Sie in folgender Bedie-
+               nungsanleitung:
+
+
+
+
+               http://www.fronius.com/QR-link/4204102152
+
+               42,0410,2152
+               Fronius Push Service
+
+
+
+
+72
+Einstellungen - Modbus
+
+Allgemeines        Über die Web-Seite des Fronius Datamanager 2.0 können via Web-Browser Ein-
+                   stellungen für die Modbus-Anbindung vorgenommen werden, welche über das
+                   Modbus-Protokoll nicht ansprechbar sind.
+
+
+
+Weitere Informa-   Weitere Informationen zur Modbus-Funktion finden Sie in folgenden Bedie-
+tionen zur Mod-    nungsanleitungen:
+bus-Funktion
+                                   http://www.fronius.com/QR-link/4204102049
+
+                                   42,0410,2049
+                                   Fronius Datamanager Modbus Anbindung
+
+
+                                   http://www.fronius.com/QR-link/4204102108
+
+                                   42,0410,2108
+                                   Fronius Datamanager Modbus RTU Quickstart Guide
+
+
+
+
+Datenausgabe       Datenausgabe über Modbus auf aus
+über Modbus        Ist die Datenausgabe über Modbus deaktiviert, werden über Modbus an die
+                   Wechselrichter übertragene Steuerungsbefehle zurückgesetzt, z. B. keine Leis-
+                   tungsreduktion oder keine Blindleistungs-Vorgabe.
+
+                   Datenausgabe über Modbus auf tcp
+                   Ist die Datenausgabe über Modbus deaktiviert, werden über Modbus an die
+                   Wechselrichter übertragene Steuerungsbefehle zurückgesetzt, z. B. keine Leis-
+                   tungsreduktion oder keine Blindleistungs-Vorgabe.
+
+                   Feld Modbus Port - Nummer des TCP Ports, der für die Modbus-Kommunikation
+                   zu verwenden ist. Voreinstellung: 502. Port 80 kann hierfür nicht verwendet wer-
+                   den.
+
+                   Feld „String Control Adress-Offset - Offset-Wert für die Adressierung von Froni-
+                   us String Controls per Modbus.
+
+                   Sunspec Model Type - zum Auswählen des Datentyps von Datenmodellen für
+                   Wechselrichter und von Datenmodellen für Energiezähler
+                   float - Darstellung als Gleitkommazahlen
+                   SunSpec Inverter Model I111, I112 oder I113
+                   SunSpec Meter Model M211, M212 oder M213
+                   int+SF - Darstellung als ganze Zahlen mit Skalierungsfaktoren
+                   SunSpec Inverter Model I101, I102 oder I103
+                   SunSpec Meter Model M201, M202 oder M203
+
+                   WICHTIG! Da die verschiedenen Modelle über unterschiedliche Anzahlen an Re-
+                   gistern verfügen, ändern sich durch den Wechsel des Datentyps auch die Regis-
+                   teradressen aller nachfolgenden Modelle.
+
+                   Demo Modus - Der Demo Modus dient zur Implementierung oder Validierung ei-
+                   nes Modbus Masters. Er ermöglicht es, Wechselrichter-, Energiezähler- und
+
+
+
+                                                                                                 73
+     String Control Daten auszulesen, ohne dass ein Gerät wirklich angeschlossen
+     oder aktiv ist. Es werden für alle Register immer dieselben Daten zurückgeliefert.
+
+     Wechselrichter-Steuerung über Modbus
+     Wenn diese Option aktiviert ist, können die Wechselrichter über Modbus ge-
+     steuert werden. Das Auswahlfeld Steuerung einschränken wird angezeigt. Zur
+     Wechselrichter-Steuerung gehören folgende Funktionen:
+     -   Ein / Aus
+     -   Leistungsreduktion
+     -   Vorgabe eines konstanten Leistungs-Faktors cos Phi
+     -   Vorgabe einer konstanten Blindleistung
+
+
+     Datenausgabe über Modbus auf rtu
+
+     Befindet sich ein unter Einstellungen > Zähler ein konfigurierter Modbus Ener-
+     giezähler (z. B. Fronius Smart Meter) im System, kann die Einstellung rtu nicht
+     verwendet werden.
+     Bei Auswahl von rtu wird in diesem Fall die Datenausgabe per Modbus automa-
+     tisch deaktiviert. Diese Änderung ist erst nach einem erneuten Laden der Web-
+     seite sichtbar.
+     Ein über RS485 angeschlossener Energiezähler kann auch per Modbus TCP über
+     die entsprechenden SunSpec Modelle ausgelesen werden. Die Modbus ID für
+     den Zähler ist 240.
+
+     Feld Schnittstelle - Hier kann die Modbus-Schnittstelle 0 (rtu0 | default) oder
+     Modbus-Schnittstelle 1 (rtu1) ausgewählt werden.
+
+     Feld String Control Adress-Offset - Offset-Wert für die Adressierung von Froni-
+     us String Controls per Modbus. Für weitere Details siehe Abschnitt „Modbus
+     Geräte-ID für Fronius String Controls“.
+
+     Sunspec Model Type - zum Auswählen des Datentyps von Datenmodellen für
+     Wechselrichter
+     float - Darstellung als Gleitkommazahlen
+     SunSpec Inverter Model I111, I112 oder I113
+     int+SF - Darstellung als ganze Zahlen mit Skalierungsfaktoren
+     SunSpec Inverter Model I101, I102 oder I103
+
+     WICHTIG! Da die verschiedenen Modelle über unterschiedliche Anzahlen an Re-
+     gistern verfügen, ändern sich durch den Wechsel des Datentyps auch die Regis-
+     teradressen aller nachfolgenden Modelle.
+
+     Demo Modus - Der Demo Modus dient zur Implementierung oder Validierung ei-
+     nes Modbus Masters. Er ermöglicht es, Wechselrichter-, Energiezähler- und
+     String Control-Daten auszulesen, ohne dass ein Gerät wirklich angeschlossen
+     oder aktiv ist. Es werden für alle Register immer dieselben Daten zurückgeliefert.
+
+     Wechselrichter-Steuerung über Modbus
+     Wenn diese Option aktiviert ist, können die Wechselrichter über Modbus ge-
+     steuert werden. Zur Wechselrichter-Steuerung gehören folgende Funktionen:
+     -   Ein / Aus
+     -   Leistungsreduktion
+     -   Vorgabe eines konstanten Leistungs-Faktors cos Phi
+     -   Vorgabe einer konstanten Blindleistung
+
+     Steuerungs-Prioritäten
+     Die Steuerungs-Prioritäten legen fest, welcher Dienst bei der Wechselrichter-
+     steuerung priorisiert wird.
+     1 = höchste Priorität, 3 = niedrigste Priorität
+
+
+
+
+74
+                 Die Steuerungs-Prioritäten können nur im Menüpunkt EVU-Editor geändert wer-
+                 den.
+
+
+
+Steuerung ein-   Die Option Steuerung einschränken ist nur beim Übertragungsprotokollen tcp
+schränken        verfügbar.
+                 Sie dient dazu Wechselrichter-Steuerungsbefehle durch Unbefugte zu verhin-
+                 dern, indem die Steuerung nur für bestimmte Geräte erlaubt wird.
+
+                 Feld IP-Adresse
+                 Um die Wechselrichter-Steuerung auf ein oder mehrere Geräte zu beschränken,
+                 werden in diesem Feld die IP-Adressen jener Geräte eingetragen, die Befehle an
+                 den Fronius Datamanager senden dürfen. Mehrere Einträge werden durch Bei-
+                 striche getrennt.
+
+                 Beispiele:
+                 -   eine IP-Adresse: 98.7.65.4 - Steuerung nur durch IP-Adresse 98.7.65.4
+                     zulässig
+                 -   mehrere IP-Adressen: 98.7.65.4,222.44.33.1 - Steuerung nur durch IP-Adres-
+                     sen 98.7.65.4 und 222.44.33.1 zulässig
+                 -   IP-Adressbereich z. B. von 98.7.65.1 bis 98.7.65.254 (CIDR Notation):
+                     98.7.65.0/24 - Steuerung nur durch IP-Adressen 98.7.65.1 bis 98.7.65.254
+                     zulässig
+
+
+
+Änderungen             Speichert die Einstellungen und zeigt eine Meldung an, dass die Speiche-
+speichern oder   rung erfolgreich war.
+verwerfen        Wird der Menüpunkt Modbus verlassen ohne zu speichern, so werden alle vorge-
+                 nommenen Änderungen verworfen.
+
+                       Stellt eine Sicherheitsabfrage ob die vorgenommenen Änderungen
+                 tatsächlich verworfen werden sollen, und stellt dann die zuletzt gespeicherten
+                 Werte wieder her.
+
+
+
+
+                                                                                                  75
+Einstellungen - Wechselrichter
+
+Wechselrichter   Im Menü Wechselrichter werden die Daten für die Vergleichsansicht festgelegt.
+                 Ist das Auswahlfeld sichtbar ausgewählt, wird der Wechselrichter in der Ver-
+                 gleichsansicht angezeigt.
+
+
+
+
+76
+Einstellungen - Fronius Sensor Cards
+
+Sensor Cards   Unter Sensor Cards kann für jeden Sensorwert einer Fronius Sensor Card / Box
+               ein spezifischer Kanalname vergeben werden (z. B.: Windgeschwindigkeit).
+
+
+
+
+                                                                                          77
+Einstellungen - Zähler
+
+Allgemeines     WICHTIG! Einstellungen im Menüpunkt Zähler dürfen nur von geschultem Fach-
+                personal durchgeführt werden!
+
+                Für den Menüpunkt Zähler ist die Eingabe des Service-Passwortes erforderlich.
+
+                Dreiphasige oder einphasige Fronius Smart Meter können verwendet werden.
+                Die Auswahl erfolgt in beiden Fällen über den Punkt Fronius Smart Meter. Der
+                Fronius Datamanager ermittelt automatisch den Zählertyp.
+
+                Es kann ein Primärzähler und optional mehrere Sekundärzähler ausgewählt wer-
+                den. Der Primärzähler muss zuerst konfiguriert werden, bevor ein Se-
+                kundärzähler ausgewählt werden kann.
+
+
+
+Fronius Smart   Wenn der Fronius Smart Meter als Zähler ausgewählt wird, muss über das Feld
+Meter           Einstellungen die Zählerposition eingestellt werden.
+
+                Zählerposition am Einspeisepunkt (1a)
+                Die eingespeiste Leistung und Energie werden gemessen. Anhand dieser Werte
+                und der Anlagendaten wird der Verbrauch bestimmt.
+
+                Zählerposition im Verbrauchszweig (1b)
+                Die verbrauchte Leistung und Energie werden direkt gemessen. Anhand dieser
+                Werte und der Anlagendaten werden die eingespeiste Leistung und Energie be-
+                stimmt.
+
+
+
+
+                                         (1a)
+
+
+
+
+                                                                       (1b)
+
+
+
+                Sekundärzähler
+                Wenn als Sekundärzähler ein Fronius Smart Meter ausgewählt wurde, öffnet
+                sich ein Fenster zum Eingeben der Bezeichnung (frei wählbar) und ein Modbus-
+                Adresse Feld. Im Modbus-Adresse Feld wird automatisch ein Wert vorgeschla-
+                gen (nächste freie Adresse im Adressbereich). Die Modbus-Adresse darf nicht
+                doppelt vergeben werden. Nach der Eingabe auf das Feld Scan klicken.
+
+
+
+
+78
+Anschluss des      Fronius Smart Meter
+Fronius Smart      OUTPUT                Fronius Datamanager 2.0
+Meter am Froni-    RS 485
+us Datamanager
+                    D-    D+    -             -      D+    D-
+2.0
+                      120 Ω                           ON
+
+
+
+
+S0-Wechselrich-   Zählerposition am Einspeisepunkt (1a)
+ter               Die eingespeiste Leistung und Energie werden gemessen. Anhand dieser Werte
+                  und der Anlagendaten wird der Verbrauch bestimmt.
+                  Ein S0-Zähler muss an dieser Stelle so konfiguriert sein, dass die eingespeiste
+                  Energie gezählt wird.
+
+                  WICHTIG!
+                  Bei einem S0-Zähler am Einspeisepunkt werden die Zählerdaten nicht in Fronius
+                  Solar.web angezeigt. Diese Option ist nur für die dynamische Leistungsreduzie-
+                  rung vorgesehen. Die Verbrauchswerte können bei Einspeisung ins Netz einge-
+                  schränkt ermittelt werden.
+
+                  Zählerposition im Verbrauchszweig (1b)
+                  Die verbrauchte Leistung und Energie werden direkt gemessen. Anhand dieser
+                  Werte und der Anlagendaten werden die eingespeiste Leistung und Energie be-
+                  stimmt.
+                  Ein S0-Zähler muss an dieser Stelle so konfiguriert sein, dass die verbrauchte
+                  Energie gezählt wird.
+
+
+
+
+                                              (1a)
+
+
+
+
+                                                                          (1b)
+
+
+
+                  Ein Zähler zur Erfassung des Eigenverbrauchs per S0 kann direkt an den Wech-
+                  selrichter angeschlossen werden.
+
+                  WICHTIG!
+                  Ein S0-Zähler wird an der schaltbaren Multifunktions-Stromschnittstelle des
+                  Wechselrichters angeschlossen. Der Anschluss eines S0-Zählers am Wechsel-
+                  richter kann eine Aktualisierung der Wechselrichter-Firmware erfordern.
+
+
+
+
+                                                                                                79
+     Anforderungen an den S0-Zähler:
+     -  muss der Norm IEC62053-31 Class B entsprechen
+     -  max. Spannung 15 V DC
+     -  max. Strom bei ON 15 mA
+     -  min. Strom bei ON 2 mA
+     -  max. Strom bei OFF 0,15 mA
+
+     Empfohlene max. Impulsrate des S0-Zählers:
+     PV-Leistung kWp [kW]       max. Impulsrate pro kWp
+     30                         1000
+     20                         2000
+     10                         5000
+     ≤ 5,5                      10000
+
+
+
+
+80
+Einstellungen - EVU Editor
+
+Allgemeines        Im Menüpunkt EVU-Editor werden für ein Energieversorgungs-Unternehmen re-
+                   levante Einstellungen vorgenommen.
+                   Eingestellt werden können eine Wirkleistungs-Begrenzung in % und/oder eine
+                   Leistungsfaktor-Begrenzung.
+
+                   WICHTIG! Einstellungen im Menüpunkt EVU-Editor dürfen nur von geschultem
+                   Fachpersonal durchgeführt werden!
+
+                   Für den Menüpunkt EVU-Editor ist die Eingabe des Service-Passwortes erfor-
+                   derlich.
+
+                   Cloud Control
+                   Ein virtuelles Kraftwerk ist ein Zusammenschaltung mehrerer Erzeuger zu einem
+                   Verbund. Dieser Verbund kann über die Cloud-Steuerung per Internet gesteuert
+                   werden. Eine aktive Internetverbindung des Wechselrichters ist Voraussetzung
+                   dafür. Es werden Daten der Anlage übermittelt.
+                   Wenn die Funktion Cloud-Steuerung für Anforderungen des Netzbetreibers/
+                   Energieversorgers zulassen aktiviert ist (service-Zugang erforderlich), ist die
+                   Funktion Cloud-Steuerung für virtuelle Kraftwerke zulassen automatisch akti-
+                   viert und kann nicht deaktiviert werden.
+                   Die Funktion Cloud-Steuerung für Anforderungen des Netzbetreibers/Energie-
+                   versorgers zulassen kann für den ordnungsgemäßen Betrieb der Anlage ver-
+                   pflichtend sein.
+
+
+
+EVU Editor - IO-   Eingangsmuster (Belegung der einzelnen I/Os):
+Steuerung
+                   -   weiß = Kontakt offen
+                   -   blau = Kontakt geschlossen
+                   -   grau = Kontakt nicht berücksichtigt
+                   -   schwarz = Kontakt nicht anwendbar
+
+                   Durch Klicken auf die Kontakte verändert sich das ausgewählte Eingangsmus-
+                   ter.
+
+                   Angezeigt wird die virtuelle IO Zuordnung gemäß Abschnitt „Einstellungen - IO
+                   Zuordnung“ (siehe Seite 69).
+                   Bei älteren Software-Versionen kann die Anzeige abweichen.
+
+                   Leistungsfaktor cos phi
+                   ind = induktiv
+                   cap = kapazitiv
+
+                   EVU Ausgang (Rückmeldungs-Ausgang)
+                   Dieser Ausgang ist frei konfigurierbar und wird aktiviert, sobald die Regel ge-
+                   setzt ist.(z. B. zum Betrieb einer Signaleinrichtung). Werksseitig ist dafür der
+                   Ausgang I/O 0 voreingestellt.
+
+                   ausgeschlossene Wechselrichter
+                   Hier die DATCOM- bzw. Fronius Solar Net- Nummern der Wechselrichter einge-
+                   ben, die von der Regelung ausgeschlossen sein sollen. Mehrere Wechselrichter
+                   durch Beistriche trennen.
+
+
+
+
+                                                                                                      81
+                  Löschen / Hinzufügen einer Regel
+                  + = eine neue Regel hinzufügen
+                  - = die aktuell ausgewählte Regel löschen
+
+                  Schaltfläche Importieren - klicken, um Regeln im Format *.fpc zu importieren
+                  Die Funktion der Schaltfläche Importieren ist vom verwendeten Browser
+                  abhängig, z. B. unterstützen Mozilla Firefox und Google Chrome die Funktion.
+
+                  Schaltfläche Exportieren - klicken, um die Regeln im Format *.fpc separat abzu-
+                  speichern
+
+
+
+Anschluss-Sche-   Der Rundsteuer-Signalempfänger und die I/Os Anschlussklemmen des Wech-
+ma - 4 Relais     selrichters werden mittels 4-poligem Kabel gemäß Anschluss-Schema mitein-
+                  ander verbunden.
+                  Für Kabellängen größer 10 m zwischen Wechselrichter und Rundsteuer-Signal-
+                  empfänger wird ein geschirmtes Kabel (CAT 5) empfohlen.
+
+                  Der 4-Relais-Betrieb ist werksseitig voreingestellt. Die folgenden Schritte sind
+                  nur notwendig, wenn die Konfiguration angepasst oder wiederhergestellt wer-
+                  den muss.
+
+
+
+
+                            (1)                            +
+                                  100 %                                   (2)
+                                                           IO 2 (Pin2)
+
+
+
+
+                                                                                IO1
+                                                                                IO3
+
+
+
+
+                                                                                        D-
+                                                                                7
+                                                                                5
+                                                                                9
+
+
+
+
+                                                                                -
+                                                                                -
+                                  60 %
+                                                           IO 3 (Pin3)
+                                  30 %
+                                                                                  4
+                                                                                  8
+                                                           I 4 (Pin4)             6
+
+
+                                                                                0OI
+
+
+                                                                                 +D
+                                                                                2OI
+
+                                                                                  +
+                                                                                  +
+                                   0%
+                                                           I 5 (Pin5)
+
+
+
+
+                  (1)    Rundsteuer-Signalempfänger mit 4 Relais, zur Wirkleistungs-Begren-
+                         zung.
+                  (2)    I/Os des Datenkommunikations-Bereichs.
+
+                  IO-Zuordnung
+
+                   Relais         Anschluss Fronius Datamanager 2.0                          PIN
+                   1              IO1                                                        2
+                   2              IO2                                                        3
+                   3              IO3                                                        4
+                   4              I4                                                         5
+
+                  Einstellungen am EVU Editor:
+
+
+
+
+82
+                  Übersicht IO-Steuerung Benutzeroberfläche
+
+                  1.   In der Spalte “freigegeben“ Zeile 1-4 auswählen
+                  2.   Eingangsmuster konfigurieren
+                  3.   Wirkleistung wie folgt einstellen:
+                       -   Regel 1: 100 %, Relaiskontakt 1 geschlossen
+                       -   Regel 2: 60 %, Relaiskontakt 2 geschlossen
+                       -   Regel 3: 30 %, Relaiskontakt 3 geschlossen
+                       -   Regel 4: 0 %, Relaiskontakt 4 geschlossen
+                  4.   Haken klicken, um die Einstellungen zu speichern.
+
+                  WICHTIG!
+
+                  Nicht berücksichtigte Eingangsmuster sind zu vermeiden, da sich die aktivierten
+                  Regeln ansonsten gegenseitig ausschließen. In diesem Fall erscheint beim Spei-
+                  chern der Dialog “Speichern gescheitert“. Die fehlerhaften Zeilen werden rot
+                  markiert.
+
+
+
+Anschluss-Sche-   Der Rundsteuer-Signalempfänger und die I/Os Anschlussklemmen des Wech-
+ma - 3 Relais     selrichters werden mittels 4-poligem Kabel gemäß Anschluss-Schema mitein-
+                  ander verbunden.
+                  Für Kabellängen größer 10 m zwischen Wechselrichter und Rundsteuer-Signal-
+                  empfänger wird ein geschirmtes Kabel (CAT 5) empfohlen.
+
+
+
+
+                          (1)                                 +             (2)
+                                  60 %
+                                                                                  IO1
+                                                                                  IO3
+
+
+
+
+                                                                                        D-
+                                                                                  7
+                                                                                  5
+                                                                                  9
+
+
+
+
+                                                                                  -
+                                                                                  -
+
+
+
+
+                                                              IO 2 (Pin2)
+                                  30 %
+                                                              IO 3 (Pin3)
+                                                                                    4
+                                                                                    8
+                                                                                    6
+
+
+                                                                                  0OI
+
+
+                                                                                   +D
+                                                                                  2OI
+
+                                                                                    +
+                                                                                    +
+
+
+
+
+                                   0%
+                                                              I 4 (Pin4)
+
+
+
+
+                                                                                               83
+                  (1)      Rundsteuer-Signalempfänger mit 3 Relais, zur Wirkleistungs-Begrenzung
+                  (2)      I/Os des Datenkommunikations-Bereichs
+
+                  IO-Zuordnung
+
+                   Relais         Anschluss Fronius Datamanager 2.0                      PIN
+                   1              IO1                                                    2
+                   2              IO2                                                    3
+                   3              IO3                                                    4
+
+                  Einstellungen am EVU Editor:
+
+
+
+
+                  Übersicht IO-Steuerung Benutzeroberfläche
+
+                  1.    In der Spalte “freigegeben“ Zeile 1-4 auswählen
+                  2.    Eingangsmuster für Zeile 1-3 konfigurieren
+                  3.    Wirkleistung wie folgt einstellen:
+                        -   Zeile 1: 100 %, alle Kontakte offen, keine weiteren Regeln definiert
+                        -   Zeile 2 / Regel 1 60 %, Relaiskontakt 1 geschlossen
+                        -   Zeile 3 / Regel 2: 30 %, Relaiskontakt 2 geschlossen
+                        -   Zeile 4 / Regel 3: 0 %, Relaiskontakt 3 geschlossen
+                  4.    Haken klicken, um die Einstellungen zu speichern.
+
+                  WICHTIG!
+
+                  Nicht berücksichtigte Eingangsmuster sind zu vermeiden, da sich die aktivierten
+                  Regeln ansonsten gegenseitig ausschließen. In diesem Fall erscheint beim Spei-
+                  chern der Dialog “Speichern gescheitert“. Die fehlerhaften Zeilen werden rot
+                  markiert.
+
+
+
+Anschluss-Sche-   Der Rundsteuer-Signalempfänger und die I/Os Anschlussklemmen des Wech-
+ma - 1 Relais     selrichters werden mittels 4-poligem Kabel gemäß Anschluss-Schema mitein-
+                  ander verbunden.
+                  Für Kabellängen größer 10 m zwischen Wechselrichter und Rundsteuer-Signal-
+                  empfänger wird ein geschirmtes Kabel (CAT 5) empfohlen.
+
+
+
+
+84
+                                                          (2)
+          (1)
+
+
+
+
+                                                                IO1
+                                                                IO3
+                                            +
+
+
+
+
+                                                                      D-
+                                                                7
+                                                                5
+                                                                9
+
+
+
+
+                                                                -
+                                                                -
+                100 %
+                                            IO 2 (Pin2)
+
+
+
+
+                                                                  4
+                                                                  8
+                                                                  6
+
+
+                                                                0OI
+
+
+                                                                 +D
+                                                                2OI
+
+                                                                  +
+                                                                  +
+(1)     Rundsteuer-Signalempfänger mit 1 Relais, zur Wirkleistungs-Begrenzung.
+(2)     I/Os des Datenkommunikations-Bereichs
+
+IO-Zuordnung
+
+ Relais          Anschluss Fronius Datamanager 2.0                    PIN
+ 1               IO1                                                  2
+
+Einstellungen am EVU Editor:
+
+
+
+
+Übersicht IO-Steuerung Benutzeroberfläche
+
+1.    In der Spalte “freigegeben“ Zeile 1-2 auswählen
+2.    Eingangsmuster konfigurieren
+3.    Wirkleistung wie folgt einstellen:
+      -   Regel1: 100 %, Relaiskontakt 1 offen
+      -   Regel 2: 0 %, Relaiskontakt 1 geschlossen
+4.    Haken klicken, um die Einstellungen zu speichern.
+
+WICHTIG!
+
+Nicht berücksichtigte Eingangsmuster sind zu vermeiden, da sich die aktivierten
+Regeln ansonsten gegenseitig ausschließen. In diesem Fall erscheint beim Spei-
+chern der Dialog “Speichern gescheitert“. Die fehlerhaften Zeilen werden rot
+markiert.
+
+
+                                                                             85
+Anschluss-Sche-    Der Rundsteuer-Signalempfänger und die I/Os Anschlussklemmen des Wech-
+ma - Alternative   selrichters werden mittels 4-poligem Kabel gemäß Anschluss-Schema mitein-
+mit 2 Relais       ander verbunden.
+                   Für Kabellängen größer 10 m zwischen Wechselrichter und Rundsteuer-Signal-
+                   empfänger wird ein geschirmtes Kabel (CAT 5) empfohlen.
+
+                   Bei diesem Beispiel können 4 Leistungsstufen mit 2 Relais konfiguriert werden.
+
+
+
+
+                          (1)                                  +             (2)
+                                Relais 1
+
+
+
+
+                                                                                   IO1
+                                                                                   IO3
+
+
+
+
+                                                                                         D-
+                                                                                   7
+                                                                                   5
+                                                                                   9
+                                                               IO 2 (Pin2)
+
+
+
+
+                                                                                   -
+                                                                                   -
+                                Relais 2
+                                                               IO 3 (Pin3)
+
+
+
+
+                                                                                     4
+                                                                                     8
+                                                                                     6
+
+
+                                                                                   0OI
+
+
+                                                                                    +D
+                                                                                   2OI
+
+                                                                                     +
+                                                                                     +
+                   (1)     Rundsteuer-Signalempfänger mit 2 Relais, zur Wirkleistungs-Begren-
+                           zung.
+                   (2)     I/Os des Datenkommunikations-Bereichs
+
+                   IO-Zuordnung
+
+                    Relais          Anschluss Fronius Datamanager 2.0                    PIN
+                    1               IO1                                                  2
+                    2               IO2                                                  3
+
+                   Einstellungen am EVU Editor:
+
+
+
+
+                   Übersicht IO-Steuerung Benutzeroberfläche
+
+
+
+
+86
+                    1.     In der Spalte “freigegeben“ Zeile 1-4 auswählen
+                    2.     Eingangsmuster für Zeile 1-4 konfigurieren
+                    3.     Wirkleistung wie folgt einstellen:
+                           -   Regel 1: 100 %, beide Relaiskontakte offen
+                           -   Regel 2: 60 %, Relaiskontakt 1 aktiv, PIN 2 geschlossen / Relaiskontakt 2
+                               nicht aktiv, PIN 3 offen
+                           -   Regel 3: 30 %, Relaiskontakt 1 nicht aktiv, PIN 2 offen / Relaiskontakt 2
+                               aktiv, PIN 3 geschlossen
+                           -   Regel 4: 0 %, beide Relaiskontakte geschlossen
+                    4.     Haken klicken, um die Einstellungen zu speichern.
+
+                    WICHTIG!
+
+                    Nicht berücksichtigte Eingangsmuster sind zu vermeiden, da sich die aktivierten
+                    Regeln ansonsten gegenseitig ausschließen. In diesem Fall erscheint beim Spei-
+                    chern der Dialog “Speichern gescheitert“. Die fehlerhaften Zeilen werden rot
+                    markiert.
+
+
+
+Awendungsbei-       Der Rundsteuer-Signalempfänger und die I/Os Anschlussklemmen des Wech-
+spiel 2 Rundsteu-   selrichters können gemäß Anschluss-Schema miteinander verbunden werden.
+er-Empfänger        Für Entfernungen größer 10 m zwischen Wechselrichter und Rundsteuer-Signal-
+                    empfänger wird mindestens ein CAT 5 Kabel empfohlen und die Schirmung
+                    muss einseitig an der Push-in Anschlussklemme des Datenkommunikations-Be-
+                    reichs (SHIELD) angeschlossen werden.
+
+                    In diesem Beispiel wird die Anbindung an 2 Rundsteuer-Empfänger beschrieben.
+                    So kann gleichzeitig die Wirkleistung und der Leistungsfaktor geregelt werden.
+
+
+                          (1)                               +
+                                  60 %
+                                                            IO 2
+                                                                                                       -
+                                  30 %
+                                                                          IO1
+                                                                          IO3
+
+
+
+
+                                                                                          D-
+                                                                          7
+                                                                          5
+                                                                          9
+
+
+
+
+                                                            IO 3
+                                                                          -
+                                                                          -
+
+
+
+
+                                   0%
+                                                            I4                                             (4)
+                                                                            4
+                                                                            8
+                                                                            6
+
+
+
+
+                                                                                                   IO 0
+                                                                          0OI
+
+
+                                                                           +D
+                                                                          2OI
+
+                                                                            +
+                                                                            +
+
+
+
+
+                          (2)
+                                  0,95
+                                                            I7
+                                  0,90                                              (3)
+                                                            I8
+                                  0,85
+                                                            I9
+
+                    2 Rundsteuer-Empfänger, angeschlossen an den IOs des Fronius Datamanager 2.0
+
+
+                    (1)         Rundsteuer-Empfänger mit 3 Relais, zur Wirkleistungs-Begrenzung
+                    (2)         Rundsteuer-Empfänger mit 3 Relais, zur Leistungsfaktor-Begrenzung
+                    (3)         I/Os des Datenkommunikations-Bereichs
+                    (4)         Verbraucher (z. B. Signallampe, Signal-Relais)
+
+                    IO-Zuordnung Rundsteuerempfänger 1 (Wirkleistung)
+
+                     Relais              Anschluss Fronius Datamanager 2.0                         PIN
+                     1                   IO1                                                       2
+                     2                   IO2                                                       3
+
+
+
+                                                                                                                 87
+      Relais         Anschluss Fronius Datamanager 2.0                PIN
+      3              I4                                               4
+
+     IO-Zuordnung Rundsteuerempfänger 2 (Leistungsfaktor)
+
+      Relais         Anschluss Fronius Datamanager 2.0                PIN
+      1              I7                                               5
+      2              I8                                               6
+      2              I9                                               7
+
+     Einstellungen am EVU Editor:
+
+
+
+
+     Übersicht IO-Steuerung Benutzeroberfläche
+
+     1.   In der Spalte “freigegeben“ Zeile 1-6 auswählen
+     2.   Eingangsmuster für Zeile 1-6 konfigurieren
+     3.   Wirkleistung wie folgt einstellen:
+          -   Regel 1: 100 %, Relaiskontakt 1 geschlossen
+          -   Regel 2: 60 %, Relaiskontakt 2 geschlossen
+          -   Regel 3: 30 %, Relaiskontakt 3 geschlossen
+     4.   Leistungsfaktor wie folgt einstellen:
+          -   Regel 1: 0,95, Relaiskontakt 4 geschlossen
+          -   Regel 2: 0,90, Relaiskontakt 5 geschlossen
+          -   Regel 3: 0,85, Relaiskontakt 6 geschlossen
+     5.   Haken klicken, um die Einstellungen zu speichern.
+
+     WICHTIG!
+
+     Nicht berücksichtigte Eingangsmuster sind zu vermeiden, da sich die aktivierten
+     Regeln ansonsten gegenseitig ausschließen. In diesem Fall erscheint beim Spei-
+     chern der Dialog “Speichern gescheitert“. Die fehlerhaften Zeilen werden rot
+     markiert.
+
+
+
+
+88
+Rundsteuer-        Der Netzbetreiber kann den Anschluss eines oder mehrerer Wechselrichter an
+Empfänger mit      einen Rundsteuer-Empfänger fordern, um die Wirkleistung und/oder den Leis-
+mehreren Wech-     tungsfaktor der Photovoltaik-Anlage zu begrenzen.
+selrichtern ver-
+binden               SnapINverter
+                                                         12 Volt power -   +
+                    Datamanager 2.0
+                                                                                    Coupling relays
+                           +
+
+
+
+
+                                               R1.1
+
+
+
+
+                                                             R3.1
+
+                                                                    R4.1
+                                                      R2.1
+                          I/O 2
+                                                                                                      Grid operator
+                          I/O 3                                                F1
+                                                                                                      Ripple control
+                           I4                                                                            receiver
+
+                           I5                                                                               1
+
+                                                                               R1
+                     GEN24 / Tauro /
+                                                                                                            2
+                        Verto
+                                                                                      R2
+                           V+
+                                                                                                            3
+
+                                                      R2.2
+
+                                                             R3.2
+                                               R1.2
+
+
+
+
+                                                                    R4.2
+                          IN 8                                                              R3
+                                                                                                            4
+                          IN 9
+                                                                                                 R4
+                          IN10
+                                                                                                            5
+                          IN11
+
+                   Anschluss-Schema Rundsteuer-Empfänger mit mehreren Wechselrichtern
+
+                   Über einen Verteiler (Koppelrelais) können folgende Fronius-Wechselrichter mit
+                   dem Rundsteuer-Empfänger verbunden werden:
+                   -  Symo GEN24
+                   -  Primo GEN24
+                   -  Tauro
+                   -  Verto
+                   -  SnapINverter (nur Geräte mit Fronius Datamanager 2.0)
+
+                   WICHTIG!
+                   Auf der Benutzeroberfläche jedes Wechselrichters, der mit dem Rundsteuer-
+                   Empfänger verbunden ist, muss die Einstellung „4-Relais-Betrieb“(siehe An-
+                   schluss-Schema - 4 Relais) aktiviert werden.
+
+
+
+EVU Editor - AUS    WICHTIG! Für eine Steuerung des Wechselrichters via DRM ist ein Fronius
+- Demand Re-        DRM Interface (Artikelnummer 4,240,005) im Wechselrichter erforderlich.
+sponse Modes        Einbau und Installation sind in der Installationsanleitung des Fronius DRM In-
+(DRM)               terface beschrieben. Die Installationsanleitung für das Fronius DRM Interface
+                    ist auf der Fronius Homepage unter folgendem Link verfügbar:
+
+
+
+                                       http://www.fronius.com/QR-link/4204102292
+
+
+
+
+                   Blindleistungsabgabe- zum Eingeben der Blindleistungsabgabe (= +Qrel) für DRM
+                   3 in %
+
+                   Blindleistungsaufnahme- zum Eingeben der Blindeistungsaufnahme (= -Qrel) für
+                   DRM 7 in %
+
+
+
+
+                                                                                                                   89
+EVU Editor - Dy-   Energieunternehmen oder Netzbetreiber können Einspeisebegrenzungen für ei-
+namische Leis-     nen Wechselrichter vorschreiben (z. B. max. 70 % der kWp oder max. 5 kW).
+tungsreduzie-      Die dynamische Leistungsreduzierung berücksichtigt dabei den Eigenverbrauch
+rung               im Haushalt, bevor die Leistung eines Wechselrichters reduziert wird:
+                   -   Ein individuelles Limit kann eingestellt werden.
+                   -   Ein Zähler zur Ermittlung des Eigenverbrauchs per S0 kann direkt an den
+                       Wechselrichter angeschlossen werden.
+                   -   Ein Fronius Smart Meter kann am Datamanager an den Anschlüssen D- / D+
+                       für Modbus Daten angeschlossen werden.
+
+                   kein Limit - Der Wechselrichter wandelt die gesamte, zur Verfügung stehende
+                   PV-Leistung um und speist diese in das öffentliche Netz ein.
+
+                   Limit für gesamte Anlage - Die gesamte Photovoltaik-Anlage wird auf ein fixes
+                   Leistungslimit begrenzt. Der Wert der zulässigen Gesamt-Einspeiseleistung ist
+                   einzustellen.
+
+                   Limit pro Phase (nicht für einphasige Geräte) - Jede einzelne Phase wird gemes-
+                   sen. Wird bei einer Phase das zulässige Einspeiselimit überschritten, wird die Ge-
+                   samtleistung des Wechselrichters soweit reduziert, bis der Wert auf der betrof-
+                   fenen Phase wieder zulässig ist (siehe nachstehendes Beispiel). Diese Einstellung
+                   ist nur notwendig falls dies von den nationalen Normen und Bestimmungen ge-
+                   fordert wird. Der Wert der zulässigen Einspeiseleistung je Phase ist einzustellen.
+                   „Limit pro Phase“ ist auf 20 Wechselrichter beschränkt. Bei Überschreitung des
+                   Limits ist die Funktion der Leistungslimitierung nicht mehr gegeben.
+
+                    Beispiel: „Limit pro Phase“ (Einstellwert 2000 W)
+                    Max. mögliche Produktion [kW]          4            4         4           12
+                    Eingestellter Wert                                                        6
+                                                                        2
+                    „Limit pro Phase“ [kW]
+                    Lastanforderung im Hausnetz            2            3         5          10
+                    [kW]
+                    Lastabdeckung im Hausnetz              2            2         2           6
+                    über PV-Anlage [kW]
+                    Bezug aus dem öffentlichen             0            1         3           4
+                    Netz [kW]
+
+                   Feld zum Eingeben der gesamten DC Anlagenleistung in Wp.
+                   Dieser Wert dient einerseits als Bezug für die Regelung, andererseits für den
+                   Fehlerfall (z. B. bei Zählerausfall).
+
+                   Feld zum Eingeben der max. Leistung in W oder % (bis zu zwei Stellen nach dem
+                   Komma, auch negative Werte sind möglich)
+                   wenn im Menüpunkt Zähler kein Zähler ausgewählt wurde:
+                   max. produzierte Leistung der gesamten Anlage
+                   wenn im Menüpunkt Zähler Fronius Smart Meter oder S0-Wechselrichter aus-
+                   gewählt wurde: max. Netzeinspeiseleistung
+
+                   Hard Limit - bei Überschreiten dieses Wertes, schaltet der Wechselrichter inner-
+                   halb von max. 5 Sekunden ab. Dieser Wert muss höher als der eingestellte Wert
+                   bei Soft Limit sein.
+
+                   Soft Limit - bei Überschreiten dieses Wertes regelt der Wechselrichter innerhalb
+                   der von den nationalen Normen und Bestimmungen geforderten Zeit auf den
+                   eingestellten Wert herab.
+
+
+
+
+90
+Dynamische Ein-    Um Einspeisebegrenzungen von Energieunternehmen oder Netzbetreibern zen-
+speisebegren-      tral zu verwalten, kann ein Fronius Wechselrichter (Primärgerät) die dynamische
+zung mit mehre-    Einspeisebegrenzung für weitere Fronius-Wechselrichter im System (Se-
+ren Wechselrich-   kundärgeräte) steuern. Folgende Voraussetzungen müssen dafür erfüllt sein:
+tern               -    Leistungsbegrenzung und die Funktion Mehrere Wechselrichter limitieren
+                        (nur Soft Limit und I/O Leistungsmanagement) sind auf der Benutzer-
+                        oberfläche des Primärgeräts aktiviert und konfiguriert.
+                   -    Primärgerät und Sekundärgerät(e) sind physisch über LAN mit demselben
+                        Netzwerk-Router verbunden.
+                   -    Bei allen Sekundärgeräten ist die Wechselrichter-Steuerung über Modbus
+                        TCP aktiviert und konfiguriert.
+                   -    Der Fronius Smart Meter ist als Primärzähler konfiguriert und mit dem
+                        Primärgerät verbunden.
+
+                   Die dynamische Einspeisebegrenzung ist bei folgenden Geräte-Kombinationen
+                   verfügbar:
+
+                    Primärgerät                   Sekundärgeräte
+                    Fronius GEN24                 Fronius GEN24, Fronius Verto, Fronius Tauro, Fronius
+                                                  Argeno, Fronius SnapINverter mit Fronius Datamana-
+                                                  ger 2.0*
+                    Fronius Verto                 Fronius GEN24, Fronius Verto, Fronius Tauro, Fronius
+                                                  Argeno, Fronius SnapINverter mit Fronius Datamana-
+                                                  ger 2.0*
+                    Fronius Tauro                 Fronius GEN24, Fronius Verto, Fronius Tauro, Fronius
+                                                  Argeno, Fronius SnapINverter mit Fronius Datamana-
+                                                  ger 2.0*
+                   * An jedem Fronius SnapINverter mit Fronius Datamanager 2.0 können bis zu 4 weitere Fronius Sna-
+                   pINverter angeschlossen werden.
+
+
+                   Systemgrenzen
+                   -  Es werden Systeme mit max. 20 Wechselrichtern (1 Primärgerät + 19 Se-
+                      kundärgeräte) unterstützt.
+                   -  Die Regelung ist für Photovoltaik-Anlagen bis zu einer Gesamtleistung von
+                      300 kW konzipiert.
+                   -  Bei größeren Anlagenleistungen verlängern sich die Schaltzeiten zwischen
+                      den Wechselrichtern.
+                   -  Für Anlagen >300 kW ist die Verwendung eines Parkreglers empfohlen.
+
+                   Sekundärgerät
+                   Ein Sekundärgerät übernimmt die Einspeisebegrenzung durch das Primärgerät.
+                   Es werden keine Daten für die Einspeisebegrenzung an das Primärgerät gesen-
+                   det. Folgende Konfigurationen müssen für die Leistungsbegrenzung eingestellt
+                   werden:
+
+                   Benutzeroberfläche Sekundärgerät Fronius Datamanager 2.0
+                    1   Benutzer Admin auswählen und das Passwort für Benutzer Admin eingeben.
+                    2   Im Menübereich Einstellungen-Modbus die Funktionen Datenausgabe über
+                        Modbus und Wechselrichter-Steuerung über Modbus aktivieren.
+                    3   Im Menübereich EVU-Editor > Steuerungs-Prioritäten die Steuerungsprio-
+                        ritäten für ein Fail-Safe-Szenario wie folgt festlegen:
+                        1. Modbus
+                        2. Dynamische Leistungsreduzierung
+                        3. I/O-Steuerung
+                    4   Menübereich EVU-Editor > Dynamische Leistungsreduzierung auswählen
+
+
+
+
+                                                                                                                91
+                   5   Beim Menüpunkt Einspeisebegrenzung die Funktion Limit für die gesamte
+                       Anlage aktivieren und folgende Einstellungen durchführen:
+                       -   Gesamtwert der DC-Anlagenleistung in W angeben
+                       -   Dynamische Einspeisebegrenzung (Soft Limit) aktivieren und für die
+                           Max. Netzeinspeise-Leistung einen Wert von 0 W eingeben.
+                       -   Funktion Wechselrichterleistung auf 0 % reduzieren, wenn die Verbin-
+                           dung zum Smart Meter getrennt ist aktivieren
+
+                   ü   Die dynamische Einspeisebegrenzung mit mehreren Wechselrichtern ist
+                       konfiguriert.
+
+                   WICHTIG!
+                   Das Sekundärgerät stoppt die Netzeinspeisung bei einem Kommunikationsaus-
+                   fall automatisch, wenn die Modbus-Steuerung kein Signal an den Wechselrich-
+                   ter sendet.
+
+
+
+EVU Editor -       Zum Einstellen der Steuerungsprioritäten für den Rundsteuersignal Empfänger,
+Steuerungs-Prio-   die dynamische Leistungsreduzierung und die Steuerung über Modbus
+ritäten
+                   1 = höchste Priorität, 3 = niedrigste Priorität
+
+
+
+
+92
+93
+94
+95
+-
+-
+

@@ -1,0 +1,110 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+41031,ID,160,uint16,1,,,,S,Multiple MPPT Inverter Extension Model
+41032,L,208,uint16,1,,,,S,Model length
+41033,DCA_SF,,sunssf,1,,,,,Current Scale Factor
+41034,DCV_SF,,sunssf,1,,,,,Voltage Scale Factor
+41035,DCW_SF,,sunssf,1,,,,,Power Scale Factor
+41036,DCWH_SF,,sunssf,1,,,,,Energy Scale Factor,not supported
+41037,Evt,,bitfield32,2,,,,,Global Events,not supported
+41039,N,10,count,1,,,,,Number of Modules
+41040,TmsPer,,uint16,1,,,,,Timestamp Period,not supported
+41041,ID,,uint16,1,,,,,Input ID
+41042,IDStr,,string,8,,,,,Input ID Sting
+41050,DCA,,uint16,1,DCA_SF,A,,,DC Current
+41051,DCV,,uint16,1,DCV_SF,V,,,DC Voltage
+41052,DCW,,uint16,1,DCW_SF,W,,,DC Power
+41053,DCWH,,acc32,2,DCWH_SF,Wh,,,Lifetime Energy,not supported
+41055,Tms,,uint32,2,,Secs,,,Timestamp,not supported
+41057,Tmp,,int16,1,,C,,,Temperature,not supported
+41058,DCSt,,enum16,1,,,,,Operating State,not supported
+41059,DCEvt,,bitfield32,2,,,,,Module Events,not supported
+41061,ID,,uint16,1,,,,,Input ID
+41062,IDStr,,string,8,,,,,Input ID Sting
+41070,DCA,,uint16,1,DCA_SF,A,,,DC Current
+41071,DCV,,uint16,1,DCV_SF,V,,,DC Voltage
+41072,DCW,,uint16,1,DCW_SF,W,,,DC Power
+41073,DCWH,,acc32,2,DCWH_SF,Wh,,,Lifetime Energy,not supported
+41075,Tms,,uint32,2,,Secs,,,Timestamp,not supported
+41077,Tmp,,int16,1,,C,,,Temperature,not supported
+41078,DCSt,,enum16,1,,,,,Operating State,not supported
+41079,DCEvt,,bitfield32,2,,,,,Module Events,not supported
+41081,ID,,uint16,1,,,,,Input ID
+41082,IDStr,,string,8,,,,,Input ID Sting
+41090,DCA,,uint16,1,DCA_SF,A,,,DC Current
+41091,DCV,,uint16,1,DCV_SF,V,,,DC Voltage
+41092,DCW,,uint16,1,DCW_SF,W,,,DC Power
+41093,DCWH,,acc32,2,DCWH_SF,Wh,,,Lifetime Energy,not supported
+41095,Tms,,uint32,2,,Secs,,,Timestamp,not supported
+41097,Tmp,,int16,1,,C,,,Temperature,not supported
+41098,DCSt,,enum16,1,,,,,Operating State,not supported
+41099,DCEvt,,bitfield32,2,,,,,Module Events,not supported
+41101,ID,,uint16,1,,,,,Input ID
+41102,IDStr,,string,8,,,,,Input ID Sting
+41110,DCA,,uint16,1,DCA_SF,A,,,DC Current
+41111,DCV,,uint16,1,DCV_SF,V,,,DC Voltage
+41112,DCW,,uint16,1,DCW_SF,W,,,DC Power
+41113,DCWH,,acc32,2,DCWH_SF,Wh,,,Lifetime Energy,not supported
+41115,Tms,,uint32,2,,Secs,,,Timestamp,not supported
+41117,Tmp,,int16,1,,C,,,Temperature,not supported
+41118,DCSt,,enum16,1,,,,,Operating State,not supported
+41119,DCEvt,,bitfield32,2,,,,,Module Events,not supported
+41121,ID,,uint16,1,,,,,Input ID
+41122,IDStr,,string,8,,,,,Input ID Sting
+41130,DCA,,uint16,1,DCA_SF,A,,,DC Current
+41131,DCV,,uint16,1,DCV_SF,V,,,DC Voltage
+41132,DCW,,uint16,1,DCW_SF,W,,,DC Power
+41133,DCWH,,acc32,2,DCWH_SF,Wh,,,Lifetime Energy,not supported
+41135,Tms,,uint32,2,,Secs,,,Timestamp,not supported
+41137,Tmp,,int16,1,,C,,,Temperature,not supported
+41138,DCSt,,enum16,1,,,,,Operating State,not supported
+41139,DCEvt,,bitfield32,2,,,,,Module Events,not supported
+41141,ID,,uint16,1,,,,,Input ID
+41142,IDStr,,string,8,,,,,Input ID Sting
+41150,DCA,,uint16,1,DCA_SF,A,,,DC Current
+41151,DCV,,uint16,1,DCV_SF,V,,,DC Voltage
+41152,DCW,,uint16,1,DCW_SF,W,,,DC Power
+41153,DCWH,,acc32,2,DCWH_SF,Wh,,,Lifetime Energy,not supported
+41155,Tms,,uint32,2,,Secs,,,Timestamp,not supported
+41157,Tmp,,int16,1,,C,,,Temperature,not supported
+41158,DCSt,,enum16,1,,,,,Operating State,not supported
+41159,DCEvt,,bitfield32,2,,,,,Module Events,not supported
+41161,ID,,uint16,1,,,,,Input ID
+41162,IDStr,,string,8,,,,,Input ID Sting
+41170,DCA,,uint16,1,DCA_SF,A,,,DC Current
+41171,DCV,,uint16,1,DCV_SF,V,,,DC Voltage
+41172,DCW,,uint16,1,DCW_SF,W,,,DC Power
+41173,DCWH,,acc32,2,DCWH_SF,Wh,,,Lifetime Energy,not supported
+41175,Tms,,uint32,2,,Secs,,,Timestamp,not supported
+41177,Tmp,,int16,1,,C,,,Temperature,not supported
+41178,DCSt,,enum16,1,,,,,Operating State,not supported
+41179,DCEvt,,bitfield32,2,,,,,Module Events,not supported
+41181,ID,,uint16,1,,,,,Input ID
+41182,IDStr,,string,8,,,,,Input ID Sting
+41190,DCA,,uint16,1,DCA_SF,A,,,DC Current
+41191,DCV,,uint16,1,DCV_SF,V,,,DC Voltage
+41192,DCW,,uint16,1,DCW_SF,W,,,DC Power
+41193,DCWH,,acc32,2,DCWH_SF,Wh,,,Lifetime Energy,not supported
+41195,Tms,,uint32,2,,Secs,,,Timestamp,not supported
+41197,Tmp,,int16,1,,C,,,Temperature,not supported
+41198,DCSt,,enum16,1,,,,,Operating State,not supported
+41199,DCEvt,,bitfield32,2,,,,,Module Events,not supported
+41201,ID,,uint16,1,,,,,Input ID
+41202,IDStr,,string,8,,,,,Input ID Sting
+41210,DCA,,uint16,1,DCA_SF,A,,,DC Current
+41211,DCV,,uint16,1,DCV_SF,V,,,DC Voltage
+41212,DCW,,uint16,1,DCW_SF,W,,,DC Power
+41213,DCWH,,acc32,2,DCWH_SF,Wh,,,Lifetime Energy,not supported
+41215,Tms,,uint32,2,,Secs,,,Timestamp,not supported
+41217,Tmp,,int16,1,,C,,,Temperature,not supported
+41218,DCSt,,enum16,1,,,,,Operating State,not supported
+41219,DCEvt,,bitfield32,2,,,,,Module Events,not supported
+41221,ID,,uint16,1,,,,,Input ID
+41222,IDStr,,string,8,,,,,Input ID Sting
+41230,DCA,,uint16,1,DCA_SF,A,,,DC Current
+41231,DCV,,uint16,1,DCV_SF,V,,,DC Voltage
+41232,DCW,,uint16,1,DCW_SF,W,,,DC Power
+41233,DCWH,,acc32,2,DCWH_SF,Wh,,,Lifetime Energy,not supported
+41235,Tms,,uint32,2,,Secs,,,Timestamp,not supported
+41237,Tmp,,int16,1,,C,,,Temperature,not supported
+41238,DCSt,,enum16,1,,,,,Operating State,not supported
+41239,DCEvt,,bitfield32,2,,,,,Module Events,not supported

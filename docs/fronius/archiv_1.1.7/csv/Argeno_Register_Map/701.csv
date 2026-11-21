@@ -1,0 +1,99 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+41241,ID,701,uint16,1,,,,S,DER AC measurement model ID.
+41242,L,153,uint16,1,,,,S,DER AC measurement model length.
+41243,ACType,2,enum16,1,,,,,AC wiring type.,"0: Single Phase
+1: Split Phase
+2: Three Phase"
+41244,St,,enum16,1,,,,,Operating state of the DER.,"0: OFF
+1: ON"
+41245,InvSt,,enum16,1,,,,,Enumerated value.  Inverter state.,"1: OFF
+2: SLEEPING
+3: STARTING
+4: RUNNING
+5: THROTTLED
+6: SHUTTING_DOWN
+7: FAULT
+8: STANDBY"
+41246,ConnSt,,enum16,1,,,,,Grid connection state of the DER.,"0: DISCONNECTED
+1: CONNECTED"
+41247,Alrm,,bitfield32,2,,,,,Active alarms for the DER.,"1: DC Over Voltage
+2: AC Disconnect Open
+3: DC Disconnect Open
+4: Grid Disconnect
+5: Cabinet Open
+6: Manual Shutdown
+7: Over Temperature
+8: Frequency Above Limit
+9: Frequency Under Limit
+10: AC Voltage Above Limit
+11: AC Voltage Under Limit
+12: Blown String Fuse On Input
+13: Under Temperature
+14: Generic Memory Or Communication Error (Internal)
+15: Hardware Test Failure
+16: Manufacturer Alarm"
+41249,DERMode,,bitfield32,2,,,,,Current operational characteristics of the DER.,not supported
+41251,W,,int16,1,W_SF,W,,,Total active power. Active power is positive for DER generation and negative for absorption.
+41252,VA,,int16,1,VA_SF,VA,,,Total apparent power.
+41253,Var,,int16,1,Var_SF,Var,,,Total reactive power.
+41254,PF,,int16,1,PF_SF,,,,Power factor. The sign of power factor should be the sign of active power.
+41255,A,,int16,1,A_SF,A,,,Total AC current.
+41256,LLV,,uint16,1,V_SF,V,,,Line to line AC voltage as an average of active phases.,not supported
+41257,LNV,,uint16,1,V_SF,V,,,Line to neutral AC voltage as an average of active phases.,not supported
+41258,Hz,,uint32,2,Hz_SF,Hz,,,AC frequency.
+41260,TotWhInj,,uint64,4,TotWh_SF,Wh,,,Total active energy injected (Quadrants 1 & 4).,not supported
+41264,TotWhAbs,,uint64,4,TotWh_SF,Wh,,,Total active energy absorbed (Quadrants 2 & 3).,not supported
+41268,TotVarhInj,,uint64,4,TotVarh_SF,Varh,,,Total reactive energy injected (Quadrants 1 & 2).,not supported
+41272,TotVarhAbs,,uint64,4,TotVarh_SF,Varh,,,Total reactive energy absorbed (Quadrants 3 & 4).,not supported
+41276,TmpAmb,,int16,1,Tmp_SF,C,,,Ambient temperature.,not supported
+41277,TmpCab,,int16,1,Tmp_SF,C,,,Cabinet temperature.
+41278,TmpSnk,,int16,1,Tmp_SF,C,,,Heat sink temperature.,not supported
+41279,TmpTrns,,int16,1,Tmp_SF,C,,,Transformer temperature.,not supported
+41280,TmpSw,,int16,1,Tmp_SF,C,,,IGBT/MOSFET temperature.,not supported
+41281,TmpOt,,int16,1,Tmp_SF,C,,,Other temperature.,not supported
+41282,WL1,,int16,1,W_SF,W,,,Active power L1.,not supported
+41283,VAL1,,int16,1,VA_SF,VA,,,Apparent power L1.,not supported
+41284,VarL1,,int16,1,Var_SF,Var,,,Reactive power L1.,not supported
+41285,PFL1,,int16,1,PF_SF,,,,Power factor phase L1.,not supported
+41286,AL1,,int16,1,A_SF,A,,,Current phase L1.
+41287,VL1L2,,uint16,1,V_SF,V,,,Phase voltage L1-L2.
+41288,VL1,,uint16,1,V_SF,V,,,Phase voltage L1-N.
+41289,TotWhInjL1,,uint64,4,TotWh_SF,Wh,,,Total active energy injected L1.,not supported
+41293,TotWhAbsL1,,uint64,4,TotWh_SF,Wh,,,Total active energy absorbed L1.,not supported
+41297,TotVarhInjL1,,uint64,4,TotVarh_SF,Varh,,,Total reactive energy injected L1.,not supported
+41301,TotVarhAbsL1,,uint64,4,TotVarh_SF,Varh,,,Total reactive energy absorbed L1.,not supported
+41305,WL2,,int16,1,W_SF,W,,,Active power L2.,not supported
+41306,VAL2,,int16,1,VA_SF,VA,,,Apparent power L2.,not supported
+41307,VarL2,,int16,1,Var_SF,Var,,,Reactive power L2.,not supported
+41308,PFL2,,int16,1,PF_SF,,,,Power factor L2.,not supported
+41309,AL2,,int16,1,A_SF,A,,,Current L2.
+41310,VL2L3,,uint16,1,V_SF,V,,,Phase voltage L2-L3.
+41311,VL2,,uint16,1,V_SF,V,,,Phase voltage L2-N.
+41312,TotWhInjL2,,uint64,4,TotWh_SF,Wh,,,Total active energy injected L2.,not supported
+41316,TotWhAbsL2,,uint64,4,TotWh_SF,Wh,,,Total active energy absorbed L2.,not supported
+41320,TotVarhInjL2,,uint64,4,TotVarh_SF,Varh,,,Total reactive energy injected L2.,not supported
+41324,TotVarhAbsL2,,uint64,4,TotVarh_SF,Varh,,,Total reactive energy absorbed L2.,not supported
+41328,WL3,,int16,1,W_SF,W,,,Active power L3.,not supported
+41329,VAL3,,int16,1,VA_SF,VA,,,Apparent power L3.,not supported
+41330,VarL3,,int16,1,Var_SF,Var,,,Reactive power L3.,not supported
+41331,PFL3,,int16,1,PF_SF,,,,Power factor L3.,not supported
+41332,AL3,,int16,1,A_SF,A,,,Current L3.
+41333,VL3L1,,uint16,1,V_SF,V,,,Phase voltage L3-L1.
+41334,VL3,,uint16,1,V_SF,V,,,Phase voltage L3-N.
+41335,TotWhInjL3,,uint64,4,TotWh_SF,Wh,,,Total active energy injected L3.,not supported
+41339,TotWhAbsL3,,uint64,4,TotWh_SF,Wh,,,Total active energy absorbed L3.,not supported
+41343,TotVarhInjL3,,uint64,4,TotVarh_SF,Varh,,,Total reactive energy injected L3.,not supported
+41347,TotVarhAbsL3,,uint64,4,TotVarh_SF,Varh,,,Total reactive energy absorbed L3.,not supported
+41351,ThrotPct,,uint16,1,,Pct,,,Throttling in pct of maximum active power.,not supported
+41352,ThrotSrc,,bitfield32,2,,,,,Active throttling source.,not supported
+41354,A_SF,,sunssf,1,,,,S,Current scale factor.
+41355,V_SF,,sunssf,1,,,,S,Voltage scale factor.
+41356,Hz_SF,,sunssf,1,,,,S,Frequency scale factor.
+41357,W_SF,,sunssf,1,,,,S,Active power scale factor.
+41358,PF_SF,,sunssf,1,,,,S,Power factor scale factor.
+41359,VA_SF,,sunssf,1,,,,S,Apparent power scale factor.
+41360,Var_SF,,sunssf,1,,,,S,Reactive power scale factor.
+41361,TotWh_SF,,sunssf,1,,,,S,Active energy scale factor.
+41362,TotVarh_SF,,sunssf,1,,,,S,Reactive energy scale factor.
+41363,Tmp_SF,,sunssf,1,,,,S,Temperature scale factor.
+41364,MnAlrmInfo,,string,32,,,,,Manufacturer alarm information. Valid if MANUFACTURER_ALRM indication is active.,not supported

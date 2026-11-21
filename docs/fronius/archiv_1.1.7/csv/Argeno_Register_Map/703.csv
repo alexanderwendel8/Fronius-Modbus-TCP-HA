@@ -1,0 +1,15 @@
+Start,Name,Value,Type,Size,Scale Factor,Units,RW Access (RW),Static (S),Description,Notes
+41448,ID,703,uint16,1,,,,S,Enter service model ID.
+41449,L,17,uint16,1,,,,S,Enter service model length.
+41450,ES,,enum16,1,,,RW,,Permit enter service.,"0: DISABLED
+1: ENABLED"
+41451,ESVHi,,uint16,1,V_SF,Pct,RW,,Enter service voltage high threshold as percent of normal voltage.
+41452,ESVLo,,uint16,1,V_SF,Pct,RW,,Enter service voltage low threshold as percent of normal voltage.
+41453,ESHzHi,,uint32,2,Hz_SF,Hz,RW,,Enter service frequency high threshold.
+41455,ESHzLo,,uint32,2,Hz_SF,Hz,RW,,Enter service frequency low threshold.
+41457,ESDlyTms,,uint32,2,,Secs,RW,,Enter service delay time in seconds.
+41459,ESRndTms,,uint32,2,,Secs,RW,,Enter service random delay in seconds.,not supported
+41461,ESRmpTms,,uint32,2,,Secs,RW,,Enter service ramp time in seconds.
+41463,ESDlyRemTms,,uint32,2,,Secs,,,Enter service delay time remaining in seconds.,not supported
+41465,V_SF,,sunssf,1,,,,S,Voltage percentage scale factor.
+41466,Hz_SF,,sunssf,1,,,,S,Frequency scale factor.
