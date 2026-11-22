@@ -84,21 +84,27 @@ Temperaturen – diese Sensoren werden daher nicht angelegt. Weitere Geräte ger
 
 ## Installation
 
-**Marketplace (ab Home Assistant 2026.11):** Seit 2026.11 ist HACS als *Marketplace* in Home Assistant
-eingebaut (*Einstellungen → Marketplace*), eine separate HACS-Installation ist nicht mehr nötig.
-1. Beim ersten Öffnen den Hinweis des Marketplace bestätigen und ein GitHub-Konto verbinden
-   (nötig, um benutzerdefinierte Repositories hinzuzufügen und Updates abzurufen).
-2. Dieses Repository `alexanderwendel8/Fronius-Modbus-TCP-HA` als benutzerdefiniertes Repository
-   vom Typ *Integration* hinzufügen.
-3. „Fronius Modbus TCP“ installieren (die neueste Release-Version, z. B. `v0.1.0`) und Home Assistant neu starten.
+**Marketplace (ab Home Assistant 2026.11):** Seit 2026.11 ersetzt der eingebaute *Marketplace* HACS
+([offizielle Doku](https://www.home-assistant.io/integrations/marketplace/)). Er ist unter
+*Settings → Marketplace* zu finden (nur für Administratoren), eine eigene HACS-Installation ist nicht nötig.
+Die Integration steht (noch) nicht im Katalog und wird als benutzerdefiniertes Repository hinzugefügt:
 
-Neue Versionen erscheinen als Update. Benutzerdefinierte Repositories werden nicht sofort abgefragt –
-wer ein gerade veröffentlichtes Release sofort sehen will, wählt beim Repository *Refresh information*
-(„Informationen aktualisieren“).
+1. *Settings → Marketplace* öffnen; beim ersten Öffnen den Warnhinweis akzeptieren
+   (ohne Zustimmung kann der Marketplace nichts installieren).
+2. Oben rechts **Add from link** wählen, unter **GitHub link** `alexanderwendel8/Fronius-Modbus-TCP-HA`
+   eintragen, **Add**. Falls noch nicht geschehen, fragt der Marketplace jetzt nach einer GitHub-Verbindung
+   (Anmeldung per Code auf github.com; nur Lesezugriff auf öffentliche Daten) – sie ist für benutzerdefinierte
+   Repositories Pflicht.
+3. Das Repository in der Liste öffnen, **Install** wählen, Version prüfen (neuestes Release, z. B. `v0.1.0`),
+   **Install**. Ist ein Neustart nötig, erinnert eine Reparaturmeldung unter *Settings → System → Repairs* daran.
+
+Updates erscheinen unter *Settings → Updates* (mit Release Notes); benutzerdefinierte Repositories prüft der
+Marketplace mit GitHub-Verbindung alle 48 Stunden. Nach einem Update Home Assistant neu starten – auch hier
+erinnert eine Reparaturmeldung. Eine HACS-Installation wird beim ersten Start von 2026.11 automatisch
+übernommen, einschließlich dieses Repositories und seiner Update-Entität.
 
 **HACS (Home Assistant vor 2026.11):** Dieses Repository als benutzerdefiniertes Repository (Typ *Integration*)
-hinzufügen, installieren, Home Assistant neu starten. HACS aktualisiert benutzerdefinierte Repositories etwa
-alle 48 Stunden; sofort geht es über *Informationen aktualisieren*.
+hinzufügen, installieren, Home Assistant neu starten.
 
 **Manuell:** `custom_components/fronius_modbus_tcp` nach `<config>/custom_components/` kopieren und neu starten.
 
