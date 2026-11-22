@@ -159,9 +159,10 @@ richten die Integration in einer Home-Assistant-Testinstanz ein.
 
 ## Releases
 
-Änderungen stehen in [`CHANGELOG.md`](CHANGELOG.md). Ein Release entsteht durch einen Tag `vX.Y.Z`,
-der zur Version in `manifest.json` passen muss; der Workflow `release.yml` erstellt daraus das
-GitHub-Release mit den Notizen aus dem Changelog. HACS zeigt dann die Versionsnummer statt des Commit-Hashs.
+Änderungen stehen in [`CHANGELOG.md`](CHANGELOG.md). Releases erstellt der Workflow `release.yml`
+mit den Notizen aus dem Changelog – entweder per Tag `vX.Y.Z` oder manuell unter
+*Actions → Release → Run workflow* (auf `main`, Eingabe z. B. `0.1.0`; der Tag wird dann gesetzt).
+Die Version muss zu `manifest.json` passen. HACS zeigt danach die Versionsnummer statt des Commit-Hashs.
 
 ## Herstellerdokumentation
 
