@@ -115,6 +115,16 @@ CTRL_WMAXLIMPCT_SF = 21
 STATE_CODE_OK = "OK"
 MAX_STATE_LENGTH = 255  # Home Assistant begrenzt Zustände auf 255 Zeichen
 
+# EvtVnd-Fehlerklassen, die im normalen Tagesablauf auftreten (Abschalten am Abend,
+# Anlaufen am Morgen) und deshalb nicht als Fehler zählen: (Register, Bit).
+# In allen Fronius-Familien gleich belegt (EvtVnd1_4_*.csv).
+INFO_EVENT_CLASSES: frozenset[tuple[int, int]] = frozenset(
+    {
+        (1, 0x20),  # Power low (State Code 306)
+        (1, 0x40),  # DC low (307, 310, 522, 523)
+    }
+)
+
 
 # --- Basis-Dekoder (liefern None für "nicht implementiert") -----------------
 
@@ -620,11 +630,13 @@ def parse_vendor_event_classes(
 ) -> dict[str, Any]:
     """Datamanager: jedes Bit in EvtVnd1-4 steht für eine Fehlerklasse.
 
-    Unbekannte Bits werden als "EvtVnd<n> 0x…" angezeigt.
+    Unbekannte Bits werden als "EvtVnd<n> 0x…" angezeigt. "Power low" und
+    "DC low" (Abend/Morgen) erscheinen im Text, zählen aber nicht als Fehler.
     """
     if all(value is None for value in evt_vnd):
         return {"error_active": None, "vendor_events": None}
     classes: list[str] = []
+    error = False
     for register, value in enumerate(evt_vnd, start=1):
         if not value:
             continue
@@ -632,9 +644,10 @@ def parse_vendor_event_classes(
             mask = 1 << bit
             if value & mask:
                 classes.append(table.get((register, mask), f"EvtVnd{register} 0x{mask:X}"))
+                error |= (register, mask) not in INFO_EVENT_CLASSES
     message = "; ".join(dict.fromkeys(classes)) or STATE_CODE_OK
     return {
-        "error_active": bool(classes),
+        "error_active": error,
         "vendor_events": message[:MAX_STATE_LENGTH],
     }
 

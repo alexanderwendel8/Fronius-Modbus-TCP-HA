@@ -219,6 +219,12 @@ def test_vendor_event_classes() -> None:
     assert sunspec.parse_vendor_event_classes([0, 0x8, 0, 0], symo)["vendor_events"] == (
         "Faulty plug connections"
     )
+    # Abend/Morgen: Power low (306) und DC low sichtbar, aber kein Fehler
+    v = sunspec.parse_vendor_event_classes([0x20 | 0x40, 0, 0, 0], symo)
+    assert v == {"error_active": False, "vendor_events": "Power low; DC low"}
+    # Zusammen mit einer echten Fehlerklasse → Fehler
+    v = sunspec.parse_vendor_event_classes([0x20 | 0x4, 0, 0, 0], symo)
+    assert v["error_active"] is True
     # Unbekanntes Bit, nicht unterstützt
     assert sunspec.parse_vendor_event_classes([0, 0, 0, 0x10], symo)["vendor_events"] == (
         "EvtVnd4 0x10"
