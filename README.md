@@ -1,9 +1,13 @@
 # Fronius Modbus TCP für Home Assistant
 
-Custom Integration, die Fronius-Wechselrichter (SunSpec) lokal per Modbus TCP ausliest.
+Custom Integration, die Fronius-Wechselrichter lokal per **Modbus TCP (SunSpec)** ausliest – ohne Cloud
+und ohne Solar.web. Unterstützt werden GEN24/Tauro/Verto sowie ältere Geräte am Datamanager
+(Symo, Primo, Galvo, Eco, Symo Hybrid …), jeweils mit PV-Strings, Batterie und Fronius Smart Meter.
+Optional lassen sich Leistungsbegrenzung und Einspeisung aus Home Assistant steuern.
 
-> Status: Frühe Entwicklungsversion – getestet gegen simulierte Geräte (GEN24 Plus mit Smart Meter,
-> Symo Hybrid am Datamanager), noch nicht an echter Hardware.
+> **Status:** Version 0.1 – im Einsatz an einem echten Symo 3.0-3-M am Datamanager 2.0
+> (siehe [Getestete Geräte](#getestete-geräte)); GEN24, Batterie und Smart Meter bisher nur gegen
+> simulierte Geräte. Rückmeldungen zu weiteren Geräten sind willkommen.
 
 ## Funktionen
 
@@ -55,6 +59,20 @@ vorübergehend „unbekannt“ sind (z. B. nachts).
 
 **Vorzeichen:** Batterieleistung positiv = Entladen. Smart Meter wie vom Gerät geliefert – bei Einbau am
 Netzanschlusspunkt ist positiv = Netzbezug, negativ = Einspeisung.
+
+## Getestete Geräte
+
+| Gerät | Anbindung | Firmware WR | Integration | Home Assistant | Ergebnis |
+|---|---|---|---|---|---|
+| **Symo 3.0-3-M** (echtes Gerät) | Datamanager 2.0, Modbus TCP, Unit-ID 1 | 0.3.30.2 | 0.1.0 | 2026.11.2 (HA OS 18.4) | ✅ Messwerte, Anlagenwerte, Statuscode, Fehlerklassen, Modell 120/122/123 lesend · ⏳ Steuerung noch nicht am Gerät erprobt |
+| GEN24 Plus mit Batterie und Smart Meter | simuliert (Tests) | – | 0.1.0 | Testumgebung | ✅ automatisierte Tests |
+| Symo Hybrid mit Batterie (Datamanager) | simuliert (Tests) | – | 0.1.0 | Testumgebung | ✅ automatisierte Tests |
+| GEN24 ohne Batterie, Gerät mit einem DC-Eingang | simuliert (Tests) | – | 0.1.0 | Testumgebung | ✅ automatisierte Tests |
+| Smart Meter 203 (int+SF) / 213 (float) | simuliert (Tests) | – | 0.1.0 | Testumgebung | ✅ automatisierte Tests |
+
+Beobachtungen am echten Symo: liefert `ActWh` (Modell 122), aber keinen Isolationswiderstand und keine
+Temperaturen – diese Sensoren werden daher nicht angelegt. Weitere Geräte gern per Issue melden
+(Modell, Firmware, Anbindung, Home-Assistant-Version, Diagnose-Export).
 
 ## Voraussetzungen
 
