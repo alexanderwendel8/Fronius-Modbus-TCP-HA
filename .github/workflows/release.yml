@@ -1,0 +1,39 @@
+name: Release
+
+# Erstellt beim Push eines Tags vX.Y.Z ein GitHub-Release mit den Notizen aus CHANGELOG.md.
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Version prüfen und Release Notes extrahieren
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          manifest=$(python3 -c "import json; print(json.load(open('custom_components/fronius_modbus_tcp/manifest.json'))['version'])")
+          if [ "$version" != "$manifest" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME passt nicht zu manifest.json ($manifest)"
+            exit 1
+          fi
+          awk -v v="$version" '
+            $0 ~ "^## " v "$" {found=1; next}
+            found && /^## / {exit}
+            found {print}
+          ' CHANGELOG.md > release_notes.md
+          if [ ! -s release_notes.md ]; then
+            echo "::error::Kein Abschnitt '## $version' in CHANGELOG.md"
+            exit 1
+          fi
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          body_path: release_notes.md
