@@ -150,7 +150,7 @@ def gen24_plus_float() -> list[int]:
     """Symo GEN24 Plus, float, 2 PV-Strings + Batterie (StCha 3 / StDisCha 4)."""
     return device(
         common("Fronius", "Symo GEN24 10.0 Plus", "1.36.5-1", "33333333"),
-        inverter_113(evt_vnd=(0b010, 0b011, 0, 0)),
+        inverter_113(evt1=0x0080 | 0x0400, evt_vnd=(0b010, 0b011, 0, 0)),
         nameplate_120(wh_rtg=10240, cha=10000),
         filler(121, 30), filler(122, 44),
         controls_123(limit_pct=70, limit_ena=1),

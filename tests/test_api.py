@@ -75,6 +75,10 @@ async def test_gen24_plus(gen24) -> None:
         assert v["battery_capacity"] == 10240
         assert v["battery_max_charge_power"] == 10000
 
+        # Evt1 (SunSpec): Übertemperatur + AC-Überspannung
+        assert v["events"] == 0x0480
+        assert v["event_message"] == "Over temperature; AC voltage above limit"
+
         # EvtVnd1 (Sicht "Customer"): Bit 1 = Warnung, kein Fehler
         assert v["warning_active"] is True
         assert v["error_active"] is False
@@ -219,3 +223,10 @@ def test_severity_events() -> None:
         "warning_active": False,
     }
     assert sunspec.parse_severity_events([None, 0, 0, 0])["error_active"] is None
+
+
+def test_event_message() -> None:
+    assert sunspec.parse_event_message(0) == {"event_message": "OK"}
+    assert sunspec.parse_event_message(0x0001) == {"event_message": "Ground fault"}
+    assert sunspec.parse_event_message(0x10000)["event_message"] == "Evt1 0x10000"
+    assert sunspec.parse_event_message(None) == {"event_message": None}

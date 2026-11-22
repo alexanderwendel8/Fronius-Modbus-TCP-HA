@@ -85,6 +85,9 @@ async def test_gen24_plus_with_meter(hass: HomeAssistant, gen24) -> None:
     feed_in = ent_reg.async_get_entity_id("binary_sensor", DOMAIN, "33333333_feed_in_enabled")
     assert hass.states.get(limit_active).state == "on"
 
+    # Evt1 im Klartext
+    assert s("33333333_event_message").state == "Over temperature; AC voltage above limit"
+
     # EvtVnd1 (GEN24): Warnung aktiv, kein Fehler
     warning = ent_reg.async_get_entity_id("binary_sensor", DOMAIN, "33333333_warning_active")
     error = ent_reg.async_get_entity_id("binary_sensor", DOMAIN, "33333333_error_active")

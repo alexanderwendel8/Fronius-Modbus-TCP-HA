@@ -357,6 +357,9 @@
       },
       "vendor_events": {
         "name": "Active error classes"
+      },
+      "event_message": {
+        "name": "Events"
       }
     }
   }

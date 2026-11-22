@@ -193,6 +193,7 @@ INVERTER_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
     _temperature("temperature_other"),
     _enum("status", sunspec.STATUS),
     _enum("status_vendor", sunspec.STATUS_VENDOR),
+    _desc("event_message", skip_if_unsupported=True),
     _desc("events", skip_if_unsupported=True, **_DIAG, **_OFF),
 )
 

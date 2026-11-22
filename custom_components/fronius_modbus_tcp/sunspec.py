@@ -54,6 +54,27 @@ STATUS_VENDOR: dict[int, str] = {
     13: "afci",
 }
 
+# SunSpec "Evt1" (Bitfeld im Inverter-Modell); Texte aus der Fronius-Tabelle
+# docs/fronius/archiv_1.1.7/csv/Fronius_State_Codes_Event_Flags_1_0/Evt1.csv
+SUNSPEC_EVENTS: dict[int, str] = {
+    0x0001: "Ground fault",
+    0x0002: "DC over voltage",
+    0x0004: "AC disconnect open",
+    0x0008: "DC disconnect open",
+    0x0010: "Grid shutdown",
+    0x0020: "Cabinet open",
+    0x0040: "Manual shutdown",
+    0x0080: "Over temperature",
+    0x0100: "Frequency above limit",
+    0x0200: "Frequency under limit",
+    0x0400: "AC voltage above limit",
+    0x0800: "AC voltage under limit",
+    0x1000: "Blown string fuse",
+    0x2000: "Under temperature",
+    0x4000: "Generic memory or communication error",
+    0x8000: "Hardware test failure",
+}
+
 # Modell 124 "ChaSt"
 STORAGE_STATE: dict[int, str] = {
     1: "off",
@@ -602,3 +623,16 @@ def parse_vendor_event_classes(
         "error_active": bool(classes),
         "vendor_events": message[:MAX_STATE_LENGTH],
     }
+
+
+def parse_event_message(evt1: int | None) -> dict[str, Any]:
+    """SunSpec-Ereignisse (Evt1) im Klartext, "OK" wenn keines aktiv ist."""
+    if evt1 is None:
+        return {"event_message": None}
+    events = [
+        SUNSPEC_EVENTS.get(1 << bit, f"Evt1 0x{1 << bit:X}")
+        for bit in range(32)
+        if evt1 & (1 << bit)
+    ]
+    message = "; ".join(events) or STATE_CODE_OK
+    return {"event_message": message[:MAX_STATE_LENGTH]}

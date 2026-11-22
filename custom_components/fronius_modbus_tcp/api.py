@@ -277,6 +277,8 @@ class FroniusModbusClient:
         else:
             values.update(sunspec.parse_inverter_int_sf(regs))
 
+        values.update(sunspec.parse_event_message(values["events"]))
+
         # EvtVnd1-4: Bedeutung hängt von der Gerätegeneration ab (CLAUDE.md)
         evt_vnd = values["evt_vnd"]
         if info.has_site_registers:
