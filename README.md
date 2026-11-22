@@ -83,6 +83,47 @@ Anschließend unter *Einstellungen → Geräte & Dienste → Integration hinzuf�
 für jeden Wechselrichter einen eigenen Eintrag anlegen; der Smart Meter wird automatisch nur dem
 ersten Eintrag zugeordnet.
 
+## Steuerung (optional)
+
+Standardmäßig liest die Integration nur. Schreibende Entitäten gibt es erst nach
+*Einstellungen → Geräte & Dienste → Fronius Modbus TCP → Konfigurieren → „Steuerung erlauben“*.
+
+**Voraussetzung am Gerät:** In der Fronius-Weboberfläche muss „Wechselrichter-Steuerung über Modbus“
+(Datamanager) bzw. „Steuerung erlauben“ (GEN24) aktiv sein. Empfehlenswert: „Steuerung einschränken“
+auf die IP-Adresse von Home Assistant. Vorgaben des Netzbetreibers (Steuerungs-Prioritäten im
+EVU-Editor) haben Vorrang.
+
+| Entität | Typ | Wirkung |
+|---|---|---|
+| Leistungsbegrenzung | Zahl 0–100 % | Maximale Ausgangsleistung in % der Nennleistung. Bei aktiver Begrenzung wirkt ein neuer Wert sofort, sonst wird er nur hinterlegt. |
+| Leistungsbegrenzung aktiv | Schalter | Begrenzung ein/aus |
+| Einspeisung | Schalter | Aus = Standby (keine Einspeisung) |
+| Rückfallzeit Vorgaben | Zahl (s), Konfiguration | Standard 300 s, siehe unten |
+| Ereignisse zurücksetzen | Taste, nur Datamanager | Löscht hängengebliebene Event Flags und den Statuscode |
+
+Ist die Steuerung erlaubt, ersetzen „Leistungsbegrenzung“, „Leistungsbegrenzung aktiv“ und
+„Einspeisung“ die gleichnamigen reinen Anzeige-Entitäten.
+
+**Rückfallzeit:** Jede Vorgabe wird mit einer Rückfallzeit geschrieben. Da jede Modbus-Abfrage den Timer
+im Wechselrichter neu startet, bleibt eine Vorgabe aktiv, solange Home Assistant läuft. Fällt Home Assistant
+aus, kehrt der Wechselrichter nach dieser Zeit von selbst in den Normalbetrieb zurück – eine Drosselung
+oder ein Standby kann also nicht „hängen bleiben“.
+
+Beispiel-Automation: bei negativem Strompreis auf 0 % drosseln:
+
+```yaml
+triggers:
+  - trigger: numeric_state
+    entity_id: sensor.strompreis
+    below: 0
+actions:
+  - action: number.set_value
+    target: {entity_id: number.symo_3_0_3_m_power_limit}
+    data: {value: 0}
+  - action: switch.turn_on
+    target: {entity_id: switch.symo_3_0_3_m_power_limit_active}
+```
+
 ## Struktur
 
 | Datei | Zweck |
@@ -93,7 +134,8 @@ ersten Eintrag zugeordnet.
 | `config_flow.py` | Einrichtung über die UI inkl. Verbindungstest |
 | `entity.py` | Basisentität mit Gerätezuordnung |
 | `sensor.py` | Sensor-Definitionen |
-| `binary_sensor.py` | Binärsensoren (Vorgaben aus Modell 123) |
+| `binary_sensor.py` | Binärsensoren (Fehler, Warnung, Vorgaben aus Modell 123) |
+| `number.py`, `switch.py`, `button.py` | Steuerung (nur mit Option „Steuerung erlauben“) |
 | `state_codes.py` | Fronius State Codes im Klartext (erzeugt mit `scripts/generate_state_codes.py`) |
 | `diagnostics.py` | Diagnosedaten-Export |
 | `strings.json`, `translations/` | Texte (EN/DE) |

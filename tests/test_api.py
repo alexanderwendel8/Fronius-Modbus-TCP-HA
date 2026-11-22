@@ -7,6 +7,7 @@ import pytest
 from custom_components.fronius_modbus_tcp import sunspec
 from custom_components.fronius_modbus_tcp.api import (
     FroniusModbusClient,
+    FroniusModbusError,
     async_detect_meter,
 )
 
@@ -238,3 +239,58 @@ def test_event_message() -> None:
     assert sunspec.parse_event_message(0x0001) == {"event_message": "Ground fault"}
     assert sunspec.parse_event_message(0x10000)["event_message"] == "Evt1 0x10000"
     assert sunspec.parse_event_message(None) == {"event_message": None}
+
+
+# --- Schreiben (Steuerung) -----------------------------------------------------
+
+
+def test_encode_power_limit() -> None:
+    # Handbuch-Beispiel: 80 % bei SF −2, ohne Zeitvorgaben → 8000, 0, 0, 0, 1
+    assert sunspec.encode_power_limit(80, -2, 0, True) == [8000, 0, 0, 0, 1]
+    assert sunspec.encode_power_limit(55.5, -2, 300, False) == [5550, 0, 300, 0, 0]
+    with pytest.raises(ValueError):
+        sunspec.encode_power_limit(101, -2, 300, True)
+    with pytest.raises(ValueError):
+        sunspec.encode_power_limit(50, None, 300, True)
+    assert sunspec.encode_feed_in(False, 300) == [0, 300, 0]
+    assert sunspec.encode_feed_in(True, 300) == [0, 0, 1]
+
+
+async def test_write_controls(gen24) -> None:
+    client = FroniusModbusClient("127.0.0.1", gen24.port)
+    try:
+        info = await client.read_inverter_info(1)
+        start = info.models[sunspec.CONTROLS_MODEL][0]
+
+        await client.set_power_limit(info, 55, enabled=True, revert_seconds=600)
+        v = await client.read_inverter_data(info)
+        assert v["power_limit"] == 55.0 and v["power_limit_active"] is True
+        # WMaxLimPct_RvrtTms gesetzt
+        assert (await client.read(1, start + 5, 1)) == [600]
+
+        await client.disable_power_limit(info)
+        v = await client.read_inverter_data(info)
+        assert v["power_limit_active"] is False and v["power_limit"] == 55.0
+
+        await client.set_feed_in(info, False, revert_seconds=300)
+        v = await client.read_inverter_data(info)
+        assert v["feed_in_enabled"] is False
+        assert (await client.read(1, start, 3)) == [0, 300, 0]
+        await client.set_feed_in(info, True, revert_seconds=300)
+        assert (await client.read_inverter_data(info))["feed_in_enabled"] is True
+
+        # GEN24 hat keine Fronius-Register
+        with pytest.raises(FroniusModbusError):
+            await client.reset_events(info)
+    finally:
+        await client.close()
+
+
+async def test_reset_events_datamanager(datamanager) -> None:
+    client = FroniusModbusClient("127.0.0.1", datamanager.port)
+    try:
+        info = await client.read_inverter_info(1)
+        await client.reset_events(info)
+        assert (await client.read(1, sunspec.FRONIUS_RESET_EVENTS_ADDRESS, 1)) == [0xFFFF]
+    finally:
+        await client.close()

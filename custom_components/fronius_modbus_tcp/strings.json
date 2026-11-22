@@ -49,6 +49,19 @@
         "name": "Warning"
       }
     },
+    "button": {
+      "reset_events": {
+        "name": "Reset events"
+      }
+    },
+    "number": {
+      "power_limit": {
+        "name": "Power limit"
+      },
+      "revert_time": {
+        "name": "Fallback time for settings"
+      }
+    },
     "sensor": {
       "ac_power": {
         "name": "AC power"
@@ -367,6 +380,33 @@
       "isolation_resistance": {
         "name": "Isolation resistance"
       }
+    },
+    "switch": {
+      "power_limit_active": {
+        "name": "Power limit active"
+      },
+      "feed_in_enabled": {
+        "name": "Feed-in"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Fronius Modbus TCP options",
+        "description": "Writing entities change the inverter's behaviour. \"Inverter control via Modbus\" must be enabled in the Fronius web interface; grid operator settings (control priorities) take precedence.",
+        "data": {
+          "allow_control": "Allow control"
+        },
+        "data_description": {
+          "allow_control": "Creates entities for power limitation, feed-in (standby), fallback time and – for Datamanager devices – resetting events."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "write_failed": {
+      "message": "Writing to the inverter failed: {error}. Is \"Inverter control via Modbus\" enabled in the Fronius web interface?"
     }
   }
 }

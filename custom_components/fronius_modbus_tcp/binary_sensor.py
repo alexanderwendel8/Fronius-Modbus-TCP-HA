@@ -15,7 +15,7 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from . import sunspec
 from .coordinator import FroniusConfigEntry, FroniusCoordinator
-from .entity import FroniusEntity, drop_unsupported
+from .entity import FroniusEntity, drop_unsupported, remove_replaced
 
 PARALLEL_UPDATES = 0
 
@@ -79,6 +79,8 @@ async def async_setup_entry(
         entities += [
             FroniusBinarySensor(coordinator, desc) for desc in CONTROLS_BINARY_SENSORS
         ]
+    replaced = remove_replaced(hass, coordinator, "binary_sensor")
+    entities = [e for e in entities if e.entity_description.key not in replaced]
     async_add_entities(drop_unsupported(hass, coordinator, "binary_sensor", entities))
 
 

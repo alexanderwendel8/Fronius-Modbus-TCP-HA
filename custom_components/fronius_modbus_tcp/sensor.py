@@ -27,7 +27,13 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from . import sunspec
 from .coordinator import FroniusConfigEntry, FroniusCoordinator
-from .entity import DEVICE_INVERTER, DEVICE_METER, FroniusEntity, drop_unsupported
+from .entity import (
+    DEVICE_INVERTER,
+    DEVICE_METER,
+    FroniusEntity,
+    drop_unsupported,
+    remove_replaced,
+)
 
 PARALLEL_UPDATES = 0
 
@@ -446,6 +452,8 @@ async def async_setup_entry(
             if desc.min_phases <= meter.phases
         ]
 
+    replaced = remove_replaced(hass, coordinator, "sensor")
+    entities = [e for e in entities if e.entity_description.key not in replaced]
     async_add_entities(drop_unsupported(hass, coordinator, "sensor", entities))
 
 

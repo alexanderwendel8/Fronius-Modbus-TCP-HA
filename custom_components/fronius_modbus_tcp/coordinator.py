@@ -8,6 +8,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
+from . import sunspec
 from .api import (
     FroniusData,
     FroniusModbusClient,
@@ -15,7 +16,12 @@ from .api import (
     InverterInfo,
     MeterInfo,
 )
-from .const import DEFAULT_SCAN_INTERVAL, DOMAIN
+from .const import (
+    CONF_ALLOW_CONTROL,
+    DEFAULT_REVERT_SECONDS,
+    DEFAULT_SCAN_INTERVAL,
+    DOMAIN,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -48,6 +54,15 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
         self._inverter_unit = inverter_unit
         self._meter_unit = meter_unit
         self.meter = None
+        # Rückfallzeit für Vorgaben; gesetzt/wiederhergestellt von der Number-Entität
+        self.revert_seconds = DEFAULT_REVERT_SECONDS
+
+    @property
+    def control_allowed(self) -> bool:
+        """Option "Steuerung erlauben" aktiv und Gerät hat Modell 123."""
+        return bool(
+            self.config_entry.options.get(CONF_ALLOW_CONTROL)
+        ) and sunspec.CONTROLS_MODEL in self.inverter.models
 
     async def _async_setup(self) -> None:
         """Einmalig beim ersten Refresh: Gerätestruktur erkennen."""

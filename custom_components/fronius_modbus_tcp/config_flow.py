@@ -7,7 +7,13 @@ from typing import Any
 
 import voluptuous as vol
 
-from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
+from homeassistant.config_entries import (
+    ConfigEntry,
+    ConfigFlow,
+    ConfigFlowResult,
+    OptionsFlow,
+)
+from homeassistant.core import callback
 from homeassistant.const import CONF_HOST, CONF_PORT
 
 from .api import (
@@ -17,6 +23,7 @@ from .api import (
     async_detect_meter,
 )
 from .const import (
+    CONF_ALLOW_CONTROL,
     CONF_METER_UNIT_ID,
     CONF_UNIT_ID,
     DEFAULT_PORT,
@@ -49,6 +56,11 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
     """Einrichtung über die Benutzeroberfläche."""
 
     VERSION = 1
+
+    @staticmethod
+    @callback
+    def async_get_options_flow(config_entry: ConfigEntry) -> FroniusOptionsFlow:
+        return FroniusOptionsFlow()
 
     def _host_has_meter(self, host: str) -> bool:
         """Smart Meter am selben Host schon einem anderen Eintrag zugeordnet?
@@ -146,4 +158,25 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
                 STEP_USER_DATA_SCHEMA, user_input
             ),
             errors=errors,
+        )
+
+
+class FroniusOptionsFlow(OptionsFlow):
+    """Optionen: Steuerung des Wechselrichters erlauben (Standard: aus)."""
+
+    async def async_step_init(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        if user_input is not None:
+            return self.async_create_entry(data=user_input)
+        return self.async_show_form(
+            step_id="init",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(
+                        CONF_ALLOW_CONTROL,
+                        default=self.config_entry.options.get(CONF_ALLOW_CONTROL, False),
+                    ): bool,
+                }
+            ),
         )

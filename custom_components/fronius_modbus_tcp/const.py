@@ -10,6 +10,8 @@ MANUFACTURER: Final = "Fronius"
 
 CONF_UNIT_ID: Final = "unit_id"
 CONF_METER_UNIT_ID: Final = "meter_unit_id"
+# Option: schreibende Entitäten (Leistungsbegrenzung, Standby …) anlegen
+CONF_ALLOW_CONTROL: Final = "allow_control"
 
 DEFAULT_PORT: Final = 502
 DEFAULT_UNIT_ID: Final = 1
@@ -25,6 +27,14 @@ METER_UNIT_ID_GEN24: Final = 200
 METER_UNIT_ID_DATAMANAGER: Final = 240
 METER_UNIT_ID_CANDIDATES: Final = [METER_UNIT_ID_GEN24, METER_UNIT_ID_DATAMANAGER]
 METER_UNIT_ID_NONE: Final = 0  # im Formular: 0 = kein Smart Meter
+
+# Rückfallzeit (RvrtTms) für Vorgaben: Fällt Home Assistant aus, kehrt der
+# Wechselrichter danach von selbst in den Normalbetrieb zurück. Jede Modbus-
+# Nachricht startet den Timer neu, solange die Integration läuft bleibt die
+# Vorgabe also aktiv (Handbuch "Zeitverhalten der unterstützten Betriebsarten").
+DEFAULT_REVERT_SECONDS: Final = 300
+MIN_REVERT_SECONDS: Final = 60
+MAX_REVERT_SECONDS: Final = 28800
 
 # SunSpec-Basisadresse (0-basiert). An Adresse 40000 steht die Kennung "SunS".
 SUNSPEC_BASE_ADDRESS: Final = 40000
