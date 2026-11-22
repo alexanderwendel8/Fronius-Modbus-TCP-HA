@@ -45,7 +45,7 @@ mehrzeilige Kopfzeile. Spalten jeweils:
 | 113 | Inverter Drehstrom (float) | 40123 | 60 | ✅ (bevorzugt) |
 | 120 | Nameplate (Nennwerte) | 40185 | 26/27 | ⏳ z. B. `WRtg` Nennleistung |
 | 121 | Basic Settings | 40213 | 30 | ⏳ |
-| 122 | Extended Measurements & Status | 40245 | 44 | ⏳ fast alles „not supported“, nur `TmSrc`, `Tms` |
+| 122 | Extended Measurements & Status | 40245 | 44 | ✅ `ActWh`, `Ris` gelesen. Argeno: fast alles „not supported“; Symo am Datamanager liefert aber `ActWh` (siehe §6) |
 | 123 | Immediate Controls (**schreibbar**) | 40291 | 24 | ⏳ Leistungsbegrenzung `WMaxLimPct`, `Conn`, `OutPFSet` |
 | 126, 129, 130, 132, 135, 136, 145 | Netzstützungskurven / Ride-Through / Extended Settings | 40317–41030 | – | ❌ |
 | 160 | Multiple MPPT Extension | 41031 | 208 (N = 10) | ✅ |
@@ -177,6 +177,13 @@ Wird von der Integration derzeit **nicht** unterstützt.
 - Common-Model-Länge 65 vs. 66 je nach Gerät (siehe Abschnitt 2).
 
 ---
+
+### Abweichungen in der Praxis (Testsystem)
+- **Symo 3.0-3-M am Datamanager** (Datamanager-FW 3.34.1-7): Modell 122 `ActWh` wird geliefert
+  (identisch mit `WH` und den Fronius-Registern 510–513), `Ris` nicht. Die Argeno-Registerkarte
+  markiert beide als „not supported“ – sie gilt nicht für alle Datamanager-Geräte. Unterstützung
+  daher immer am Gerät prüfen (die Integration legt nur Sensoren mit Werten an).
+- Temperaturen (`TmpCab`, `TmpSnk`, `TmpTrns`, `TmpOt`) liefert dieser Symo nicht.
 
 ## 7. Was aus diesem Archiv fehlt
 
