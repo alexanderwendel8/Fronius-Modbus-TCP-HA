@@ -2,11 +2,19 @@
 
 from __future__ import annotations
 
+import logging
+from collections.abc import Sequence
+from typing import TypeVar
+
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN, MANUFACTURER
 from .coordinator import FroniusCoordinator
+
+_LOGGER = logging.getLogger(__name__)
 
 DEVICE_INVERTER = "inverter"
 DEVICE_METER = "meter"
@@ -68,3 +76,38 @@ class FroniusEntity(CoordinatorEntity[FroniusCoordinator]):
             and self.coordinator.data is not None
             and self._key in self.coordinator.data.values
         )
+
+
+_EntityT = TypeVar("_EntityT", bound=FroniusEntity)
+
+
+def drop_unsupported(
+    hass: HomeAssistant,
+    coordinator: FroniusCoordinator,
+    platform: str,
+    entities: Sequence[_EntityT],
+) -> list[_EntityT]:
+    """Entitäten weglassen, deren Wert das Gerät als "nicht unterstützt" meldet.
+
+    Betrifft nur Beschreibungen mit skip_if_unsupported=True, und nur wenn der
+    Wert gelesen wurde (Schlüssel vorhanden) und None ist – fehlt der Schlüssel,
+    ist das Lesen fehlgeschlagen (z. B. Smart Meter antwortet nicht) und die
+    Entität bleibt erhalten. Bestehende Registry-Einträge der weggelassenen
+    Entitäten werden entfernt; wird der Wert später unterstützt, legt der
+    nächste Start die Entität wieder an.
+    """
+    values = coordinator.data.values if coordinator.data else {}
+    registry = er.async_get(hass)
+    kept: list[_EntityT] = []
+    for entity in entities:
+        desc = entity.entity_description
+        key = desc.key
+        if getattr(desc, "skip_if_unsupported", False) and key in values and values[key] is None:
+            _LOGGER.debug("%s %s nicht unterstützt, wird nicht angelegt", platform, key)
+            if entity_id := registry.async_get_entity_id(
+                platform, DOMAIN, entity.unique_id or ""
+            ):
+                registry.async_remove(entity_id)
+            continue
+        kept.append(entity)
+    return kept

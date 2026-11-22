@@ -29,6 +29,20 @@
     }
   },
   "entity": {
+    "binary_sensor": {
+      "power_limit_active": {
+        "name": "Leistungsbegrenzung aktiv"
+      },
+      "feed_in_enabled": {
+        "name": "Einspeisung freigegeben"
+      },
+      "pf_control_active": {
+        "name": "Fester Leistungsfaktor aktiv"
+      },
+      "var_control_active": {
+        "name": "Feste Blindleistung aktiv"
+      }
+    },
     "sensor": {
       "ac_power": {
         "name": "AC-Leistung"
@@ -289,6 +303,51 @@
       },
       "meter_power_factor": {
         "name": "Leistungsfaktor"
+      },
+      "site_power": {
+        "name": "Anlagenleistung"
+      },
+      "site_energy_day": {
+        "name": "Energie heute"
+      },
+      "site_energy_year": {
+        "name": "Energie dieses Jahr"
+      },
+      "site_energy_total": {
+        "name": "Anlagen-Gesamtenergie"
+      },
+      "state_code": {
+        "name": "Statuscode"
+      },
+      "state_message": {
+        "name": "Statusmeldung"
+      },
+      "power_limit": {
+        "name": "Leistungsbegrenzung"
+      },
+      "pf_setpoint": {
+        "name": "Leistungsfaktor-Vorgabe"
+      },
+      "var_limit": {
+        "name": "Blindleistungs-Vorgabe"
+      },
+      "rated_power": {
+        "name": "Nennleistung"
+      },
+      "rated_apparent_power": {
+        "name": "Nenn-Scheinleistung"
+      },
+      "rated_current": {
+        "name": "Nennstrom"
+      },
+      "battery_capacity": {
+        "name": "Batteriekapazität"
+      },
+      "battery_max_charge_power": {
+        "name": "Batterie max. Ladeleistung"
+      },
+      "battery_max_discharge_power": {
+        "name": "Batterie max. Entladeleistung"
       }
     }
   }

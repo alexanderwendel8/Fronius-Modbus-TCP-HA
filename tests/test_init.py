@@ -72,6 +72,19 @@ async def test_gen24_plus_with_meter(hass: HomeAssistant, gen24) -> None:
     assert ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_dc_current") is None
     assert ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_dc_voltage") is None
     assert float(s("33333333_dc_power").state) == 3400.0
+
+    # Modell 120: Nennleistung und Batteriekapazität
+    assert float(s("33333333_rated_power").state) == 10000
+    assert float(s("33333333_battery_capacity").state) == pytest.approx(10.24)
+
+    # Modell 123: aktive Drosselung als Sensor und Binärsensoren
+    assert float(s("33333333_power_limit").state) == 70.0
+    limit_active = ent_reg.async_get_entity_id(
+        "binary_sensor", DOMAIN, "33333333_power_limit_active"
+    )
+    feed_in = ent_reg.async_get_entity_id("binary_sensor", DOMAIN, "33333333_feed_in_enabled")
+    assert hass.states.get(limit_active).state == "on"
+    assert hass.states.get(feed_in).state == "on"
     assert float(s("33333333_mppt_1_dc_power").state) == 1680
     assert ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_mppt_3_dc_power") is None
     assert float(s("33333333_battery_power").state) == 1440
@@ -269,6 +282,40 @@ async def test_hybrid_unused_energy_not_created(hass: HomeAssistant, socket_enab
         }
         assert "44444444_mppt_1_dc_power" in uids
         assert "44444444_mppt_1_dc_energy" not in uids
+        # Ohne Fronius-Register keine Anlagensummen
+        assert "44444444_site_energy_day" not in uids
+        # Nennwerte: WRtg vorhanden, ARtg und Batteriekapazität nicht unterstützt
+        assert "44444444_rated_power" in uids
+        assert "44444444_rated_current" not in uids
+        assert "44444444_battery_capacity" not in uids
+        assert await hass.config_entries.async_unload(entry.entry_id)
+        await hass.async_block_till_done()
+    finally:
+        await server.stop()
+
+
+async def test_datamanager_site_totals(hass: HomeAssistant, socket_enabled) -> None:
+    """Datamanager: Anlagenleistung und Tages-/Jahres-/Gesamtenergie als Sensoren."""
+    server = sim.FroniusSimulator(
+        {
+            1: (
+                sim.datamanager_hybrid_int(),
+                sim.fronius_registers(day=12_345, state_code=306),
+            )
+        }
+    )
+    await server.start()
+    try:
+        entry = await _setup(hass, server.port, **{CONF_METER_UNIT_ID: 0})
+        ent_reg = er.async_get(hass)
+        s = lambda uid: _state(hass, ent_reg, uid)  # noqa: E731
+        assert float(s("44444444_site_power").state) == 2000
+        assert float(s("44444444_site_energy_day").state) == pytest.approx(12.345)
+        assert float(s("44444444_site_energy_year").state) == pytest.approx(1234.567)
+        assert float(s("44444444_site_energy_total").state) == pytest.approx(9330.29)
+        # Symo Hybrid → Symo-Tabelle
+        assert s("44444444_state_code").state == "306"
+        assert s("44444444_state_message").state == "Power Low"
         assert await hass.config_entries.async_unload(entry.entry_id)
         await hass.async_block_till_done()
     finally:

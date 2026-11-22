@@ -78,6 +78,7 @@ an der Modellkette (z. B. Modell 124 vorhanden → Batterie-fähig).
 | Unit-ID im Config Flow | `config_flow.py`, `strings.json` | ✅ Hinweise GEN24 = 1, Datamanager = WR-Nummer (00 → 100) |
 | `EvtVnd1-4` dekodieren | – | ⏳ je nach Gerätegeneration unterschiedlich (siehe Tabelle oben) |
 | Mehrere Smart Meter (200–204 / 240–244) | – | ⏳ derzeit nur einer |
-| Fronius-Register 214 (State Code), 500–513 (Anlagensummen) | – | ⏳ nur Datamanager |
-| Steuerung (Modell 123, 124 schreibbar) | – | ⏳ nicht umgesetzt (Ablauf siehe handbuecher §2) |
-| Nennleistung (Modell 120 `WRtg`) | – | ⏳ nicht umgesetzt |
+| Fronius-Register 214 (State Code), 500–513 (Anlagensummen) | `sunspec.py::parse_fronius_*`, `state_codes.py` | ✅ nur Datamanager; Erkennung per Testlesen beim Start |
+| Vorgaben lesen (Modell 123) | `sunspec.py::parse_controls`, `binary_sensor.py` | ✅ Leistungsbegrenzung, Standby, cos φ/Blindleistung (nur lesend) |
+| Steuerung (Modell 123, 124 schreiben) | – | ⏳ nicht umgesetzt (Ablauf siehe handbuecher §2) |
+| Nennwerte (Modell 120) | `sunspec.py::parse_nameplate` | ✅ WRtg, VARtg, ARtg; Batterie WHRtg, MaxChaRte, MaxDisChaRte; einmal beim Start gelesen |

@@ -29,6 +29,12 @@ Custom Integration, die Fronius-Wechselrichter (SunSpec) lokal per Modbus TCP au
 | | Batterie | Leistung (+ Entladen / − Laden), Lade- und Entladeleistung, Spannung, geladene/entladene Energie**, Ladezustand, Status, Mindestreserve | ja |
 | | Batterie | Ladequelle, Maximalleistung (Diagnose); Steuermodus, Lade-/Entladegrenze | teils |
 | | Status | Betriebszustand (SunSpec), Fronius-Zustand | ja |
+| | Status (Datamanager) | Statuscode und Statusmeldung im Klartext (z. B. „306 Power Low“) | ja |
+| | Anlage (Datamanager) | Anlagenleistung, Energie heute, Energie dieses Jahr, Anlagen-Gesamtenergie | ja |
+| | Vorgaben (Modell 123, nur lesend) | Leistungsbegrenzung in %, Leistungsbegrenzung aktiv, Einspeisung freigegeben | ja |
+| | Vorgaben (Diagnose) | Leistungsfaktor- und Blindleistungs-Vorgabe und ob aktiv | nein |
+| | Nennwerte (Modell 120) | Nennleistung; Batteriekapazität; max. Lade-/Entladeleistung | ja (Diagnose) |
+| | Nennwerte (Diagnose) | Nenn-Scheinleistung, Nennstrom | nein |
 | | Diagnose | Temperaturen, Ereignis-Flags | nein |
 | Smart Meter | | Leistung, Energie Bezug, Energie Einspeisung, Strom, Spannung L-N je Phase, Frequenz | ja |
 | | | Leistung/Strom/Energie je Phase, Spannung L-L, Schein-/Blindleistung, Leistungsfaktor | nein |
@@ -84,6 +90,8 @@ ersten Eintrag zugeordnet.
 | `config_flow.py` | Einrichtung über die UI inkl. Verbindungstest |
 | `entity.py` | Basisentität mit Gerätezuordnung |
 | `sensor.py` | Sensor-Definitionen |
+| `binary_sensor.py` | Binärsensoren (Vorgaben aus Modell 123) |
+| `state_codes.py` | Fronius State Codes im Klartext (erzeugt mit `scripts/generate_state_codes.py`) |
 | `diagnostics.py` | Diagnosedaten-Export |
 | `strings.json`, `translations/` | Texte (EN/DE) |
 

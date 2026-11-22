@@ -10,7 +10,7 @@ from typing import Any
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ModbusException
 
-from . import sunspec
+from . import state_codes, sunspec
 from .const import (
     DEFAULT_RETRIES,
     DEFAULT_TIMEOUT,
@@ -55,6 +55,10 @@ class InverterInfo(SunSpecDeviceInfo):
     mppt_roles: list[str] = field(default_factory=list)
     has_storage: bool = False
     hybrid_storage: bool = False
+    # Fronius-Register 214 (State Code) und 500-513 (Anlagensummen) – nur Datamanager
+    has_site_registers: bool = False
+    # Nennwerte aus Modell 120 (statisch, einmal beim Start gelesen)
+    nameplate: dict[str, Any] = field(default_factory=dict)
 
     @property
     def has_battery(self) -> bool:
@@ -222,6 +226,23 @@ class FroniusModbusClient:
             info.mppt_names = [
                 name or f"MPPT {i}" for i, name in enumerate(raw_names, 1)
             ]
+
+        if sunspec.NAMEPLATE_MODEL in models:
+            regs = await self.read_model(unit, models, sunspec.NAMEPLATE_MODEL)
+            info.nameplate = sunspec.parse_nameplate(regs)
+
+        # Fronius-Register gibt es nur beim Datamanager; GEN24 & Co. antworten
+        # mit einer Modbus-Exception (unzulässige Adresse).
+        try:
+            await self.read(
+                unit, sunspec.FRONIUS_SITE_ADDRESS, sunspec.FRONIUS_SITE_COUNT
+            )
+        except FroniusConnectionError:
+            raise
+        except FroniusModbusError as err:
+            _LOGGER.debug("Unit %s: keine Fronius-Register 500-513 (%s)", unit, err)
+        else:
+            info.has_site_registers = True
         return info
 
     async def read_meter_info(self, unit: int) -> MeterInfo:
@@ -246,7 +267,7 @@ class FroniusModbusClient:
     async def read_inverter_data(self, info: InverterInfo) -> dict[str, Any]:
         """Alle Messwerte des Wechselrichters (inkl. MPPT und Speicher)."""
         unit, models = info.unit_id, info.models
-        values: dict[str, Any] = {}
+        values: dict[str, Any] = dict(info.nameplate)
 
         model_id = info.inverter_model
         assert model_id is not None
@@ -267,6 +288,22 @@ class FroniusModbusClient:
         if info.has_storage:
             regs = await self.read_model(unit, models, sunspec.STORAGE_MODEL)
             values.update(sunspec.parse_storage(regs))
+
+        if sunspec.CONTROLS_MODEL in models:
+            regs = await self.read_model(unit, models, sunspec.CONTROLS_MODEL)
+            values.update(sunspec.parse_controls(regs))
+
+        if info.has_site_registers:
+            regs = await self.read(
+                unit, sunspec.FRONIUS_SITE_ADDRESS, sunspec.FRONIUS_SITE_COUNT
+            )
+            values.update(sunspec.parse_fronius_site(regs))
+            (reg,) = await self.read(unit, sunspec.FRONIUS_STATE_CODE_ADDRESS, 1)
+            values.update(
+                sunspec.parse_fronius_state_code(
+                    reg, state_codes.table_for_model(info.model)
+                )
+            )
 
         return values
 

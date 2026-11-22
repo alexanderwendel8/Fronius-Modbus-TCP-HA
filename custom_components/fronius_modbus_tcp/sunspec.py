@@ -17,6 +17,8 @@ INVERTER_INT_SF_MODELS: dict[int, int] = {101: 1, 102: 2, 103: 3}
 METER_FLOAT_MODELS: dict[int, int] = {211: 1, 212: 2, 213: 3, 214: 3}
 METER_INT_SF_MODELS: dict[int, int] = {201: 1, 202: 2, 203: 3, 204: 3}
 COMMON_MODEL = 1
+CONTROLS_MODEL = 123
+NAMEPLATE_MODEL = 120
 STORAGE_MODEL = 124
 MPPT_MODEL = 160
 END_MODEL = 0xFFFF
@@ -75,6 +77,14 @@ STORAGE_CONTROL_MODE: dict[int, str] = {
 STORAGE_GRID_CHARGING: dict[int, str] = {0: "pv", 1: "grid"}
 
 
+# Fronius-Register (nur Datamanager, 0-basierte Adressen; Handbuch 42,0410,2049
+# Kapitel "Fronius Register": Register 212-216 und 500-513, 1-basiert)
+FRONIUS_SITE_ADDRESS = 499  # F_Site_Power (500-501) … F_Site_Energy_Total (510-513)
+FRONIUS_SITE_COUNT = 14
+FRONIUS_STATE_CODE_ADDRESS = 213  # F_Active_State_Code (214)
+STATE_CODE_OK = "OK"
+
+
 # --- Basis-Dekoder (liefern None für "nicht implementiert") -----------------
 
 
@@ -96,6 +106,13 @@ def to_int16(reg: int) -> int | None:
 def to_uint32(regs: list[int]) -> int | None:
     value = (regs[0] << 16) | regs[1]
     return None if value == 0xFFFFFFFF else value
+
+
+def to_uint64(regs: list[int]) -> int | None:
+    value = 0
+    for reg in regs[:4]:
+        value = (value << 16) | reg
+    return None if value == 0xFFFFFFFFFFFFFFFF else value
 
 
 def to_acc32(regs: list[int]) -> int | None:
@@ -463,4 +480,80 @@ def parse_meter_int_sf(regs: list[int]) -> dict[str, Any]:
         "meter_energy_import_a": wh(46),
         "meter_energy_import_b": wh(48),
         "meter_energy_import_c": wh(50),
+    }
+
+
+# --- Fronius-Register (Datamanager) -----------------------------------------
+
+
+def parse_fronius_site(regs: list[int]) -> dict[str, Any]:
+    """Anlagensummen aller Wechselrichter am Datamanager (W bzw. Wh, ohne SF).
+
+    Tages- und Jahresenergie dürfen 0 sein (Tages-/Jahreswechsel) und werden
+    daher nicht als "nicht verfügbar" behandelt.
+    """
+    return {
+        "site_power": to_uint32(regs[0:2]),
+        "site_energy_day": to_uint64(regs[2:6]),
+        "site_energy_year": to_uint64(regs[6:10]),
+        "site_energy_total": _positive(to_uint64(regs[10:14])),
+    }
+
+
+def parse_fronius_state_code(reg: int, table: dict[int, str]) -> dict[str, Any]:
+    """Aktuell anliegender State Code des Wechselrichters mit Klartext.
+
+    0 = kein State Code aktiv. Unbekannte Codes werden als Nummer angezeigt.
+    """
+    code = to_uint16(reg)
+    if code is None:
+        message = None
+    elif code == 0:
+        message = STATE_CODE_OK
+    else:
+        message = table.get(code, f"State code {code}")
+    return {"state_code": code, "state_message": message}
+
+
+# --- Immediate Controls (Modell 123, nur lesend) -----------------------------
+
+
+def _flag(reg: int) -> bool | None:
+    value = to_uint16(reg)
+    return None if value is None else value == 1
+
+
+def parse_controls(regs: list[int]) -> dict[str, Any]:
+    """Aktuelle Vorgaben (Leistungsbegrenzung, cos φ, Blindleistung, Standby).
+
+    Die Werte zeigen, was am Wechselrichter gerade eingestellt ist – z. B. eine
+    Drosselung durch Netzbetreiber, EVU-Editor oder ein Modbus-Programm.
+    """
+    return {
+        "feed_in_enabled": _flag(regs[2]),  # Conn: 1 = Einspeisebetrieb, 0 = Standby
+        "power_limit": scale(to_uint16(regs[3]), to_int16(regs[21]), 2),
+        "power_limit_active": _flag(regs[7]),  # WMaxLim_Ena
+        "pf_setpoint": scale(to_int16(regs[8]), to_int16(regs[22]), 3),
+        "pf_control_active": _flag(regs[12]),  # OutPFSet_Ena
+        "var_limit": scale(to_int16(regs[14]), to_int16(regs[23]), 2),
+        "var_control_active": _flag(regs[20]),  # VArPct_Ena
+    }
+
+
+# --- Nameplate (Modell 120, Nennwerte) ---------------------------------------
+
+
+def parse_nameplate(regs: list[int]) -> dict[str, Any]:
+    """Nennwerte des Wechselrichters und – bei Speichersystemen – der Batterie."""
+
+    def u16(offset: int, sf_offset: int) -> float | None:
+        return scale(to_uint16(regs[offset]), to_int16(regs[sf_offset]), 2)
+
+    return {
+        "rated_power": u16(1, 2),  # WRtg
+        "rated_apparent_power": u16(3, 4),  # VARtg
+        "rated_current": u16(10, 11),  # ARtg
+        "battery_capacity": u16(17, 18),  # WHRtg
+        "battery_max_charge_power": u16(21, 22),  # MaxChaRte
+        "battery_max_discharge_power": u16(23, 24),  # MaxDisChaRte
     }

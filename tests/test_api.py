@@ -24,7 +24,10 @@ async def gen24(socket_enabled):
 @pytest.fixture
 async def datamanager(socket_enabled):
     server = sim.FroniusSimulator(
-        {1: sim.datamanager_hybrid_int(), 240: sim.meter_203()}
+        {
+            1: (sim.datamanager_hybrid_int(), sim.fronius_registers(day=0)),
+            240: sim.meter_203(),
+        }
     )
     await server.start()
     yield server
@@ -38,6 +41,7 @@ async def test_gen24_plus(gen24) -> None:
         assert info.model == "Symo GEN24 10.0 Plus"
         assert info.inverter_model == 113 and info.phases == 3
         assert info.has_storage and not info.hybrid_storage
+        assert not info.has_site_registers  # GEN24: keine Fronius-Register
         assert info.mppt_roles == [
             sunspec.ROLE_PV,
             sunspec.ROLE_PV,
@@ -63,6 +67,21 @@ async def test_gen24_plus(gen24) -> None:
         assert v["battery_min_reserve"] == 10.0
         assert v["battery_grid_charging"] == "grid"
         assert v["battery_max_power"] == 10000
+
+        # Modell 120: Nennwerte, einmal beim Start gelesen
+        assert info.nameplate["rated_power"] == 10000
+        assert v["rated_power"] == 10000
+        assert v["rated_current"] == 14.5
+        assert v["battery_capacity"] == 10240
+        assert v["battery_max_charge_power"] == 10000
+
+        # Modell 123 (nur lesend): Drosselung auf 70 % aktiv
+        assert v["power_limit"] == 70.0
+        assert v["power_limit_active"] is True
+        assert v["feed_in_enabled"] is True
+        assert v["pf_setpoint"] == -0.95
+        assert v["pf_control_active"] is False
+        assert v["var_limit"] == 0
 
         meter = await client.read_meter_info(200)
         assert meter.meter_model == 213 and meter.options == "<primary>"
@@ -94,6 +113,15 @@ async def test_datamanager_symo_hybrid(datamanager) -> None:
         assert v["battery_soc"] == 80.0
         assert v["battery_grid_charging"] == "pv"
         assert "battery_charge_energy" not in v
+
+        # Fronius-Register (Datamanager): Anlagensummen, Tagesenergie 0 ist gültig
+        assert info.has_site_registers
+        assert v["site_power"] == 2000
+        assert v["site_energy_day"] == 0
+        assert v["site_energy_year"] == 1_234_567
+        assert v["site_energy_total"] == 9_330_290
+        assert v["state_code"] == 0
+        assert v["state_message"] == "OK"
 
         meter = await client.read_meter_info(240)
         m = await client.read_meter_data(meter)
@@ -134,3 +162,22 @@ async def test_detect_meter(gen24, datamanager) -> None:
     meter = await async_detect_meter("127.0.0.1", datamanager.port, [200, 240])
     assert meter is not None and meter.unit_id == 240
     assert await async_detect_meter("127.0.0.1", gen24.port, [201]) is None
+
+
+def test_state_code_text() -> None:
+    from custom_components.fronius_modbus_tcp import state_codes
+
+    symo = state_codes.table_for_model("Symo 3.0-3-M")
+    assert sunspec.parse_fronius_state_code(306, symo) == {
+        "state_code": 306,
+        "state_message": "Power Low",
+    }
+    # IG Plus hat eigene Texte
+    igplus = state_codes.table_for_model("IG Plus 50 V-1")
+    assert sunspec.parse_fronius_state_code(307, igplus)["state_message"] == "DC Low"
+    # Unbekannte Familie → alle Tabellen; unbekannter Code → Nummer
+    other = state_codes.table_for_model("Eco 25.0-3-S")
+    assert sunspec.parse_fronius_state_code(306, other)["state_message"] == "Power Low"
+    assert sunspec.parse_fronius_state_code(9999, other)["state_message"] == "State code 9999"
+    # Nicht unterstützt
+    assert sunspec.parse_fronius_state_code(0xFFFF, other)["state_code"] is None
