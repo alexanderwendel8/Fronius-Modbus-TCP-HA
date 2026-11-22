@@ -41,3 +41,5 @@ Regeln:
 - SunSpec-Dekodierung ohne HA-Abhängigkeit in `sunspec.py`; Modbus-Zugriff in `api.py`.
 - Neuer Sensor: Wert in `sunspec.py` dekodieren → Beschreibung in `sensor.py` →
   Namen in `strings.json`, `translations/en.json`, `translations/de.json`.
+- Releases: Ablauf und wiederverwendbare Vorlage in `.claude/skills/release/SKILL.md`
+  (Version in `manifest.json` + Abschnitt in `CHANGELOG.md`, dann Workflow `release.yml` manuell auf `main` starten).
