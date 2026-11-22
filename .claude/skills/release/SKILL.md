@@ -142,7 +142,8 @@ Prüfen vor dem Commit: `python3 -c "import yaml; print(list(yaml.safe_load(open
 - `workflow_dispatch` ist erst startbar, wenn die Workflow-Datei auf dem Default-Branch liegt.
 - Bereits existierender Tag/Release: softprops aktualisiert das Release, verschiebt den Tag aber
   nicht – für eine neue Version immer die Version erhöhen statt denselben Tag neu zu bauen.
-- **HACS** (HA-Integrationen) zeigt ohne Releases den Commit-Hash. Nach dem ersten Release in HACS
+- **HACS / Marketplace** (HA-Integrationen; ab HA 2026.11 ist HACS als *Marketplace* eingebaut,
+  dort heißt die Aktion „Refresh information“) zeigt ohne Releases den Commit-Hash. Nach dem ersten Release in HACS
   beim Repository „Informationen aktualisieren“ wählen, dann wird die Version als Update angeboten.
   HACS-Validierung braucht außerdem Repo-Beschreibung und Topics (setzt der Nutzer in den
   GitHub-Einstellungen) sowie ein Brand-Icon.

@@ -84,7 +84,21 @@ Temperaturen – diese Sensoren werden daher nicht angelegt. Weitere Geräte ger
 
 ## Installation
 
-**HACS:** Dieses Repository als benutzerdefiniertes Repository (Typ *Integration*) hinzufügen, installieren, Home Assistant neu starten.
+**Marketplace (ab Home Assistant 2026.11):** Seit 2026.11 ist HACS als *Marketplace* in Home Assistant
+eingebaut (*Einstellungen → Marketplace*), eine separate HACS-Installation ist nicht mehr nötig.
+1. Beim ersten Öffnen den Hinweis des Marketplace bestätigen und ein GitHub-Konto verbinden
+   (nötig, um benutzerdefinierte Repositories hinzuzufügen und Updates abzurufen).
+2. Dieses Repository `alexanderwendel8/Fronius-Modbus-TCP-HA` als benutzerdefiniertes Repository
+   vom Typ *Integration* hinzufügen.
+3. „Fronius Modbus TCP“ installieren (die neueste Release-Version, z. B. `v0.1.0`) und Home Assistant neu starten.
+
+Neue Versionen erscheinen als Update. Benutzerdefinierte Repositories werden nicht sofort abgefragt –
+wer ein gerade veröffentlichtes Release sofort sehen will, wählt beim Repository *Refresh information*
+(„Informationen aktualisieren“).
+
+**HACS (Home Assistant vor 2026.11):** Dieses Repository als benutzerdefiniertes Repository (Typ *Integration*)
+hinzufügen, installieren, Home Assistant neu starten. HACS aktualisiert benutzerdefinierte Repositories etwa
+alle 48 Stunden; sofort geht es über *Informationen aktualisieren*.
 
 **Manuell:** `custom_components/fronius_modbus_tcp` nach `<config>/custom_components/` kopieren und neu starten.
 
@@ -180,7 +194,7 @@ richten die Integration in einer Home-Assistant-Testinstanz ein.
 Änderungen stehen in [`CHANGELOG.md`](CHANGELOG.md). Releases erstellt der Workflow `release.yml`
 mit den Notizen aus dem Changelog – entweder per Tag `vX.Y.Z` oder manuell unter
 *Actions → Release → Run workflow* (auf `main`, Eingabe z. B. `0.1.0`; der Tag wird dann gesetzt).
-Die Version muss zu `manifest.json` passen. HACS zeigt danach die Versionsnummer statt des Commit-Hashs.
+Die Version muss zu `manifest.json` passen. Marketplace bzw. HACS zeigen danach die Versionsnummer statt des Commit-Hashs.
 
 ## Herstellerdokumentation
 
