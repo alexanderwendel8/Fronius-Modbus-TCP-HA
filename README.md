@@ -30,7 +30,7 @@ Custom Integration, die Fronius-Wechselrichter (SunSpec) lokal per Modbus TCP au
 | | Batterie | Ladequelle, Maximalleistung (Diagnose); Steuermodus, Lade-/Entladegrenze | teils |
 | | Status | Betriebszustand (SunSpec), Fronius-Zustand | ja |
 | | Status (Datamanager) | Statuscode und Statusmeldung im Klartext (z. B. „306 Power Low“) | ja |
-| | Fehler | Binärsensor Fehler; GEN24/Tauro/Verto zusätzlich Warnung; Datamanager: aktive Fehlerklassen im Klartext | ja |
+| | Fehler | Binärsensor Fehler; GEN24/Tauro/Verto zusätzlich Warnung; Datamanager: aktive Fehlerklassen im Klartext („Power low“/„DC low“ beim Ab- und Anschalten zählen nicht als Fehler) | ja |
 | | Ereignisse | SunSpec-Ereignisse im Klartext (z. B. „Over temperature“) | ja |
 | | Modell 122 | Gesamtenergie (genau, 64-bit-Zähler; GEN24 und Datamanager); Isolationswiderstand (Diagnose, GEN24) | ja |
 | | Anlage (Datamanager) | Anlagenleistung, Energie heute, Energie dieses Jahr, Anlagen-Gesamtenergie | ja |

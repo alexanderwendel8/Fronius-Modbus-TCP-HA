@@ -434,3 +434,28 @@ async def test_reset_events_button(hass: HomeAssistant, socket_enabled) -> None:
         await hass.async_block_till_done()
     finally:
         await server.stop()
+
+
+async def test_power_low_is_no_error(hass: HomeAssistant, socket_enabled) -> None:
+    """Datamanager am Abend: State Code 306 "Power Low" löst keinen Fehler aus."""
+    server = sim.FroniusSimulator(
+        {
+            1: (
+                sim.datamanager_hybrid_int(evt_vnd=(0x20, 0, 0, 0)),
+                sim.fronius_registers(state_code=306),
+            )
+        }
+    )
+    await server.start()
+    try:
+        entry = await _setup(hass, server.port, **{CONF_METER_UNIT_ID: 0})
+        ent_reg = er.async_get(hass)
+        s = lambda uid: _state(hass, ent_reg, uid)  # noqa: E731
+        assert s("44444444_state_message").state == "Power Low"
+        assert s("44444444_vendor_events").state == "Power low"
+        error = ent_reg.async_get_entity_id("binary_sensor", DOMAIN, "44444444_error_active")
+        assert hass.states.get(error).state == "off"
+        assert await hass.config_entries.async_unload(entry.entry_id)
+        await hass.async_block_till_done()
+    finally:
+        await server.stop()
