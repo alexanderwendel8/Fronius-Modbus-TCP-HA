@@ -216,6 +216,9 @@ SITE_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
     _energy("site_energy_day"),
     _energy("site_energy_year"),
     _energy("site_energy_total"),
+    # Aktueller Fronius State Code (Register 214) mit Klartext aus der Fronius-Liste
+    _desc("state_code", skip_if_unsupported=True),
+    _desc("state_message", skip_if_unsupported=True),
 )
 
 # Batterie über Modell 160 (Leistung, Spannung, Energie)

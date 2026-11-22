@@ -280,7 +280,12 @@ async def test_hybrid_unused_energy_not_created(hass: HomeAssistant, socket_enab
 async def test_datamanager_site_totals(hass: HomeAssistant, socket_enabled) -> None:
     """Datamanager: Anlagenleistung und Tages-/Jahres-/Gesamtenergie als Sensoren."""
     server = sim.FroniusSimulator(
-        {1: (sim.datamanager_hybrid_int(), sim.fronius_registers(day=12_345))}
+        {
+            1: (
+                sim.datamanager_hybrid_int(),
+                sim.fronius_registers(day=12_345, state_code=306),
+            )
+        }
     )
     await server.start()
     try:
@@ -291,6 +296,9 @@ async def test_datamanager_site_totals(hass: HomeAssistant, socket_enabled) -> N
         assert float(s("44444444_site_energy_day").state) == pytest.approx(12.345)
         assert float(s("44444444_site_energy_year").state) == pytest.approx(1234.567)
         assert float(s("44444444_site_energy_total").state) == pytest.approx(9330.29)
+        # Symo Hybrid → Symo-Tabelle
+        assert s("44444444_state_code").state == "306"
+        assert s("44444444_state_message").state == "Power Low"
         assert await hass.config_entries.async_unload(entry.entry_id)
         await hass.async_block_till_done()
     finally:

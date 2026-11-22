@@ -301,6 +301,12 @@
       },
       "site_energy_total": {
         "name": "Site total energy"
+      },
+      "state_code": {
+        "name": "State code"
+      },
+      "state_message": {
+        "name": "State message"
       }
     }
   }

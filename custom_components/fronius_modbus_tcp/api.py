@@ -10,7 +10,7 @@ from typing import Any
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.exceptions import ModbusException
 
-from . import sunspec
+from . import state_codes, sunspec
 from .const import (
     DEFAULT_RETRIES,
     DEFAULT_TIMEOUT,
@@ -55,7 +55,7 @@ class InverterInfo(SunSpecDeviceInfo):
     mppt_roles: list[str] = field(default_factory=list)
     has_storage: bool = False
     hybrid_storage: bool = False
-    # Fronius-Register 500-513 (Anlagensummen) – nur beim Datamanager
+    # Fronius-Register 214 (State Code) und 500-513 (Anlagensummen) – nur Datamanager
     has_site_registers: bool = False
 
     @property
@@ -288,6 +288,12 @@ class FroniusModbusClient:
                 unit, sunspec.FRONIUS_SITE_ADDRESS, sunspec.FRONIUS_SITE_COUNT
             )
             values.update(sunspec.parse_fronius_site(regs))
+            (reg,) = await self.read(unit, sunspec.FRONIUS_STATE_CODE_ADDRESS, 1)
+            values.update(
+                sunspec.parse_fronius_state_code(
+                    reg, state_codes.table_for_model(info.model)
+                )
+            )
 
         return values
 

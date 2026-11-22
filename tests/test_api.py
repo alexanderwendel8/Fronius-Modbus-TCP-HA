@@ -105,6 +105,8 @@ async def test_datamanager_symo_hybrid(datamanager) -> None:
         assert v["site_energy_day"] == 0
         assert v["site_energy_year"] == 1_234_567
         assert v["site_energy_total"] == 9_330_290
+        assert v["state_code"] == 0
+        assert v["state_message"] == "OK"
 
         meter = await client.read_meter_info(240)
         m = await client.read_meter_data(meter)
@@ -145,3 +147,22 @@ async def test_detect_meter(gen24, datamanager) -> None:
     meter = await async_detect_meter("127.0.0.1", datamanager.port, [200, 240])
     assert meter is not None and meter.unit_id == 240
     assert await async_detect_meter("127.0.0.1", gen24.port, [201]) is None
+
+
+def test_state_code_text() -> None:
+    from custom_components.fronius_modbus_tcp import state_codes
+
+    symo = state_codes.table_for_model("Symo 3.0-3-M")
+    assert sunspec.parse_fronius_state_code(306, symo) == {
+        "state_code": 306,
+        "state_message": "Power Low",
+    }
+    # IG Plus hat eigene Texte
+    igplus = state_codes.table_for_model("IG Plus 50 V-1")
+    assert sunspec.parse_fronius_state_code(307, igplus)["state_message"] == "DC Low"
+    # Unbekannte Familie → alle Tabellen; unbekannter Code → Nummer
+    other = state_codes.table_for_model("Eco 25.0-3-S")
+    assert sunspec.parse_fronius_state_code(306, other)["state_message"] == "Power Low"
+    assert sunspec.parse_fronius_state_code(9999, other)["state_message"] == "State code 9999"
+    # Nicht unterstützt
+    assert sunspec.parse_fronius_state_code(0xFFFF, other)["state_code"] is None

@@ -79,6 +79,8 @@ STORAGE_GRID_CHARGING: dict[int, str] = {0: "pv", 1: "grid"}
 # Kapitel "Fronius Register": Register 212-216 und 500-513, 1-basiert)
 FRONIUS_SITE_ADDRESS = 499  # F_Site_Power (500-501) … F_Site_Energy_Total (510-513)
 FRONIUS_SITE_COUNT = 14
+FRONIUS_STATE_CODE_ADDRESS = 213  # F_Active_State_Code (214)
+STATE_CODE_OK = "OK"
 
 
 # --- Basis-Dekoder (liefern None für "nicht implementiert") -----------------
@@ -494,3 +496,18 @@ def parse_fronius_site(regs: list[int]) -> dict[str, Any]:
         "site_energy_year": to_uint64(regs[6:10]),
         "site_energy_total": _positive(to_uint64(regs[10:14])),
     }
+
+
+def parse_fronius_state_code(reg: int, table: dict[int, str]) -> dict[str, Any]:
+    """Aktuell anliegender State Code des Wechselrichters mit Klartext.
+
+    0 = kein State Code aktiv. Unbekannte Codes werden als Nummer angezeigt.
+    """
+    code = to_uint16(reg)
+    if code is None:
+        message = None
+    elif code == 0:
+        message = STATE_CODE_OK
+    else:
+        message = table.get(code, f"State code {code}")
+    return {"state_code": code, "state_message": message}

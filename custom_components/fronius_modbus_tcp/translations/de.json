@@ -301,6 +301,12 @@
       },
       "site_energy_total": {
         "name": "Anlagen-Gesamtenergie"
+      },
+      "state_code": {
+        "name": "Statuscode"
+      },
+      "state_message": {
+        "name": "Statusmeldung"
       }
     }
   }
