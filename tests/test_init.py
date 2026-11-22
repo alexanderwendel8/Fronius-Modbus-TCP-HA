@@ -171,3 +171,37 @@ async def test_second_inverter_same_host_gets_no_meter(hass: HomeAssistant, sock
         await hass.async_block_till_done()
     finally:
         await server.stop()
+
+
+async def test_setup_errors_are_logged(hass: HomeAssistant, gen24, caplog) -> None:
+    """Fehler beim Einrichten landen mit Host, Port, Unit-ID und Ursache im Log."""
+    caplog.set_level("INFO", logger="custom_components.fronius_modbus_tcp")
+
+    # Falsche Unit-ID: Gerät antwortet, liefert aber keine Wechselrichterdaten
+    result = await hass.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
+    )
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"],
+        {CONF_HOST: "127.0.0.1", CONF_PORT: gen24.port, CONF_UNIT_ID: 7, CONF_METER_UNIT_ID: 0},
+    )
+    assert result["errors"] == {"base": "not_sunspec"}
+    assert f"127.0.0.1:{gen24.port} (Unit-ID 7)" in caplog.text
+    assert "keine SunSpec-Wechselrichterdaten" in caplog.text
+
+    # Smart Meter unter angegebener Adresse nicht vorhanden
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"],
+        {CONF_HOST: "127.0.0.1", CONF_PORT: gen24.port, CONF_UNIT_ID: 1, CONF_METER_UNIT_ID: 201},
+    )
+    assert result["errors"] == {CONF_METER_UNIT_ID: "meter_not_found"}
+    assert "kein Smart Meter unter Unit-ID 201" in caplog.text
+    assert "Symo GEN24 10.0 Plus erkannt" in caplog.text
+
+    # Keine Verbindung
+    port = sim.free_port()
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {CONF_HOST: "127.0.0.1", CONF_PORT: port, CONF_UNIT_ID: 1}
+    )
+    assert result["errors"] == {"base": "cannot_connect"}
+    assert f"127.0.0.1:{port} (Unit-ID 1): keine Verbindung" in caplog.text

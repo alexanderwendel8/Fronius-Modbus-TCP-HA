@@ -68,16 +68,37 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             host, port = user_input[CONF_HOST], user_input[CONF_PORT]
+            unit = user_input[CONF_UNIT_ID]
             client = FroniusModbusClient(host, port)
             try:
-                info = await client.read_inverter_info(user_input[CONF_UNIT_ID])
-            except FroniusConnectionError:
+                info = await client.read_inverter_info(unit)
+            except FroniusConnectionError as err:
+                _LOGGER.warning(
+                    "Einrichtung %s:%s (Unit-ID %s): keine Verbindung – %s. "
+                    "Modbus TCP am Gerät aktiv? Port korrekt?",
+                    host, port, unit, err,
+                )
                 errors["base"] = "cannot_connect"
-            except FroniusModbusError:
+            except FroniusModbusError as err:
+                _LOGGER.warning(
+                    "Einrichtung %s:%s (Unit-ID %s): Gerät antwortet, aber keine "
+                    "SunSpec-Wechselrichterdaten – %s. GEN24/Tauro/Verto: Unit-ID 1; "
+                    "Datamanager: Wechselrichter-Nummer (00 → 100)",
+                    host, port, unit, err,
+                )
                 errors["base"] = "not_sunspec"
             except Exception:
-                _LOGGER.exception("Unerwarteter Fehler")
+                _LOGGER.exception(
+                    "Einrichtung %s:%s (Unit-ID %s): unerwarteter Fehler",
+                    host, port, unit,
+                )
                 errors["base"] = "unknown"
+            else:
+                _LOGGER.info(
+                    "Einrichtung %s:%s (Unit-ID %s): %s %s erkannt, Modelle %s",
+                    host, port, unit, info.manufacturer, info.model,
+                    sorted(info.models),
+                )
             finally:
                 await client.close()
 
@@ -90,8 +111,19 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
                             host, port, METER_UNIT_ID_CANDIDATES
                         )
                         meter_unit = meter.unit_id if meter else None
+                    else:
+                        _LOGGER.info(
+                            "Einrichtung %s: Smart Meter bereits einem anderen "
+                            "Eintrag zugeordnet, keine automatische Suche",
+                            host,
+                        )
                 elif requested != METER_UNIT_ID_NONE:
                     if await async_detect_meter(host, port, [requested]) is None:
+                        _LOGGER.warning(
+                            "Einrichtung %s:%s: kein Smart Meter unter Unit-ID %s "
+                            "(GEN24: 200–204, Datamanager: 240–244)",
+                            host, port, requested,
+                        )
                         errors[CONF_METER_UNIT_ID] = "meter_not_found"
                     meter_unit = requested
 

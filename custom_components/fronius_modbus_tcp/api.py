@@ -156,7 +156,10 @@ class FroniusModbusClient:
         """SunSpec-Modellkette ab Basisadresse durchlaufen."""
         header = await self.read(unit, SUNSPEC_BASE_ADDRESS, 2)
         if sunspec.to_str(header) != "SunS":
-            raise FroniusModbusError(f"Keine SunSpec-Kennung (Unit {unit})")
+            raise FroniusModbusError(
+                f"Keine SunSpec-Kennung an Register 40001 (Unit {unit}): "
+                f"gelesen {sunspec.to_str(header)!r} {[hex(r) for r in header]} statt 'SunS'"
+            )
 
         models: dict[int, tuple[int, int]] = {}
         address = SUNSPEC_BASE_ADDRESS + 2
@@ -202,7 +205,10 @@ class FroniusModbusClient:
                 info.phases = phases
                 break
         if info.inverter_model is None:
-            raise FroniusModbusError(f"Kein Wechselrichter-Modell (Unit {unit})")
+            raise FroniusModbusError(
+                f"Kein Wechselrichter-Modell 101-103/111-113 (Unit {unit}), "
+                f"gefundene Modelle: {sorted(models)}"
+            )
 
         if sunspec.STORAGE_MODEL in models:
             regs = await self.read_model(unit, models, sunspec.STORAGE_MODEL)
@@ -230,7 +236,10 @@ class FroniusModbusClient:
                     meter_model=model_id,
                     phases=phases,
                 )
-        raise FroniusModbusError(f"Kein Zähler-Modell (Unit {unit})")
+        raise FroniusModbusError(
+            f"Kein Zähler-Modell 201-204/211-214 (Unit {unit}), "
+            f"gefundene Modelle: {sorted(models)}"
+        )
 
     # --- Zyklisches Lesen ----------------------------------------------------
 
@@ -281,12 +290,23 @@ async def async_detect_meter(
     try:
         for unit in candidates:
             try:
-                return await client.read_meter_info(unit)
-            except FroniusConnectionError:
+                meter = await client.read_meter_info(unit)
+            except FroniusConnectionError as err:
                 # Kein Gerät unter dieser ID: Verbindung neu aufbauen und weiter
+                _LOGGER.debug("Zählersuche %s:%s Unit %s: %s", host, port, unit, err)
                 await client.close()
-            except (TimeoutError, FroniusModbusError):
-                pass
+            except (TimeoutError, FroniusModbusError) as err:
+                _LOGGER.debug("Zählersuche %s:%s Unit %s: %s", host, port, unit, err)
+            else:
+                _LOGGER.info(
+                    "Smart Meter %s %s (Modell %s) unter Unit-ID %s gefunden",
+                    meter.manufacturer, meter.model, meter.meter_model, unit,
+                )
+                return meter
+        _LOGGER.info(
+            "Kein Smart Meter unter %s:%s gefunden (geprüft: Unit-IDs %s)",
+            host, port, candidates,
+        )
         return None
     finally:
         await client.close()
