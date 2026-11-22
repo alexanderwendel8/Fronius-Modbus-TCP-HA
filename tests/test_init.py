@@ -84,6 +84,12 @@ async def test_gen24_plus_with_meter(hass: HomeAssistant, gen24) -> None:
     )
     feed_in = ent_reg.async_get_entity_id("binary_sensor", DOMAIN, "33333333_feed_in_enabled")
     assert hass.states.get(limit_active).state == "on"
+
+    # EvtVnd1 (GEN24): Warnung aktiv, kein Fehler
+    warning = ent_reg.async_get_entity_id("binary_sensor", DOMAIN, "33333333_warning_active")
+    error = ent_reg.async_get_entity_id("binary_sensor", DOMAIN, "33333333_error_active")
+    assert hass.states.get(warning).state == "on"
+    assert hass.states.get(error).state == "off"
     assert hass.states.get(feed_in).state == "on"
     assert float(s("33333333_mppt_1_dc_power").state) == 1680
     assert ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_mppt_3_dc_power") is None
@@ -299,7 +305,7 @@ async def test_datamanager_site_totals(hass: HomeAssistant, socket_enabled) -> N
     server = sim.FroniusSimulator(
         {
             1: (
-                sim.datamanager_hybrid_int(),
+                sim.datamanager_hybrid_int(evt_vnd=(0x20, 0x4, 0, 0)),
                 sim.fronius_registers(day=12_345, state_code=306),
             )
         }
@@ -316,6 +322,14 @@ async def test_datamanager_site_totals(hass: HomeAssistant, socket_enabled) -> N
         # Symo Hybrid → Symo-Tabelle
         assert s("44444444_state_code").state == "306"
         assert s("44444444_state_message").state == "Power Low"
+        # Fehlerklassen aus EvtVnd1-4 (Symo-Tabelle)
+        assert s("44444444_vendor_events").state == "Power low; 24h no feed in"
+        error = ent_reg.async_get_entity_id("binary_sensor", DOMAIN, "44444444_error_active")
+        assert hass.states.get(error).state == "on"
+        # Warnungen gibt es nur beim GEN24
+        assert ent_reg.async_get_entity_id(
+            "binary_sensor", DOMAIN, "44444444_warning_active"
+        ) is None
         assert await hass.config_entries.async_unload(entry.entry_id)
         await hass.async_block_till_done()
     finally:

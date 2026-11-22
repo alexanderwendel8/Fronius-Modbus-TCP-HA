@@ -41,6 +41,12 @@
       },
       "var_control_active": {
         "name": "Fixed reactive power active"
+      },
+      "error_active": {
+        "name": "Error"
+      },
+      "warning_active": {
+        "name": "Warning"
       }
     },
     "sensor": {
@@ -348,6 +354,9 @@
       },
       "battery_max_discharge_power": {
         "name": "Battery max. discharge power"
+      },
+      "vendor_events": {
+        "name": "Active error classes"
       }
     }
   }

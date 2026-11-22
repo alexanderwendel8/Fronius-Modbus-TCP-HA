@@ -48,7 +48,13 @@ def device(*models: list[int]) -> list[int]:
 # --- Wechselrichter ---------------------------------------------------------
 
 
-def inverter_113(w: float = 3333.3, dcw: float = 3400.0, phases: int = 3) -> list[int]:
+def inverter_113(
+    w: float = 3333.3,
+    dcw: float = 3400.0,
+    phases: int = 3,
+    evt1: int = 0,
+    evt_vnd: tuple[int, int, int, int] = (0, 0, 0, 0),
+) -> list[int]:
     body = (
         f(14.5) + f(4.8) + f(4.9) + f(4.8)
         + f(400.1) + f(401.2) + f(399.8)
@@ -56,13 +62,19 @@ def inverter_113(w: float = 3333.3, dcw: float = 3400.0, phases: int = 3) -> lis
         + f(w) + f(50.01) + f(3340.0) + f(-120.0) + f(99.5) + f(12345678.0)
         + f(NAN) + f(NAN) + f(dcw)
         + f(41.0) + f(NAN) + f(NAN) + f(NAN)
-        + [4, 4] + [0, 0] + [0] * 10
+        + [4, 4] + acc32(evt1) + [0, 0]
+        + [r for v in evt_vnd for r in acc32(v)]
     )
     assert len(body) == 60
     return model(110 + phases, body)
 
 
-def inverter_103(w: int = 3333, dcw: int = 3400) -> list[int]:
+def inverter_103(
+    w: int = 3333,
+    dcw: int = 3400,
+    evt1: int = 0,
+    evt_vnd: tuple[int, int, int, int] = (0, 0, 0, 0),
+) -> list[int]:
     body = [
         1450, 480, 490, 480, i16(-2),
         4001, 4012, 3998, 2310, 2321, 2305, i16(-1),
@@ -70,8 +82,8 @@ def inverter_103(w: int = 3333, dcw: int = 3400) -> list[int]:
         *acc32(12345), 1,
         0xFFFF, i16(-1), 0xFFFF, i16(-1), i16(dcw), 0,
         410, 0x8000, 0x8000, 0x8000, i16(-1),
-        4, 7, 0, 0, 0, 0,
-    ] + [0] * 8
+        4, 7, *acc32(evt1), 0, 0,
+    ] + [r for v in evt_vnd for r in acc32(v)]
     assert len(body) == 50
     return model(103, body)
 
@@ -138,7 +150,7 @@ def gen24_plus_float() -> list[int]:
     """Symo GEN24 Plus, float, 2 PV-Strings + Batterie (StCha 3 / StDisCha 4)."""
     return device(
         common("Fronius", "Symo GEN24 10.0 Plus", "1.36.5-1", "33333333"),
-        inverter_113(),
+        inverter_113(evt_vnd=(0b010, 0b011, 0, 0)),
         nameplate_120(wh_rtg=10240, cha=10000),
         filler(121, 30), filler(122, 44),
         controls_123(limit_pct=70, limit_ena=1),
@@ -152,11 +164,13 @@ def gen24_plus_float() -> list[int]:
     )
 
 
-def datamanager_hybrid_int(dcw: int = 1000) -> list[int]:
+def datamanager_hybrid_int(
+    dcw: int = 1000, evt_vnd: tuple[int, int, int, int] = (0, 0, 0, 0)
+) -> list[int]:
     """Symo Hybrid am Datamanager, int+SF: String 1 = PV, String 2 = Speicher (Betrag)."""
     return device(
         common("Fronius", "Symo Hybrid 5.0-3-S", "1.13.1-1", "44444444"),
-        inverter_103(dcw=dcw),
+        inverter_103(dcw=dcw, evt_vnd=evt_vnd),
         nameplate_120(w_rtg=500, a_rtg=0xFFFF),
         filler(121, 30), filler(122, 44), controls_123(),
         mppt_160([("String 1", 500, 4000, 2000, 0), ("String 2", 200, 4900, 1000, 0)]),

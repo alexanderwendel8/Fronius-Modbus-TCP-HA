@@ -83,6 +83,7 @@ FRONIUS_SITE_ADDRESS = 499  # F_Site_Power (500-501) … F_Site_Energy_Total (51
 FRONIUS_SITE_COUNT = 14
 FRONIUS_STATE_CODE_ADDRESS = 213  # F_Active_State_Code (214)
 STATE_CODE_OK = "OK"
+MAX_STATE_LENGTH = 255  # Home Assistant begrenzt Zustände auf 255 Zeichen
 
 
 # --- Basis-Dekoder (liefern None für "nicht implementiert") -----------------
@@ -185,6 +186,7 @@ def parse_inverter_float(regs: list[int]) -> dict[str, Any]:
         "status": _enum(status, STATUS),
         "status_vendor": _enum(status_vendor, STATUS_VENDOR),
         "events": to_uint32(regs[48:50]),
+        "evt_vnd": [to_uint32(regs[i : i + 2]) for i in (52, 54, 56, 58)],
     }
 
 
@@ -234,6 +236,7 @@ def parse_inverter_int_sf(regs: list[int]) -> dict[str, Any]:
         "status": _enum(status, STATUS),
         "status_vendor": _enum(status_vendor, STATUS_VENDOR),
         "events": to_uint32(regs[38:40]),
+        "evt_vnd": [to_uint32(regs[i : i + 2]) for i in (42, 44, 46, 48)],
     }
 
 
@@ -556,4 +559,46 @@ def parse_nameplate(regs: list[int]) -> dict[str, Any]:
         "battery_capacity": u16(17, 18),  # WHRtg
         "battery_max_charge_power": u16(21, 22),  # MaxChaRte
         "battery_max_discharge_power": u16(23, 24),  # MaxDisChaRte
+    }
+
+
+# --- Herstellerspezifische Ereignisse (EvtVnd1-4) ----------------------------
+
+
+def parse_severity_events(evt_vnd: list[int | None]) -> dict[str, Any]:
+    """GEN24/Tauro/Verto: EvtVnd1 = Schweregrad-Bits der Sicht "Customer".
+
+    Bit 0 = mindestens ein aktiver Fehler, Bit 1 = Warnung, Bit 2 = Info
+    (Registerkarte archiv_1.2.7, inverter_11x: EvtVnd1).
+    """
+    customer = evt_vnd[0]
+    if customer is None:
+        return {"error_active": None, "warning_active": None}
+    return {
+        "error_active": bool(customer & 0x1),
+        "warning_active": bool(customer & 0x2),
+    }
+
+
+def parse_vendor_event_classes(
+    evt_vnd: list[int | None], table: dict[tuple[int, int], str]
+) -> dict[str, Any]:
+    """Datamanager: jedes Bit in EvtVnd1-4 steht für eine Fehlerklasse.
+
+    Unbekannte Bits werden als "EvtVnd<n> 0x…" angezeigt.
+    """
+    if all(value is None for value in evt_vnd):
+        return {"error_active": None, "vendor_events": None}
+    classes: list[str] = []
+    for register, value in enumerate(evt_vnd, start=1):
+        if not value:
+            continue
+        for bit in range(32):
+            mask = 1 << bit
+            if value & mask:
+                classes.append(table.get((register, mask), f"EvtVnd{register} 0x{mask:X}"))
+    message = "; ".join(dict.fromkeys(classes)) or STATE_CODE_OK
+    return {
+        "error_active": bool(classes),
+        "vendor_events": message[:MAX_STATE_LENGTH],
     }

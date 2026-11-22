@@ -41,6 +41,12 @@
       },
       "var_control_active": {
         "name": "Feste Blindleistung aktiv"
+      },
+      "error_active": {
+        "name": "Fehler"
+      },
+      "warning_active": {
+        "name": "Warnung"
       }
     },
     "sensor": {
@@ -348,6 +354,9 @@
       },
       "battery_max_discharge_power": {
         "name": "Batterie max. Entladeleistung"
+      },
+      "vendor_events": {
+        "name": "Aktive Fehlerklassen"
       }
     }
   }
