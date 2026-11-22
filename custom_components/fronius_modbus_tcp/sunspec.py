@@ -104,6 +104,14 @@ STORAGE_GRID_CHARGING: dict[int, str] = {0: "pv", 1: "grid"}
 FRONIUS_SITE_ADDRESS = 499  # F_Site_Power (500-501) … F_Site_Energy_Total (510-513)
 FRONIUS_SITE_COUNT = 14
 FRONIUS_STATE_CODE_ADDRESS = 213  # F_Active_State_Code (214)
+FRONIUS_RESET_EVENTS_ADDRESS = 214  # F_Reset_All_Event_Flags (215), 0xFFFF schreiben
+FRONIUS_RESET_VALUE = 0xFFFF
+
+# Offsets im Rumpf von Modell 123 (Immediate Controls)
+CTRL_CONN_WIN_TMS = 0  # Conn_WinTms, Conn_RvrtTms, Conn
+CTRL_WMAXLIMPCT = 3  # WMaxLimPct, _WinTms, _RvrtTms, _RmpTms, WMaxLim_Ena
+CTRL_WMAXLIM_ENA = 7
+CTRL_WMAXLIMPCT_SF = 21
 STATE_CODE_OK = "OK"
 MAX_STATE_LENGTH = 255  # Home Assistant begrenzt Zustände auf 255 Zeichen
 
@@ -658,3 +666,28 @@ def parse_status(regs: list[int]) -> dict[str, Any]:
         "ac_energy_lifetime": to_acc64(regs[3:7]),  # ActWh
         "isolation_resistance": scale(to_uint16(regs[42]), to_int16(regs[43]), 0),  # Ris
     }
+
+
+def encode_power_limit(
+    percent: float, sf: int | None, revert_seconds: int, enabled: bool
+) -> list[int]:
+    """Registerwerte WMaxLimPct … WMaxLim_Ena (5 Register, ein Schreibbefehl).
+
+    Laut Handbuch werden alle fünf Register gemeinsam geschrieben; das Schreiben
+    des ggf. read-only RmpTms ignoriert das Gerät ohne Exception. Beispiel 80 %
+    bei SF −2 und 300 s Rückfallzeit: [8000, 0, 300, 0, 1].
+    """
+    if not 0 <= percent <= 100:
+        raise ValueError(f"Leistungsbegrenzung {percent} % außerhalb 0–100 %")
+    if sf is None:
+        raise ValueError("Skalierungsfaktor WMaxLimPct_SF nicht verfügbar")
+    raw = round(percent / 10**sf)
+    return [raw, 0, revert_seconds, 0, 1 if enabled else 0]
+
+
+def encode_feed_in(enabled: bool, revert_seconds: int) -> list[int]:
+    """Registerwerte Conn_WinTms, Conn_RvrtTms, Conn (0 = Standby, 1 = Einspeisen).
+
+    Beim Wiedereinschalten wird keine Rückfallzeit gesetzt (Normalbetrieb).
+    """
+    return [0, 0 if enabled else revert_seconds, 1 if enabled else 0]

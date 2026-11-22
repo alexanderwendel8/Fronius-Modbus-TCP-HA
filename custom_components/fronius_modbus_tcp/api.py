@@ -136,6 +136,32 @@ class FroniusModbusClient:
             )
         return result.registers
 
+    async def _write_raw(self, unit: int, address: int, values: list[int]) -> None:
+        try:
+            try:
+                result = await self._client.write_registers(
+                    address, values=values, device_id=unit
+                )
+            except TypeError:
+                # pymodbus < 3.10 verwendet noch "slave"
+                result = await self._client.write_registers(
+                    address, values=values, slave=unit
+                )
+        except ModbusException as err:
+            raise FroniusConnectionError(str(err)) from err
+        if result.isError():
+            raise FroniusModbusError(
+                f"Modbus-Fehler (Unit {unit}) beim Schreiben von {address} "
+                f"({values}): {result}"
+            )
+
+    async def write(self, unit: int, address: int, values: list[int]) -> None:
+        """Holding-Register schreiben (0-basierte Adresse, Funktionscode 0x10)."""
+        async with self._lock:
+            await self.connect()
+            _LOGGER.debug("Unit %s: schreibe %s ab Adresse %s", unit, values, address)
+            await self._write_raw(unit, address, values)
+
     async def read(self, unit: int, address: int, count: int) -> list[int]:
         """Holding-Register lesen (0-basierte Adresse), bei Bedarf in Blöcken."""
         async with self._lock:
@@ -329,6 +355,53 @@ class FroniusModbusClient:
         if info.meter_model in sunspec.METER_FLOAT_MODELS:
             return sunspec.parse_meter_float(regs)
         return sunspec.parse_meter_int_sf(regs)
+
+
+    # --- Steuerung (nur mit Option "Steuerung erlauben") ---------------------
+
+    def _controls_start(self, info: InverterInfo) -> int:
+        if sunspec.CONTROLS_MODEL not in info.models:
+            raise FroniusModbusError("Gerät hat kein Modell 123 (Immediate Controls)")
+        return info.models[sunspec.CONTROLS_MODEL][0]
+
+    async def set_power_limit(
+        self, info: InverterInfo, percent: float, *, enabled: bool, revert_seconds: int
+    ) -> None:
+        """Leistungsbegrenzung setzen; mit enabled=True wird sie (erneut) gestartet.
+
+        Der Skalierungsfaktor wird vorher frisch gelesen (kann sich ändern).
+        """
+        start = self._controls_start(info)
+        regs = await self.read_model(info.unit_id, info.models, sunspec.CONTROLS_MODEL)
+        sf = sunspec.to_int16(regs[sunspec.CTRL_WMAXLIMPCT_SF])
+        values = sunspec.encode_power_limit(percent, sf, revert_seconds, enabled)
+        await self.write(info.unit_id, start + sunspec.CTRL_WMAXLIMPCT, values)
+
+    async def disable_power_limit(self, info: InverterInfo) -> None:
+        """Leistungsbegrenzung beenden (WMaxLim_Ena = 0)."""
+        start = self._controls_start(info)
+        await self.write(info.unit_id, start + sunspec.CTRL_WMAXLIM_ENA, [0])
+
+    async def set_feed_in(
+        self, info: InverterInfo, enabled: bool, *, revert_seconds: int
+    ) -> None:
+        """Einspeisung ein (Conn = 1) oder Standby (Conn = 0) mit Rückfallzeit."""
+        start = self._controls_start(info)
+        await self.write(
+            info.unit_id,
+            start + sunspec.CTRL_CONN_WIN_TMS,
+            sunspec.encode_feed_in(enabled, revert_seconds),
+        )
+
+    async def reset_events(self, info: InverterInfo) -> None:
+        """Event Flags und State Code zurücksetzen (nur Datamanager, Register 215)."""
+        if not info.has_site_registers:
+            raise FroniusModbusError("Ereignisse zurücksetzen nur beim Datamanager")
+        await self.write(
+            info.unit_id,
+            sunspec.FRONIUS_RESET_EVENTS_ADDRESS,
+            [sunspec.FRONIUS_RESET_VALUE],
+        )
 
 
 async def async_detect_meter(

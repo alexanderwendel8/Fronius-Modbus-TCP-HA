@@ -82,5 +82,7 @@ an der Modellkette (z. B. Modell 124 vorhanden → Batterie-fähig).
 | Mehrere Smart Meter (200–204 / 240–244) | – | ⏳ derzeit nur einer |
 | Fronius-Register 214 (State Code), 500–513 (Anlagensummen) | `sunspec.py::parse_fronius_*`, `state_codes.py` | ✅ nur Datamanager; Erkennung per Testlesen beim Start |
 | Vorgaben lesen (Modell 123) | `sunspec.py::parse_controls`, `binary_sensor.py` | ✅ Leistungsbegrenzung, Standby, cos φ/Blindleistung (nur lesend) |
-| Steuerung (Modell 123, 124 schreiben) | – | ⏳ nicht umgesetzt (Ablauf siehe handbuecher §2) |
+| Steuerung Modell 123 | `api.py::set_power_limit` / `set_feed_in`, `number.py`, `switch.py` | ✅ Leistungsbegrenzung (5 Register in einem Befehl, SF frisch gelesen), Standby (`Conn`), immer mit `RvrtTms`; nur mit Option „Steuerung erlauben“. cos φ/Blindleistung ⏳ |
+| Fronius-Register 215 (Ereignisse zurücksetzen) | `api.py::reset_events`, `button.py` | ✅ nur Datamanager |
+| Steuerung Modell 124 (Batterie) | – | ⏳ nicht umgesetzt (Ablauf siehe handbuecher §2) |
 | Nennwerte (Modell 120) | `sunspec.py::parse_nameplate` | ✅ WRtg, VARtg, ARtg; Batterie WHRtg, MaxChaRte, MaxDisChaRte; einmal beim Start gelesen |

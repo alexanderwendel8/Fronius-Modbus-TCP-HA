@@ -9,5 +9,5 @@
   "issue_tracker": "https://github.com/alexanderwendel8/Fronius-Modbus-TCP-HA/issues",
   "loggers": ["pymodbus"],
   "requirements": ["pymodbus>=3.8.0"],
-  "version": "0.4.0"
+  "version": "0.5.0"
 }

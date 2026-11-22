@@ -11,6 +11,7 @@ from homeassistant.data_entry_flow import FlowResultType
 from homeassistant.helpers import device_registry as dr, entity_registry as er
 
 from custom_components.fronius_modbus_tcp.const import (
+    CONF_ALLOW_CONTROL,
     CONF_METER_UNIT_ID,
     CONF_UNIT_ID,
     DOMAIN,
@@ -340,6 +341,95 @@ async def test_datamanager_site_totals(hass: HomeAssistant, socket_enabled) -> N
         assert ent_reg.async_get_entity_id(
             "binary_sensor", DOMAIN, "44444444_warning_active"
         ) is None
+        assert await hass.config_entries.async_unload(entry.entry_id)
+        await hass.async_block_till_done()
+    finally:
+        await server.stop()
+
+
+# --- Steuerung (Option "Steuerung erlauben") -----------------------------------
+
+
+async def _enable_control(hass: HomeAssistant, entry) -> None:
+    result = await hass.config_entries.options.async_init(entry.entry_id)
+    assert result["type"] is FlowResultType.FORM
+    result = await hass.config_entries.options.async_configure(
+        result["flow_id"], {CONF_ALLOW_CONTROL: True}
+    )
+    assert result["type"] is FlowResultType.CREATE_ENTRY
+    await hass.async_block_till_done()
+
+
+async def test_control_disabled_by_default(hass: HomeAssistant, gen24) -> None:
+    entry = await _setup(hass, gen24.port, **{CONF_METER_UNIT_ID: 0})
+    ent_reg = er.async_get(hass)
+    domains = {e.domain for e in er.async_entries_for_config_entry(ent_reg, entry.entry_id)}
+    assert domains == {"sensor", "binary_sensor"}
+    assert await hass.config_entries.async_unload(entry.entry_id)
+    await hass.async_block_till_done()
+
+
+async def test_control_entities(hass: HomeAssistant, gen24) -> None:
+    entry = await _setup(hass, gen24.port, **{CONF_METER_UNIT_ID: 0})
+    ent_reg = er.async_get(hass)
+    assert ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_power_limit")
+
+    await _enable_control(hass, entry)
+    eid = lambda domain, key: ent_reg.async_get_entity_id(domain, DOMAIN, f"33333333_{key}")  # noqa: E731
+
+    # Anzeige-Entitäten durch schaltbare ersetzt
+    assert eid("sensor", "power_limit") is None
+    assert eid("binary_sensor", "power_limit_active") is None
+    assert eid("binary_sensor", "feed_in_enabled") is None
+    number, revert = eid("number", "power_limit"), eid("number", "revert_time")
+    limit_switch, feed_in = eid("switch", "power_limit_active"), eid("switch", "feed_in_enabled")
+    assert hass.states.get(number).state == "70.0"
+    assert hass.states.get(limit_switch).state == "on"
+    assert hass.states.get(feed_in).state == "on"
+    assert hass.states.get(revert).state == "300"
+    # GEN24: kein Button "Ereignisse zurücksetzen"
+    assert eid("button", "reset_events") is None
+
+    # Rückfallzeit ändern, dann Leistungsbegrenzung auf 40 %
+    await hass.services.async_call(
+        "number", "set_value", {"entity_id": revert, "value": 900}, blocking=True
+    )
+    await hass.services.async_call(
+        "number", "set_value", {"entity_id": number, "value": 40}, blocking=True
+    )
+    await hass.async_block_till_done()
+    assert hass.states.get(number).state == "40.0"
+    coordinator = entry.runtime_data
+    start = coordinator.inverter.models[123][0]
+    assert await coordinator.client.read(1, start + 3, 5) == [4000, 0, 900, 0, 1]
+
+    # Begrenzung aus, Standby ein
+    await hass.services.async_call(
+        "switch", "turn_off", {"entity_id": limit_switch}, blocking=True
+    )
+    await hass.services.async_call("switch", "turn_off", {"entity_id": feed_in}, blocking=True)
+    await hass.async_block_till_done()
+    assert hass.states.get(limit_switch).state == "off"
+    assert hass.states.get(feed_in).state == "off"
+    assert await coordinator.client.read(1, start, 3) == [0, 900, 0]
+
+    assert await hass.config_entries.async_unload(entry.entry_id)
+    await hass.async_block_till_done()
+
+
+async def test_reset_events_button(hass: HomeAssistant, socket_enabled) -> None:
+    server = sim.FroniusSimulator(
+        {1: (sim.datamanager_hybrid_int(), sim.fronius_registers(state_code=306))}
+    )
+    await server.start()
+    try:
+        entry = await _setup(hass, server.port, **{CONF_METER_UNIT_ID: 0})
+        await _enable_control(hass, entry)
+        ent_reg = er.async_get(hass)
+        button = ent_reg.async_get_entity_id("button", DOMAIN, "44444444_reset_events")
+        assert button
+        await hass.services.async_call("button", "press", {"entity_id": button}, blocking=True)
+        assert await entry.runtime_data.client.read(1, 214, 1) == [0xFFFF]
         assert await hass.config_entries.async_unload(entry.entry_id)
         await hass.async_block_till_done()
     finally:

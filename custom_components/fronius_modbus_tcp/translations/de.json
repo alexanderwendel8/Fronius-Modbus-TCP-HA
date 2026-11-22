@@ -49,6 +49,19 @@
         "name": "Warnung"
       }
     },
+    "button": {
+      "reset_events": {
+        "name": "Ereignisse zurücksetzen"
+      }
+    },
+    "number": {
+      "power_limit": {
+        "name": "Leistungsbegrenzung"
+      },
+      "revert_time": {
+        "name": "Rückfallzeit Vorgaben"
+      }
+    },
     "sensor": {
       "ac_power": {
         "name": "AC-Leistung"
@@ -367,6 +380,33 @@
       "isolation_resistance": {
         "name": "Isolationswiderstand"
       }
+    },
+    "switch": {
+      "power_limit_active": {
+        "name": "Leistungsbegrenzung aktiv"
+      },
+      "feed_in_enabled": {
+        "name": "Einspeisung"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Optionen Fronius Modbus TCP",
+        "description": "Schreibende Entitäten verändern das Verhalten des Wechselrichters. In der Fronius-Weboberfläche muss „Wechselrichter-Steuerung über Modbus“ aktiviert sein; Vorgaben des Netzbetreibers (Steuerungs-Prioritäten) haben Vorrang.",
+        "data": {
+          "allow_control": "Steuerung erlauben"
+        },
+        "data_description": {
+          "allow_control": "Legt Entitäten für Leistungsbegrenzung, Einspeisung (Standby), Rückfallzeit und – bei Datamanager-Geräten – Ereignisse zurücksetzen an."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "write_failed": {
+      "message": "Schreiben auf den Wechselrichter fehlgeschlagen: {error}. Ist „Wechselrichter-Steuerung über Modbus“ in der Fronius-Weboberfläche aktiviert?"
     }
   }
 }

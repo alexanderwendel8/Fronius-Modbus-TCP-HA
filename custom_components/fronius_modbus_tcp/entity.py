@@ -4,13 +4,17 @@ from __future__ import annotations
 
 import logging
 from collections.abc import Sequence
-from typing import TypeVar
+from typing import Any, TypeVar
+
+from collections.abc import Awaitable
 
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
+from .api import FroniusModbusError
 from .const import DOMAIN, MANUFACTURER
 from .coordinator import FroniusCoordinator
 
@@ -111,3 +115,52 @@ def drop_unsupported(
             continue
         kept.append(entity)
     return kept
+
+
+# Anzeige-Entitäten, die bei erlaubter Steuerung durch schaltbare ersetzt werden
+REPLACED_BY_CONTROLS: dict[str, set[str]] = {
+    "sensor": {"power_limit"},
+    "binary_sensor": {"power_limit_active", "feed_in_enabled"},
+}
+
+
+def remove_replaced(
+    hass: HomeAssistant, coordinator: FroniusCoordinator, platform: str
+) -> set[str]:
+    """Registry-Einträge der ersetzten Anzeige-Entitäten entfernen.
+
+    Gibt die Schlüssel zurück, die die Plattform nicht anlegen soll.
+    """
+    if not coordinator.control_allowed:
+        return set()
+    keys = REPLACED_BY_CONTROLS.get(platform, set())
+    registry = er.async_get(hass)
+    for key in keys:
+        unique_id = f"{inverter_device_id(coordinator)}_{key}"
+        if entity_id := registry.async_get_entity_id(platform, DOMAIN, unique_id):
+            registry.async_remove(entity_id)
+    return keys
+
+
+async def async_write(
+    coordinator: FroniusCoordinator,
+    action: Awaitable[None],
+    written: dict[str, Any] | None = None,
+) -> None:
+    """Schreibvorgang ausführen, Fehler verständlich melden, Werte neu lesen.
+
+    `written`: geschriebene Werte, die sofort angezeigt werden – sonst springt
+    ein Schalter bis zur nächsten (gebündelten) Abfrage auf den alten Zustand.
+    """
+    try:
+        await action
+    except (FroniusModbusError, ValueError) as err:
+        raise HomeAssistantError(
+            translation_domain=DOMAIN,
+            translation_key="write_failed",
+            translation_placeholders={"error": str(err)},
+        ) from err
+    if written and coordinator.data is not None:
+        coordinator.data.values.update(written)
+        coordinator.async_update_listeners()
+    await coordinator.async_request_refresh()
