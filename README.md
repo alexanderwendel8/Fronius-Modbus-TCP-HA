@@ -84,7 +84,27 @@ Temperaturen – diese Sensoren werden daher nicht angelegt. Weitere Geräte ger
 
 ## Installation
 
-**HACS:** Dieses Repository als benutzerdefiniertes Repository (Typ *Integration*) hinzufügen, installieren, Home Assistant neu starten.
+**Marketplace (ab Home Assistant 2026.11):** Seit 2026.11 ersetzt der eingebaute *Marketplace* HACS
+([offizielle Doku](https://www.home-assistant.io/integrations/marketplace/)). Er ist unter
+*Settings → Marketplace* zu finden (nur für Administratoren), eine eigene HACS-Installation ist nicht nötig.
+Die Integration steht (noch) nicht im Katalog und wird als benutzerdefiniertes Repository hinzugefügt:
+
+1. *Settings → Marketplace* öffnen; beim ersten Öffnen den Warnhinweis akzeptieren
+   (ohne Zustimmung kann der Marketplace nichts installieren).
+2. Oben rechts **Add from link** wählen, unter **GitHub link** `alexanderwendel8/Fronius-Modbus-TCP-HA`
+   eintragen, **Add**. Falls noch nicht geschehen, fragt der Marketplace jetzt nach einer GitHub-Verbindung
+   (Anmeldung per Code auf github.com; nur Lesezugriff auf öffentliche Daten) – sie ist für benutzerdefinierte
+   Repositories Pflicht.
+3. Das Repository in der Liste öffnen, **Install** wählen, Version prüfen (neuestes Release, z. B. `v0.1.0`),
+   **Install**. Ist ein Neustart nötig, erinnert eine Reparaturmeldung unter *Settings → System → Repairs* daran.
+
+Updates erscheinen unter *Settings → Updates* (mit Release Notes); benutzerdefinierte Repositories prüft der
+Marketplace mit GitHub-Verbindung alle 48 Stunden. Nach einem Update Home Assistant neu starten – auch hier
+erinnert eine Reparaturmeldung. Eine HACS-Installation wird beim ersten Start von 2026.11 automatisch
+übernommen, einschließlich dieses Repositories und seiner Update-Entität.
+
+**HACS (Home Assistant vor 2026.11):** Dieses Repository als benutzerdefiniertes Repository (Typ *Integration*)
+hinzufügen, installieren, Home Assistant neu starten.
 
 **Manuell:** `custom_components/fronius_modbus_tcp` nach `<config>/custom_components/` kopieren und neu starten.
 
@@ -180,7 +200,7 @@ richten die Integration in einer Home-Assistant-Testinstanz ein.
 Änderungen stehen in [`CHANGELOG.md`](CHANGELOG.md). Releases erstellt der Workflow `release.yml`
 mit den Notizen aus dem Changelog – entweder per Tag `vX.Y.Z` oder manuell unter
 *Actions → Release → Run workflow* (auf `main`, Eingabe z. B. `0.1.0`; der Tag wird dann gesetzt).
-Die Version muss zu `manifest.json` passen. HACS zeigt danach die Versionsnummer statt des Commit-Hashs.
+Die Version muss zu `manifest.json` passen. Marketplace bzw. HACS zeigen danach die Versionsnummer statt des Commit-Hashs.
 
 ## Herstellerdokumentation
 

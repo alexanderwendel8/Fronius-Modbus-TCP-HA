@@ -36,6 +36,28 @@ Regeln:
 - „not supported“-Register liefern NaN / 0xFFFF / 0x8000 / acc32 0 → werden zu `None`.
 - Originale in `original/` nie verändern; CSV-Exporte bei Bedarf neu erzeugen.
 
+## Home-Assistant-Doku – offizielle Quelle
+
+Aussagen über Home Assistant (Oberfläche, Menünamen, Marketplace/HACS, Integrations-Verhalten, Entwickler-APIs)
+**immer gegen die offizielle Doku prüfen**, nicht aus dem Gedächtnis – Home Assistant ändert sich monatlich.
+Die gesamte Doku liegt als Markdown im öffentlichen Repo `home-assistant/home-assistant.io` (sauberer als die
+HTML-Seiten; www.home-assistant.io ist aus der Cloud-Umgebung zudem nicht erreichbar):
+
+```bash
+GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --filter=blob:none --sparse \
+  https://github.com/home-assistant/home-assistant.io /home/user/home-assistant/home-assistant.io
+git -C /home/user/home-assistant/home-assistant.io sparse-checkout set source/_docs source/_integrations
+grep -rli "marketplace" /home/user/home-assistant/home-assistant.io/source/_docs
+```
+
+- Integrationen: `source/_integrations/<domain>.markdown` (z. B. `marketplace.markdown`, `modbus.markdown`)
+- Allgemeine Doku: `source/_docs/` (z. B. `apps-and-integrations.markdown`)
+- Bei bestehendem Klon vorher `git -C … pull` (bzw. neu klonen), damit der Stand aktuell ist.
+- Für öffentliche Texte (README, CHANGELOG) die Quelle verlinken: `https://www.home-assistant.io/<pfad>/`
+  (`source/_integrations/x.markdown` → `/integrations/x/`, `source/_docs/y.markdown` → `/docs/y/`).
+- Menü- und Schaltflächennamen so übernehmen, wie die Doku sie schreibt (englisch, fett), ggf. mit deutscher
+  Erläuterung.
+
 ## Entwicklung
 
 - SunSpec-Dekodierung ohne HA-Abhängigkeit in `sunspec.py`; Modbus-Zugriff in `api.py`.

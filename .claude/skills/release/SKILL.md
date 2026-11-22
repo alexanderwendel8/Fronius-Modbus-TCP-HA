@@ -142,8 +142,10 @@ Prüfen vor dem Commit: `python3 -c "import yaml; print(list(yaml.safe_load(open
 - `workflow_dispatch` ist erst startbar, wenn die Workflow-Datei auf dem Default-Branch liegt.
 - Bereits existierender Tag/Release: softprops aktualisiert das Release, verschiebt den Tag aber
   nicht – für eine neue Version immer die Version erhöhen statt denselben Tag neu zu bauen.
-- **HACS** (HA-Integrationen) zeigt ohne Releases den Commit-Hash. Nach dem ersten Release in HACS
-  beim Repository „Informationen aktualisieren“ wählen, dann wird die Version als Update angeboten.
+- **Marketplace / HACS** (HA-Integrationen) zeigt ohne Releases den Commit-Hash. Ab HA 2026.11 ersetzt der
+  eingebaute Marketplace HACS (offizielle Doku: `source/_integrations/marketplace.markdown` in
+  `home-assistant/home-assistant.io`); benutzerdefinierte Repositories brauchen dort `hacs.json` und eine
+  GitHub-Verbindung und werden alle 48 Stunden geprüft, Updates erscheinen unter *Settings → Updates*.
   HACS-Validierung braucht außerdem Repo-Beschreibung und Topics (setzt der Nutzer in den
   GitHub-Einstellungen) sowie ein Brand-Icon.
 - Keine Modellbezeichnungen in Commits, PRs oder Release Notes.
