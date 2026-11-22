@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from homeassistant.components.binary_sensor import (
+    BinarySensorDeviceClass,
     BinarySensorEntity,
     BinarySensorEntityDescription,
 )
@@ -25,6 +26,18 @@ class FroniusBinarySensorEntityDescription(BinarySensorEntityDescription):
 
     skip_if_unsupported: bool = True
 
+
+# Fehler/Warnungen aus EvtVnd1-4 (GEN24: Schweregrad, Datamanager: Fehlerklassen)
+ERROR_BINARY_SENSOR = FroniusBinarySensorEntityDescription(
+    key="error_active",
+    translation_key="error_active",
+    device_class=BinarySensorDeviceClass.PROBLEM,
+)
+WARNING_BINARY_SENSOR = FroniusBinarySensorEntityDescription(
+    key="warning_active",
+    translation_key="warning_active",
+    device_class=BinarySensorDeviceClass.PROBLEM,
+)
 
 # Aktueller Zustand der Vorgaben aus Modell 123 (nur lesend)
 CONTROLS_BINARY_SENSORS: tuple[FroniusBinarySensorEntityDescription, ...] = (
@@ -55,8 +68,14 @@ async def async_setup_entry(
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     coordinator = entry.runtime_data
-    entities: list[FroniusBinarySensor] = []
-    if sunspec.CONTROLS_MODEL in coordinator.inverter.models:
+    inverter = coordinator.inverter
+    entities: list[FroniusBinarySensor] = [
+        FroniusBinarySensor(coordinator, ERROR_BINARY_SENSOR)
+    ]
+    if not inverter.has_site_registers:
+        # Warnungen gibt es nur bei den Schweregrad-Bits (GEN24/Tauro/Verto)
+        entities.append(FroniusBinarySensor(coordinator, WARNING_BINARY_SENSOR))
+    if sunspec.CONTROLS_MODEL in inverter.models:
         entities += [
             FroniusBinarySensor(coordinator, desc) for desc in CONTROLS_BINARY_SENSORS
         ]

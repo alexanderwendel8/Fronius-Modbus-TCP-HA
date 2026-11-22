@@ -30,12 +30,15 @@ Custom Integration, die Fronius-Wechselrichter (SunSpec) lokal per Modbus TCP au
 | | Batterie | Ladequelle, Maximalleistung (Diagnose); Steuermodus, Lade-/Entladegrenze | teils |
 | | Status | Betriebszustand (SunSpec), Fronius-Zustand | ja |
 | | Status (Datamanager) | Statuscode und Statusmeldung im Klartext (z. B. „306 Power Low“) | ja |
+| | Fehler | Binärsensor Fehler; GEN24/Tauro/Verto zusätzlich Warnung; Datamanager: aktive Fehlerklassen im Klartext | ja |
+| | Ereignisse | SunSpec-Ereignisse im Klartext (z. B. „Over temperature“) | ja |
+| | Modell 122 (GEN24) | Gesamtenergie (genau, 64-bit-Zähler); Isolationswiderstand (Diagnose) | ja |
 | | Anlage (Datamanager) | Anlagenleistung, Energie heute, Energie dieses Jahr, Anlagen-Gesamtenergie | ja |
 | | Vorgaben (Modell 123, nur lesend) | Leistungsbegrenzung in %, Leistungsbegrenzung aktiv, Einspeisung freigegeben | ja |
 | | Vorgaben (Diagnose) | Leistungsfaktor- und Blindleistungs-Vorgabe und ob aktiv | nein |
 | | Nennwerte (Modell 120) | Nennleistung; Batteriekapazität; max. Lade-/Entladeleistung | ja (Diagnose) |
 | | Nennwerte (Diagnose) | Nenn-Scheinleistung, Nennstrom | nein |
-| | Diagnose | Temperaturen, Ereignis-Flags | nein |
+| | Diagnose | Temperaturen, Ereignis-Flags (Rohwert) | nein |
 | Smart Meter | | Leistung, Energie Bezug, Energie Einspeisung, Strom, Spannung L-N je Phase, Frequenz | ja |
 | | | Leistung/Strom/Energie je Phase, Spannung L-L, Schein-/Blindleistung, Leistungsfaktor | nein |
 

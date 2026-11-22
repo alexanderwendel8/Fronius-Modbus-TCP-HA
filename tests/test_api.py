@@ -75,6 +75,19 @@ async def test_gen24_plus(gen24) -> None:
         assert v["battery_capacity"] == 10240
         assert v["battery_max_charge_power"] == 10000
 
+        # Modell 122: genauer Energiezähler und Isolationswiderstand (1500 × 10³ Ω)
+        assert v["ac_energy_lifetime"] == 12_345_679
+        assert v["isolation_resistance"] == 1_500_000
+
+        # Evt1 (SunSpec): Übertemperatur + AC-Überspannung
+        assert v["events"] == 0x0480
+        assert v["event_message"] == "Over temperature; AC voltage above limit"
+
+        # EvtVnd1 (Sicht "Customer"): Bit 1 = Warnung, kein Fehler
+        assert v["warning_active"] is True
+        assert v["error_active"] is False
+        assert "vendor_events" not in v
+
         # Modell 123 (nur lesend): Drosselung auf 70 % aktiv
         assert v["power_limit"] == 70.0
         assert v["power_limit_active"] is True
@@ -122,6 +135,14 @@ async def test_datamanager_symo_hybrid(datamanager) -> None:
         assert v["site_energy_total"] == 9_330_290
         assert v["state_code"] == 0
         assert v["state_message"] == "OK"
+        # Modell 122 beim Datamanager nicht unterstützt
+        assert v["ac_energy_lifetime"] is None
+        assert v["isolation_resistance"] is None
+
+        # Keine Fehlerklassen aktiv
+        assert v["error_active"] is False
+        assert v["vendor_events"] == "OK"
+        assert "warning_active" not in v
 
         meter = await client.read_meter_info(240)
         m = await client.read_meter_data(meter)
@@ -181,3 +202,39 @@ def test_state_code_text() -> None:
     assert sunspec.parse_fronius_state_code(9999, other)["state_message"] == "State code 9999"
     # Nicht unterstützt
     assert sunspec.parse_fronius_state_code(0xFFFF, other)["state_code"] is None
+
+
+def test_vendor_event_classes() -> None:
+    from custom_components.fronius_modbus_tcp import state_codes
+
+    symo = state_codes.events_for_model("Symo 3.0-3-M")
+    v = sunspec.parse_vendor_event_classes([0x20, 0x4, 0, 0], symo)
+    assert v == {"error_active": True, "vendor_events": "Power low; 24h no feed in"}
+    # Familienspezifisch: EvtVnd2 0x8 heißt beim Primo anders als beim Symo
+    primo = state_codes.events_for_model("Primo 5.0-1")
+    assert sunspec.parse_vendor_event_classes([0, 0x8, 0, 0], primo)["vendor_events"] == (
+        "No communication with filter"
+    )
+    assert sunspec.parse_vendor_event_classes([0, 0x8, 0, 0], symo)["vendor_events"] == (
+        "Faulty plug connections"
+    )
+    # Unbekanntes Bit, nicht unterstützt
+    assert sunspec.parse_vendor_event_classes([0, 0, 0, 0x10], symo)["vendor_events"] == (
+        "EvtVnd4 0x10"
+    )
+    assert sunspec.parse_vendor_event_classes([None] * 4, symo)["error_active"] is None
+
+
+def test_severity_events() -> None:
+    assert sunspec.parse_severity_events([0b001, 0, 0, 0]) == {
+        "error_active": True,
+        "warning_active": False,
+    }
+    assert sunspec.parse_severity_events([None, 0, 0, 0])["error_active"] is None
+
+
+def test_event_message() -> None:
+    assert sunspec.parse_event_message(0) == {"event_message": "OK"}
+    assert sunspec.parse_event_message(0x0001) == {"event_message": "Ground fault"}
+    assert sunspec.parse_event_message(0x10000)["event_message"] == "Evt1 0x10000"
+    assert sunspec.parse_event_message(None) == {"event_message": None}

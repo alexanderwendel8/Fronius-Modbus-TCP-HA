@@ -277,6 +277,19 @@ class FroniusModbusClient:
         else:
             values.update(sunspec.parse_inverter_int_sf(regs))
 
+        values.update(sunspec.parse_event_message(values["events"]))
+
+        # EvtVnd1-4: Bedeutung hängt von der Gerätegeneration ab (CLAUDE.md)
+        evt_vnd = values["evt_vnd"]
+        if info.has_site_registers:
+            values.update(
+                sunspec.parse_vendor_event_classes(
+                    evt_vnd, state_codes.events_for_model(info.model)
+                )
+            )
+        else:
+            values.update(sunspec.parse_severity_events(evt_vnd))
+
         if info.mppt_roles:
             regs = await self.read_model(unit, models, sunspec.MPPT_MODEL)
             values.update(
@@ -292,6 +305,10 @@ class FroniusModbusClient:
         if sunspec.CONTROLS_MODEL in models:
             regs = await self.read_model(unit, models, sunspec.CONTROLS_MODEL)
             values.update(sunspec.parse_controls(regs))
+
+        if sunspec.STATUS_MODEL in models:
+            regs = await self.read_model(unit, models, sunspec.STATUS_MODEL)
+            values.update(sunspec.parse_status(regs))
 
         if info.has_site_registers:
             regs = await self.read(

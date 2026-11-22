@@ -19,6 +19,7 @@ METER_INT_SF_MODELS: dict[int, int] = {201: 1, 202: 2, 203: 3, 204: 3}
 COMMON_MODEL = 1
 CONTROLS_MODEL = 123
 NAMEPLATE_MODEL = 120
+STATUS_MODEL = 122
 STORAGE_MODEL = 124
 MPPT_MODEL = 160
 END_MODEL = 0xFFFF
@@ -54,6 +55,27 @@ STATUS_VENDOR: dict[int, str] = {
     13: "afci",
 }
 
+# SunSpec "Evt1" (Bitfeld im Inverter-Modell); Texte aus der Fronius-Tabelle
+# docs/fronius/archiv_1.1.7/csv/Fronius_State_Codes_Event_Flags_1_0/Evt1.csv
+SUNSPEC_EVENTS: dict[int, str] = {
+    0x0001: "Ground fault",
+    0x0002: "DC over voltage",
+    0x0004: "AC disconnect open",
+    0x0008: "DC disconnect open",
+    0x0010: "Grid shutdown",
+    0x0020: "Cabinet open",
+    0x0040: "Manual shutdown",
+    0x0080: "Over temperature",
+    0x0100: "Frequency above limit",
+    0x0200: "Frequency under limit",
+    0x0400: "AC voltage above limit",
+    0x0800: "AC voltage under limit",
+    0x1000: "Blown string fuse",
+    0x2000: "Under temperature",
+    0x4000: "Generic memory or communication error",
+    0x8000: "Hardware test failure",
+}
+
 # Modell 124 "ChaSt"
 STORAGE_STATE: dict[int, str] = {
     1: "off",
@@ -83,6 +105,7 @@ FRONIUS_SITE_ADDRESS = 499  # F_Site_Power (500-501) … F_Site_Energy_Total (51
 FRONIUS_SITE_COUNT = 14
 FRONIUS_STATE_CODE_ADDRESS = 213  # F_Active_State_Code (214)
 STATE_CODE_OK = "OK"
+MAX_STATE_LENGTH = 255  # Home Assistant begrenzt Zustände auf 255 Zeichen
 
 
 # --- Basis-Dekoder (liefern None für "nicht implementiert") -----------------
@@ -113,6 +136,11 @@ def to_uint64(regs: list[int]) -> int | None:
     for reg in regs[:4]:
         value = (value << 16) | reg
     return None if value == 0xFFFFFFFFFFFFFFFF else value
+
+
+def to_acc64(regs: list[int]) -> int | None:
+    value = to_uint64(regs)
+    return value or None
 
 
 def to_acc32(regs: list[int]) -> int | None:
@@ -185,6 +213,7 @@ def parse_inverter_float(regs: list[int]) -> dict[str, Any]:
         "status": _enum(status, STATUS),
         "status_vendor": _enum(status_vendor, STATUS_VENDOR),
         "events": to_uint32(regs[48:50]),
+        "evt_vnd": [to_uint32(regs[i : i + 2]) for i in (52, 54, 56, 58)],
     }
 
 
@@ -234,6 +263,7 @@ def parse_inverter_int_sf(regs: list[int]) -> dict[str, Any]:
         "status": _enum(status, STATUS),
         "status_vendor": _enum(status_vendor, STATUS_VENDOR),
         "events": to_uint32(regs[38:40]),
+        "evt_vnd": [to_uint32(regs[i : i + 2]) for i in (42, 44, 46, 48)],
     }
 
 
@@ -556,4 +586,75 @@ def parse_nameplate(regs: list[int]) -> dict[str, Any]:
         "battery_capacity": u16(17, 18),  # WHRtg
         "battery_max_charge_power": u16(21, 22),  # MaxChaRte
         "battery_max_discharge_power": u16(23, 24),  # MaxDisChaRte
+    }
+
+
+# --- Herstellerspezifische Ereignisse (EvtVnd1-4) ----------------------------
+
+
+def parse_severity_events(evt_vnd: list[int | None]) -> dict[str, Any]:
+    """GEN24/Tauro/Verto: EvtVnd1 = Schweregrad-Bits der Sicht "Customer".
+
+    Bit 0 = mindestens ein aktiver Fehler, Bit 1 = Warnung, Bit 2 = Info
+    (Registerkarte archiv_1.2.7, inverter_11x: EvtVnd1).
+    """
+    customer = evt_vnd[0]
+    if customer is None:
+        return {"error_active": None, "warning_active": None}
+    return {
+        "error_active": bool(customer & 0x1),
+        "warning_active": bool(customer & 0x2),
+    }
+
+
+def parse_vendor_event_classes(
+    evt_vnd: list[int | None], table: dict[tuple[int, int], str]
+) -> dict[str, Any]:
+    """Datamanager: jedes Bit in EvtVnd1-4 steht für eine Fehlerklasse.
+
+    Unbekannte Bits werden als "EvtVnd<n> 0x…" angezeigt.
+    """
+    if all(value is None for value in evt_vnd):
+        return {"error_active": None, "vendor_events": None}
+    classes: list[str] = []
+    for register, value in enumerate(evt_vnd, start=1):
+        if not value:
+            continue
+        for bit in range(32):
+            mask = 1 << bit
+            if value & mask:
+                classes.append(table.get((register, mask), f"EvtVnd{register} 0x{mask:X}"))
+    message = "; ".join(dict.fromkeys(classes)) or STATE_CODE_OK
+    return {
+        "error_active": bool(classes),
+        "vendor_events": message[:MAX_STATE_LENGTH],
+    }
+
+
+def parse_event_message(evt1: int | None) -> dict[str, Any]:
+    """SunSpec-Ereignisse (Evt1) im Klartext, "OK" wenn keines aktiv ist."""
+    if evt1 is None:
+        return {"event_message": None}
+    events = [
+        SUNSPEC_EVENTS.get(1 << bit, f"Evt1 0x{1 << bit:X}")
+        for bit in range(32)
+        if evt1 & (1 << bit)
+    ]
+    message = "; ".join(events) or STATE_CODE_OK
+    return {"event_message": message[:MAX_STATE_LENGTH]}
+
+
+# --- Extended Measurements & Status (Modell 122) ------------------------------
+
+
+def parse_status(regs: list[int]) -> dict[str, Any]:
+    """Isolationswiderstand und 64-bit-Energiezähler (GEN24; Datamanager meist n. u.).
+
+    ActWh ist genauer als WH aus dem Inverter-Modell ("may be imprecise", Fronius-
+    Changelog 1.1.1) und wird als eigener Sensor geführt, damit die Statistik des
+    bisherigen Gesamtenergie-Sensors nicht springt.
+    """
+    return {
+        "ac_energy_lifetime": to_acc64(regs[3:7]),  # ActWh
+        "isolation_resistance": scale(to_uint16(regs[42]), to_int16(regs[43]), 0),  # Ris
     }

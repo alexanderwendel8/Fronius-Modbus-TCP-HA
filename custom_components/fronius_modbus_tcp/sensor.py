@@ -193,6 +193,7 @@ INVERTER_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
     _temperature("temperature_other"),
     _enum("status", sunspec.STATUS),
     _enum("status_vendor", sunspec.STATUS_VENDOR),
+    _desc("event_message", skip_if_unsupported=True),
     _desc("events", skip_if_unsupported=True, **_DIAG, **_OFF),
 )
 
@@ -216,6 +217,19 @@ CONTROLS_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
         **_OFF,
     ),
     _percent("var_limit", skip_if_unsupported=True, **_DIAG, **_OFF),
+)
+
+# Extended Measurements & Status (Modell 122)
+STATUS_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
+    _energy("ac_energy_lifetime", skip_if_unsupported=True),
+    _desc(
+        "isolation_resistance",
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement="Ω",
+        suggested_display_precision=0,
+        skip_if_unsupported=True,
+        **_DIAG,
+    ),
 )
 
 # Nennwerte aus Modell 120 (statisch)
@@ -278,6 +292,8 @@ SITE_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
     # Aktueller Fronius State Code (Register 214) mit Klartext aus der Fronius-Liste
     _desc("state_code", skip_if_unsupported=True),
     _desc("state_message", skip_if_unsupported=True),
+    # Aktive Fehlerklassen aus EvtVnd1-4 im Klartext
+    _desc("vendor_events", skip_if_unsupported=True),
 )
 
 # Batterie über Modell 160 (Leistung, Spannung, Energie)
@@ -414,6 +430,8 @@ async def async_setup_entry(
         entities += [FroniusSensor(coordinator, desc) for desc in SITE_SENSORS]
     if sunspec.CONTROLS_MODEL in inverter.models:
         entities += [FroniusSensor(coordinator, desc) for desc in CONTROLS_SENSORS]
+    if sunspec.STATUS_MODEL in inverter.models:
+        entities += [FroniusSensor(coordinator, desc) for desc in STATUS_SENSORS]
     if inverter.nameplate:
         entities += [FroniusSensor(coordinator, desc) for desc in NAMEPLATE_SENSORS]
         if inverter.has_storage:

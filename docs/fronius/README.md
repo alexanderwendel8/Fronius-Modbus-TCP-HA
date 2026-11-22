@@ -76,7 +76,9 @@ an der Modellkette (z. B. Modell 124 vorhanden → Batterie-fähig).
 | Timeout | `const.py` (`DEFAULT_TIMEOUT = 10`, Suche 3 s) | ✅ |
 | Skalierungsfaktoren | `sunspec.py` | ✅ werden bei jedem Lesen mitgelesen |
 | Unit-ID im Config Flow | `config_flow.py`, `strings.json` | ✅ Hinweise GEN24 = 1, Datamanager = WR-Nummer (00 → 100) |
-| `EvtVnd1-4` dekodieren | – | ⏳ je nach Gerätegeneration unterschiedlich (siehe Tabelle oben) |
+| `EvtVnd1-4` dekodieren | `sunspec.py::parse_severity_events` / `parse_vendor_event_classes`, `state_codes.py` | ✅ GEN24: Schweregrad (Fehler/Warnung); Datamanager: Fehlerklassen je Familie (Unterscheidung über Fronius-Register) |
+| `Evt1` im Klartext | `sunspec.py::SUNSPEC_EVENTS` | ✅ 16 Bits laut `Evt1.csv` |
+| Modell 122 | `sunspec.py::parse_status` | ✅ `ActWh` (eigener Sensor, genauer als `WH`), `Ris`; `StActCtl`, `PVConn` … ⏳ |
 | Mehrere Smart Meter (200–204 / 240–244) | – | ⏳ derzeit nur einer |
 | Fronius-Register 214 (State Code), 500–513 (Anlagensummen) | `sunspec.py::parse_fronius_*`, `state_codes.py` | ✅ nur Datamanager; Erkennung per Testlesen beim Start |
 | Vorgaben lesen (Modell 123) | `sunspec.py::parse_controls`, `binary_sensor.py` | ✅ Leistungsbegrenzung, Standby, cos φ/Blindleistung (nur lesend) |
