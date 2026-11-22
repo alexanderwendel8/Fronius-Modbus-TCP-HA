@@ -191,7 +191,14 @@ INVERTER_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
     _desc("events", **_DIAG, **_OFF),
 )
 
-PV_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (_power("pv_power"),)
+PV_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
+    _power("pv_power"),
+    _current("pv_current"),
+)
+
+# Bei mehreren DC-Eingängen liefert das Inverter-Model nur DCW; DCA und DCV sind
+# laut Fronius "not implemented" (Werte stehen je Eingang in Modell 160).
+SINGLE_DC_INPUT_ONLY = {"dc_current", "dc_voltage"}
 
 # Batterie über Modell 160 (Leistung, Spannung, Energie)
 BATTERY_MPPT_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
@@ -286,6 +293,9 @@ async def async_setup_entry(
         FroniusSensor(coordinator, desc)
         for desc in INVERTER_SENSORS
         if desc.min_phases <= inverter.phases
+        and not (
+            len(inverter.mppt_roles) > 1 and desc.key in SINGLE_DC_INPUT_ONLY
+        )
     ]
 
     roles = inverter.mppt_roles

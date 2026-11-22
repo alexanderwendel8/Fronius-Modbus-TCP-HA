@@ -209,6 +209,9 @@
       "pv_power": {
         "name": "PV power"
       },
+      "pv_current": {
+        "name": "PV current"
+      },
       "meter_power": {
         "name": "Power"
       },

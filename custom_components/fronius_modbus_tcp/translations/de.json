@@ -209,6 +209,9 @@
       "pv_power": {
         "name": "PV-Leistung"
       },
+      "pv_current": {
+        "name": "PV-Strom"
+      },
       "meter_power": {
         "name": "Leistung"
       },

@@ -290,6 +290,7 @@ def combine_mppt(
     """
     values: dict[str, Any] = {}
     pv_powers: list[float | None] = []
+    pv_currents: list[float | None] = []
     charge = discharge = hybrid = None
 
     for index, (module, role) in enumerate(zip(modules, roles, strict=False), 1):
@@ -297,6 +298,7 @@ def combine_mppt(
             for field, value in module.items():
                 values[f"mppt_{index}_{field}"] = value
             pv_powers.append(module["dc_power"])
+            pv_currents.append(module["dc_current"])
         elif role == ROLE_BATTERY_CHARGE:
             charge = module
         elif role == ROLE_BATTERY_DISCHARGE:
@@ -307,6 +309,11 @@ def combine_mppt(
     if pv_powers:
         values["pv_power"] = (
             None if None in pv_powers else round(sum(pv_powers), 1)  # type: ignore[arg-type]
+        )
+        # Summe der String-Ströme (eine Gesamtspannung gibt es bei mehreren
+        # Strings nicht – die Spannung bleibt nur je String verfügbar)
+        values["pv_current"] = (
+            None if None in pv_currents else round(sum(pv_currents), 2)  # type: ignore[arg-type]
         )
 
     if charge is not None or discharge is not None:

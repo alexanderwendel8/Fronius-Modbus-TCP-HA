@@ -133,6 +133,19 @@ def gen24_float_no_battery() -> list[int]:
     )
 
 
+def single_mppt_float() -> list[int]:
+    """Wechselrichter mit nur einem DC-Eingang: DCA/DCV im Inverter-Model vorhanden."""
+    inverter = inverter_113(phases=3)
+    body = inverter[2:]
+    body[32:34] = f(8.2)   # DCA
+    body[34:36] = f(410.0)  # DCV
+    return device(
+        common("Fronius", "Tauro ECO 50-3-D", "1.36.5-1", "66666666"),
+        model(113, body),
+        mppt_160([("MPPT 1", 820, 4100, 3362, 1)]),
+    )
+
+
 # --- Smart Meter ------------------------------------------------------------
 
 
