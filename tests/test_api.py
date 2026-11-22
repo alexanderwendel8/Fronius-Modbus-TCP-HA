@@ -68,6 +68,14 @@ async def test_gen24_plus(gen24) -> None:
         assert v["battery_grid_charging"] == "grid"
         assert v["battery_max_power"] == 10000
 
+        # Modell 123 (nur lesend): Drosselung auf 70 % aktiv
+        assert v["power_limit"] == 70.0
+        assert v["power_limit_active"] is True
+        assert v["feed_in_enabled"] is True
+        assert v["pf_setpoint"] == -0.95
+        assert v["pf_control_active"] is False
+        assert v["var_limit"] == 0
+
         meter = await client.read_meter_info(200)
         assert meter.meter_model == 213 and meter.options == "<primary>"
         m = await client.read_meter_data(meter)

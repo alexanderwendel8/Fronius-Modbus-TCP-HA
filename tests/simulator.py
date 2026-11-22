@@ -94,6 +94,23 @@ def storage_124(wchamax: int = 10000, soc: int = 5420, chast: int = 4, grid: int
     return model(124, body)
 
 
+def controls_123(
+    *, conn: int = 1, limit_pct: float = 100.0, limit_ena: int = 0, pf_ena: int = 0
+) -> list[int]:
+    """Immediate Controls: WMaxLimPct mit SF −2, OutPFSet mit SF −3."""
+    body = [
+        0, 0, conn,                      # Conn_WinTms, Conn_RvrtTms, Conn
+        round(limit_pct * 100), 0, 0, 0,  # WMaxLimPct, _WinTms, _RvrtTms, _RmpTms
+        limit_ena,                       # WMaxLim_Ena
+        i16(-950), 0, 0, 0, pf_ena,      # OutPFSet (−0,95), _WinTms, _RvrtTms, _RmpTms, _Ena
+        0x8000, 0, 0x8000,               # VArWMaxPct (n. u.), VArMaxPct, VArAvalPct (n. u.)
+        0, 0, 0, 2, 0,                   # VArPct_WinTms, _RvrtTms, _RmpTms, _Mod, _Ena
+        i16(-2), i16(-3), 0,             # WMaxLimPct_SF, OutPFSet_SF, VArPct_SF
+    ]
+    assert len(body) == 24
+    return model(123, body)
+
+
 def filler(model_id: int, length: int) -> list[int]:
     return model(model_id, [0xFFFF] * length)
 
@@ -103,7 +120,8 @@ def gen24_plus_float() -> list[int]:
     return device(
         common("Fronius", "Symo GEN24 10.0 Plus", "1.36.5-1", "33333333"),
         inverter_113(),
-        filler(120, 26), filler(121, 30), filler(122, 44), filler(123, 24),
+        filler(120, 26), filler(121, 30), filler(122, 44),
+        controls_123(limit_pct=70, limit_ena=1),
         mppt_160([
             ("MPPT 1", 412, 4050, 1680, 1234567),
             ("MPPT 2", 398, 3980, 1590, 7654321),
@@ -119,7 +137,7 @@ def datamanager_hybrid_int(dcw: int = 1000) -> list[int]:
     return device(
         common("Fronius", "Symo Hybrid 5.0-3-S", "1.13.1-1", "44444444"),
         inverter_103(dcw=dcw),
-        filler(120, 26), filler(121, 30), filler(122, 44), filler(123, 24),
+        filler(120, 26), filler(121, 30), filler(122, 44), controls_123(),
         mppt_160([("String 1", 500, 4000, 2000, 0), ("String 2", 200, 4900, 1000, 0)]),
         storage_124(wchamax=5000, soc=8000, chast=4, grid=0),
     )

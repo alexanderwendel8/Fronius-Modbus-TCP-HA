@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import logging
 from dataclasses import dataclass, replace
 
 from homeassistant.components.sensor import (
@@ -24,15 +23,11 @@ from homeassistant.const import (
     UnitOfTemperature,
 )
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from . import sunspec
-from .const import DOMAIN
 from .coordinator import FroniusConfigEntry, FroniusCoordinator
-from .entity import DEVICE_INVERTER, DEVICE_METER, FroniusEntity
-
-_LOGGER = logging.getLogger(__name__)
+from .entity import DEVICE_INVERTER, DEVICE_METER, FroniusEntity, drop_unsupported
 
 PARALLEL_UPDATES = 0
 
@@ -210,6 +205,19 @@ PV_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
 # laut Fronius "not implemented" (Werte stehen je Eingang in Modell 160).
 SINGLE_DC_INPUT_ONLY = {"dc_current", "dc_voltage"}
 
+# Aktuelle Vorgaben aus Modell 123 (nur lesend)
+CONTROLS_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
+    _percent("power_limit", suggested_display_precision=0, skip_if_unsupported=True),
+    _desc(
+        "pf_setpoint",
+        device_class=SensorDeviceClass.POWER_FACTOR,
+        skip_if_unsupported=True,
+        **_DIAG,
+        **_OFF,
+    ),
+    _percent("var_limit", skip_if_unsupported=True, **_DIAG, **_OFF),
+)
+
 # Anlagensummen aus den Fronius-Registern 500-513 (nur Datamanager)
 SITE_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
     _power("site_power"),
@@ -353,6 +361,8 @@ async def async_setup_entry(
         ]
     if inverter.has_site_registers:
         entities += [FroniusSensor(coordinator, desc) for desc in SITE_SENSORS]
+    if sunspec.CONTROLS_MODEL in inverter.models:
+        entities += [FroniusSensor(coordinator, desc) for desc in CONTROLS_SENSORS]
 
     if (meter := coordinator.meter) is not None:
         entities += [
@@ -361,34 +371,7 @@ async def async_setup_entry(
             if desc.min_phases <= meter.phases
         ]
 
-    async_add_entities(_drop_unsupported(hass, coordinator, entities))
-
-
-def _drop_unsupported(
-    hass: HomeAssistant, coordinator: FroniusCoordinator, entities: list[FroniusSensor]
-) -> list[FroniusSensor]:
-    """Sensoren weglassen, deren Wert das Gerät als "nicht unterstützt" meldet.
-
-    Nur wenn der Wert gelesen wurde (Schlüssel vorhanden) und None ist – fehlt
-    der Schlüssel, ist das Lesen fehlgeschlagen (z. B. Smart Meter antwortet
-    nicht) und der Sensor bleibt erhalten. Bestehende Registry-Einträge der
-    weggelassenen Sensoren werden entfernt; wird der Wert später unterstützt,
-    legt der nächste Start den Sensor wieder an.
-    """
-    values = coordinator.data.values if coordinator.data else {}
-    registry = er.async_get(hass)
-    kept: list[FroniusSensor] = []
-    for entity in entities:
-        desc = entity.entity_description
-        if desc.skip_if_unsupported and desc.key in values and values[desc.key] is None:
-            _LOGGER.debug("Sensor %s nicht unterstützt, wird nicht angelegt", desc.key)
-            if entity_id := registry.async_get_entity_id(
-                "sensor", DOMAIN, entity.unique_id
-            ):
-                registry.async_remove(entity_id)
-            continue
-        kept.append(entity)
-    return kept
+    async_add_entities(drop_unsupported(hass, coordinator, "sensor", entities))
 
 
 class FroniusSensor(FroniusEntity, SensorEntity):

@@ -29,6 +29,20 @@
     }
   },
   "entity": {
+    "binary_sensor": {
+      "power_limit_active": {
+        "name": "Power limit active"
+      },
+      "feed_in_enabled": {
+        "name": "Feed-in enabled"
+      },
+      "pf_control_active": {
+        "name": "Fixed power factor active"
+      },
+      "var_control_active": {
+        "name": "Fixed reactive power active"
+      }
+    },
     "sensor": {
       "ac_power": {
         "name": "AC power"
@@ -307,6 +321,15 @@
       },
       "state_message": {
         "name": "State message"
+      },
+      "power_limit": {
+        "name": "Power limit"
+      },
+      "pf_setpoint": {
+        "name": "Power factor setpoint"
+      },
+      "var_limit": {
+        "name": "Reactive power limit"
       }
     }
   }

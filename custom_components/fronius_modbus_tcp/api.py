@@ -283,6 +283,10 @@ class FroniusModbusClient:
             regs = await self.read_model(unit, models, sunspec.STORAGE_MODEL)
             values.update(sunspec.parse_storage(regs))
 
+        if sunspec.CONTROLS_MODEL in models:
+            regs = await self.read_model(unit, models, sunspec.CONTROLS_MODEL)
+            values.update(sunspec.parse_controls(regs))
+
         if info.has_site_registers:
             regs = await self.read(
                 unit, sunspec.FRONIUS_SITE_ADDRESS, sunspec.FRONIUS_SITE_COUNT

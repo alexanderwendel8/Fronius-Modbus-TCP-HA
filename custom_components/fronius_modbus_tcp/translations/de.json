@@ -29,6 +29,20 @@
     }
   },
   "entity": {
+    "binary_sensor": {
+      "power_limit_active": {
+        "name": "Leistungsbegrenzung aktiv"
+      },
+      "feed_in_enabled": {
+        "name": "Einspeisung freigegeben"
+      },
+      "pf_control_active": {
+        "name": "Fester Leistungsfaktor aktiv"
+      },
+      "var_control_active": {
+        "name": "Feste Blindleistung aktiv"
+      }
+    },
     "sensor": {
       "ac_power": {
         "name": "AC-Leistung"
@@ -307,6 +321,15 @@
       },
       "state_message": {
         "name": "Statusmeldung"
+      },
+      "power_limit": {
+        "name": "Leistungsbegrenzung"
+      },
+      "pf_setpoint": {
+        "name": "Leistungsfaktor-Vorgabe"
+      },
+      "var_limit": {
+        "name": "Blindleistungs-Vorgabe"
       }
     }
   }

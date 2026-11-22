@@ -72,6 +72,15 @@ async def test_gen24_plus_with_meter(hass: HomeAssistant, gen24) -> None:
     assert ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_dc_current") is None
     assert ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_dc_voltage") is None
     assert float(s("33333333_dc_power").state) == 3400.0
+
+    # Modell 123: aktive Drosselung als Sensor und Binärsensoren
+    assert float(s("33333333_power_limit").state) == 70.0
+    limit_active = ent_reg.async_get_entity_id(
+        "binary_sensor", DOMAIN, "33333333_power_limit_active"
+    )
+    feed_in = ent_reg.async_get_entity_id("binary_sensor", DOMAIN, "33333333_feed_in_enabled")
+    assert hass.states.get(limit_active).state == "on"
+    assert hass.states.get(feed_in).state == "on"
     assert float(s("33333333_mppt_1_dc_power").state) == 1680
     assert ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_mppt_3_dc_power") is None
     assert float(s("33333333_battery_power").state) == 1440

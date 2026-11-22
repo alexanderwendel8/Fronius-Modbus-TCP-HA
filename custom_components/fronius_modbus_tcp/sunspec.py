@@ -17,6 +17,7 @@ INVERTER_INT_SF_MODELS: dict[int, int] = {101: 1, 102: 2, 103: 3}
 METER_FLOAT_MODELS: dict[int, int] = {211: 1, 212: 2, 213: 3, 214: 3}
 METER_INT_SF_MODELS: dict[int, int] = {201: 1, 202: 2, 203: 3, 204: 3}
 COMMON_MODEL = 1
+CONTROLS_MODEL = 123
 STORAGE_MODEL = 124
 MPPT_MODEL = 160
 END_MODEL = 0xFFFF
@@ -511,3 +512,28 @@ def parse_fronius_state_code(reg: int, table: dict[int, str]) -> dict[str, Any]:
     else:
         message = table.get(code, f"State code {code}")
     return {"state_code": code, "state_message": message}
+
+
+# --- Immediate Controls (Modell 123, nur lesend) -----------------------------
+
+
+def _flag(reg: int) -> bool | None:
+    value = to_uint16(reg)
+    return None if value is None else value == 1
+
+
+def parse_controls(regs: list[int]) -> dict[str, Any]:
+    """Aktuelle Vorgaben (Leistungsbegrenzung, cos φ, Blindleistung, Standby).
+
+    Die Werte zeigen, was am Wechselrichter gerade eingestellt ist – z. B. eine
+    Drosselung durch Netzbetreiber, EVU-Editor oder ein Modbus-Programm.
+    """
+    return {
+        "feed_in_enabled": _flag(regs[2]),  # Conn: 1 = Einspeisebetrieb, 0 = Standby
+        "power_limit": scale(to_uint16(regs[3]), to_int16(regs[21]), 2),
+        "power_limit_active": _flag(regs[7]),  # WMaxLim_Ena
+        "pf_setpoint": scale(to_int16(regs[8]), to_int16(regs[22]), 3),
+        "pf_control_active": _flag(regs[12]),  # OutPFSet_Ena
+        "var_limit": scale(to_int16(regs[14]), to_int16(regs[23]), 2),
+        "var_control_active": _flag(regs[20]),  # VArPct_Ena
+    }
