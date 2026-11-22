@@ -23,17 +23,20 @@ Custom Integration, die Fronius-Wechselrichter (SunSpec) lokal per Modbus TCP au
 |---|---|---|---|
 | Wechselrichter | AC | Leistung, Gesamtenergie, Strom, Spannung L-N je Phase, Netzfrequenz | ja |
 | | AC | Strom je Phase, Spannung L-L, Schein-/Blindleistung, Leistungsfaktor | nein |
-| | DC | Leistung, Strom, Spannung | ja |
-| | PV | PV-Leistung gesamt; Leistung, Strom, Spannung je String | ja |
+| | DC | Leistung; Strom und Spannung nur bei Geräten mit einem DC-Eingang* | ja |
+| | PV | PV-Leistung und PV-Strom gesamt; Leistung, Strom, Spannung je String | ja |
 | | PV | Energie je String | nein |
-| | Batterie | Leistung (+ Entladen / − Laden), Lade- und Entladeleistung, Spannung, geladene/entladene Energie*, Ladezustand, Status, Mindestreserve | ja |
+| | Batterie | Leistung (+ Entladen / − Laden), Lade- und Entladeleistung, Spannung, geladene/entladene Energie**, Ladezustand, Status, Mindestreserve | ja |
 | | Batterie | Ladequelle, Maximalleistung (Diagnose); Steuermodus, Lade-/Entladegrenze | teils |
 | | Status | Betriebszustand (SunSpec), Fronius-Zustand | ja |
 | | Diagnose | Temperaturen, Ereignis-Flags | nein |
 | Smart Meter | | Leistung, Energie Bezug, Energie Einspeisung, Strom, Spannung L-N je Phase, Frequenz | ja |
 | | | Leistung/Strom/Energie je Phase, Spannung L-L, Schein-/Blindleistung, Leistungsfaktor | nein |
 
-\* Energiezähler der Batterie nur bei GEN24/Verto (Symo Hybrid liefert keine).
+\* Bei mehreren DC-Eingängen liefert Fronius DC-Strom und DC-Spannung nur je String (Modell 160);
+die Gesamtwerte im Wechselrichter-Modell sind dann „nicht unterstützt“ und werden nicht angelegt.
+
+\*\* Energiezähler der Batterie nur bei GEN24/Verto (Symo Hybrid liefert keine).
 
 Nicht unterstützte Werte (z. B. Temperaturen bei vielen Fronius-Geräten) werden als „unbekannt“ angezeigt.
 

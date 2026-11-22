@@ -51,6 +51,7 @@ async def test_gen24_plus(gen24) -> None:
         assert v["mppt_1_dc_power"] == 1680 and v["mppt_2_dc_power"] == 1590
         assert "mppt_3_dc_power" not in v  # Batteriemodul ist kein PV-String
         assert v["pv_power"] == 3270
+        assert v["pv_current"] == 8.1  # 4,12 A + 3,98 A
         assert v["battery_discharge_power"] == 1440
         assert v["battery_charge_power"] == 0
         assert v["battery_power"] == 1440  # positiv = Entladen

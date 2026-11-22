@@ -67,6 +67,11 @@ async def test_gen24_plus_with_meter(hass: HomeAssistant, gen24) -> None:
 
     assert float(s("33333333_ac_power").state) == 3333.3
     assert float(s("33333333_pv_power").state) == 3270
+    assert float(s("33333333_pv_current").state) == 8.1
+    # Mehrere DC-Eingänge: DCA/DCV vom Gerät nicht unterstützt → keine Sensoren
+    assert ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_dc_current") is None
+    assert ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_dc_voltage") is None
+    assert float(s("33333333_dc_power").state) == 3400.0
     assert float(s("33333333_mppt_1_dc_power").state) == 1680
     assert ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_mppt_3_dc_power") is None
     assert float(s("33333333_battery_power").state) == 1440
@@ -168,6 +173,56 @@ async def test_second_inverter_same_host_gets_no_meter(hass: HomeAssistant, sock
         await hass.async_block_till_done()
         for entry in hass.config_entries.async_entries(DOMAIN):
             assert await hass.config_entries.async_unload(entry.entry_id)
+        await hass.async_block_till_done()
+    finally:
+        await server.stop()
+
+
+async def test_setup_errors_are_logged(hass: HomeAssistant, gen24, caplog) -> None:
+    """Fehler beim Einrichten landen mit Host, Port, Unit-ID und Ursache im Log."""
+    caplog.set_level("INFO", logger="custom_components.fronius_modbus_tcp")
+
+    # Falsche Unit-ID: Gerät antwortet, liefert aber keine Wechselrichterdaten
+    result = await hass.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
+    )
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"],
+        {CONF_HOST: "127.0.0.1", CONF_PORT: gen24.port, CONF_UNIT_ID: 7, CONF_METER_UNIT_ID: 0},
+    )
+    assert result["errors"] == {"base": "not_sunspec"}
+    assert f"127.0.0.1:{gen24.port} (Unit-ID 7)" in caplog.text
+    assert "keine SunSpec-Wechselrichterdaten" in caplog.text
+
+    # Smart Meter unter angegebener Adresse nicht vorhanden
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"],
+        {CONF_HOST: "127.0.0.1", CONF_PORT: gen24.port, CONF_UNIT_ID: 1, CONF_METER_UNIT_ID: 201},
+    )
+    assert result["errors"] == {CONF_METER_UNIT_ID: "meter_not_found"}
+    assert "kein Smart Meter unter Unit-ID 201" in caplog.text
+    assert "Symo GEN24 10.0 Plus erkannt" in caplog.text
+
+    # Keine Verbindung
+    port = sim.free_port()
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"], {CONF_HOST: "127.0.0.1", CONF_PORT: port, CONF_UNIT_ID: 1}
+    )
+    assert result["errors"] == {"base": "cannot_connect"}
+    assert f"127.0.0.1:{port} (Unit-ID 1): keine Verbindung" in caplog.text
+
+
+async def test_single_dc_input_keeps_dc_sensors(hass: HomeAssistant, socket_enabled) -> None:
+    """Nur ein DC-Eingang: DC-Strom und DC-Spannung kommen aus dem Inverter-Model."""
+    server = sim.FroniusSimulator({1: sim.single_mppt_float()})
+    await server.start()
+    try:
+        entry = await _setup(hass, server.port, **{CONF_METER_UNIT_ID: 0})
+        ent_reg = er.async_get(hass)
+        assert float(_state(hass, ent_reg, "66666666_dc_current").state) == 8.2
+        assert float(_state(hass, ent_reg, "66666666_dc_voltage").state) == 410.0
+        assert float(_state(hass, ent_reg, "66666666_pv_current").state) == 8.2
+        assert await hass.config_entries.async_unload(entry.entry_id)
         await hass.async_block_till_done()
     finally:
         await server.stop()
