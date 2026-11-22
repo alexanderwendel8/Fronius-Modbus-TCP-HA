@@ -218,6 +218,57 @@ CONTROLS_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
     _percent("var_limit", skip_if_unsupported=True, **_DIAG, **_OFF),
 )
 
+# Nennwerte aus Modell 120 (statisch)
+NAMEPLATE_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
+    _desc(
+        "rated_power",
+        device_class=SensorDeviceClass.POWER,
+        native_unit_of_measurement=UnitOfPower.WATT,
+        skip_if_unsupported=True,
+        **_DIAG,
+    ),
+    _desc(
+        "rated_apparent_power",
+        device_class=SensorDeviceClass.APPARENT_POWER,
+        native_unit_of_measurement=UnitOfApparentPower.VOLT_AMPERE,
+        skip_if_unsupported=True,
+        **_DIAG,
+        **_OFF,
+    ),
+    _desc(
+        "rated_current",
+        device_class=SensorDeviceClass.CURRENT,
+        native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
+        skip_if_unsupported=True,
+        **_DIAG,
+        **_OFF,
+    ),
+)
+BATTERY_NAMEPLATE_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
+    _desc(
+        "battery_capacity",
+        device_class=SensorDeviceClass.ENERGY_STORAGE,
+        native_unit_of_measurement=UnitOfEnergy.WATT_HOUR,
+        suggested_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
+        suggested_display_precision=2,
+        skip_if_unsupported=True,
+    ),
+    _desc(
+        "battery_max_charge_power",
+        device_class=SensorDeviceClass.POWER,
+        native_unit_of_measurement=UnitOfPower.WATT,
+        skip_if_unsupported=True,
+        **_DIAG,
+    ),
+    _desc(
+        "battery_max_discharge_power",
+        device_class=SensorDeviceClass.POWER,
+        native_unit_of_measurement=UnitOfPower.WATT,
+        skip_if_unsupported=True,
+        **_DIAG,
+    ),
+)
+
 # Anlagensummen aus den Fronius-Registern 500-513 (nur Datamanager)
 SITE_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
     _power("site_power"),
@@ -363,6 +414,12 @@ async def async_setup_entry(
         entities += [FroniusSensor(coordinator, desc) for desc in SITE_SENSORS]
     if sunspec.CONTROLS_MODEL in inverter.models:
         entities += [FroniusSensor(coordinator, desc) for desc in CONTROLS_SENSORS]
+    if inverter.nameplate:
+        entities += [FroniusSensor(coordinator, desc) for desc in NAMEPLATE_SENSORS]
+        if inverter.has_storage:
+            entities += [
+                FroniusSensor(coordinator, desc) for desc in BATTERY_NAMEPLATE_SENSORS
+            ]
 
     if (meter := coordinator.meter) is not None:
         entities += [

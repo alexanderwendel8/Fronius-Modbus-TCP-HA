@@ -330,6 +330,24 @@
       },
       "var_limit": {
         "name": "Reactive power limit"
+      },
+      "rated_power": {
+        "name": "Rated power"
+      },
+      "rated_apparent_power": {
+        "name": "Rated apparent power"
+      },
+      "rated_current": {
+        "name": "Rated current"
+      },
+      "battery_capacity": {
+        "name": "Battery capacity"
+      },
+      "battery_max_charge_power": {
+        "name": "Battery max. charge power"
+      },
+      "battery_max_discharge_power": {
+        "name": "Battery max. discharge power"
       }
     }
   }

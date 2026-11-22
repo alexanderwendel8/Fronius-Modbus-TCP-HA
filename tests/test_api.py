@@ -68,6 +68,13 @@ async def test_gen24_plus(gen24) -> None:
         assert v["battery_grid_charging"] == "grid"
         assert v["battery_max_power"] == 10000
 
+        # Modell 120: Nennwerte, einmal beim Start gelesen
+        assert info.nameplate["rated_power"] == 10000
+        assert v["rated_power"] == 10000
+        assert v["rated_current"] == 14.5
+        assert v["battery_capacity"] == 10240
+        assert v["battery_max_charge_power"] == 10000
+
         # Modell 123 (nur lesend): Drosselung auf 70 % aktiv
         assert v["power_limit"] == 70.0
         assert v["power_limit_active"] is True

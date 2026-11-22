@@ -330,6 +330,24 @@
       },
       "var_limit": {
         "name": "Blindleistungs-Vorgabe"
+      },
+      "rated_power": {
+        "name": "Nennleistung"
+      },
+      "rated_apparent_power": {
+        "name": "Nenn-Scheinleistung"
+      },
+      "rated_current": {
+        "name": "Nennstrom"
+      },
+      "battery_capacity": {
+        "name": "Batteriekapazität"
+      },
+      "battery_max_charge_power": {
+        "name": "Batterie max. Ladeleistung"
+      },
+      "battery_max_discharge_power": {
+        "name": "Batterie max. Entladeleistung"
       }
     }
   }

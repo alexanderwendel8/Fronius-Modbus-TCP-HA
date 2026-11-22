@@ -73,6 +73,10 @@ async def test_gen24_plus_with_meter(hass: HomeAssistant, gen24) -> None:
     assert ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_dc_voltage") is None
     assert float(s("33333333_dc_power").state) == 3400.0
 
+    # Modell 120: Nennleistung und Batteriekapazität
+    assert float(s("33333333_rated_power").state) == 10000
+    assert float(s("33333333_battery_capacity").state) == pytest.approx(10.24)
+
     # Modell 123: aktive Drosselung als Sensor und Binärsensoren
     assert float(s("33333333_power_limit").state) == 70.0
     limit_active = ent_reg.async_get_entity_id(
@@ -280,6 +284,10 @@ async def test_hybrid_unused_energy_not_created(hass: HomeAssistant, socket_enab
         assert "44444444_mppt_1_dc_energy" not in uids
         # Ohne Fronius-Register keine Anlagensummen
         assert "44444444_site_energy_day" not in uids
+        # Nennwerte: WRtg vorhanden, ARtg und Batteriekapazität nicht unterstützt
+        assert "44444444_rated_power" in uids
+        assert "44444444_rated_current" not in uids
+        assert "44444444_battery_capacity" not in uids
         assert await hass.config_entries.async_unload(entry.entry_id)
         await hass.async_block_till_done()
     finally:

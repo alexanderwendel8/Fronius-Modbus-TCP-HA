@@ -18,6 +18,7 @@ METER_FLOAT_MODELS: dict[int, int] = {211: 1, 212: 2, 213: 3, 214: 3}
 METER_INT_SF_MODELS: dict[int, int] = {201: 1, 202: 2, 203: 3, 204: 3}
 COMMON_MODEL = 1
 CONTROLS_MODEL = 123
+NAMEPLATE_MODEL = 120
 STORAGE_MODEL = 124
 MPPT_MODEL = 160
 END_MODEL = 0xFFFF
@@ -536,4 +537,23 @@ def parse_controls(regs: list[int]) -> dict[str, Any]:
         "pf_control_active": _flag(regs[12]),  # OutPFSet_Ena
         "var_limit": scale(to_int16(regs[14]), to_int16(regs[23]), 2),
         "var_control_active": _flag(regs[20]),  # VArPct_Ena
+    }
+
+
+# --- Nameplate (Modell 120, Nennwerte) ---------------------------------------
+
+
+def parse_nameplate(regs: list[int]) -> dict[str, Any]:
+    """Nennwerte des Wechselrichters und – bei Speichersystemen – der Batterie."""
+
+    def u16(offset: int, sf_offset: int) -> float | None:
+        return scale(to_uint16(regs[offset]), to_int16(regs[sf_offset]), 2)
+
+    return {
+        "rated_power": u16(1, 2),  # WRtg
+        "rated_apparent_power": u16(3, 4),  # VARtg
+        "rated_current": u16(10, 11),  # ARtg
+        "battery_capacity": u16(17, 18),  # WHRtg
+        "battery_max_charge_power": u16(21, 22),  # MaxChaRte
+        "battery_max_discharge_power": u16(23, 24),  # MaxDisChaRte
     }

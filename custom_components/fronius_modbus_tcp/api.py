@@ -57,6 +57,8 @@ class InverterInfo(SunSpecDeviceInfo):
     hybrid_storage: bool = False
     # Fronius-Register 214 (State Code) und 500-513 (Anlagensummen) – nur Datamanager
     has_site_registers: bool = False
+    # Nennwerte aus Modell 120 (statisch, einmal beim Start gelesen)
+    nameplate: dict[str, Any] = field(default_factory=dict)
 
     @property
     def has_battery(self) -> bool:
@@ -225,6 +227,10 @@ class FroniusModbusClient:
                 name or f"MPPT {i}" for i, name in enumerate(raw_names, 1)
             ]
 
+        if sunspec.NAMEPLATE_MODEL in models:
+            regs = await self.read_model(unit, models, sunspec.NAMEPLATE_MODEL)
+            info.nameplate = sunspec.parse_nameplate(regs)
+
         # Fronius-Register gibt es nur beim Datamanager; GEN24 & Co. antworten
         # mit einer Modbus-Exception (unzulässige Adresse).
         try:
@@ -261,7 +267,7 @@ class FroniusModbusClient:
     async def read_inverter_data(self, info: InverterInfo) -> dict[str, Any]:
         """Alle Messwerte des Wechselrichters (inkl. MPPT und Speicher)."""
         unit, models = info.unit_id, info.models
-        values: dict[str, Any] = {}
+        values: dict[str, Any] = dict(info.nameplate)
 
         model_id = info.inverter_model
         assert model_id is not None

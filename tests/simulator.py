@@ -94,6 +94,25 @@ def storage_124(wchamax: int = 10000, soc: int = 5420, chast: int = 4, grid: int
     return model(124, body)
 
 
+def nameplate_120(
+    *, w_rtg: int = 1000, a_rtg: int = 1450, wh_rtg: int = 0xFFFF, cha: int = 0xFFFF
+) -> list[int]:
+    """Nameplate: WRtg/VARtg mit SF 1, ARtg mit SF −2, Batteriewerte mit SF 0."""
+    body = [
+        82,                              # DERTyp (PV_STOR)
+        w_rtg, 1, w_rtg, 1,              # WRtg, WRtg_SF, VARtg, VARtg_SF
+        500, 0, 0, i16(-500), 1,         # VArRtgQ1-Q4, VArRtg_SF
+        a_rtg, i16(-2),                  # ARtg, ARtg_SF
+        i16(-800), 1000, 1000, 800, i16(-3),  # PFRtgQ1-Q4, PFRtg_SF
+        wh_rtg, 0,                       # WHRtg, WHRtg_SF
+        0xFFFF, 0x8000,                  # AhrRtg, AhrRtg_SF (n. u.)
+        cha, 0, cha, 0,                  # MaxChaRte, _SF, MaxDisChaRte, _SF
+        0x8000,                          # Pad
+    ]
+    assert len(body) == 26
+    return model(120, body)
+
+
 def controls_123(
     *, conn: int = 1, limit_pct: float = 100.0, limit_ena: int = 0, pf_ena: int = 0
 ) -> list[int]:
@@ -120,7 +139,8 @@ def gen24_plus_float() -> list[int]:
     return device(
         common("Fronius", "Symo GEN24 10.0 Plus", "1.36.5-1", "33333333"),
         inverter_113(),
-        filler(120, 26), filler(121, 30), filler(122, 44),
+        nameplate_120(wh_rtg=10240, cha=10000),
+        filler(121, 30), filler(122, 44),
         controls_123(limit_pct=70, limit_ena=1),
         mppt_160([
             ("MPPT 1", 412, 4050, 1680, 1234567),
@@ -137,7 +157,8 @@ def datamanager_hybrid_int(dcw: int = 1000) -> list[int]:
     return device(
         common("Fronius", "Symo Hybrid 5.0-3-S", "1.13.1-1", "44444444"),
         inverter_103(dcw=dcw),
-        filler(120, 26), filler(121, 30), filler(122, 44), controls_123(),
+        nameplate_120(w_rtg=500, a_rtg=0xFFFF),
+        filler(121, 30), filler(122, 44), controls_123(),
         mppt_160([("String 1", 500, 4000, 2000, 0), ("String 2", 200, 4900, 1000, 0)]),
         storage_124(wchamax=5000, soc=8000, chast=4, grid=0),
     )
