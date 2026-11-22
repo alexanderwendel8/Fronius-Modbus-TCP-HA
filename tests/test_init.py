@@ -226,3 +226,50 @@ async def test_single_dc_input_keeps_dc_sensors(hass: HomeAssistant, socket_enab
         await hass.async_block_till_done()
     finally:
         await server.stop()
+
+
+async def test_unsupported_sensors_not_created(hass: HomeAssistant, gen24) -> None:
+    """Vom Gerät als "nicht unterstützt" gemeldete Werte → kein Sensor, alte Einträge weg."""
+    ent_reg = er.async_get(hass)
+    # Eintrag aus einer älteren Version vorhanden
+    stale = ent_reg.async_get_or_create(
+        "sensor", DOMAIN, "33333333_temperature_heatsink"
+    )
+
+    entry = await _setup(hass, gen24.port)
+    uids = {
+        e.unique_id for e in er.async_entries_for_config_entry(ent_reg, entry.entry_id)
+    }
+    # Simulator: TmpCab = 41 °C, TmpSnk/TmpTrns/TmpOt = NaN
+    assert "33333333_temperature_cabinet" in uids
+    assert "33333333_temperature_heatsink" not in uids
+    assert "33333333_temperature_transformer" not in uids
+    assert "33333333_temperature_other" not in uids
+    assert ent_reg.async_get(stale.entity_id) is None
+    # Unterstützte optionale Werte bleiben
+    assert "33333333_mppt_1_dc_energy" in uids
+    assert "meter_M0000001_meter_energy_import_a" in uids
+    # Kernwerte sind nie betroffen
+    assert "33333333_ac_power" in uids
+
+    assert await hass.config_entries.async_unload(entry.entry_id)
+    await hass.async_block_till_done()
+
+
+async def test_hybrid_unused_energy_not_created(hass: HomeAssistant, socket_enabled) -> None:
+    """Symo Hybrid: DCWH nicht unterstützt (0) → kein Energiesensor für den String."""
+    server = sim.FroniusSimulator({1: sim.datamanager_hybrid_int()})
+    await server.start()
+    try:
+        entry = await _setup(hass, server.port, **{CONF_METER_UNIT_ID: 0})
+        ent_reg = er.async_get(hass)
+        uids = {
+            e.unique_id
+            for e in er.async_entries_for_config_entry(ent_reg, entry.entry_id)
+        }
+        assert "44444444_mppt_1_dc_power" in uids
+        assert "44444444_mppt_1_dc_energy" not in uids
+        assert await hass.config_entries.async_unload(entry.entry_id)
+        await hass.async_block_till_done()
+    finally:
+        await server.stop()

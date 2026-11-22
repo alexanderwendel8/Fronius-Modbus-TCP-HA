@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+import logging
+from dataclasses import dataclass, replace
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
@@ -23,11 +24,15 @@ from homeassistant.const import (
     UnitOfTemperature,
 )
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from . import sunspec
+from .const import DOMAIN
 from .coordinator import FroniusConfigEntry, FroniusCoordinator
 from .entity import DEVICE_INVERTER, DEVICE_METER, FroniusEntity
+
+_LOGGER = logging.getLogger(__name__)
 
 PARALLEL_UPDATES = 0
 
@@ -37,6 +42,10 @@ class FroniusSensorEntityDescription(SensorEntityDescription):
     """Sensorbeschreibung mit Mindestanzahl an Phasen."""
 
     min_phases: int = 1
+    # Wert hängt vom Gerätetyp ab: meldet das Gerät ihn beim Start als
+    # "nicht unterstützt", wird der Sensor nicht angelegt. Nicht für
+    # Messwerte, die nachts vorübergehend NaN sein können (Leistung, Spannung …).
+    skip_if_unsupported: bool = False
 
 
 # --- Fabriken für wiederkehrende Sensortypen --------------------------------
@@ -130,6 +139,7 @@ def _temperature(key: str) -> FroniusSensorEntityDescription:
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         entity_category=EntityCategory.DIAGNOSTIC,
         entity_registry_enabled_default=False,
+        skip_if_unsupported=True,
     )
 
 
@@ -188,7 +198,7 @@ INVERTER_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
     _temperature("temperature_other"),
     _enum("status", sunspec.STATUS),
     _enum("status_vendor", sunspec.STATUS_VENDOR),
-    _desc("events", **_DIAG, **_OFF),
+    _desc("events", skip_if_unsupported=True, **_DIAG, **_OFF),
 )
 
 PV_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
@@ -271,6 +281,12 @@ METER_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
     ),
 )
 
+# Welche Zählerwerte geliefert werden, hängt von Zählertyp und Netzanschluss ab
+METER_SENSORS = tuple(
+    desc if desc.key == "meter_power" else replace(desc, skip_if_unsupported=True)
+    for desc in METER_SENSORS
+)
+
 
 def _mppt_sensors(index: int) -> tuple[FroniusSensorEntityDescription, ...]:
     prefix = f"mppt_{index}"
@@ -278,7 +294,12 @@ def _mppt_sensors(index: int) -> tuple[FroniusSensorEntityDescription, ...]:
         _power(f"{prefix}_dc_power", translation_key="mppt_dc_power"),
         _current(f"{prefix}_dc_current", translation_key="mppt_dc_current"),
         _voltage(f"{prefix}_dc_voltage", translation_key="mppt_dc_voltage"),
-        _energy(f"{prefix}_dc_energy", translation_key="mppt_dc_energy", **_OFF),
+        _energy(
+            f"{prefix}_dc_energy",
+            translation_key="mppt_dc_energy",
+            skip_if_unsupported=True,
+            **_OFF,
+        ),
     )
 
 
@@ -327,7 +348,34 @@ async def async_setup_entry(
             if desc.min_phases <= meter.phases
         ]
 
-    async_add_entities(entities)
+    async_add_entities(_drop_unsupported(hass, coordinator, entities))
+
+
+def _drop_unsupported(
+    hass: HomeAssistant, coordinator: FroniusCoordinator, entities: list[FroniusSensor]
+) -> list[FroniusSensor]:
+    """Sensoren weglassen, deren Wert das Gerät als "nicht unterstützt" meldet.
+
+    Nur wenn der Wert gelesen wurde (Schlüssel vorhanden) und None ist – fehlt
+    der Schlüssel, ist das Lesen fehlgeschlagen (z. B. Smart Meter antwortet
+    nicht) und der Sensor bleibt erhalten. Bestehende Registry-Einträge der
+    weggelassenen Sensoren werden entfernt; wird der Wert später unterstützt,
+    legt der nächste Start den Sensor wieder an.
+    """
+    values = coordinator.data.values if coordinator.data else {}
+    registry = er.async_get(hass)
+    kept: list[FroniusSensor] = []
+    for entity in entities:
+        desc = entity.entity_description
+        if desc.skip_if_unsupported and desc.key in values and values[desc.key] is None:
+            _LOGGER.debug("Sensor %s nicht unterstützt, wird nicht angelegt", desc.key)
+            if entity_id := registry.async_get_entity_id(
+                "sensor", DOMAIN, entity.unique_id
+            ):
+                registry.async_remove(entity_id)
+            continue
+        kept.append(entity)
+    return kept
 
 
 class FroniusSensor(FroniusEntity, SensorEntity):

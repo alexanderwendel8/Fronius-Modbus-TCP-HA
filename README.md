@@ -38,7 +38,11 @@ die Gesamtwerte im Wechselrichter-Modell sind dann „nicht unterstützt“ und 
 
 \*\* Energiezähler der Batterie nur bei GEN24/Verto (Symo Hybrid liefert keine).
 
-Nicht unterstützte Werte (z. B. Temperaturen bei vielen Fronius-Geräten) werden als „unbekannt“ angezeigt.
+Optionale Werte, die das Gerät beim Start als „nicht unterstützt“ meldet (Temperaturen, Ereignis-Flags,
+Energie je String, einzelne Smart-Meter-Werte), werden gar nicht erst angelegt; ältere Einträge dafür
+entfernt die Integration selbst. Unterstützt eine neue Firmware den Wert später, erscheint der Sensor nach
+dem nächsten Neustart. Kernwerte wie Leistung, Strom und Spannung werden immer angelegt, auch wenn sie
+vorübergehend „unbekannt“ sind (z. B. nachts).
 
 **Vorzeichen:** Batterieleistung positiv = Entladen. Smart Meter wie vom Gerät geliefert – bei Einbau am
 Netzanschlusspunkt ist positiv = Netzbezug, negativ = Einspeisung.
