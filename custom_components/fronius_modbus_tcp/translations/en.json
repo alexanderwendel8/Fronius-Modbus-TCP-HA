@@ -289,6 +289,18 @@
       },
       "meter_power_factor": {
         "name": "Power factor"
+      },
+      "site_power": {
+        "name": "Site power"
+      },
+      "site_energy_day": {
+        "name": "Energy today"
+      },
+      "site_energy_year": {
+        "name": "Energy this year"
+      },
+      "site_energy_total": {
+        "name": "Site total energy"
       }
     }
   }

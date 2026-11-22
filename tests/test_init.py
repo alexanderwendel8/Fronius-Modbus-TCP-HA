@@ -269,6 +269,28 @@ async def test_hybrid_unused_energy_not_created(hass: HomeAssistant, socket_enab
         }
         assert "44444444_mppt_1_dc_power" in uids
         assert "44444444_mppt_1_dc_energy" not in uids
+        # Ohne Fronius-Register keine Anlagensummen
+        assert "44444444_site_energy_day" not in uids
+        assert await hass.config_entries.async_unload(entry.entry_id)
+        await hass.async_block_till_done()
+    finally:
+        await server.stop()
+
+
+async def test_datamanager_site_totals(hass: HomeAssistant, socket_enabled) -> None:
+    """Datamanager: Anlagenleistung und Tages-/Jahres-/Gesamtenergie als Sensoren."""
+    server = sim.FroniusSimulator(
+        {1: (sim.datamanager_hybrid_int(), sim.fronius_registers(day=12_345))}
+    )
+    await server.start()
+    try:
+        entry = await _setup(hass, server.port, **{CONF_METER_UNIT_ID: 0})
+        ent_reg = er.async_get(hass)
+        s = lambda uid: _state(hass, ent_reg, uid)  # noqa: E731
+        assert float(s("44444444_site_power").state) == 2000
+        assert float(s("44444444_site_energy_day").state) == pytest.approx(12.345)
+        assert float(s("44444444_site_energy_year").state) == pytest.approx(1234.567)
+        assert float(s("44444444_site_energy_total").state) == pytest.approx(9330.29)
         assert await hass.config_entries.async_unload(entry.entry_id)
         await hass.async_block_till_done()
     finally:

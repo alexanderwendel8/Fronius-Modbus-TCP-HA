@@ -210,6 +210,14 @@ PV_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
 # laut Fronius "not implemented" (Werte stehen je Eingang in Modell 160).
 SINGLE_DC_INPUT_ONLY = {"dc_current", "dc_voltage"}
 
+# Anlagensummen aus den Fronius-Registern 500-513 (nur Datamanager)
+SITE_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
+    _power("site_power"),
+    _energy("site_energy_day"),
+    _energy("site_energy_year"),
+    _energy("site_energy_total"),
+)
+
 # Batterie über Modell 160 (Leistung, Spannung, Energie)
 BATTERY_MPPT_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
     _power("battery_power"),
@@ -340,6 +348,8 @@ async def async_setup_entry(
         entities += [
             FroniusSensor(coordinator, desc) for desc in BATTERY_STORAGE_SENSORS
         ]
+    if inverter.has_site_registers:
+        entities += [FroniusSensor(coordinator, desc) for desc in SITE_SENSORS]
 
     if (meter := coordinator.meter) is not None:
         entities += [

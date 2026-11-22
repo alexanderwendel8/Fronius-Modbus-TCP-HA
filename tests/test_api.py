@@ -24,7 +24,10 @@ async def gen24(socket_enabled):
 @pytest.fixture
 async def datamanager(socket_enabled):
     server = sim.FroniusSimulator(
-        {1: sim.datamanager_hybrid_int(), 240: sim.meter_203()}
+        {
+            1: (sim.datamanager_hybrid_int(), sim.fronius_registers(day=0)),
+            240: sim.meter_203(),
+        }
     )
     await server.start()
     yield server
@@ -38,6 +41,7 @@ async def test_gen24_plus(gen24) -> None:
         assert info.model == "Symo GEN24 10.0 Plus"
         assert info.inverter_model == 113 and info.phases == 3
         assert info.has_storage and not info.hybrid_storage
+        assert not info.has_site_registers  # GEN24: keine Fronius-Register
         assert info.mppt_roles == [
             sunspec.ROLE_PV,
             sunspec.ROLE_PV,
@@ -94,6 +98,13 @@ async def test_datamanager_symo_hybrid(datamanager) -> None:
         assert v["battery_soc"] == 80.0
         assert v["battery_grid_charging"] == "pv"
         assert "battery_charge_energy" not in v
+
+        # Fronius-Register (Datamanager): Anlagensummen, Tagesenergie 0 ist gültig
+        assert info.has_site_registers
+        assert v["site_power"] == 2000
+        assert v["site_energy_day"] == 0
+        assert v["site_energy_year"] == 1_234_567
+        assert v["site_energy_total"] == 9_330_290
 
         meter = await client.read_meter_info(240)
         m = await client.read_meter_data(meter)

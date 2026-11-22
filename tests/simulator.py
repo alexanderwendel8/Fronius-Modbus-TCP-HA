@@ -199,8 +199,36 @@ def free_port() -> int:
         return sock.getsockname()[1]
 
 
-def build_context(devices: dict[int, list[int]]):
-    from pymodbus.datastore import ModbusSequentialDataBlock, ModbusServerContext
+def fronius_registers(
+    *,
+    state_code: int = 0,
+    site_power: int = 2000,
+    day: int = 12_345,
+    year: int = 1_234_567,
+    total: int = 9_330_290,
+) -> dict[int, int]:
+    """Fronius-Register des Datamanagers (0-basierte Adressen)."""
+    regs: dict[int, int] = {}
+
+    def put(address: int, values: list[int]) -> None:
+        for i, value in enumerate(values):
+            regs[address + i] = value
+
+    def u64(value: int) -> list[int]:
+        return [(value >> s) & 0xFFFF for s in (48, 32, 16, 0)]
+
+    put(211, [0, 0, state_code, 0, 1])  # F_Delete_Data … F_ModelType
+    put(499, [site_power >> 16, site_power & 0xFFFF, *u64(day), *u64(year), *u64(total)])
+    return regs
+
+
+def build_context(devices: dict[int, list[int] | tuple[list[int], dict[int, int]]]):
+    """devices: Unit-ID -> SunSpec-Register ab 40001, optional mit Zusatzregistern.
+
+    Zusatzregister als {0-basierte Adresse: Wert}. Nicht belegte Adressen
+    beantwortet der Server mit einer Modbus-Exception (wie ein echtes Gerät).
+    """
+    from pymodbus.datastore import ModbusServerContext, ModbusSparseDataBlock
 
     try:
         from pymodbus.datastore import ModbusDeviceContext as Dev
@@ -210,11 +238,13 @@ def build_context(devices: dict[int, list[int]]):
         from pymodbus.datastore import ModbusSlaveContext as Dev
 
         kw = "slaves"
-    # Legacy-Datastore adressiert intern +1 → Block bei 40001 beginnen
-    ctx = {
-        unit: Dev(hr=ModbusSequentialDataBlock(40001, regs))
-        for unit, regs in devices.items()
-    }
+    # Legacy-Datastore adressiert intern +1 → Adresse + 1 als Schlüssel
+    ctx = {}
+    for unit, spec in devices.items():
+        sunspec_regs, extra = spec if isinstance(spec, tuple) else (spec, {})
+        values = {40001 + i: v for i, v in enumerate(sunspec_regs)}
+        values.update({address + 1: v for address, v in extra.items()})
+        ctx[unit] = Dev(hr=ModbusSparseDataBlock(values))
     return ModbusServerContext(**{kw: ctx}, single=False)
 
 
