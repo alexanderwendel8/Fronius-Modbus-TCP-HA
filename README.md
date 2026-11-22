@@ -157,6 +157,12 @@ pytest
 Die Tests starten simulierte Fronius-Geräte (`tests/simulator.py`) als echten Modbus-TCP-Server und
 richten die Integration in einer Home-Assistant-Testinstanz ein.
 
+## Releases
+
+Änderungen stehen in [`CHANGELOG.md`](CHANGELOG.md). Ein Release entsteht durch einen Tag `vX.Y.Z`,
+der zur Version in `manifest.json` passen muss; der Workflow `release.yml` erstellt daraus das
+GitHub-Release mit den Notizen aus dem Changelog. HACS zeigt dann die Versionsnummer statt des Commit-Hashs.
+
 ## Herstellerdokumentation
 
 Die Fronius-Registerkarten und State-Code-Tabellen liegen in [`docs/fronius/`](docs/fronius/README.md) –
