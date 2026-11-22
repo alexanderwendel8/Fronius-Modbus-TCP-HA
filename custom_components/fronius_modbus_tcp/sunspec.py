@@ -648,7 +648,7 @@ def parse_event_message(evt1: int | None) -> dict[str, Any]:
 
 
 def parse_status(regs: list[int]) -> dict[str, Any]:
-    """Isolationswiderstand und 64-bit-Energiezähler (GEN24; Datamanager meist n. u.).
+    """64-bit-Energiezähler und Isolationswiderstand (Unterstützung je Gerät verschieden).
 
     ActWh ist genauer als WH aus dem Inverter-Modell ("may be imprecise", Fronius-
     Changelog 1.1.1) und wird als eigener Sensor geführt, damit die Statistik des
