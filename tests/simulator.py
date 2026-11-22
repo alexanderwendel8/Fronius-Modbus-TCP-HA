@@ -125,6 +125,21 @@ def nameplate_120(
     return model(120, body)
 
 
+def status_122(*, act_wh: int = 0, ris: int = 0xFFFF, ris_sf: int = 0x8000) -> list[int]:
+    """Extended Measurements: ActWh (acc64) und Ris; Standard = nicht unterstützt."""
+    body = [
+        0b111, 0xFFFF, 0b1,                                 # PVConn, StorConn, ECPConn
+        *[(act_wh >> s) & 0xFFFF for s in (48, 32, 16, 0)],  # ActWh
+        *[0] * 4 * 5,                                       # ActVAh, ActVArhQ1-Q4
+        0x8000, 0x8000, 0xFFFF, 0x8000,                     # VArAval(_SF), WAval(_SF)
+        0xFFFF, 0xFFFF, 0, 0,                               # StSetLimMsk, StActCtl
+        *s("RTC", 4), 0, 0,                                 # TmSrc, Tms
+        0xFFFF, ris, i16(ris_sf) if ris_sf != 0x8000 else 0x8000,  # RtSt, Ris, Ris_SF
+    ]
+    assert len(body) == 44, len(body)
+    return model(122, body)
+
+
 def controls_123(
     *, conn: int = 1, limit_pct: float = 100.0, limit_ena: int = 0, pf_ena: int = 0
 ) -> list[int]:
@@ -152,7 +167,7 @@ def gen24_plus_float() -> list[int]:
         common("Fronius", "Symo GEN24 10.0 Plus", "1.36.5-1", "33333333"),
         inverter_113(evt1=0x0080 | 0x0400, evt_vnd=(0b010, 0b011, 0, 0)),
         nameplate_120(wh_rtg=10240, cha=10000),
-        filler(121, 30), filler(122, 44),
+        filler(121, 30), status_122(act_wh=12_345_679, ris=1500, ris_sf=3),
         controls_123(limit_pct=70, limit_ena=1),
         mppt_160([
             ("MPPT 1", 412, 4050, 1680, 1234567),
@@ -172,7 +187,7 @@ def datamanager_hybrid_int(
         common("Fronius", "Symo Hybrid 5.0-3-S", "1.13.1-1", "44444444"),
         inverter_103(dcw=dcw, evt_vnd=evt_vnd),
         nameplate_120(w_rtg=500, a_rtg=0xFFFF),
-        filler(121, 30), filler(122, 44), controls_123(),
+        filler(121, 30), status_122(), controls_123(),
         mppt_160([("String 1", 500, 4000, 2000, 0), ("String 2", 200, 4900, 1000, 0)]),
         storage_124(wchamax=5000, soc=8000, chast=4, grid=0),
     )

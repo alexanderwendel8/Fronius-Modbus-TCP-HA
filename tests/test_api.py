@@ -75,6 +75,10 @@ async def test_gen24_plus(gen24) -> None:
         assert v["battery_capacity"] == 10240
         assert v["battery_max_charge_power"] == 10000
 
+        # Modell 122: genauer Energiezähler und Isolationswiderstand (1500 × 10³ Ω)
+        assert v["ac_energy_lifetime"] == 12_345_679
+        assert v["isolation_resistance"] == 1_500_000
+
         # Evt1 (SunSpec): Übertemperatur + AC-Überspannung
         assert v["events"] == 0x0480
         assert v["event_message"] == "Over temperature; AC voltage above limit"
@@ -131,6 +135,10 @@ async def test_datamanager_symo_hybrid(datamanager) -> None:
         assert v["site_energy_total"] == 9_330_290
         assert v["state_code"] == 0
         assert v["state_message"] == "OK"
+        # Modell 122 beim Datamanager nicht unterstützt
+        assert v["ac_energy_lifetime"] is None
+        assert v["isolation_resistance"] is None
+
         # Keine Fehlerklassen aktiv
         assert v["error_active"] is False
         assert v["vendor_events"] == "OK"

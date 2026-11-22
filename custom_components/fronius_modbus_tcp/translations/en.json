@@ -360,6 +360,12 @@
       },
       "event_message": {
         "name": "Events"
+      },
+      "ac_energy_lifetime": {
+        "name": "Total energy (precise)"
+      },
+      "isolation_resistance": {
+        "name": "Isolation resistance"
       }
     }
   }

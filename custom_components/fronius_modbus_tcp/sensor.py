@@ -219,6 +219,19 @@ CONTROLS_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
     _percent("var_limit", skip_if_unsupported=True, **_DIAG, **_OFF),
 )
 
+# Extended Measurements & Status (Modell 122)
+STATUS_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
+    _energy("ac_energy_lifetime", skip_if_unsupported=True),
+    _desc(
+        "isolation_resistance",
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement="Ω",
+        suggested_display_precision=0,
+        skip_if_unsupported=True,
+        **_DIAG,
+    ),
+)
+
 # Nennwerte aus Modell 120 (statisch)
 NAMEPLATE_SENSORS: tuple[FroniusSensorEntityDescription, ...] = (
     _desc(
@@ -417,6 +430,8 @@ async def async_setup_entry(
         entities += [FroniusSensor(coordinator, desc) for desc in SITE_SENSORS]
     if sunspec.CONTROLS_MODEL in inverter.models:
         entities += [FroniusSensor(coordinator, desc) for desc in CONTROLS_SENSORS]
+    if sunspec.STATUS_MODEL in inverter.models:
+        entities += [FroniusSensor(coordinator, desc) for desc in STATUS_SENSORS]
     if inverter.nameplate:
         entities += [FroniusSensor(coordinator, desc) for desc in NAMEPLATE_SENSORS]
         if inverter.has_storage:

@@ -85,6 +85,10 @@ async def test_gen24_plus_with_meter(hass: HomeAssistant, gen24) -> None:
     feed_in = ent_reg.async_get_entity_id("binary_sensor", DOMAIN, "33333333_feed_in_enabled")
     assert hass.states.get(limit_active).state == "on"
 
+    # Modell 122: genaue Gesamtenergie (kWh) und Isolationswiderstand
+    assert float(s("33333333_ac_energy_lifetime").state) == pytest.approx(12345.679)
+    assert float(s("33333333_isolation_resistance").state) == 1_500_000
+
     # Evt1 im Klartext
     assert s("33333333_event_message").state == "Over temperature; AC voltage above limit"
 
@@ -295,6 +299,9 @@ async def test_hybrid_unused_energy_not_created(hass: HomeAssistant, socket_enab
         assert "44444444_site_energy_day" not in uids
         # Nennwerte: WRtg vorhanden, ARtg und Batteriekapazität nicht unterstützt
         assert "44444444_rated_power" in uids
+        # Modell 122 nicht unterstützt → keine Sensoren
+        assert "44444444_ac_energy_lifetime" not in uids
+        assert "44444444_isolation_resistance" not in uids
         assert "44444444_rated_current" not in uids
         assert "44444444_battery_capacity" not in uids
         assert await hass.config_entries.async_unload(entry.entry_id)

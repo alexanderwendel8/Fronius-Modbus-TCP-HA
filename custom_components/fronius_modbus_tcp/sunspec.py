@@ -19,6 +19,7 @@ METER_INT_SF_MODELS: dict[int, int] = {201: 1, 202: 2, 203: 3, 204: 3}
 COMMON_MODEL = 1
 CONTROLS_MODEL = 123
 NAMEPLATE_MODEL = 120
+STATUS_MODEL = 122
 STORAGE_MODEL = 124
 MPPT_MODEL = 160
 END_MODEL = 0xFFFF
@@ -135,6 +136,11 @@ def to_uint64(regs: list[int]) -> int | None:
     for reg in regs[:4]:
         value = (value << 16) | reg
     return None if value == 0xFFFFFFFFFFFFFFFF else value
+
+
+def to_acc64(regs: list[int]) -> int | None:
+    value = to_uint64(regs)
+    return value or None
 
 
 def to_acc32(regs: list[int]) -> int | None:
@@ -636,3 +642,19 @@ def parse_event_message(evt1: int | None) -> dict[str, Any]:
     ]
     message = "; ".join(events) or STATE_CODE_OK
     return {"event_message": message[:MAX_STATE_LENGTH]}
+
+
+# --- Extended Measurements & Status (Modell 122) ------------------------------
+
+
+def parse_status(regs: list[int]) -> dict[str, Any]:
+    """Isolationswiderstand und 64-bit-Energiezähler (GEN24; Datamanager meist n. u.).
+
+    ActWh ist genauer als WH aus dem Inverter-Modell ("may be imprecise", Fronius-
+    Changelog 1.1.1) und wird als eigener Sensor geführt, damit die Statistik des
+    bisherigen Gesamtenergie-Sensors nicht springt.
+    """
+    return {
+        "ac_energy_lifetime": to_acc64(regs[3:7]),  # ActWh
+        "isolation_resistance": scale(to_uint16(regs[42]), to_int16(regs[43]), 0),  # Ris
+    }
