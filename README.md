@@ -64,14 +64,22 @@ Netzanschlusspunkt ist positiv = Netzbezug, negativ = Einspeisung.
 
 | Gerät | Anbindung | Firmware WR | Integration | Home Assistant | Ergebnis |
 |---|---|---|---|---|---|
-| **Symo 3.0-3-M** (echtes Gerät) | Datamanager 2.0, Modbus TCP, Unit-ID 1 | 0.3.30.2 | 0.1.0 | 2026.11.2 (HA OS 18.4) | ✅ Messwerte, Anlagenwerte, Statuscode, Fehlerklassen, Modell 120/122/123 lesend · ⏳ Steuerung noch nicht am Gerät erprobt |
+| **Symo 3.0-3-M** (echtes Gerät) | Datamanager 2.0, Modbus TCP, Unit-ID 1 | 0.3.30.2 | 0.1.0 | 2026.11.2 (HA OS 18.4) | ✅ Messwerte, Anlagenwerte, Statuscode, Fehlerklassen, Modell 120/122/123 lesend · ✅ Steuerung: Leistungsbegrenzung und Einspeisung aus/ein (23.11.2026) |
 | GEN24 Plus mit Batterie und Smart Meter | simuliert (Tests) | – | 0.1.0 | Testumgebung | ✅ automatisierte Tests |
 | Symo Hybrid mit Batterie (Datamanager) | simuliert (Tests) | – | 0.1.0 | Testumgebung | ✅ automatisierte Tests |
 | GEN24 ohne Batterie, Gerät mit einem DC-Eingang | simuliert (Tests) | – | 0.1.0 | Testumgebung | ✅ automatisierte Tests |
 | Smart Meter 203 (int+SF) / 213 (float) | simuliert (Tests) | – | 0.1.0 | Testumgebung | ✅ automatisierte Tests |
 
 Beobachtungen am echten Symo: liefert `ActWh` (Modell 122), aber keinen Isolationswiderstand und keine
-Temperaturen – diese Sensoren werden daher nicht angelegt. Weitere Geräte gern per Issue melden
+Temperaturen – diese Sensoren werden daher nicht angelegt.
+
+Steuerungstest am Symo (bei nur ca. 40 W PV-Leistung):
+- **Leistungsbegrenzung 1 % (= 30 W):** nach ca. 7 s Betriebszustand *throttled*, AC-Leistung 33 → 29 W.
+- **Einspeisung aus:** nach ca. 15 s 0 W, Betriebszustand *standby*, kein Fehler.
+- **Einspeisung wieder ein, Begrenzung aus:** der Wechselrichter startet neu; bei sehr wenig Licht kann das
+  einige Minuten dauern (wiederholte Startversuche mit Statuscode *306 Power Low*, im Test ca. 9 Minuten).
+  Der Binärsensor *Fehler* bleibt dabei aus.
+- Die Schalter zeigen den vom Gerät zurückgelesenen Zustand. Weitere Geräte gern per Issue melden
 (Modell, Firmware, Anbindung, Home-Assistant-Version, Diagnose-Export).
 
 ## Voraussetzungen
