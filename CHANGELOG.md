@@ -1,5 +1,9 @@
 # Changelog
 
+## Unveröffentlicht
+
+- Steuerung am echten Symo 3.0-3-M (Datamanager 2.0) erfolgreich getestet: Leistungsbegrenzung und Einspeisung aus/ein.
+
 ## 0.1.0
 
 Erstes Release der Home-Assistant-Integration für Fronius-Wechselrichter per Modbus TCP (SunSpec).
