@@ -290,59 +290,109 @@ def fronius_registers(
     return regs
 
 
-def build_context(devices: dict[int, list[int] | tuple[list[int], dict[int, int]]]):
+def build_registers(
+    devices: dict[int, list[int] | tuple[list[int], dict[int, int]]],
+) -> dict[int, dict[int, int]]:
     """devices: Unit-ID -> SunSpec-Register ab 40001, optional mit Zusatzregistern.
 
-    Zusatzregister als {0-basierte Adresse: Wert}. Nicht belegte Adressen
-    beantwortet der Server mit einer Modbus-Exception (wie ein echtes Gerät).
+    Zusatzregister als {0-basierte Adresse: Wert}. Ergebnis: Unit-ID ->
+    {0-basierte Adresse: Wert}.
     """
-    from pymodbus.datastore import ModbusServerContext, ModbusSparseDataBlock
-
-    try:
-        from pymodbus.datastore import ModbusDeviceContext as Dev
-
-        kw = "devices"
-    except ImportError:  # pymodbus < 3.10
-        from pymodbus.datastore import ModbusSlaveContext as Dev
-
-        kw = "slaves"
-    # Legacy-Datastore adressiert intern +1 → Adresse + 1 als Schlüssel
-    ctx = {}
+    units: dict[int, dict[int, int]] = {}
     for unit, spec in devices.items():
         sunspec_regs, extra = spec if isinstance(spec, tuple) else (spec, {})
-        values = {40001 + i: v for i, v in enumerate(sunspec_regs)}
-        values.update({address + 1: v for address, v in extra.items()})
-        ctx[unit] = Dev(hr=ModbusSparseDataBlock(values))
-    return ModbusServerContext(**{kw: ctx}, single=False)
+        values = {40000 + i: v for i, v in enumerate(sunspec_regs)}
+        values.update(extra)
+        units[unit] = values
+    return units
+
+
+EXC_ILLEGAL_FUNCTION = 1
+EXC_ILLEGAL_ADDRESS = 2
+EXC_GATEWAY_NO_RESPONSE = 11
 
 
 class FroniusSimulator:
-    """Asynchroner Modbus-TCP-Server mit mehreren Unit-IDs."""
+    """Kleiner Modbus-TCP-Server mit mehreren Unit-IDs.
 
-    def __init__(self, devices: dict[int, list[int]]) -> None:
-        from pymodbus.server import ModbusTcpServer
+    Bewusst ohne den Server aus pymodbus: dessen Datastore-API und Verhalten
+    ändern sich zwischen den Versionen, die Tests sollen aber mit jeder von
+    Home Assistant vorgegebenen pymodbus-Version laufen. Unterstützt werden
+    Read Holding Registers (0x03) und Write Multiple Registers (0x10).
 
+    Verhalten wie ein echtes Gerät: nicht belegte Adressen → Exception 2
+    (unzulässige Adresse), unbekannte Unit-ID → Exception 11 (Gateway: Zielgerät
+    antwortet nicht).
+    """
+
+    def __init__(
+        self, devices: dict[int, list[int] | tuple[list[int], dict[int, int]]]
+    ) -> None:
         self.port = free_port()
-        self._server = ModbusTcpServer(
-            build_context(devices), address=("127.0.0.1", self.port)
-        )
-        self._task = None
+        self.units = build_registers(devices)
+        self._server = None
+        self._writers: set = set()
 
     async def start(self) -> None:
         import asyncio
 
-        self._task = asyncio.create_task(self._server.serve_forever())
-        for _ in range(50):
-            try:
-                _, writer = await asyncio.open_connection("127.0.0.1", self.port)
-                writer.close()
-                await writer.wait_closed()
-                return
-            except OSError:
-                await asyncio.sleep(0.05)
-        raise RuntimeError("Simulator nicht gestartet")
+        self._server = await asyncio.start_server(
+            self._handle, "127.0.0.1", self.port
+        )
 
     async def stop(self) -> None:
-        await self._server.shutdown()
-        if self._task:
-            self._task.cancel()
+        if self._server is None:
+            return
+        self._server.close()
+        for writer in list(self._writers):
+            writer.close()
+        await self._server.wait_closed()
+        self._server = None
+
+    async def _handle(self, reader, writer) -> None:
+        import asyncio
+
+        self._writers.add(writer)
+        try:
+            while True:
+                header = await reader.readexactly(7)
+                transaction, _, length, unit = struct.unpack(">HHHB", header)
+                pdu = await reader.readexactly(length - 1)
+                response = self._respond(unit, pdu)
+                writer.write(
+                    struct.pack(">HHHB", transaction, 0, len(response) + 1, unit)
+                    + response
+                )
+                await writer.drain()
+        except (asyncio.IncompleteReadError, ConnectionError):
+            pass
+        finally:
+            self._writers.discard(writer)
+            writer.close()
+
+    def _respond(self, unit: int, pdu: bytes) -> bytes:
+        function = pdu[0]
+
+        def error(code: int) -> bytes:
+            return bytes([function | 0x80, code])
+
+        registers = self.units.get(unit)
+        if registers is None:
+            return error(EXC_GATEWAY_NO_RESPONSE)
+        if function == 0x03:
+            address, count = struct.unpack(">HH", pdu[1:5])
+            wanted = range(address, address + count)
+            if not all(a in registers for a in wanted):
+                return error(EXC_ILLEGAL_ADDRESS)
+            return bytes([function, count * 2]) + struct.pack(
+                f">{count}H", *(registers[a] for a in wanted)
+            )
+        if function == 0x10:
+            address, count, _ = struct.unpack(">HHB", pdu[1:6])
+            values = struct.unpack(f">{count}H", pdu[6 : 6 + count * 2])
+            wanted = range(address, address + count)
+            if not all(a in registers for a in wanted):
+                return error(EXC_ILLEGAL_ADDRESS)
+            registers.update(zip(wanted, values, strict=True))
+            return bytes([function]) + struct.pack(">HH", address, count)
+        return error(EXC_ILLEGAL_FUNCTION)

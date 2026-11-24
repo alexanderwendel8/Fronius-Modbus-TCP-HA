@@ -8,6 +8,6 @@
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/alexanderwendel8/Fronius-Modbus-TCP-HA/issues",
   "loggers": ["pymodbus"],
-  "requirements": ["pymodbus>=3.8.0"],
+  "requirements": ["pymodbus>=3.8.3"],
   "version": "0.1.0"
 }
