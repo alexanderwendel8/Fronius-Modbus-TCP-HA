@@ -16,6 +16,22 @@
           "unit_id": "GEN24, Tauro, Verto: immer 1. Datamanager (Symo, Primo, Galvo, Eco …): Wechselrichter-Nummer laut Display; Nummer 00 = Adresse 100.",
           "meter_unit_id": "Leer lassen für automatische Suche (GEN24: 200, Datamanager: 240). 0 eintragen, wenn kein Smart Meter gelesen werden soll."
         }
+      },
+      "reconfigure": {
+        "title": "Fronius Modbus TCP neu konfigurieren",
+        "description": "Verbindungsdaten ändern, zum Beispiel nach einer neuen IP-Adresse des Wechselrichters. Das Gerät selbst muss dasselbe bleiben.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "unit_id": "Modbus-Adresse Wechselrichter",
+          "meter_unit_id": "Modbus-Adresse Smart Meter"
+        },
+        "data_description": {
+          "host": "Hostname oder IP-Adresse des Wechselrichters bzw. Datamanagers.",
+          "port": "Modbus-TCP-Port: 502 (Standard) oder 1502 (Option beim GEN24).",
+          "unit_id": "GEN24, Tauro, Verto: immer 1. Datamanager (Symo, Primo, Galvo, Eco …): Wechselrichter-Nummer laut Display; Nummer 00 = Adresse 100.",
+          "meter_unit_id": "Leer lassen für automatische Suche (GEN24: 200, Datamanager: 240). 0 eintragen, wenn kein Smart Meter gelesen werden soll."
+        }
       }
     },
     "error": {
@@ -25,7 +41,9 @@
       "meter_not_found": "Unter dieser Modbus-Adresse wurde kein Smart Meter gefunden."
     },
     "abort": {
-      "already_configured": "Gerät ist bereits eingerichtet"
+      "already_configured": "Gerät ist bereits eingerichtet",
+      "reconfigure_successful": "Die Neukonfiguration war erfolgreich",
+      "wrong_device": "Das Gerät unter dieser Adresse hat eine andere Seriennummer als das eingerichtete. Für einen weiteren Wechselrichter stattdessen einen neuen Eintrag hinzufügen."
     }
   },
   "entity": {

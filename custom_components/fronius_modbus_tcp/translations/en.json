@@ -16,6 +16,22 @@
           "unit_id": "GEN24, Tauro, Verto: always 1. Datamanager (Symo, Primo, Galvo, Eco …): the inverter number from the inverter display; number 00 = address 100.",
           "meter_unit_id": "Leave empty for automatic detection (GEN24: 200, Datamanager: 240). Enter 0 if no Smart Meter should be read."
         }
+      },
+      "reconfigure": {
+        "title": "Reconfigure Fronius Modbus TCP",
+        "description": "Change the connection settings, for example after the inverter got a new IP address. The device itself must stay the same.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "unit_id": "Inverter Modbus address",
+          "meter_unit_id": "Smart Meter Modbus address"
+        },
+        "data_description": {
+          "host": "Hostname or IP address of the inverter or Datamanager.",
+          "port": "Modbus TCP port: 502 (default) or 1502 (GEN24 option).",
+          "unit_id": "GEN24, Tauro, Verto: always 1. Datamanager (Symo, Primo, Galvo, Eco …): the inverter number from the inverter display; number 00 = address 100.",
+          "meter_unit_id": "Leave empty for automatic detection (GEN24: 200, Datamanager: 240). Enter 0 if no Smart Meter should be read."
+        }
       }
     },
     "error": {
@@ -25,7 +41,9 @@
       "meter_not_found": "No Smart Meter found at this Modbus address."
     },
     "abort": {
-      "already_configured": "Device is already configured"
+      "already_configured": "Device is already configured",
+      "reconfigure_successful": "Re-configuration was successful",
+      "wrong_device": "The device at this address has a different serial number than the configured one. To add another inverter, use **Add entry** instead."
     }
   },
   "entity": {

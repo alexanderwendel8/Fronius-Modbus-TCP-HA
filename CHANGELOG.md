@@ -12,6 +12,7 @@
 - Mehrere Wechselrichter am selben Datamanager teilen sich jetzt eine Modbus-Verbindung; ihre Abfragen laufen nacheinander statt parallel (Vorgabe von Fronius).
 - pymodbus: Mindestversion 3.11.2 (die von Home Assistant 2026.2 vorgegebene). Die CI testet mit 3.11.2, 3.13.1 (Vorgabe von Home Assistant 2026.11) und der neuesten Version. Der Testsimulator ist ein eigener kleiner Modbus-TCP-Server und hängt nicht mehr vom Server aus pymodbus ab.
 - Leistungsbegrenzung: Skalierungsfaktor lesen und Vorgabe schreiben laufen jetzt als ein unteilbarer Ablauf; eine gleichzeitige Abfrage kann sich nicht mehr dazwischenschieben. Gelesen wird dabei nur noch das eine Register statt des ganzen Modells 123.
+- Neu: Verbindungsdaten nachträglich ändern (**Reconfigure** im Menü des Eintrags) – Host, Port und Modbus-Adressen lassen sich anpassen, ohne den Eintrag zu löschen. Ein Gerät mit anderer Seriennummer wird abgelehnt.
 
 ## 0.1.0
 

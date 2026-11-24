@@ -130,6 +130,11 @@ für jeden Wechselrichter einen eigenen Eintrag anlegen; der Smart Meter wird au
 ersten Eintrag zugeordnet. Alle Einträge am selben Datamanager teilen sich eine Modbus-Verbindung und fragen
 nacheinander ab.
 
+**Verbindungsdaten ändern:** Bekommt der Wechselrichter eine neue IP-Adresse oder soll der Smart Meter
+nachträglich dazukommen, muss der Eintrag nicht gelöscht werden. Unter *Settings → Devices & services →
+Fronius Modbus TCP* das Drei-Punkte-Menü des Eintrags öffnen und **Reconfigure** wählen. Das Gerät muss
+dasselbe bleiben (gleiche Seriennummer); Entitäten und Historie bleiben erhalten.
+
 Antwortet der Smart Meter beim Start nicht, wird der Wechselrichter trotzdem eingerichtet. Die Integration
 sucht den Zähler dann alle 5 Minuten erneut und lädt den Eintrag neu, sobald er gefunden wird.
 
