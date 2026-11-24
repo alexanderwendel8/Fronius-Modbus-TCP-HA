@@ -1,0 +1,116 @@
+{
+  "entity": {
+    "sensor": {
+      "status": {
+        "default": "mdi:solar-power-variant"
+      },
+      "status_vendor": {
+        "default": "mdi:solar-power-variant"
+      },
+      "event_message": {
+        "default": "mdi:alert-circle-outline"
+      },
+      "events": {
+        "default": "mdi:alert-circle-outline"
+      },
+      "state_code": {
+        "default": "mdi:numeric"
+      },
+      "state_message": {
+        "default": "mdi:message-alert-outline"
+      },
+      "vendor_events": {
+        "default": "mdi:alert-outline"
+      },
+      "power_limit": {
+        "default": "mdi:speedometer"
+      },
+      "pf_setpoint": {
+        "default": "mdi:angle-acute"
+      },
+      "var_limit": {
+        "default": "mdi:sine-wave"
+      },
+      "isolation_resistance": {
+        "default": "mdi:omega"
+      },
+      "battery_state": {
+        "default": "mdi:battery-sync"
+      },
+      "battery_control_mode": {
+        "default": "mdi:battery-lock"
+      },
+      "battery_grid_charging": {
+        "default": "mdi:transmission-tower-import"
+      },
+      "battery_charge_limit": {
+        "default": "mdi:battery-arrow-up"
+      },
+      "battery_discharge_limit": {
+        "default": "mdi:battery-arrow-down"
+      },
+      "battery_min_reserve": {
+        "default": "mdi:battery-low"
+      }
+    },
+    "binary_sensor": {
+      "power_limit_active": {
+        "default": "mdi:speedometer"
+      },
+      "feed_in_enabled": {
+        "default": "mdi:transmission-tower-export",
+        "state": {
+          "off": "mdi:transmission-tower-off"
+        }
+      },
+      "pf_control_active": {
+        "default": "mdi:angle-acute"
+      },
+      "var_control_active": {
+        "default": "mdi:sine-wave"
+      }
+    },
+    "number": {
+      "power_limit": {
+        "default": "mdi:speedometer"
+      },
+      "revert_time": {
+        "default": "mdi:timer-refresh-outline"
+      },
+      "battery_charge_limit": {
+        "default": "mdi:battery-arrow-up"
+      },
+      "battery_discharge_limit": {
+        "default": "mdi:battery-arrow-down"
+      },
+      "battery_min_reserve": {
+        "default": "mdi:battery-low"
+      }
+    },
+    "switch": {
+      "power_limit_active": {
+        "default": "mdi:speedometer"
+      },
+      "feed_in_enabled": {
+        "default": "mdi:transmission-tower-export",
+        "state": {
+          "off": "mdi:transmission-tower-off"
+        }
+      },
+      "battery_charge_limit_active": {
+        "default": "mdi:battery-arrow-up"
+      },
+      "battery_discharge_limit_active": {
+        "default": "mdi:battery-arrow-down"
+      },
+      "battery_grid_charging_allowed": {
+        "default": "mdi:transmission-tower-import"
+      }
+    },
+    "button": {
+      "reset_events": {
+        "default": "mdi:notification-clear-all"
+      }
+    }
+  }
+}

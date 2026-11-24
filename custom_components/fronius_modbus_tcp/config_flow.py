@@ -15,6 +15,7 @@ from homeassistant.config_entries import (
 )
 from homeassistant.core import callback
 from homeassistant.const import CONF_HOST, CONF_PORT, UnitOfTime
+from homeassistant.helpers.service_info.dhcp import DhcpServiceInfo
 from homeassistant.helpers.selector import (
     NumberSelector,
     NumberSelectorConfig,
@@ -39,6 +40,7 @@ from .const import (
     DEFAULT_SCAN_INTERVAL_SECONDS,
     DEFAULT_UNIT_ID,
     DOMAIN,
+    MANUFACTURER,
     METER_UNIT_ID_CANDIDATES,
     METER_UNIT_ID_NONE,
     MAX_SCAN_INTERVAL_SECONDS,
@@ -87,6 +89,9 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
     """Einrichtung über die Benutzeroberfläche."""
 
     VERSION = 1
+
+    # per DHCP gefundene Adresse, als Vorschlag im Einrichtungsformular
+    _discovered_host: str | None = None
 
     @staticmethod
     @callback
@@ -206,6 +211,53 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
             data[CONF_SITE_REGISTERS] = info.has_site_registers
         return info, data, errors
 
+    async def async_step_dhcp(
+        self, discovery_info: DhcpServiceInfo
+    ) -> ConfigFlowResult:
+        """Fronius-Gerät im Netzwerk gesehen (DHCP, MAC-Präfix 00:03:AC).
+
+        Antwortet es per Modbus TCP unter den Standardwerten (Port 502, Adresse 1),
+        wird es zur Einrichtung vorgeschlagen. Ist das Gerät schon eingerichtet,
+        aber unter einer anderen IP-Adresse, wird diese aktualisiert. Ohne Modbus-
+        Antwort (Modbus TCP aus, anderer Port, andere Adresse) passiert nichts.
+        """
+        host = discovery_info.ip
+        entries = self._async_current_entries(include_ignore=False)
+        if any(entry.data.get(CONF_HOST) == host for entry in entries):
+            return self.async_abort(reason="already_configured")
+
+        client = async_acquire_client(self.hass, host, DEFAULT_PORT)
+        try:
+            info = await client.read_inverter_info(DEFAULT_UNIT_ID)
+        except FroniusModbusError as err:
+            _LOGGER.debug("DHCP-Erkennung %s: kein Modbus-Gerät (%s)", host, err)
+            return self.async_abort(reason="cannot_connect")
+        finally:
+            await async_release_client(self.hass, host, DEFAULT_PORT)
+
+        await self.async_set_unique_id(info.serial_number or None)
+        known = next((e for e in entries if e.unique_id == self.unique_id), None)
+        if known is not None and self.unique_id:
+            # Neue IP-Adresse: alle Einträge am bisherigen Host umziehen (mehrere
+            # Wechselrichter an einem Datamanager teilen sich die Adresse)
+            old_host = known.data.get(CONF_HOST)
+            for entry in entries:
+                if entry.data.get(CONF_HOST) == old_host:
+                    self.hass.config_entries.async_update_entry(
+                        entry, data={**entry.data, CONF_HOST: host}
+                    )
+                    self.hass.config_entries.async_schedule_reload(entry.entry_id)
+            _LOGGER.info(
+                "%s hat eine neue IP-Adresse: %s statt %s", info.model, host, old_host
+            )
+            return self.async_abort(reason="already_configured")
+
+        self._discovered_host = host
+        self.context["title_placeholders"] = {
+            "name": f"{info.model or MANUFACTURER} ({host})"
+        }
+        return await self.async_step_user()
+
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
@@ -226,7 +278,9 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user",
             data_schema=self.add_suggested_values_to_schema(
-                STEP_USER_DATA_SCHEMA, user_input
+                STEP_USER_DATA_SCHEMA,
+                user_input
+                or ({CONF_HOST: self._discovered_host} if self._discovered_host else None),
             ),
             errors=errors,
         )

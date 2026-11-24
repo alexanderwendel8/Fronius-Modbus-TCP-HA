@@ -117,6 +117,10 @@ hinzufügen, installieren, Home Assistant neu starten.
 **Manuell:** `custom_components/fronius_modbus_tcp` nach `<config>/custom_components/` kopieren und neu starten.
 
 Anschließend unter *Einstellungen → Geräte & Dienste → Integration hinzufügen* nach „Fronius Modbus TCP“ suchen:
+(Meldet sich ein Fronius-Gerät per DHCP im Netzwerk und antwortet es per Modbus TCP auf Port 502 unter
+Adresse 1, schlägt Home Assistant die Einrichtung von selbst vor. Bekommt ein bereits eingerichtetes Gerät
+auf diesem Weg eine neue IP-Adresse, wird sie automatisch übernommen.)
+
 
 | Feld | GEN24 / Tauro / Verto | Datamanager (Symo, Primo, Galvo …) |
 |---|---|---|
@@ -256,6 +260,7 @@ Issue anhängen – damit lässt sich das Verhalten ohne Zugriff auf das Gerät 
 | `state_codes.py` | Fronius State Codes im Klartext (erzeugt mit `scripts/generate_state_codes.py`) |
 | `diagnostics.py` | Diagnosedaten-Export inkl. roher Register aller SunSpec-Modelle |
 | `strings.json`, `translations/` | Texte (EN/DE) |
+| `icons.json` | Symbole der Entitäten ohne Geräteklasse |
 
 ## Neue Sensoren hinzufügen
 

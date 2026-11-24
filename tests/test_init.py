@@ -1061,3 +1061,77 @@ async def test_first_start_needs_device(hass: HomeAssistant, socket_enabled) -> 
     await hass.async_block_till_done()
     assert entry.state is ConfigEntryState.SETUP_RETRY
     await hass.config_entries.async_unload(entry.entry_id)
+
+
+async def test_dhcp_discovery(hass: HomeAssistant, gen24, gen24_plain) -> None:
+    """DHCP: Gerät vorschlagen, neue IP-Adresse übernehmen, ohne Modbus nichts tun."""
+    from unittest.mock import patch
+
+    from homeassistant.helpers.service_info.dhcp import DhcpServiceInfo
+
+    flow_module = "custom_components.fronius_modbus_tcp.config_flow"
+
+    async def _discover(ip: str, port: int):
+        # Der Simulator lauscht nicht auf Port 502
+        with patch(f"{flow_module}.DEFAULT_PORT", port):
+            result = await hass.config_entries.flow.async_init(
+                DOMAIN,
+                context={"source": config_entries.SOURCE_DHCP},
+                data=DhcpServiceInfo(ip=ip, hostname="fronius", macaddress="0003ac112233"),
+            )
+            await hass.async_block_till_done()
+            return result
+
+    # Kein Modbus unter der Adresse → still abbrechen
+    result = await _discover("127.0.0.1", sim.free_port())
+    assert result["type"] is FlowResultType.ABORT
+    assert result["reason"] == "cannot_connect"
+
+    # Gerät antwortet → Formular mit vorgeschlagenem Host, Einrichtung wie gewohnt
+    result = await _discover("127.0.0.1", gen24.port)
+    assert result["type"] is FlowResultType.FORM and result["step_id"] == "user"
+    flow = hass.config_entries.flow.async_get(result["flow_id"])
+    assert flow["context"]["title_placeholders"] == {
+        "name": "Symo GEN24 10.0 Plus (127.0.0.1)"
+    }
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"],
+        {
+            CONF_HOST: "127.0.0.1",
+            CONF_PORT: gen24.port,
+            CONF_UNIT_ID: 1,
+            CONF_METER_UNIT_ID: 0,
+        },
+    )
+    assert result["type"] is FlowResultType.CREATE_ENTRY
+    await hass.async_block_till_done()
+    entry = result["result"]
+
+    # Gleiche Adresse erneut gesehen → schon eingerichtet
+    result = await _discover("127.0.0.1", gen24.port)
+    assert result["reason"] == "already_configured"
+
+    # Gleiches Gerät unter neuer Adresse → Host wird aktualisiert, Eintrag lädt neu
+    result = await _discover("localhost", gen24.port)
+    assert result["type"] is FlowResultType.ABORT
+    assert result["reason"] == "already_configured"
+    assert entry.data[CONF_HOST] == "localhost"
+    await hass.async_block_till_done()
+    assert entry.runtime_data.last_update_success
+
+    assert await hass.config_entries.async_unload(entry.entry_id)
+    await hass.async_block_till_done()
+
+
+def test_icons_match_translations() -> None:
+    """Jedes Symbol gehört zu einer vorhandenen Entität (Tippfehler fallen sonst nicht auf)."""
+    import json
+    from pathlib import Path
+
+    base = Path(__file__).parents[1] / "custom_components" / DOMAIN
+    icons = json.loads((base / "icons.json").read_text())["entity"]
+    names = json.loads((base / "strings.json").read_text())["entity"]
+    for platform, entries in icons.items():
+        for key, icon in entries.items():
+            assert key in names[platform], f"{platform}.{key}"
+            assert icon["default"].startswith("mdi:")
