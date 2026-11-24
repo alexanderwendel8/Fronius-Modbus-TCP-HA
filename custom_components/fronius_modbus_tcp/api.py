@@ -161,27 +161,38 @@ class FroniusModbusClient:
     async def write(self, unit: int, address: int, values: list[int]) -> None:
         """Holding-Register schreiben (0-basierte Adresse, Funktionscode 0x10)."""
         async with self._lock:
-            await self.connect()
-            _LOGGER.debug("Unit %s: schreibe %s ab Adresse %s", unit, values, address)
-            await self._write_raw(unit, address, values)
+            await self._write_unlocked(unit, address, values)
 
     async def read(self, unit: int, address: int, count: int) -> list[int]:
         """Holding-Register lesen (0-basierte Adresse), bei Bedarf in Blöcken."""
         async with self._lock:
-            await self.connect()
-            registers: list[int] = []
-            while count > 0:
-                chunk = min(count, MAX_REGISTERS_PER_READ)
-                regs = await self._read_raw(unit, address, chunk)
-                if len(regs) != chunk:
-                    raise FroniusModbusError(
-                        f"Unvollständige Antwort (Unit {unit}) beim Lesen von "
-                        f"{address}: {len(regs)} statt {chunk} Register"
-                    )
-                registers += regs
-                address += chunk
-                count -= chunk
-            return registers
+            return await self._read_unlocked(unit, address, count)
+
+    # Die *_unlocked-Varianten setzen voraus, dass der Aufrufer self._lock hält.
+    # So lassen sich Lesen und Schreiben zu einem unteilbaren Ablauf verbinden.
+
+    async def _write_unlocked(
+        self, unit: int, address: int, values: list[int]
+    ) -> None:
+        await self.connect()
+        _LOGGER.debug("Unit %s: schreibe %s ab Adresse %s", unit, values, address)
+        await self._write_raw(unit, address, values)
+
+    async def _read_unlocked(self, unit: int, address: int, count: int) -> list[int]:
+        await self.connect()
+        registers: list[int] = []
+        while count > 0:
+            chunk = min(count, MAX_REGISTERS_PER_READ)
+            regs = await self._read_raw(unit, address, chunk)
+            if len(regs) != chunk:
+                raise FroniusModbusError(
+                    f"Unvollständige Antwort (Unit {unit}) beim Lesen von "
+                    f"{address}: {len(regs)} statt {chunk} Register"
+                )
+            registers += regs
+            address += chunk
+            count -= chunk
+        return registers
 
     async def read_model(
         self, unit: int, models: dict[int, tuple[int, int]], model_id: int
@@ -445,12 +456,20 @@ class FroniusModbusClient:
         """Leistungsbegrenzung setzen; mit enabled=True wird sie (erneut) gestartet.
 
         Der Skalierungsfaktor wird vorher frisch gelesen (kann sich ändern).
+        Lesen und Schreiben laufen unter einem gemeinsamen Lock, damit sich
+        keine andere Abfrage oder Vorgabe dazwischenschiebt.
         """
         start = self._controls_start(info)
-        regs = await self.read_model(info.unit_id, info.models, sunspec.CONTROLS_MODEL)
-        sf = sunspec.to_int16(regs[sunspec.CTRL_WMAXLIMPCT_SF])
-        values = sunspec.encode_power_limit(percent, sf, revert_seconds, enabled)
-        await self.write(info.unit_id, start + sunspec.CTRL_WMAXLIMPCT, values)
+        async with self._lock:
+            (sf_reg,) = await self._read_unlocked(
+                info.unit_id, start + sunspec.CTRL_WMAXLIMPCT_SF, 1
+            )
+            values = sunspec.encode_power_limit(
+                percent, sunspec.to_int16(sf_reg), revert_seconds, enabled
+            )
+            await self._write_unlocked(
+                info.unit_id, start + sunspec.CTRL_WMAXLIMPCT, values
+            )
 
     async def disable_power_limit(self, info: InverterInfo) -> None:
         """Leistungsbegrenzung beenden (WMaxLim_Ena = 0)."""
