@@ -1,0 +1,21 @@
+name: Wunsch / Feature request
+description: Eine Funktion fehlt oder sollte anders arbeiten (a feature is missing).
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Was soll erreicht werden?
+      description: Der Anwendungsfall, nicht nur die Lösung – z. B. „Speicher nachts aus dem Netz laden, wenn der Strompreis niedrig ist“.
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Betroffenes Gerät
+      placeholder: "z. B. Symo GEN24 10.0 Plus mit BYD-Speicher"
+  - type: textarea
+    id: idea
+    attributes:
+      label: Idee zur Umsetzung
+      description: Optional – z. B. welches Register oder welche Entität dafür in Frage käme.

@@ -60,7 +60,7 @@ class SunSpecDeviceInfo:
 class InverterInfo(SunSpecDeviceInfo):
     """Wechselrichter inklusive Speicher- und MPPT-Struktur."""
 
-    inverter_model: int | None = None
+    inverter_model: int = 0  # 0 = noch nicht erkannt
     phases: int = 0
     mppt_names: list[str] = field(default_factory=list)
     mppt_roles: list[str] = field(default_factory=list)
@@ -283,7 +283,7 @@ class FroniusModbusClient:
                 info.inverter_model = model_id
                 info.phases = phases
                 break
-        if info.inverter_model is None:
+        if not info.inverter_model:
             raise FroniusModbusError(
                 f"Kein Wechselrichter-Modell 101-103/111-113 (Unit {unit}), "
                 f"gefundene Modelle: {sorted(models)}"
@@ -394,7 +394,6 @@ class FroniusModbusClient:
         values: dict[str, Any] = dict(info.nameplate)
 
         model_id = info.inverter_model
-        assert model_id is not None
         regs = await self.read_model(unit, models, model_id)
         if model_id in sunspec.INVERTER_FLOAT_MODELS:
             values.update(sunspec.parse_inverter_float(regs))

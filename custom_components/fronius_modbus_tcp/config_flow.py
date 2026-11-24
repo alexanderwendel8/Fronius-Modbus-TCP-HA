@@ -264,8 +264,7 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             info, data, errors = await self._async_validate(user_input)
-            if not errors:
-                assert info is not None
+            if info is not None and not errors:
                 await self.async_set_unique_id(info.serial_number or None)
                 self._abort_if_unique_id_configured()
                 return self.async_create_entry(
@@ -297,8 +296,7 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             info, data, errors = await self._async_validate(user_input, entry.entry_id)
-            if not errors:
-                assert info is not None
+            if info is not None and not errors:
                 await self.async_set_unique_id(info.serial_number or None)
                 self._abort_if_unique_id_mismatch(reason="wrong_device")
                 if CONF_SITE_REGISTERS not in data and CONF_SITE_REGISTERS in entry.data:

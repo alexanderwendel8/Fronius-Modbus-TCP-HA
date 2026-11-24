@@ -244,6 +244,9 @@ Smart Metern (bei Datamanager-Geräten zusätzlich die Fronius-Register 212–21
 Seriennummern sind entfernt. Bei einem Problem mit einem nicht getesteten Gerät diese Datei bitte dem
 Issue anhängen – damit lässt sich das Verhalten ohne Zugriff auf das Gerät nachvollziehen.
 
+Für Meldungen gibt es unter [Issues](https://github.com/alexanderwendel8/Fronius-Modbus-TCP-HA/issues/new/choose)
+drei Vorlagen: Fehler, Rückmeldung zu einem getesteten Gerät und Wunsch.
+
 ## Struktur
 
 | Datei | Zweck |
