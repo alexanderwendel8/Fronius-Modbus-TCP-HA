@@ -26,6 +26,8 @@
 - Start ohne erreichbares Gerät: Die zuletzt erkannte Gerätestruktur wird gespeichert. Antwortet der Wechselrichter beim Start von Home Assistant nicht (z. B. nachts), wird der Eintrag trotzdem eingerichtet; die Entitäten sind bis zur ersten Antwort „nicht verfügbar“, statt ganz zu fehlen.
 - Neu: Erkennung im Netzwerk per DHCP (MAC-Präfix 00:03:AC). Antwortet das Gerät per Modbus TCP unter den Standardwerten, wird die Einrichtung vorgeschlagen; eine neue IP-Adresse eines eingerichteten Geräts wird automatisch übernommen.
 - Neu: Symbole für Entitäten ohne Geräteklasse (`icons.json`), z. B. Status, Leistungsbegrenzung, Einspeisung, Speichergrenzen.
+- Behoben: Nach **Reconfigure** oder einem Adresswechsel per DHCP blieb die Modbus-Verbindung zur alten Adresse offen. Sie wird jetzt freigegeben; ein freigegebener Client baut keine Verbindung mehr auf, auch wenn beim Entladen noch eine Abfrage läuft.
+- CI: Tests laufen zusätzlich mit Python 3.14 und damit gegen das aktuelle Home Assistant (bisher nur Python 3.13 / Home Assistant 2026.2).
 
 ## 0.1.0
 

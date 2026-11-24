@@ -33,16 +33,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Home Assistant gibt die pymodbus-Version vor (package_constraints.txt):
-        # 3.11.2 (HA 2026.2, älteste unterstützte), 3.13.1 (HA 2026.11);
-        # "latest" zeigt Brüche neuer Versionen früh.
-        pymodbus: ["3.11.2", "3.13.1", "latest"]
-    name: tests (pymodbus ${{ matrix.pymodbus }})
+        # Home Assistant gibt Python- und pymodbus-Version vor (package_constraints.txt).
+        # pytest-homeassistant-custom-component installiert jeweils das neueste Home
+        # Assistant, das die Python-Version erlaubt:
+        # - 3.13 / 3.11.2: älteste unterstützte Kombination (HA 2026.2)
+        # - 3.14 / 3.13.1: aktuelles Home Assistant (2026.11 gibt pymodbus 3.13.1 vor)
+        # - 3.14 / latest: zeigt Brüche neuer pymodbus-Versionen früh
+        include:
+          - python: "3.13"
+            pymodbus: "3.11.2"
+          - python: "3.14"
+            pymodbus: "3.13.1"
+          - python: "3.14"
+            pymodbus: "latest"
+    name: tests (Python ${{ matrix.python }}, pymodbus ${{ matrix.pymodbus }})
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: ${{ matrix.python }}
           # Heruntergeladene Pakete (Home Assistant samt Abhängigkeiten) wiederverwenden
           cache: pip
           cache-dependency-path: requirements_test.txt
@@ -54,5 +63,5 @@ jobs:
           else
             pip install "pymodbus==${{ matrix.pymodbus }}"
           fi
-          pip show pymodbus | grep -i '^version'
+          pip show pymodbus homeassistant | grep -i -E '^(name|version)'
       - run: pytest -q

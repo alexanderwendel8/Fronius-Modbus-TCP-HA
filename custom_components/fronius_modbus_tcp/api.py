@@ -117,9 +117,14 @@ class FroniusModbusClient:
             host, port=port, timeout=timeout, retries=retries
         )
         self._lock = asyncio.Lock()
+        self._closed = False
 
     async def connect(self) -> None:
         """Verbindung aufbauen (falls noch nicht verbunden)."""
+        if self._closed:
+            # Eine beim Entladen noch laufende Abfrage darf die freigegebene
+            # Verbindung nicht wieder öffnen – sie bliebe sonst für immer offen.
+            raise FroniusConnectionError("Verbindung wurde geschlossen")
         if self._client.connected:
             return
         if not await self._client.connect():
@@ -127,8 +132,14 @@ class FroniusModbusClient:
                 f"Verbindung zu {self._host}:{self._port} fehlgeschlagen"
             )
 
-    async def close(self) -> None:
-        """Verbindung schließen."""
+    async def close(self, *, final: bool = True) -> None:
+        """Verbindung schließen.
+
+        final=True (Standard): Der Client wird nicht mehr verwendet und baut
+        keine Verbindung mehr auf. final=False trennt nur, z. B. um nach einem
+        Timeout mit frischer Verbindung weiterzumachen.
+        """
+        self._closed = self._closed or final
         self._client.close()
 
     async def _read_raw(self, unit: int, address: int, count: int) -> list[int]:
@@ -334,7 +345,7 @@ class FroniusModbusClient:
                 )
             except FroniusConnectionError as err:
                 # Lebt das Gerät noch? Sonst ist es ein Verbindungsproblem.
-                await self.close()
+                await self.close(final=False)
                 await self.read(unit, SUNSPEC_BASE_ADDRESS, 2)
                 _LOGGER.debug(
                     "Unit %s: keine Antwort auf Fronius-Register 500-513 (%s), "
@@ -614,7 +625,7 @@ async def async_detect_meter(
             except FroniusConnectionError as err:
                 # Kein Gerät unter dieser ID: Verbindung neu aufbauen und weiter
                 _LOGGER.debug("Zählersuche %s:%s Unit %s: %s", host, port, unit, err)
-                await client.close()
+                await client.close(final=False)
             except (TimeoutError, FroniusModbusError) as err:
                 _LOGGER.debug("Zählersuche %s:%s Unit %s: %s", host, port, unit, err)
             else:

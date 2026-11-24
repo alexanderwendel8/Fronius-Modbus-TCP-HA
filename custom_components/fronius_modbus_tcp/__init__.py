@@ -45,6 +45,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: FroniusConfigEntry) -> b
         await async_release_client(hass, host, port)
         raise
 
+    # Host/Port merken, unter denen die Verbindung geholt wurde: Beim Entladen
+    # nach einer Änderung (Reconfigure, neue IP per DHCP) stehen in entry.data
+    # schon die neuen Werte – freigegeben werden muss aber die alte Verbindung.
+    coordinator.client_key = (host, port)
     entry.runtime_data = coordinator
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     # Optionen geändert (z. B. Steuerung erlaubt) → Entitäten neu anlegen
@@ -60,9 +64,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: FroniusConfigEntry) -> 
     """Config-Entry entladen."""
     unloaded = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unloaded:
-        await async_release_client(
-            hass, entry.data[CONF_HOST], entry.data[CONF_PORT]
-        )
+        await async_release_client(hass, *entry.runtime_data.client_key)
     return unloaded
 
 

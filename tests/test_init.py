@@ -53,6 +53,16 @@ async def _setup(hass: HomeAssistant, port: int, **extra) -> config_entries.Conf
     return result["result"]
 
 
+def _find_device(dev_reg: dr.DeviceRegistry, entry, identifier: str):
+    """Gerät eines Eintrags über seine Kennung (unabhängig von der HA-Version)."""
+    (device,) = [
+        d
+        for d in dr.async_entries_for_config_entry(dev_reg, entry.entry_id)
+        if (DOMAIN, identifier) in d.identifiers
+    ]
+    return device
+
+
 def _state(hass: HomeAssistant, entity_registry, unique_id: str):
     entity_id = entity_registry.async_get_entity_id("sensor", DOMAIN, unique_id)
     assert entity_id, unique_id
@@ -115,8 +125,8 @@ async def test_gen24_plus_with_meter(hass: HomeAssistant, gen24) -> None:
     assert float(meter_power.state) == -1500.0
     assert float(s("meter_M0000001_meter_energy_import").state) == pytest.approx(3000.0)
 
-    inverter_dev = dev_reg.async_get_device({(DOMAIN, "33333333")})
-    meter_dev = dev_reg.async_get_device({(DOMAIN, "meter_M0000001")})
+    inverter_dev = _find_device(dev_reg, entry, "33333333")
+    meter_dev = _find_device(dev_reg, entry, "meter_M0000001")
     assert inverter_dev and meter_dev
     assert meter_dev.via_device_id == inverter_dev.id
     assert meter_dev.name == "Smart Meter TS 65A-3"
@@ -720,6 +730,7 @@ async def test_reconfigure(hass: HomeAssistant, gen24, gen24_plain) -> None:
     assert result["errors"] == {"base": "cannot_connect"}
     assert entry.data[CONF_PORT] == gen24.port
 
+    old_client = entry.runtime_data.client
     # Gleiches Gerät an neuer Adresse, Zähler abgewählt
     moved = sim.FroniusSimulator({1: sim.gen24_plus_float(), 200: sim.meter_213()})
     await moved.start()
@@ -729,6 +740,14 @@ async def test_reconfigure(hass: HomeAssistant, gen24, gen24_plain) -> None:
         assert result["reason"] == "reconfigure_successful"
         assert entry.data[CONF_PORT] == moved.port
         assert entry.data[CONF_METER_UNIT_ID] is None
+        # Die Verbindung zur alten Adresse ist freigegeben und geschlossen
+        from custom_components.fronius_modbus_tcp.client_pool import _pool
+
+        assert list(_pool(hass)) == [("127.0.0.1", moved.port)]
+        assert old_client is not entry.runtime_data.client
+        assert not old_client._client.connected
+        with pytest.raises(Exception, match="geschlossen"):
+            await old_client.read(1, 40000, 2)
         assert entry.data[CONF_SITE_REGISTERS] is False
         assert entry.unique_id == "33333333"
         # Entität bleibt dieselbe und liefert wieder Werte
@@ -902,8 +921,8 @@ async def test_multiple_meters(hass: HomeAssistant, socket_enabled) -> None:
         dev_reg = dr.async_get(hass)
         assert _state(hass, ent_reg, "meter_M0000001_meter_power").state == "-1500.0"
         assert _state(hass, ent_reg, "meter_M0000002_meter_power").state == "750.0"
-        primary = dev_reg.async_get_device(identifiers={(DOMAIN, "meter_M0000001")})
-        second = dev_reg.async_get_device(identifiers={(DOMAIN, "meter_M0000002")})
+        primary = _find_device(dev_reg, entry, "meter_M0000001")
+        second = _find_device(dev_reg, entry, "meter_M0000002")
         assert primary.name == "Smart Meter TS 65A-3"
         assert second.name == "Smart Meter TS 65A-3 (201)"
         assert second.via_device_id == primary.via_device_id

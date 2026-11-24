@@ -79,6 +79,8 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
             update_interval=timedelta(seconds=self.scan_interval_seconds),
         )
         self.client = client
+        # (Host, Port) der gemeinsamen Verbindung, gesetzt beim Einrichten
+        self.client_key: tuple[str, int] = ("", 0)
         self._inverter_unit = inverter_unit
         # Hauptzähler (Werte ohne Präfix) und weitere Zähler, je eigene Unit-ID
         self._meter_unit = meter_unit
@@ -268,13 +270,6 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
         except FroniusModbusError as err:
             raise UpdateFailed(f"Fehler beim Lesen des Wechselrichters: {err}") from err
 
-        if self.started_from_cache:
-            # Gerät antwortet wieder → Struktur frisch erkennen (Firmware, Module,
-            # Zähler können sich geändert haben) und Entitäten neu anlegen
-            self.started_from_cache = False
-            _LOGGER.info("Wechselrichter antwortet wieder, Eintrag wird neu geladen")
-            self.hass.config_entries.async_schedule_reload(self.config_entry.entry_id)
-
         for unit, meter in self.meters.items():
             prefix = self.meter_key_prefix(meter)
             try:
@@ -291,6 +286,13 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
                 if unit in self._meter_failed:
                     _LOGGER.info("Smart Meter (Unit-ID %s) antwortet wieder", unit)
                     self._meter_failed.discard(unit)
-        if len(self.meters) < len(self._meter_units):
+        if self.started_from_cache:
+            # Gerät antwortet wieder → Struktur frisch erkennen (Firmware, Module,
+            # Zähler können sich geändert haben) und Entitäten neu anlegen. Erst
+            # jetzt, nach allen Abfragen: Das Neuladen schließt die Verbindung.
+            self.started_from_cache = False
+            _LOGGER.info("Wechselrichter antwortet wieder, Eintrag wird neu geladen")
+            self.hass.config_entries.async_schedule_reload(self.config_entry.entry_id)
+        elif len(self.meters) < len(self._meter_units):
             await self._async_retry_meter()
         return data
