@@ -88,7 +88,7 @@ Steuerungstest am Symo (bei nur ca. 40 W PV-Leistung):
   - **GEN24 / Tauro / Verto:** Weboberfläche → Kommunikation → Modbus → *TCP Server*
   - **Datamanager:** Weboberfläche → Einstellungen → Modbus → Datenausgabe **tcp** (Datamanager 2.0 steht ab Werk auf rtu)
 - SunSpec Model Type: **float** oder **int+SF**
-- Home Assistant 2025.2 oder neuer
+- Home Assistant 2025.3 oder neuer
 
 ## Installation
 
