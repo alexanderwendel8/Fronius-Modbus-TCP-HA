@@ -8,6 +8,7 @@
 - Smart Meter, der beim Start nicht antwortet, wird alle 5 Minuten erneut gesucht; sobald er gefunden wird, erscheinen seine Sensoren ohne manuelles Neuladen. Ausfall und Rückkehr des Zählers im laufenden Betrieb stehen jetzt einmalig im Log.
 - Erkennung „Datamanager oder GEN24“ abgesichert: Ein vorübergehender Modbus-Fehler beim Prüfen der Fronius-Register 500–513 stuft das Gerät nicht mehr dauerhaft falsch ein. Nur die Fehlerantwort „unzulässige Adresse“ gilt als „nicht vorhanden“; das eindeutige Ergebnis wird im Eintrag gespeichert und bei späteren Starts nicht erneut geprüft. Antwortet ein Gerät auf diese Register gar nicht, scheitert die Einrichtung nicht mehr.
 - CI beschleunigt: pip-Cache, keine doppelten Läufe mehr bei Pull Requests, überholte Läufe werden abgebrochen.
+- Zu kurze SunSpec-Modelle bringen die Abfrage nicht mehr zum Absturz: Ein Modell, das kürzer ist als von der Auswertung benötigt, wird mit einer Warnung im Log übersprungen; die übrigen Werte bleiben verfügbar. Unvollständige Modbus-Antworten werden als Lesefehler gemeldet.
 
 ## 0.1.0
 

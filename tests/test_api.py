@@ -378,3 +378,91 @@ async def test_site_registers_known_skips_probe(gen24) -> None:
         assert calls == []
     finally:
         await client.close()
+
+
+def _truncated(model_regs: list[int], length: int) -> list[int]:
+    """Modell (ID, L, Rumpf) auf einen kürzeren Rumpf kürzen."""
+    return sim.model(model_regs[0], model_regs[2 : 2 + length])
+
+
+async def _serve(device: list[int]):
+    server = sim.FroniusSimulator({1: device})
+    await server.start()
+    return server
+
+
+async def test_short_optional_models_are_ignored(socket_enabled, caplog) -> None:
+    """Zu kurze Modelle 122/123 und unvollständiges Modell 160 → übersprungen, Rest läuft."""
+    mppt = sim.mppt_160([("MPPT 1", 412, 4050, 1680, 1), ("MPPT 2", 398, 3980, 1590, 2)])
+    server = await _serve(
+        sim.device(
+            sim.common("Fronius", "Symo GEN24 10.0", "1.36.5-1", "55555555"),
+            sim.inverter_113(),
+            _truncated(sim.status_122(act_wh=1), 10),
+            _truncated(sim.controls_123(), 8),
+            _truncated(mppt, 30),  # Kopf kündigt 2 Module an, nur eines vollständig
+        )
+    )
+    client = FroniusModbusClient("127.0.0.1", server.port)
+    try:
+        info = await client.read_inverter_info(1)
+        assert info.inverter_model == 113
+        for model_id in (sunspec.STATUS_MODEL, sunspec.CONTROLS_MODEL, sunspec.MPPT_MODEL):
+            assert model_id not in info.models
+        assert info.mppt_roles == []
+        assert "Modell 122 ist mit 10 Registern kürzer" in caplog.text
+        assert "Modell 160 kündigt 2 Module an" in caplog.text
+
+        values = await client.read_inverter_data(info)
+        assert values["ac_power"] is not None
+        assert "ac_energy_lifetime" not in values
+        assert "power_limit" not in values
+        assert "pv_power" not in values
+    finally:
+        await client.close()
+        await server.stop()
+
+
+async def test_short_inverter_model_is_rejected(socket_enabled) -> None:
+    """Zu kurzes Wechselrichter-Modell → verständlicher Fehler statt IndexError."""
+    server = await _serve(
+        sim.device(
+            sim.common("Fronius", "Symo GEN24 10.0", "1.36.5-1", "55555555"),
+            _truncated(sim.inverter_113(), 40),
+        )
+    )
+    client = FroniusModbusClient("127.0.0.1", server.port)
+    try:
+        with pytest.raises(FroniusModbusError, match="Kein Wechselrichter-Modell"):
+            await client.read_inverter_info(1)
+    finally:
+        await client.close()
+        await server.stop()
+
+
+def test_min_model_lengths_cover_parsers() -> None:
+    """Jeder Parser kommt mit genau der Mindestlänge aus (kein IndexError)."""
+    lengths = sunspec.MIN_MODEL_LENGTH
+    sunspec.parse_inverter_float([0] * lengths[113])
+    sunspec.parse_inverter_int_sf([0] * lengths[103])
+    sunspec.parse_meter_float([0] * lengths[213])
+    sunspec.parse_meter_int_sf([0] * lengths[203])
+    sunspec.parse_nameplate([0] * lengths[sunspec.NAMEPLATE_MODEL])
+    sunspec.parse_status([0] * lengths[sunspec.STATUS_MODEL])
+    sunspec.parse_controls([0] * lengths[sunspec.CONTROLS_MODEL])
+    sunspec.parse_storage([0] * lengths[sunspec.STORAGE_MODEL])
+    sunspec.storage_available([0] * lengths[sunspec.STORAGE_MODEL])
+    assert sunspec.mppt_complete([0] * lengths[sunspec.MPPT_MODEL])
+    # Ein Register weniger darf bei keinem Parser reichen
+    for parser, model_id in (
+        (sunspec.parse_inverter_float, 113),
+        (sunspec.parse_inverter_int_sf, 103),
+        (sunspec.parse_meter_float, 213),
+        (sunspec.parse_meter_int_sf, 203),
+        (sunspec.parse_nameplate, sunspec.NAMEPLATE_MODEL),
+        (sunspec.parse_status, sunspec.STATUS_MODEL),
+        (sunspec.parse_controls, sunspec.CONTROLS_MODEL),
+        (sunspec.parse_storage, sunspec.STORAGE_MODEL),
+    ):
+        with pytest.raises(IndexError):
+            parser([0] * (lengths[model_id] - 1))
