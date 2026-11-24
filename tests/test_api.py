@@ -466,3 +466,37 @@ def test_min_model_lengths_cover_parsers() -> None:
     ):
         with pytest.raises(IndexError):
             parser([0] * (lengths[model_id] - 1))
+
+
+async def test_set_power_limit_is_atomic(gen24) -> None:
+    """Zwischen Lesen des Skalierungsfaktors und Schreiben läuft keine andere Abfrage."""
+    import asyncio
+
+    client = FroniusModbusClient("127.0.0.1", gen24.port)
+    try:
+        info = await client.read_inverter_info(1)
+        order: list[str] = []
+        real_read, real_write = client._read_raw, client._write_raw
+
+        async def read_raw(unit: int, address: int, count: int) -> list[int]:
+            order.append(f"read {count}")
+            await asyncio.sleep(0.05)  # anderen Aufgaben Gelegenheit geben
+            return await real_read(unit, address, count)
+
+        async def write_raw(unit: int, address: int, values: list[int]) -> None:
+            order.append("write")
+            await real_write(unit, address, values)
+
+        client._read_raw = read_raw  # type: ignore[method-assign]
+        client._write_raw = write_raw  # type: ignore[method-assign]
+
+        await asyncio.gather(
+            client.set_power_limit(info, 40, enabled=True, revert_seconds=300),
+            client.read(1, 40000, 2),
+        )
+        # Skalierungsfaktor (1 Register) und Schreiben direkt hintereinander
+        assert order == ["read 1", "write", "read 2"]
+        v = await client.read_inverter_data(info)
+        assert v["power_limit"] == 40.0 and v["power_limit_active"] is True
+    finally:
+        await client.close()

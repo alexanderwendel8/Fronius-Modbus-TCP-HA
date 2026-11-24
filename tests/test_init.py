@@ -680,3 +680,67 @@ async def test_entries_on_same_host_share_connection(
     finally:
         await server.stop()
         await other.stop()
+
+
+async def test_reconfigure(hass: HomeAssistant, gen24, gen24_plain) -> None:
+    """Verbindungsdaten ändern: gleiches Gerät an neuer Adresse, falsches Gerät, kein Gerät."""
+    entry = await _setup(hass, gen24.port)
+    assert entry.data[CONF_METER_UNIT_ID] == 200
+    ent_reg = er.async_get(hass)
+    entity_id = ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_ac_power")
+
+    async def _reconfigure(port: int, **extra):
+        result = await hass.config_entries.flow.async_init(
+            DOMAIN,
+            context={
+                "source": config_entries.SOURCE_RECONFIGURE,
+                "entry_id": entry.entry_id,
+            },
+        )
+        assert result["type"] is FlowResultType.FORM
+        assert result["step_id"] == "reconfigure"
+        result = await hass.config_entries.flow.async_configure(
+            result["flow_id"],
+            {CONF_HOST: "127.0.0.1", CONF_PORT: port, CONF_UNIT_ID: 1, **extra},
+        )
+        await hass.async_block_till_done()
+        return result
+
+    # Anderes Gerät (andere Seriennummer) unter der neuen Adresse → abgelehnt
+    result = await _reconfigure(gen24_plain.port, **{CONF_METER_UNIT_ID: 0})
+    assert result["type"] is FlowResultType.ABORT
+    assert result["reason"] == "wrong_device"
+    assert entry.data[CONF_PORT] == gen24.port
+
+    # Nichts erreichbar → Formular mit Fehler, Eintrag unverändert
+    result = await _reconfigure(1, **{CONF_METER_UNIT_ID: 0})
+    assert result["type"] is FlowResultType.FORM
+    assert result["errors"] == {"base": "cannot_connect"}
+    assert entry.data[CONF_PORT] == gen24.port
+
+    # Gleiches Gerät an neuer Adresse, Zähler abgewählt
+    moved = sim.FroniusSimulator({1: sim.gen24_plus_float(), 200: sim.meter_213()})
+    await moved.start()
+    try:
+        result = await _reconfigure(moved.port, **{CONF_METER_UNIT_ID: 0})
+        assert result["type"] is FlowResultType.ABORT
+        assert result["reason"] == "reconfigure_successful"
+        assert entry.data[CONF_PORT] == moved.port
+        assert entry.data[CONF_METER_UNIT_ID] is None
+        assert entry.data[CONF_SITE_REGISTERS] is False
+        assert entry.unique_id == "33333333"
+        # Entität bleibt dieselbe und liefert wieder Werte
+        assert ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_ac_power") == entity_id
+        assert hass.states.get(entity_id).state not in ("unknown", "unavailable")
+        assert entry.runtime_data.meter is None
+
+        # Zählerfeld leer → automatische Suche findet ihn wieder
+        result = await _reconfigure(moved.port)
+        assert result["reason"] == "reconfigure_successful"
+        assert entry.data[CONF_METER_UNIT_ID] == 200
+        assert entry.runtime_data.meter is not None
+
+        assert await hass.config_entries.async_unload(entry.entry_id)
+        await hass.async_block_till_done()
+    finally:
+        await moved.stop()

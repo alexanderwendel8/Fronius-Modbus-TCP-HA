@@ -10,7 +10,9 @@
 - CI beschleunigt: pip-Cache, keine doppelten Läufe mehr bei Pull Requests, überholte Läufe werden abgebrochen.
 - Zu kurze SunSpec-Modelle bringen die Abfrage nicht mehr zum Absturz: Ein Modell, das kürzer ist als von der Auswertung benötigt, wird mit einer Warnung im Log übersprungen; die übrigen Werte bleiben verfügbar. Unvollständige Modbus-Antworten werden als Lesefehler gemeldet.
 - Mehrere Wechselrichter am selben Datamanager teilen sich jetzt eine Modbus-Verbindung; ihre Abfragen laufen nacheinander statt parallel (Vorgabe von Fronius).
-- pymodbus: Mindestversion 3.11.2 (die von Home Assistant 2026.2 vorgegebene). Die CI testet mit 3.11.2 und der neuesten Version. Der Testsimulator ist ein eigener kleiner Modbus-TCP-Server und hängt nicht mehr vom Server aus pymodbus ab.
+- pymodbus: Mindestversion 3.11.2 (die von Home Assistant 2026.2 vorgegebene). Die CI testet mit 3.11.2, 3.13.1 (Vorgabe von Home Assistant 2026.11) und der neuesten Version. Der Testsimulator ist ein eigener kleiner Modbus-TCP-Server und hängt nicht mehr vom Server aus pymodbus ab.
+- Leistungsbegrenzung: Skalierungsfaktor lesen und Vorgabe schreiben laufen jetzt als ein unteilbarer Ablauf; eine gleichzeitige Abfrage kann sich nicht mehr dazwischenschieben. Gelesen wird dabei nur noch das eine Register statt des ganzen Modells 123.
+- Neu: Verbindungsdaten nachträglich ändern (**Reconfigure** im Menü des Eintrags) – Host, Port und Modbus-Adressen lassen sich anpassen, ohne den Eintrag zu löschen. Ein Gerät mit anderer Seriennummer wird abgelehnt.
 - Neuer Workflow `update-check.yml`: prüft jeden Montag GitHub Actions, gepinnte Python-Pakete und neue
   Home-Assistant-Releases (samt Python-Mindestversion) und legt für jede veraltete Komponente ein Issue mit
   dem Label `aktualisierung` an; ist sie wieder aktuell, wird das Issue geschlossen. Logik in
