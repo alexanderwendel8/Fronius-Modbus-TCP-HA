@@ -23,6 +23,7 @@
 - Neu: mehrere Smart Meter je Eintrag. Weitere Zähler (GEN24: 201–204, Datamanager: 241–244) werden bei der Einrichtung oder über **Reconfigure** mit ihren Modbus-Adressen eingetragen; jeder erscheint als eigenes Gerät. Bisher nur gegen simulierte Geräte getestet.
 - Eine geänderte Rückfallzeit wirkt jetzt sofort auf gerade aktive Vorgaben (Leistungsbegrenzung, Standby, Speichergrenzen) und nicht erst beim nächsten Schreiben.
 - Diagnose-Download erweitert: Optionen, pymodbus-Version, Abfrageintervall und die rohen Register aller SunSpec-Modelle von Wechselrichter und Smart Metern (Datamanager: zusätzlich Fronius-Register). Host und Seriennummern werden entfernt.
+- Start ohne erreichbares Gerät: Die zuletzt erkannte Gerätestruktur wird gespeichert. Antwortet der Wechselrichter beim Start von Home Assistant nicht (z. B. nachts), wird der Eintrag trotzdem eingerichtet; die Entitäten sind bis zur ersten Antwort „nicht verfügbar“, statt ganz zu fehlen.
 
 ## 0.1.0
 

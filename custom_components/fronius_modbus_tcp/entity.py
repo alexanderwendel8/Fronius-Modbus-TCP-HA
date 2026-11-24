@@ -122,7 +122,12 @@ def drop_unsupported(
     for entity in entities:
         desc = entity.entity_description
         key = entity._data_key  # Schlüssel inkl. Zähler-Präfix
-        if getattr(desc, "skip_if_unsupported", False) and key in values and values[key] is None:
+        # Ohne Daten (Start mit gespeicherter Struktur, Gerät schläft) ist unbekannt,
+        # ob ein optionaler Wert unterstützt wird → nur bereits bekannte anlegen
+        unknown = coordinator.data is None
+        if getattr(desc, "skip_if_unsupported", False) and (
+            unknown or (key in values and values[key] is None)
+        ):
             entity_id = registry.async_get_entity_id(
                 platform, DOMAIN, entity.unique_id or ""
             )

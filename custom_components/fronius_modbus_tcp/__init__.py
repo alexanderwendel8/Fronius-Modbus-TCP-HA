@@ -4,10 +4,11 @@ from __future__ import annotations
 
 from homeassistant.const import CONF_HOST, CONF_PORT, Platform
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import ConfigEntryNotReady
 
 from .client_pool import async_acquire_client, async_release_client
 from .const import CONF_EXTRA_METER_UNIT_IDS, CONF_METER_UNIT_ID, CONF_UNIT_ID
-from .coordinator import FroniusConfigEntry, FroniusCoordinator
+from .coordinator import FroniusConfigEntry, FroniusCoordinator, structure_store
 
 PLATFORMS: list[Platform] = [
     Platform.BINARY_SENSOR,
@@ -34,6 +35,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: FroniusConfigEntry) -> b
     )
     try:
         await coordinator.async_config_entry_first_refresh()
+    except ConfigEntryNotReady:
+        # Gerätestruktur aus dem Speicher (Wechselrichter schläft): trotzdem
+        # einrichten, die Entitäten sind bis zur ersten Antwort nicht verfügbar
+        if not coordinator.started_from_cache:
+            await async_release_client(hass, host, port)
+            raise
     except Exception:
         await async_release_client(hass, host, port)
         raise
@@ -57,3 +64,8 @@ async def async_unload_entry(hass: HomeAssistant, entry: FroniusConfigEntry) -> 
             hass, entry.data[CONF_HOST], entry.data[CONF_PORT]
         )
     return unloaded
+
+
+async def async_remove_entry(hass: HomeAssistant, entry: FroniusConfigEntry) -> None:
+    """Eintrag gelöscht: gespeicherte Gerätestruktur entfernen."""
+    await structure_store(hass, entry.entry_id).async_remove()

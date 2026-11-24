@@ -223,6 +223,14 @@ actions:
     target: {entity_id: switch.symo_3_0_3_m_power_limit_active}
 ```
 
+## Verhalten, wenn das Gerät nicht antwortet
+
+Die Integration merkt sich die zuletzt erkannte Gerätestruktur (Modelle, Strings, Speicher, Smart Meter).
+Antwortet der Wechselrichter beim Start von Home Assistant nicht – etwa nachts, wenn ein Gerät am
+Datamanager abgeschaltet ist –, wird der Eintrag trotzdem eingerichtet. Die Entitäten sind dann
+„nicht verfügbar“ und liefern wieder Werte, sobald das Gerät antwortet; dabei lädt der Eintrag einmal neu
+und erkennt die Struktur frisch. Nur bei der allerersten Einrichtung muss das Gerät erreichbar sein.
+
 ## Diagnose und Fehlermeldungen
 
 Unter *Settings → Devices & services → Fronius Modbus TCP* lässt sich über das Drei-Punkte-Menü des Eintrags
