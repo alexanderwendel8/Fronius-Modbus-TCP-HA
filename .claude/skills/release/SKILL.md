@@ -135,6 +135,11 @@ Prüfen vor dem Commit: `python3 -c "import yaml; print(list(yaml.safe_load(open
    Changelog-Abschnitt, Start nicht auf `main`.
 6. Dem Nutzer den Link `https://github.com/<owner>/<repo>/releases/tag/vX.Y.Z` geben.
 
+**Dieses Projekt:** Changelog und README gibt es zusätzlich auf Englisch (`CHANGELOG.en.md`,
+`README.en.md`, siehe `CLAUDE.md`). Den Abschnitt `## X.Y.Z` in beiden Changelogs anlegen
+(im englischen heißt der Abschnitt für Unveröffentlichtes `## Unreleased`); `tests/test_docs.py`
+prüft, dass beide gleich aufgebaut sind. Die Release Notes kommen weiter aus `CHANGELOG.md`.
+
 ## C. Vorabversion (nur dieses Projekt)
 
 Zum Testen vor einem Release, ohne PR: Workflow `prerelease.yml` auf `main` starten mit der
