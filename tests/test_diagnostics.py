@@ -112,3 +112,44 @@ async def test_diagnostics_datamanager(hass: HomeAssistant, socket_enabled) -> N
         await hass.async_block_till_done()
     finally:
         await server.stop()
+
+
+async def test_diagnostics_entry_not_loaded(hass: HomeAssistant, socket_enabled) -> None:
+    """Gerät nicht erreichbar, Eintrag in Wiederholung: Download liefert Zustand statt Absturz."""
+    # erster Start ohne Gerät: nichts gespeichert
+    entry = _entry(sim.free_port(), "33333333", **{CONF_METER_UNIT_ID: None})
+    entry.add_to_hass(hass)
+    assert not await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+
+    diag = await async_get_config_entry_diagnostics(hass, entry)
+    assert diag["loaded"] is False
+    assert diag["state"] == "setup_retry"
+    assert "Wechselrichter nicht erkannt" in diag["reason"]
+    assert diag["options"] == {CONF_ALLOW_CONTROL: True}
+    assert diag["stored_structure"] is None
+    assert "127.0.0.1" not in json.dumps(diag)
+    await hass.config_entries.async_unload(entry.entry_id)
+
+    # mit gespeicherter Struktur aus einem früheren Lauf, Eintrag nicht geladen
+    server = sim.FroniusSimulator({1: sim.gen24_plus_float(), 200: sim.meter_213()})
+    await server.start()
+    try:
+        second = _entry(server.port, "33333334", **{CONF_METER_UNIT_ID: 200})
+        second.add_to_hass(hass)
+        assert await hass.config_entries.async_setup(second.entry_id)
+        await hass.async_block_till_done()
+        assert (await async_get_config_entry_diagnostics(hass, second))["loaded"] is True
+        assert await hass.config_entries.async_unload(second.entry_id)
+        await hass.async_block_till_done()
+    finally:
+        await server.stop()
+
+    diag = await async_get_config_entry_diagnostics(hass, second)
+    assert diag["loaded"] is False and diag["state"] == "not_loaded"
+    stored = diag["stored_structure"]
+    assert stored["inverter"]["model"] == "Symo GEN24 10.0 Plus"
+    assert list(stored["meters"]) == ["200"]
+    text = json.dumps(diag)
+    for secret in ("33333333", "M0000001", "127.0.0.1"):
+        assert secret not in text, secret

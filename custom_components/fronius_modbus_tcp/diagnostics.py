@@ -17,7 +17,7 @@ from homeassistant.core import HomeAssistant
 
 from . import sunspec
 from .api import FroniusModbusClient, FroniusModbusError, SunSpecDeviceInfo
-from .coordinator import FroniusConfigEntry
+from .coordinator import FroniusConfigEntry, FroniusCoordinator, structure_store
 
 TO_REDACT = {CONF_HOST, "serial_number"}
 
@@ -72,10 +72,36 @@ def _package_version(name: str) -> str | None:
         return None
 
 
+async def _not_loaded(hass: HomeAssistant, entry: FroniusConfigEntry) -> dict[str, Any]:
+    """Eintrag nicht geladen (z. B. Gerät beim Start nicht erreichbar).
+
+    Ohne laufende Abfrage gibt es keine Werte und keine Rohregister. Geliefert
+    wird, was für die Fehlersuche trotzdem hilft: Eintrag, Zustand samt
+    Fehlermeldung und die zuletzt gespeicherte Gerätestruktur.
+    """
+    stored = await structure_store(hass, entry.entry_id).async_load()
+    # Die Fehlermeldung nennt den Host ("Verbindung zu <host>:502 fehlgeschlagen")
+    reason = entry.reason
+    host = entry.data.get(CONF_HOST)
+    if reason and host:
+        reason = reason.replace(str(host), "**REDACTED**")
+    return {
+        "loaded": False,
+        "state": entry.state.value,
+        "reason": reason,
+        "entry": async_redact_data(dict(entry.data), TO_REDACT),
+        "options": dict(entry.options),
+        "pymodbus": _package_version("pymodbus"),
+        "stored_structure": async_redact_data(stored, TO_REDACT) if stored else None,
+    }
+
+
 async def async_get_config_entry_diagnostics(
     hass: HomeAssistant, entry: FroniusConfigEntry
 ) -> dict[str, Any]:
-    coordinator = entry.runtime_data
+    coordinator: FroniusCoordinator | None = getattr(entry, "runtime_data", None)
+    if coordinator is None:
+        return await _not_loaded(hass, entry)
     client = coordinator.client
     inverter = coordinator.inverter
     primary = coordinator.meter
@@ -89,6 +115,7 @@ async def async_get_config_entry_diagnostics(
     }
 
     return {
+        "loaded": True,
         "entry": async_redact_data(dict(entry.data), TO_REDACT),
         "options": dict(entry.options),
         "pymodbus": _package_version("pymodbus"),
