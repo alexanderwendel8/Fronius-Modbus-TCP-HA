@@ -135,6 +135,19 @@ Prüfen vor dem Commit: `python3 -c "import yaml; print(list(yaml.safe_load(open
    Changelog-Abschnitt, Start nicht auf `main`.
 6. Dem Nutzer den Link `https://github.com/<owner>/<repo>/releases/tag/vX.Y.Z` geben.
 
+## C. Vorabversion (nur dieses Projekt)
+
+Zum Testen vor einem Release, ohne PR: Workflow `prerelease.yml` auf `main` starten mit der
+geplanten nächsten Version (höher als `manifest.json`):
+```
+mcp__github__actions_run_trigger(method="run_workflow", owner=…, repo=…,
+    workflow_id="prerelease.yml", ref="main", inputs={"version": "X.Y.Z"})
+```
+Ergebnis: nach den Prüfungen aus `validate.yml` Tag und GitHub-Pre-Release `vX.Y.Zb<N>` (N zählt
+automatisch hoch), Notizen aus `## Unveröffentlicht` (darf nicht leer sein). Der Marketplace bietet es
+nur bei eingeschaltetem Schalter **Pre-release** an. Das spätere Release `X.Y.Z` läuft unverändert nach
+Abschnitt B.
+
 ## Stolpersteine
 
 - **Prüfungen vor dem Release:** Hat das Projekt einen Prüf-Workflow (Tests, Lint), diesen mit

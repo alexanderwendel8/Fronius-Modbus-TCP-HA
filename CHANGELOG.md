@@ -2,6 +2,7 @@
 
 ## Unveröffentlicht
 
+- Entwicklung: Neuer Workflow `prerelease.yml` erstellt manuell eine Vorabversion (`vX.Y.Zb1`, `b2` …) vom aktuellen Stand von `main`, mit den Notizen aus „Unveröffentlicht“. So lassen sich Änderungen über den Marketplace testen (Schalter **Pre-release** beim Repository), ohne ein Release zu machen.
 - Behoben: Der Diagnose-Download brach mit einem internen Fehler ab, solange der Eintrag nicht geladen war (z. B. Gerät beim Start nicht erreichbar). Er liefert jetzt Zustand, Fehlermeldung, Eintragsdaten und die zuletzt gespeicherte Gerätestruktur.
 
 ## 0.2.0
