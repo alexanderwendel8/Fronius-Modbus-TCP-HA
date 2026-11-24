@@ -58,6 +58,29 @@ grep -rli "marketplace" /home/user/home-assistant/home-assistant.io/source/_docs
 - Menü- und Schaltflächennamen so übernehmen, wie die Doku sie schreibt (englisch, fett), ggf. mit deutscher
   Erläuterung.
 
+## Dokumentation zweisprachig (Deutsch und Englisch)
+
+README und Changelog gibt es in zwei Fassungen, die **immer gleichlaufend gepflegt** werden:
+
+| Deutsch | Englisch |
+|---|---|
+| `README.md` | `README.en.md` |
+| `CHANGELOG.md` | `CHANGELOG.en.md` |
+
+- Jede Änderung an einer Fassung kommt **im selben Commit** in die andere – inhaltlich gleich, gleicher
+  Aufbau (Überschriften, Tabellenzeilen, Aufzählungspunkte, Codeblöcke). Keine Fassung darf nachhinken.
+- `tests/test_docs.py` prüft das: gleiche Gliederung, gleiche Tabellen- und Punktzahl je Abschnitt,
+  gleiche Versionsabschnitte, gegenseitige Sprachlinks in der ersten Zeile. Schlägt der Test fehl,
+  fehlt in einer Fassung etwas.
+- Deutsch ist die Quelle für die Workflows: Release Notes kommen aus `CHANGELOG.md` (`## X.Y.Z`),
+  Vorabversionen aus `## Unveröffentlicht`; der Update-Check liest die Tabelle „Getestete Geräte“ aus
+  `README.md`. Im englischen Changelog heißt dieser Abschnitt `## Unreleased`, die Versionsüberschriften
+  sind identisch.
+- Home-Assistant-Menünamen in beiden Fassungen englisch und fett wie in der offiziellen Doku;
+  Fronius-Bezeichnungen im Englischen wie im englischen Teil der Handbücher
+  (z. B. „Inverter control via Modbus“, „Allow Control“, „Restrict Control“, „Data output via Modbus“).
+- Entitätsnamen im Englischen wie in `translations/en.json`.
+
 ## Entwicklung
 
 - SunSpec-Dekodierung ohne HA-Abhängigkeit in `sunspec.py`; Modbus-Zugriff in `api.py`.
@@ -82,7 +105,7 @@ grep -rli "marketplace" /home/user/home-assistant/home-assistant.io/source/_docs
 - Das Ergebnis kurz zusammenfassen und den Nutzer fragen, ob und welche Issues abgearbeitet
   werden sollen. **Ohne Zustimmung nichts ändern.** Gibt es keine offenen Issues, das nur
   in einem Satz erwähnen.
-- Beim Abarbeiten gelten die übrigen Regeln (CHANGELOG-Eintrag, Tests, CI-Matrix); im Pull
+- Beim Abarbeiten gelten die übrigen Regeln (CHANGELOG-Eintrag in beiden Sprachen, Tests, CI-Matrix); im Pull
   Request das Issue mit `Closes #<Nummer>` verknüpfen.
 - `pymodbus==3.11.2` in `requirements_test.txt` ist absichtlich die Mindestversion und trägt den
   Kommentar `# update-check: ignore`; so markierte Pins prüft der Workflow nicht.

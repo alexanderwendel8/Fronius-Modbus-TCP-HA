@@ -1,3 +1,5 @@
+**Deutsch** | [English](README.en.md)
+
 # Fronius Modbus TCP für Home Assistant
 
 Custom Integration, die Fronius-Wechselrichter lokal per **Modbus TCP (SunSpec)** ausliest – ohne Cloud
@@ -5,7 +7,7 @@ und ohne Solar.web. Unterstützt werden GEN24/Tauro/Verto sowie ältere Geräte 
 (Symo, Primo, Galvo, Eco, Symo Hybrid …), jeweils mit PV-Strings, Batterie und Fronius Smart Meter.
 Optional lassen sich Leistungsbegrenzung und Einspeisung aus Home Assistant steuern.
 
-> **Status:** Version 0.1 – im Einsatz an einem echten Symo 3.0-3-M am Datamanager 2.0
+> **Status:** Version 0.2 – im Einsatz an einem echten Symo 3.0-3-M am Datamanager 2.0
 > (siehe [Getestete Geräte](#getestete-geräte)); GEN24, Batterie und Smart Meter bisher nur gegen
 > simulierte Geräte. Rückmeldungen zu weiteren Geräten sind willkommen.
 
@@ -306,7 +308,7 @@ in [`.github/scripts/check_updates.py`](.github/scripts/check_updates.py); lokal
 
 ## Releases
 
-Änderungen stehen in [`CHANGELOG.md`](CHANGELOG.md). Releases erstellt der Workflow `release.yml`
+Änderungen stehen in [`CHANGELOG.md`](CHANGELOG.md) (englisch: [`CHANGELOG.en.md`](CHANGELOG.en.md)). Releases erstellt der Workflow `release.yml`
 mit den Notizen aus dem Changelog – entweder per Tag `vX.Y.Z` oder manuell unter
 *Actions → Release → Run workflow* (auf `main`, Eingabe z. B. `0.1.0`; der Tag wird dann gesetzt).
 Die Version muss zu `manifest.json` passen. Vor dem Release laufen dieselben Prüfungen wie bei jedem
