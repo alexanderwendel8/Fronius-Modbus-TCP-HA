@@ -33,9 +33,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Home Assistant gibt die pymodbus-Version vor: 3.8.3 (HA 2025.3, älteste
-        # unterstützte), 3.11.2 (HA 2026.2); "latest" zeigt Brüche neuer Versionen früh.
-        pymodbus: ["3.8.3", "3.11.2", "latest"]
+        # Home Assistant gibt die pymodbus-Version vor: 3.11.2 (HA 2026.2, älteste
+        # unterstützte); "latest" zeigt Brüche neuer Versionen früh.
+        pymodbus: ["3.11.2", "latest"]
     name: tests (pymodbus ${{ matrix.pymodbus }})
     steps:
       - uses: actions/checkout@v4

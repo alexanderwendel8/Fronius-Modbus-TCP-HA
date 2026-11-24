@@ -1,5 +1,5 @@
 pytest-homeassistant-custom-component
 # Laufzeit-Abhängigkeit der Integration (manifest.json). Home Assistant gibt die
-# Version vor (2025.3: 3.8.3, 2026.2: 3.11.2); die CI testet zusätzlich die älteste
-# unterstützte und die neueste Version (Matrix in .github/workflows/validate.yml).
+# Version vor (2026.2: 3.11.2 = älteste unterstützte); die CI testet zusätzlich die
+# neueste Version (Matrix in .github/workflows/validate.yml).
 pymodbus==3.11.2
