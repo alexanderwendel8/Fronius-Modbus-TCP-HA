@@ -6,21 +6,20 @@ import logging
 from typing import Any
 
 import voluptuous as vol
-
 from homeassistant.config_entries import (
     ConfigEntry,
     ConfigFlow,
     ConfigFlowResult,
     OptionsFlow,
 )
-from homeassistant.core import callback
 from homeassistant.const import CONF_HOST, CONF_PORT, UnitOfTime
-from homeassistant.helpers.service_info.dhcp import DhcpServiceInfo
+from homeassistant.core import callback
 from homeassistant.helpers.selector import (
     NumberSelector,
     NumberSelectorConfig,
     NumberSelectorMode,
 )
+from homeassistant.helpers.service_info.dhcp import DhcpServiceInfo
 
 from .api import (
     FroniusConnectionError,
@@ -41,9 +40,9 @@ from .const import (
     DEFAULT_UNIT_ID,
     DOMAIN,
     MANUFACTURER,
+    MAX_SCAN_INTERVAL_SECONDS,
     METER_UNIT_ID_CANDIDATES,
     METER_UNIT_ID_NONE,
-    MAX_SCAN_INTERVAL_SECONDS,
     MIN_SCAN_INTERVAL_SECONDS,
 )
 

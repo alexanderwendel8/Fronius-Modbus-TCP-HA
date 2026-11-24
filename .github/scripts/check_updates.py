@@ -26,17 +26,17 @@ needs ``GITHUB_TOKEN`` and ``GITHUB_REPOSITORY`` (set in GitHub Actions).
 from __future__ import annotations
 
 import argparse
-from collections.abc import Callable, Iterator
-from dataclasses import dataclass
 import json
 import os
-from pathlib import Path
 import re
 import sys
-from typing import Any
 import urllib.error
 import urllib.parse
 import urllib.request
+from collections.abc import Callable, Iterator
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 LABEL = "aktualisierung"

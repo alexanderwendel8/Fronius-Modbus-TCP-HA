@@ -276,6 +276,9 @@ pip install -r requirements_test.txt
 pytest
 ```
 
+Vor einem Commit außerdem `ruff check .` (Regeln in `pyproject.toml`) und `mypy` (Typprüfung des
+Integrationscodes) ausführen; beide laufen auch in der CI.
+
 Die Tests starten simulierte Fronius-Geräte (`tests/simulator.py`) als echten Modbus-TCP-Server und
 richten die Integration in einer Home-Assistant-Testinstanz ein.
 

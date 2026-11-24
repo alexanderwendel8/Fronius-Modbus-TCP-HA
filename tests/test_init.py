@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import pytest
-
 from homeassistant import config_entries
 from homeassistant.const import CONF_HOST, CONF_PORT
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
-from homeassistant.helpers import device_registry as dr, entity_registry as er
+from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers import entity_registry as er
 
 from custom_components.fronius_modbus_tcp.const import (
     CONF_ALLOW_CONTROL,
@@ -579,7 +579,7 @@ async def test_power_low_is_no_error(hass: HomeAssistant, socket_enabled) -> Non
 async def test_site_registers_stored_for_old_entry(
     hass: HomeAssistant, socket_enabled
 ) -> None:
-    """Eintrag ohne gespeicherten Gerätetyp: Ergebnis wird nachgetragen und danach nicht mehr geprüft."""
+    """Eintrag ohne gespeicherten Gerätetyp: Ergebnis nachtragen, danach nicht mehr prüfen."""
     from unittest.mock import patch
 
     from pytest_homeassistant_custom_component.common import MockConfigEntry
@@ -787,7 +787,8 @@ async def test_storage_control_entities(hass: HomeAssistant, gen24, gen24_plain)
         assert eid("sensor", key) is None, key
     # Status und Steuermodus bleiben als Sensoren
     assert eid("sensor", "battery_soc")
-    charge, discharge = eid("number", "battery_charge_limit"), eid("number", "battery_discharge_limit")
+    charge = eid("number", "battery_charge_limit")
+    discharge = eid("number", "battery_discharge_limit")
     reserve = eid("number", "battery_min_reserve")
     discharge_on = eid("switch", "battery_discharge_limit_active")
     charge_on = eid("switch", "battery_charge_limit_active")
@@ -848,7 +849,7 @@ async def test_scan_interval_option(hass: HomeAssistant, gen24) -> None:
 
     result = await hass.config_entries.options.async_init(entry.entry_id)
     # außerhalb 5–60 s wird abgelehnt
-    with pytest.raises(Exception):  # noqa: B017, PT011 - InvalidData aus dem Schema
+    with pytest.raises(Exception):  # noqa: B017 - InvalidData aus dem Schema
         await hass.config_entries.options.async_configure(
             result["flow_id"], {CONF_ALLOW_CONTROL: True, CONF_SCAN_INTERVAL: 2}
         )
@@ -867,7 +868,7 @@ async def test_scan_interval_option(hass: HomeAssistant, gen24) -> None:
     ent_reg = er.async_get(hass)
     revert = ent_reg.async_get_entity_id("number", DOMAIN, "33333333_revert_time")
     assert hass.states.get(revert).attributes["min"] == 135
-    with pytest.raises(Exception):  # noqa: B017, PT011 - ServiceValidationError
+    with pytest.raises(Exception):  # noqa: B017 - ServiceValidationError
         await hass.services.async_call(
             "number", "set_value", {"entity_id": revert, "value": 60}, blocking=True
         )

@@ -1,3 +1,32 @@
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+extend-exclude = ["docs"]
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "W",  # pycodestyle, pyflakes
+    "I",            # Reihenfolge der Importe
+    "UP",           # veraltete Schreibweisen
+    "B",            # typische Fehlerquellen (bugbear)
+    "SIM",          # vereinfachbare Konstrukte
+    "C4", "PIE", "RET",
+    "ASYNC",        # blockierende Aufrufe in async-Code
+    "RUF",
+]
+ignore = [
+    # Deutsche Texte enthalten bewusst –, × und „typografische“ Zeichen
+    "RUF001", "RUF002", "RUF003",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["custom_components", "tests"]
+
+[tool.mypy]
+ignore_missing_imports = true
+warn_unused_ignores = true
+files = ["custom_components/fronius_modbus_tcp"]
