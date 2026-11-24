@@ -27,6 +27,20 @@ END_MODEL = 0xFFFF
 MPPT_HEADER_LEN = 8
 MPPT_MODULE_LEN = 20
 
+# Mindestlänge des Modellrumpfs, damit die Parser unten alle Register finden
+# (höchster verwendeter Offset + 1). Kürzere Modelle werden nicht ausgewertet.
+MIN_MODEL_LENGTH: dict[int, int] = {
+    **dict.fromkeys(INVERTER_INT_SF_MODELS, 50),
+    **dict.fromkeys(INVERTER_FLOAT_MODELS, 60),
+    **dict.fromkeys(METER_INT_SF_MODELS, 53),
+    **dict.fromkeys(METER_FLOAT_MODELS, 74),
+    NAMEPLATE_MODEL: 25,
+    STATUS_MODEL: 44,
+    CONTROLS_MODEL: 24,
+    STORAGE_MODEL: 24,
+    MPPT_MODEL: MPPT_HEADER_LEN,
+}
+
 # Rollen der Module in Modell 160
 ROLE_PV = "pv"
 ROLE_BATTERY_CHARGE = "battery_charge"  # GEN24/Verto: "StCha n"
@@ -290,6 +304,11 @@ def parse_inverter_int_sf(regs: list[int]) -> dict[str, Any]:
 
 def mppt_module_count(regs: list[int]) -> int:
     return to_uint16(regs[6]) or 0
+
+
+def mppt_complete(regs: list[int]) -> bool:
+    """Enthält der Rumpf alle Module, die der Kopf ankündigt?"""
+    return len(regs) >= MPPT_HEADER_LEN + mppt_module_count(regs) * MPPT_MODULE_LEN
 
 
 def mppt_module_names(regs: list[int]) -> list[str]:

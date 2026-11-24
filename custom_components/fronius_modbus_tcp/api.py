@@ -184,7 +184,13 @@ class FroniusModbusClient:
             registers: list[int] = []
             while count > 0:
                 chunk = min(count, MAX_REGISTERS_PER_READ)
-                registers += await self._read_raw(unit, address, chunk)
+                regs = await self._read_raw(unit, address, chunk)
+                if len(regs) != chunk:
+                    raise FroniusModbusError(
+                        f"Unvollständige Antwort (Unit {unit}) beim Lesen von "
+                        f"{address}: {len(regs)} statt {chunk} Register"
+                    )
+                registers += regs
                 address += chunk
                 count -= chunk
             return registers
@@ -217,6 +223,17 @@ class FroniusModbusClient:
             address += 2 + length
         if sunspec.COMMON_MODEL not in models:
             raise FroniusModbusError(f"SunSpec Common Model fehlt (Unit {unit})")
+        # Zu kurze Modelle würden die Parser mit einem IndexError abbrechen lassen
+        # und damit die gesamte Abfrage – sie werden wie "nicht vorhanden" behandelt.
+        for model_id, (_, length) in list(models.items()):
+            minimum = sunspec.MIN_MODEL_LENGTH.get(model_id, 0)
+            if length < minimum:
+                _LOGGER.warning(
+                    "Unit %s: SunSpec-Modell %s ist mit %s Registern kürzer als "
+                    "erwartet (mindestens %s) und wird nicht ausgewertet",
+                    unit, model_id, length, minimum,
+                )
+                del models[model_id]
         _LOGGER.debug("Unit %s: erkannte SunSpec-Modelle %s", unit, models)
         return models
 
@@ -267,6 +284,14 @@ class FroniusModbusClient:
 
         if sunspec.MPPT_MODEL in models:
             regs = await self.read_model(unit, models, sunspec.MPPT_MODEL)
+            if not sunspec.mppt_complete(regs):
+                _LOGGER.warning(
+                    "Unit %s: Modell 160 kündigt %s Module an, ist aber nur %s "
+                    "Register lang – MPPT-Werte werden nicht ausgewertet",
+                    unit, sunspec.mppt_module_count(regs), len(regs),
+                )
+                del models[sunspec.MPPT_MODEL]
+        if sunspec.MPPT_MODEL in models:
             raw_names = sunspec.mppt_module_names(regs)
             info.mppt_roles = sunspec.mppt_roles(raw_names, info.has_storage)
             info.hybrid_storage = sunspec.ROLE_BATTERY_HYBRID in info.mppt_roles
