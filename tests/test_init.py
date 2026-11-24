@@ -152,6 +152,65 @@ async def test_meter_not_found(hass: HomeAssistant, gen24) -> None:
     assert result["errors"] == {CONF_METER_UNIT_ID: "meter_not_found"}
 
 
+async def test_meter_found_later(hass: HomeAssistant, gen24, caplog) -> None:
+    """Zähler antwortet beim Start nicht → spätere Suche findet ihn, Entitäten erscheinen."""
+    from unittest.mock import patch
+
+    from homeassistant.util import dt as dt_util
+    from pytest_homeassistant_custom_component.common import MockConfigEntry
+
+    from custom_components.fronius_modbus_tcp.api import (
+        FroniusModbusClient,
+        FroniusModbusError,
+    )
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        unique_id="33333333",
+        data={
+            CONF_HOST: "127.0.0.1",
+            CONF_PORT: gen24.port,
+            CONF_UNIT_ID: 1,
+            CONF_METER_UNIT_ID: 200,
+        },
+    )
+    entry.add_to_hass(hass)
+    ent_reg = er.async_get(hass)
+    uid = "meter_M0000001_meter_power"
+
+    with patch.object(
+        FroniusModbusClient,
+        "read_meter_info",
+        side_effect=FroniusModbusError("keine Antwort"),
+    ) as probe:
+        assert await hass.config_entries.async_setup(entry.entry_id)
+        await hass.async_block_till_done()
+        assert "Die Suche wird alle 5 Minuten wiederholt" in caplog.text
+        assert not ent_reg.async_get_entity_id("sensor", DOMAIN, uid)
+        coordinator = entry.runtime_data
+
+        # Vor Ablauf des Intervalls wird nicht erneut gesucht
+        await coordinator.async_refresh()
+        assert probe.call_count == 1
+
+        # Intervall abgelaufen: erste Wiederholung erfolglos
+        coordinator._meter_next_retry = dt_util.utcnow()
+        await coordinator.async_refresh()
+        assert probe.call_count == 2
+        assert not ent_reg.async_get_entity_id("sensor", DOMAIN, uid)
+
+    # Zähler antwortet wieder → Eintrag lädt neu, Zähler-Entitäten erscheinen
+    coordinator._meter_next_retry = dt_util.utcnow()
+    await coordinator.async_refresh()
+    await hass.async_block_till_done()
+    assert "Eintrag wird neu geladen" in caplog.text
+    state = _state(hass, ent_reg, uid)
+    assert state is not None and state.state not in ("unknown", "unavailable")
+
+    assert await hass.config_entries.async_unload(entry.entry_id)
+    await hass.async_block_till_done()
+
+
 async def test_gen24_without_battery(hass: HomeAssistant, gen24_plain) -> None:
     entry = await _setup(hass, gen24_plain.port)
     assert entry.data[CONF_METER_UNIT_ID] is None
