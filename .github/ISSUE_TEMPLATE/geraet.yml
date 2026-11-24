@@ -1,0 +1,45 @@
+name: Gerät getestet / Device report
+description: Rückmeldung, wie die Integration mit einem bestimmten Gerät funktioniert (works or does not work with a device).
+body:
+  - type: markdown
+    attributes:
+      value: |
+        GEN24, Speicher und Smart Meter sind bisher nur gegen simulierte Geräte getestet.
+        Rückmeldungen von echten Anlagen helfen sehr – auch wenn alles funktioniert.
+  - type: input
+    id: device
+    attributes:
+      label: Gerät und Firmware
+      placeholder: "z. B. Symo GEN24 10.0 Plus, Firmware 1.36.5-1, BYD HVS 10.2, Smart Meter TS 65A-3"
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Version der Integration und von Home Assistant
+      placeholder: "z. B. 0.2.0 auf Home Assistant 2026.11.2"
+    validations:
+      required: true
+  - type: checkboxes
+    id: works
+    attributes:
+      label: Was funktioniert?
+      options:
+        - label: Einrichtung und Messwerte des Wechselrichters
+        - label: PV-Strings (MPPT)
+        - label: Batterie (Ladezustand, Leistung)
+        - label: Smart Meter
+        - label: Steuerung (Leistungsbegrenzung, Einspeisung)
+        - label: Speichersteuerung (Lade-/Entladegrenze, Mindestreserve)
+  - type: textarea
+    id: notes
+    attributes:
+      label: Auffälligkeiten
+      description: Fehlende oder falsche Werte, unerwartetes Verhalten, Besonderheiten der Anlage.
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnosedatei
+      description: >
+        Settings → Devices & services → Fronius Modbus TCP → Drei-Punkte-Menü des Eintrags →
+        **Download diagnostics**. Host und Seriennummern sind darin entfernt.

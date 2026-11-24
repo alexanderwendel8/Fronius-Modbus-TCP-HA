@@ -18,10 +18,6 @@ from .coordinator import FroniusCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 
-DEVICE_INVERTER = "inverter"
-DEVICE_METER = "meter"
-
-
 def inverter_device_id(coordinator: FroniusCoordinator) -> str:
     return coordinator.inverter.serial_number or coordinator.config_entry.entry_id
 
@@ -43,18 +39,16 @@ class FroniusEntity(CoordinatorEntity[FroniusCoordinator]):
         self,
         coordinator: FroniusCoordinator,
         key: str,
-        device: str = DEVICE_INVERTER,
         meter: MeterInfo | None = None,
     ) -> None:
+        """meter: Zähler, zu dem die Entität gehört; None = Wechselrichter."""
         super().__init__(coordinator)
         self._key = key
         # Schlüssel in den gelesenen Werten; weitere Zähler tragen ein Präfix
         self._data_key = key
         inverter_id = inverter_device_id(coordinator)
 
-        if device == DEVICE_METER:
-            meter = meter or coordinator.meter
-            assert meter is not None
+        if meter is not None:
             primary = meter is coordinator.meter
             self._data_key = f"{coordinator.meter_key_prefix(meter)}{key}"
             device_id = meter_device_id(coordinator, meter)

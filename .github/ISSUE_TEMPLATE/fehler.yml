@@ -1,0 +1,63 @@
+name: Fehler melden / Bug report
+description: Etwas funktioniert nicht wie erwartet (something does not work as expected).
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke für die Meldung! Deutsch oder Englisch ist beides in Ordnung.
+        Bitte möglichst die Diagnosedatei anhängen – sie enthält die rohen Register des Geräts,
+        Host und Seriennummern sind entfernt.
+  - type: input
+    id: device
+    attributes:
+      label: Gerät und Firmware
+      description: Wechselrichter-Modell und Firmware-Version; bei Datamanager-Geräten auch dessen Version.
+      placeholder: "z. B. Symo 3.0-3-M, Datamanager 2.0, Firmware 0.3.30.2"
+    validations:
+      required: true
+  - type: dropdown
+    id: generation
+    attributes:
+      label: Gerätefamilie
+      options:
+        - Datamanager-Gerät (Symo, Primo, Galvo, Eco, Symo Hybrid …)
+        - GEN24 / Tauro / Verto
+        - anderes / unsicher
+    validations:
+      required: true
+  - type: input
+    id: integration_version
+    attributes:
+      label: Version der Integration
+      placeholder: "z. B. 0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: ha_version
+    attributes:
+      label: Home-Assistant-Version
+      placeholder: "z. B. 2026.11.2"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Was passiert, und was wäre richtig?
+      description: Was wurde getan, was zeigt Home Assistant an, was wurde erwartet?
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnosedatei
+      description: >
+        Settings → Devices & services → Fronius Modbus TCP → Drei-Punkte-Menü des Eintrags →
+        **Download diagnostics**. Die Datei hier hineinziehen. Lässt sich die Integration gar nicht
+        einrichten, bitte stattdessen das Log anhängen.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log-Auszug
+      description: Zeilen aus dem Home-Assistant-Log, die `fronius_modbus_tcp` oder `pymodbus` enthalten.
+      render: text

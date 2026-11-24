@@ -210,6 +210,12 @@ def _enum(value: int | None, mapping: dict[int, str]) -> str | None:
     return None if value is None else mapping.get(value)
 
 
+def _sum_or_none(values: list[float | None], digits: int) -> float | None:
+    """Summe, aber None, sobald ein Summand fehlt (Teilsummen wären irreführend)."""
+    known = [value for value in values if value is not None]
+    return round(sum(known), digits) if len(known) == len(values) else None
+
+
 def _positive(value: float | None) -> float | None:
     """Zählerstände von 0 als "nicht verfügbar" behandeln (verhindert Resets)."""
     return value if value else None
@@ -402,14 +408,10 @@ def combine_mppt(
             hybrid = module
 
     if pv_powers:
-        values["pv_power"] = (
-            None if None in pv_powers else round(sum(pv_powers), 1)  # type: ignore[arg-type]
-        )
+        values["pv_power"] = _sum_or_none(pv_powers, 1)
         # Summe der String-Ströme (eine Gesamtspannung gibt es bei mehreren
         # Strings nicht – die Spannung bleibt nur je String verfügbar)
-        values["pv_current"] = (
-            None if None in pv_currents else round(sum(pv_currents), 2)  # type: ignore[arg-type]
-        )
+        values["pv_current"] = _sum_or_none(pv_currents, 2)
 
     if charge is not None or discharge is not None:
         charge_power = charge["dc_power"] if charge else None
@@ -439,11 +441,11 @@ def combine_mppt(
         battery_power = None
         if power == 0:
             battery_power = 0.0
-        elif None not in (power, pv, inverter_dc_power):
-            discharging = abs(inverter_dc_power - (pv + power)) <= abs(  # type: ignore[operator]
-                inverter_dc_power - (pv - power)  # type: ignore[operator]
+        elif power is not None and pv is not None and inverter_dc_power is not None:
+            discharging = abs(inverter_dc_power - (pv + power)) <= abs(
+                inverter_dc_power - (pv - power)
             )
-            battery_power = power if discharging else -power  # type: ignore[operator]
+            battery_power = power if discharging else -power
         values["battery_power"] = battery_power
         values["battery_charge_power"] = (
             None if battery_power is None else max(-battery_power, 0.0)

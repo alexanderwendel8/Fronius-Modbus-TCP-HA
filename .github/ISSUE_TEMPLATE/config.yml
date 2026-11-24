@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Einrichtung und Bedienung
+    url: https://github.com/alexanderwendel8/Fronius-Modbus-TCP-HA#readme
+    about: Voraussetzungen, Einrichtung, Steuerung und Diagnose stehen in der README.
