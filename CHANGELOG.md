@@ -1,37 +1,73 @@
 # Changelog
 
-## Unveröffentlicht
+## 0.2.0
 
-- Steuerung am echten Symo 3.0-3-M (Datamanager 2.0) erfolgreich getestet: Leistungsbegrenzung und Einspeisung aus/ein.
-- **Mindestversion angehoben: Home Assistant 2026.2** (bisher fälschlich 2025.2 angegeben; der Code lief erst ab 2025.3). Real getestet ist die Integration auf 2026.11.
-- Optionale Sensoren, die schon einmal einen Wert geliefert haben, werden nicht mehr gelöscht, wenn der Wert bei einem späteren Start vorübergehend fehlt. Name, Entitäts-ID und Einstellungen bleiben erhalten.
-- Smart Meter, der beim Start nicht antwortet, wird alle 5 Minuten erneut gesucht; sobald er gefunden wird, erscheinen seine Sensoren ohne manuelles Neuladen. Ausfall und Rückkehr des Zählers im laufenden Betrieb stehen jetzt einmalig im Log.
-- Erkennung „Datamanager oder GEN24“ abgesichert: Ein vorübergehender Modbus-Fehler beim Prüfen der Fronius-Register 500–513 stuft das Gerät nicht mehr dauerhaft falsch ein. Nur die Fehlerantwort „unzulässige Adresse“ gilt als „nicht vorhanden“; das eindeutige Ergebnis wird im Eintrag gespeichert und bei späteren Starts nicht erneut geprüft. Antwortet ein Gerät auf diese Register gar nicht, scheitert die Einrichtung nicht mehr.
-- CI beschleunigt: pip-Cache, keine doppelten Läufe mehr bei Pull Requests, überholte Läufe werden abgebrochen.
-- Zu kurze SunSpec-Modelle bringen die Abfrage nicht mehr zum Absturz: Ein Modell, das kürzer ist als von der Auswertung benötigt, wird mit einer Warnung im Log übersprungen; die übrigen Werte bleiben verfügbar. Unvollständige Modbus-Antworten werden als Lesefehler gemeldet.
-- Mehrere Wechselrichter am selben Datamanager teilen sich jetzt eine Modbus-Verbindung; ihre Abfragen laufen nacheinander statt parallel (Vorgabe von Fronius).
-- pymodbus: Mindestversion 3.11.2 (die von Home Assistant 2026.2 vorgegebene). Die CI testet mit 3.11.2, 3.13.1 (Vorgabe von Home Assistant 2026.11) und der neuesten Version. Der Testsimulator ist ein eigener kleiner Modbus-TCP-Server und hängt nicht mehr vom Server aus pymodbus ab.
-- Leistungsbegrenzung: Skalierungsfaktor lesen und Vorgabe schreiben laufen jetzt als ein unteilbarer Ablauf; eine gleichzeitige Abfrage kann sich nicht mehr dazwischenschieben. Gelesen wird dabei nur noch das eine Register statt des ganzen Modells 123.
-- Neu: Verbindungsdaten nachträglich ändern (**Reconfigure** im Menü des Eintrags) – Host, Port und Modbus-Adressen lassen sich anpassen, ohne den Eintrag zu löschen. Ein Gerät mit anderer Seriennummer wird abgelehnt.
-- Neuer Workflow `update-check.yml`: prüft jeden Montag GitHub Actions, gepinnte Python-Pakete und neue
-  Home-Assistant-Releases (samt Python-Mindestversion) und legt für jede veraltete Komponente ein Issue mit
-  dem Label `aktualisierung` an; ist sie wieder aktuell, wird das Issue geschlossen. Logik in
-  `.github/scripts/check_updates.py`, mit Tests. Offene Issues werden zu Beginn jeder Claude-Sitzung geprüft
-  und nur nach Rückfrage abgearbeitet (`CLAUDE.md`).
-- Neu: Speichersteuerung für Geräte mit Batterie (Modell 124, nur mit „Steuerung erlauben“): Lade- und Entladegrenze samt Schaltern, Mindestreserve und Laden aus dem Netz. Ungültige Leistungsfenster werden vor dem Schreiben abgelehnt. Bisher nur gegen simulierte Geräte getestet.
-- Neu: Abfrageintervall einstellbar (Optionen, 5–60 s, Standard 10 s). Die Rückfallzeit für Vorgaben beträgt mindestens das Dreifache des Intervalls, damit eine Vorgabe nicht zwischen zwei Abfragen endet.
-- Neu: mehrere Smart Meter je Eintrag. Weitere Zähler (GEN24: 201–204, Datamanager: 241–244) werden bei der Einrichtung oder über **Reconfigure** mit ihren Modbus-Adressen eingetragen; jeder erscheint als eigenes Gerät. Bisher nur gegen simulierte Geräte getestet.
-- Eine geänderte Rückfallzeit wirkt jetzt sofort auf gerade aktive Vorgaben (Leistungsbegrenzung, Standby, Speichergrenzen) und nicht erst beim nächsten Schreiben.
-- Diagnose-Download erweitert: Optionen, pymodbus-Version, Abfrageintervall und die rohen Register aller SunSpec-Modelle von Wechselrichter und Smart Metern (Datamanager: zusätzlich Fronius-Register). Host und Seriennummern werden entfernt.
-- Start ohne erreichbares Gerät: Die zuletzt erkannte Gerätestruktur wird gespeichert. Antwortet der Wechselrichter beim Start von Home Assistant nicht (z. B. nachts), wird der Eintrag trotzdem eingerichtet; die Entitäten sind bis zur ersten Antwort „nicht verfügbar“, statt ganz zu fehlen.
-- Neu: Erkennung im Netzwerk per DHCP (MAC-Präfix 00:03:AC). Antwortet das Gerät per Modbus TCP unter den Standardwerten, wird die Einrichtung vorgeschlagen; eine neue IP-Adresse eines eingerichteten Geräts wird automatisch übernommen.
-- Neu: Symbole für Entitäten ohne Geräteklasse (`icons.json`), z. B. Status, Leistungsbegrenzung, Einspeisung, Speichergrenzen.
-- Behoben: Nach **Reconfigure** oder einem Adresswechsel per DHCP blieb die Modbus-Verbindung zur alten Adresse offen. Sie wird jetzt freigegeben; ein freigegebener Client baut keine Verbindung mehr auf, auch wenn beim Entladen noch eine Abfrage läuft.
-- CI: Tests laufen zusätzlich mit Python 3.14 und damit gegen das aktuelle Home Assistant (bisher nur Python 3.13 / Home Assistant 2026.2).
-- Tests: Fehlerpfade und Sonderfälle ergänzt (`tests/test_edge_cases.py`), Abdeckung des Integrationscodes jetzt 100 %. Dabei behoben: Fehlerantworten beim Schreiben tragen jetzt wie beim Lesen den Modbus-Exception-Code.
-- CI: neuer Job `lint` mit `ruff` (Regeln in `pyproject.toml`) und `mypy` (Typprüfung des Integrationscodes). Die bisherigen Befunde sind behoben.
-- CI: Die Prüfungen laufen zusätzlich jede Nacht und vor jedem Release (kein Release bei fehlgeschlagener Prüfung). GitHub Actions auf aktuelle Versionen angehoben und auf Commit-SHAs festgelegt (`actions/checkout` v7.0.1, `actions/setup-python` v7.1.0, `softprops/action-gh-release` v3.0.4).
-- Aufräumen: keine `assert`-Anweisungen und keine `type: ignore`-Kommentare mehr im Integrationscode. Neu: Issue-Vorlagen für Fehler, Geräte-Rückmeldungen und Wünsche.
+Robustere Erkennung und Abfrage, neue Einstell- und Steuermöglichkeiten sowie eine deutlich breitere
+Testabdeckung. Am echten Gerät (Symo 3.0-3-M am Datamanager 2.0) getestet ist weiterhin nur der Stand 0.1.0
+einschließlich der Steuerung; alles Neue in diesem Release ist gegen simulierte Geräte geprüft.
+
+### Wichtig beim Update
+- **Mindestversion: Home Assistant 2026.2** (bisher fälschlich 2025.2 angegeben; der Code lief erst ab 2025.3).
+  pymodbus ab 3.11.2, das Home Assistant 2026.2 mitbringt.
+- Mit „Steuerung erlauben“ und vorhandenem Speicher ersetzen neue Zahl- und Schalter-Entitäten die bisherigen
+  Sensoren Batterie-Ladegrenze, -Entladegrenze, -Mindestreserve und -Ladequelle.
+
+### Neu
+- **Verbindungsdaten ändern** (**Reconfigure** im Menü des Eintrags): Host, Port und Modbus-Adressen anpassen,
+  ohne den Eintrag zu löschen. Ein Gerät mit anderer Seriennummer wird abgelehnt.
+- **Speichersteuerung** für Geräte mit Batterie (Modell 124, nur mit „Steuerung erlauben“): Lade- und
+  Entladegrenze samt Schaltern, Mindestreserve und Laden aus dem Netz. Ungültige Leistungsfenster werden vor
+  dem Schreiben abgelehnt.
+- **Mehrere Smart Meter** je Eintrag: weitere Zähler (GEN24: 201–204, Datamanager: 241–244) mit ihren
+  Modbus-Adressen eintragen; jeder erscheint als eigenes Gerät.
+- **Abfrageintervall einstellbar** (Optionen, 5–60 s, Standard 10 s). Die Rückfallzeit für Vorgaben beträgt
+  mindestens das Dreifache des Intervalls.
+- **Erkennung im Netzwerk** per DHCP (MAC-Präfix 00:03:AC): Antwortet das Gerät per Modbus TCP unter den
+  Standardwerten, wird die Einrichtung vorgeschlagen; eine neue IP-Adresse eines eingerichteten Geräts wird
+  automatisch übernommen.
+- **Start ohne erreichbares Gerät:** Die zuletzt erkannte Gerätestruktur wird gespeichert. Antwortet der
+  Wechselrichter beim Start von Home Assistant nicht (z. B. nachts), wird der Eintrag trotzdem eingerichtet;
+  die Entitäten sind bis zur ersten Antwort „nicht verfügbar“, statt ganz zu fehlen.
+- **Diagnose-Download erweitert:** Optionen, pymodbus-Version, Abfrageintervall und die rohen Register aller
+  SunSpec-Modelle von Wechselrichter und Smart Metern (Datamanager: zusätzlich Fronius-Register). Host und
+  Seriennummern werden entfernt.
+- Symbole für Entitäten ohne Geräteklasse, z. B. Status, Leistungsbegrenzung, Einspeisung, Speichergrenzen.
+- Eine geänderte Rückfallzeit wirkt sofort auf gerade aktive Vorgaben (Leistungsbegrenzung, Standby,
+  Speichergrenzen) und nicht erst beim nächsten Schreiben.
+
+### Robuster
+- Optionale Sensoren, die schon einmal einen Wert geliefert haben, werden nicht mehr gelöscht, wenn der Wert
+  bei einem späteren Start vorübergehend fehlt. Name, Entitäts-ID und Einstellungen bleiben erhalten.
+- Ein Smart Meter, der beim Start nicht antwortet, wird alle 5 Minuten erneut gesucht; seine Sensoren
+  erscheinen dann ohne manuelles Neuladen. Ausfall und Rückkehr im laufenden Betrieb stehen einmalig im Log.
+- Erkennung „Datamanager oder GEN24“: Ein vorübergehender Modbus-Fehler stuft das Gerät nicht mehr dauerhaft
+  falsch ein. Das eindeutige Ergebnis wird im Eintrag gespeichert. Antwortet ein Gerät auf die Fronius-Register
+  gar nicht, scheitert die Einrichtung nicht mehr.
+- Zu kurze SunSpec-Modelle werden mit einer Warnung übersprungen, statt die ganze Abfrage abzubrechen.
+  Unvollständige Modbus-Antworten gelten als Lesefehler.
+- Mehrere Wechselrichter am selben Datamanager teilen sich eine Modbus-Verbindung; ihre Abfragen laufen
+  nacheinander statt parallel (Vorgabe von Fronius).
+- Leistungsbegrenzung: Skalierungsfaktor lesen und Vorgabe schreiben laufen als ein unteilbarer Ablauf.
+
+### Behoben
+- Nach **Reconfigure** oder einem Adresswechsel blieb die Modbus-Verbindung zur alten Adresse offen.
+- Fehlerantworten beim Schreiben tragen jetzt wie beim Lesen den Modbus-Exception-Code.
+
+### Getestet
+- Steuerung am echten Symo 3.0-3-M (Datamanager 2.0) mit Version 0.1.0: Leistungsbegrenzung und Einspeisung
+  aus/ein.
+- Nur simuliert: GEN24, Speichersteuerung, mehrere Smart Meter, DHCP-Erkennung, Start ohne erreichbares Gerät.
+
+### Entwicklung
+- Tests laufen mit Python 3.13 (Home Assistant 2026.2, pymodbus 3.11.2) und Python 3.14 (aktuelles Home
+  Assistant, pymodbus 3.13.1 und neueste Version); Abdeckung des Integrationscodes 100 %. Der Testsimulator ist
+  ein eigener Modbus-TCP-Server.
+- CI: Lint (`ruff`) und Typprüfung (`mypy`), Prüfungen zusätzlich jede Nacht und vor jedem Release, schnellere
+  Läufe, GitHub Actions auf aktuelle Versionen und Commit-SHAs festgelegt.
+- Workflow `update-check.yml`: prüft wöchentlich GitHub Actions, gepinnte Python-Pakete und neue
+  Home-Assistant-Releases und legt für veraltete Komponenten Issues mit dem Label `aktualisierung` an.
+- Issue-Vorlagen für Fehler, Geräte-Rückmeldungen und Wünsche; keine `assert`- und `type: ignore`-Stellen
+  mehr im Integrationscode.
 
 ## 0.1.0
 

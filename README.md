@@ -65,10 +65,10 @@ Netzanschlusspunkt ist positiv = Netzbezug, negativ = Einspeisung.
 | Gerät | Anbindung | Firmware WR | Integration | Home Assistant | Ergebnis |
 |---|---|---|---|---|---|
 | **Symo 3.0-3-M** (echtes Gerät) | Datamanager 2.0, Modbus TCP, Unit-ID 1 | 0.3.30.2 | 0.1.0 | 2026.11.2 (HA OS 18.4) | ✅ Messwerte, Anlagenwerte, Statuscode, Fehlerklassen, Modell 120/122/123 lesend · ✅ Steuerung: Leistungsbegrenzung und Einspeisung aus/ein (23.11.2026) |
-| GEN24 Plus mit Batterie und Smart Meter | simuliert (Tests) | – | 0.1.0 | Testumgebung | ✅ automatisierte Tests |
-| Symo Hybrid mit Batterie (Datamanager) | simuliert (Tests) | – | 0.1.0 | Testumgebung | ✅ automatisierte Tests |
-| GEN24 ohne Batterie, Gerät mit einem DC-Eingang | simuliert (Tests) | – | 0.1.0 | Testumgebung | ✅ automatisierte Tests |
-| Smart Meter 203 (int+SF) / 213 (float) | simuliert (Tests) | – | 0.1.0 | Testumgebung | ✅ automatisierte Tests |
+| GEN24 Plus mit Batterie und Smart Meter | simuliert (Tests) | – | 0.2.0 | Testumgebung | ✅ automatisierte Tests |
+| Symo Hybrid mit Batterie (Datamanager) | simuliert (Tests) | – | 0.2.0 | Testumgebung | ✅ automatisierte Tests |
+| GEN24 ohne Batterie, Gerät mit einem DC-Eingang | simuliert (Tests) | – | 0.2.0 | Testumgebung | ✅ automatisierte Tests |
+| Smart Meter 203 (int+SF) / 213 (float) | simuliert (Tests) | – | 0.2.0 | Testumgebung | ✅ automatisierte Tests |
 
 Beobachtungen am echten Symo: liefert `ActWh` (Modell 122), aber keinen Isolationswiderstand und keine
 Temperaturen – diese Sensoren werden daher nicht angelegt.
@@ -103,7 +103,7 @@ Die Integration steht (noch) nicht im Katalog und wird als benutzerdefiniertes R
    eintragen, **Add**. Falls noch nicht geschehen, fragt der Marketplace jetzt nach einer GitHub-Verbindung
    (Anmeldung per Code auf github.com; nur Lesezugriff auf öffentliche Daten) – sie ist für benutzerdefinierte
    Repositories Pflicht.
-3. Das Repository in der Liste öffnen, **Install** wählen, Version prüfen (neuestes Release, z. B. `v0.1.0`),
+3. Das Repository in der Liste öffnen, **Install** wählen, Version prüfen (neuestes Release, z. B. `v0.2.0`),
    **Install**. Ist ein Neustart nötig, erinnert eine Reparaturmeldung unter *Settings → System → Repairs* daran.
 
 Updates erscheinen unter *Settings → Updates* (mit Release Notes); benutzerdefinierte Repositories prüft der
