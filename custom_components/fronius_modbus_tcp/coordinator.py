@@ -3,10 +3,13 @@
 from __future__ import annotations
 
 import logging
+from dataclasses import asdict
 from datetime import datetime, timedelta
+from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.storage import Store
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util
 
@@ -33,6 +36,21 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 type FroniusConfigEntry = ConfigEntry[FroniusCoordinator]
+
+STORAGE_VERSION = 1
+
+
+def structure_store(hass: HomeAssistant, entry_id: str) -> Store[dict[str, Any]]:
+    """Speicher für die zuletzt erkannte Gerätestruktur eines Eintrags."""
+    return Store(hass, STORAGE_VERSION, f"{DOMAIN}.{entry_id}")
+
+
+def _restore_models(data: dict[str, Any]) -> dict[str, Any]:
+    """JSON macht aus den Modell-IDs Zeichenketten und aus den Tupeln Listen."""
+    return {
+        **data,
+        "models": {int(k): (v[0], v[1]) for k, v in data["models"].items()},
+    }
 
 
 class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
@@ -70,6 +88,10 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
         self.meters: dict[int, MeterInfo] = {}
         self._meter_next_retry: datetime | None = None
         self._meter_failed: set[int] = set()
+        # Gerät beim Start nicht erreichbar (z. B. nachts) → mit der zuletzt
+        # erkannten Struktur gestartet; nach der ersten Antwort wird neu geladen
+        self.started_from_cache = False
+        self._store = structure_store(hass, entry.entry_id)
         # Rückfallzeit für Vorgaben; gesetzt/wiederhergestellt von der Number-Entität
         self.revert_seconds = max(DEFAULT_REVERT_SECONDS, self.min_revert_seconds)
 
@@ -136,13 +158,30 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
         """Einmalig beim ersten Refresh: Gerätestruktur erkennen."""
         entry = self.config_entry
         known = entry.data.get(CONF_SITE_REGISTERS)
+        cached: dict[str, Any] = {}
         try:
             self.inverter = await self.client.read_inverter_info(
                 self._inverter_unit, site_registers=known
             )
         except FroniusModbusError as err:
-            raise UpdateFailed(f"Wechselrichter nicht erkannt: {err}") from err
-        if known is None and self.inverter.site_registers_confirmed:
+            cached = await self._store.async_load() or {}
+            if "inverter" not in cached:
+                raise UpdateFailed(f"Wechselrichter nicht erkannt: {err}") from err
+            # Wechselrichter schläft (nachts) oder ist kurz nicht erreichbar: mit der
+            # zuletzt erkannten Struktur starten, damit die Entitäten vorhanden sind
+            self.inverter = InverterInfo(**_restore_models(cached["inverter"]))
+            self.started_from_cache = True
+            _LOGGER.warning(
+                "Wechselrichter antwortet nicht (%s); Start mit der zuletzt erkannten "
+                "Gerätestruktur. Die Entitäten bleiben bis zur ersten Antwort "
+                "nicht verfügbar",
+                err,
+            )
+        if (
+            not self.started_from_cache
+            and known is None
+            and self.inverter.site_registers_confirmed
+        ):
             # Einträge aus älteren Versionen: eindeutiges Ergebnis nachtragen, damit
             # ein späterer vorübergehender Fehler den Gerätetyp nicht mehr ändert.
             # Läuft vor dem Registrieren des Update-Listeners → kein Neuladen.
@@ -154,10 +193,16 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
                 },
             )
 
+        cached_meters = cached.get("meters", {})
         for unit in self._meter_units:
             try:
                 self.meters[unit] = await self.client.read_meter_info(unit)
             except FroniusModbusError as err:
+                if self.started_from_cache and str(unit) in cached_meters:
+                    self.meters[unit] = MeterInfo(
+                        **_restore_models(cached_meters[str(unit)])
+                    )
+                    continue
                 # Zähler fehlt: Wechselrichter trotzdem einrichten, später erneut suchen
                 _LOGGER.warning(
                     "Smart Meter unter Unit-ID %s nicht gefunden: %s. "
@@ -167,6 +212,23 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
                     int(METER_RETRY_INTERVAL.total_seconds() // 60),
                 )
                 self._meter_next_retry = dt_util.utcnow() + METER_RETRY_INTERVAL
+
+        if not self.started_from_cache:
+            # Zähler, die gerade fehlen, aus dem bisherigen Stand behalten
+            previous = (await self._store.async_load() or {}).get("meters", {})
+            await self._store.async_save(
+                {
+                    "inverter": asdict(self.inverter),
+                    "meters": {
+                        **{
+                            unit: data
+                            for unit, data in previous.items()
+                            if int(unit) in self._meter_units
+                        },
+                        **{str(u): asdict(m) for u, m in self.meters.items()},
+                    },
+                }
+            )
 
     async def _async_retry_meter(self) -> None:
         """Beim Start nicht gefundene Zähler erneut suchen.
@@ -205,6 +267,13 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
             data.values.update(await self.client.read_inverter_data(self.inverter))
         except FroniusModbusError as err:
             raise UpdateFailed(f"Fehler beim Lesen des Wechselrichters: {err}") from err
+
+        if self.started_from_cache:
+            # Gerät antwortet wieder → Struktur frisch erkennen (Firmware, Module,
+            # Zähler können sich geändert haben) und Entitäten neu anlegen
+            self.started_from_cache = False
+            _LOGGER.info("Wechselrichter antwortet wieder, Eintrag wird neu geladen")
+            self.hass.config_entries.async_schedule_reload(self.config_entry.entry_id)
 
         for unit, meter in self.meters.items():
             prefix = self.meter_key_prefix(meter)

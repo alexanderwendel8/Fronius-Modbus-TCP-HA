@@ -974,3 +974,90 @@ async def test_revert_time_applies_to_active_presets(hass: HomeAssistant, gen24)
 
     assert await hass.config_entries.async_unload(entry.entry_id)
     await hass.async_block_till_done()
+
+
+async def test_start_while_inverter_unreachable(
+    hass: HomeAssistant, socket_enabled, caplog
+) -> None:
+    """Gerät beim Start nicht erreichbar (nachts): Start mit gespeicherter Struktur."""
+    from homeassistant.config_entries import ConfigEntryState
+
+    from custom_components.fronius_modbus_tcp.coordinator import structure_store
+
+    devices = {1: sim.gen24_plus_float(), 200: sim.meter_213()}
+    server = sim.FroniusSimulator(devices)
+    await server.start()
+    port = server.port
+    entry = await _setup(hass, port)
+    ent_reg = er.async_get(hass)
+    stored = await structure_store(hass, entry.entry_id).async_load()
+    assert stored["inverter"]["model"] == "Symo GEN24 10.0 Plus"
+    assert list(stored["meters"]) == ["200"]
+    power = ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_ac_power")
+    meter_power = ent_reg.async_get_entity_id("sensor", DOMAIN, "meter_M0000001_meter_power")
+    before = {
+        e.unique_id for e in er.async_entries_for_config_entry(ent_reg, entry.entry_id)
+    }
+
+    # Gerät weg, Home Assistant startet neu
+    assert await hass.config_entries.async_unload(entry.entry_id)
+    await server.stop()
+    assert await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+    assert entry.state is ConfigEntryState.LOADED
+    coordinator = entry.runtime_data
+    assert coordinator.started_from_cache
+    assert "Start mit der zuletzt erkannten Gerätestruktur" in caplog.text
+    assert coordinator.inverter.models[113] == tuple(stored["inverter"]["models"]["113"])
+    assert coordinator.meter is not None and coordinator.meter.serial_number == "M0000001"
+    # Entitäten sind da, aber nicht verfügbar; es kommen keine neuen hinzu
+    assert hass.states.get(power).state == "unavailable"
+    assert hass.states.get(meter_power).state == "unavailable"
+    after = {
+        e.unique_id for e in er.async_entries_for_config_entry(ent_reg, entry.entry_id)
+    }
+    assert after == before
+    assert "33333333_temperature_heatsink" not in after  # nie unterstützt
+
+    # Gerät antwortet wieder → Eintrag lädt neu, Werte kommen
+    server = sim.FroniusSimulator(devices)
+    server.port = port
+    await server.start()
+    try:
+        await coordinator.async_refresh()
+        await hass.async_block_till_done()
+        assert "Eintrag wird neu geladen" in caplog.text
+        assert not entry.runtime_data.started_from_cache
+        assert hass.states.get(power).state not in ("unknown", "unavailable")
+        assert hass.states.get(meter_power).state == "-1500.0"
+        assert await hass.config_entries.async_unload(entry.entry_id)
+        await hass.async_block_till_done()
+    finally:
+        await server.stop()
+
+    # Eintrag löschen entfernt die gespeicherte Struktur
+    assert await hass.config_entries.async_remove(entry.entry_id)
+    await hass.async_block_till_done()
+    assert await structure_store(hass, entry.entry_id).async_load() is None
+
+
+async def test_first_start_needs_device(hass: HomeAssistant, socket_enabled) -> None:
+    """Ohne gespeicherte Struktur bleibt es beim erneuten Versuch (kein Start ins Leere)."""
+    from homeassistant.config_entries import ConfigEntryState
+    from pytest_homeassistant_custom_component.common import MockConfigEntry
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        unique_id="33333333",
+        data={
+            CONF_HOST: "127.0.0.1",
+            CONF_PORT: sim.free_port(),
+            CONF_UNIT_ID: 1,
+            CONF_METER_UNIT_ID: None,
+        },
+    )
+    entry.add_to_hass(hass)
+    assert not await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+    assert entry.state is ConfigEntryState.SETUP_RETRY
+    await hass.config_entries.async_unload(entry.entry_id)
