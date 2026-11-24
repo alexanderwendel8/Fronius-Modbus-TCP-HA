@@ -432,10 +432,12 @@
         "title": "Fronius Modbus TCP options",
         "description": "Writing entities change the inverter's behaviour. \"Inverter control via Modbus\" must be enabled in the Fronius web interface; grid operator settings (control priorities) take precedence.",
         "data": {
-          "allow_control": "Allow control"
+          "allow_control": "Allow control",
+          "scan_interval": "Polling interval"
         },
         "data_description": {
-          "allow_control": "Creates entities for power limitation, feed-in (standby), fallback time, battery control (charge/discharge limits, minimum reserve, charging from grid – devices with storage only) and – for Datamanager devices – resetting events."
+          "allow_control": "Creates entities for power limitation, feed-in (standby), fallback time, battery control (charge/discharge limits, minimum reserve, charging from grid – devices with storage only) and – for Datamanager devices – resetting events.",
+          "scan_interval": "How often the device is queried (5–60 s, default 10 s). Datamanager devices answer slowly; a longer interval reduces the load. The fallback time is at least three times this interval."
         }
       }
     }

@@ -13,7 +13,7 @@ from homeassistant.const import PERCENTAGE, EntityCategory, UnitOfTime
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
-from .const import DEFAULT_REVERT_SECONDS, MAX_REVERT_SECONDS, MIN_REVERT_SECONDS
+from .const import MAX_REVERT_SECONDS, MIN_REVERT_SECONDS
 from .coordinator import FroniusConfigEntry, FroniusCoordinator
 from .entity import FroniusEntity, async_write
 
@@ -190,16 +190,25 @@ class FroniusRevertTimeNumber(FroniusEntity, RestoreNumber):
         if (last := await self.async_get_last_number_data()) is not None and (
             last.native_value is not None
         ):
-            self.coordinator.revert_seconds = int(last.native_value)
+            # ein längeres Abfrageintervall kann den Mindestwert angehoben haben
+            self.coordinator.revert_seconds = max(
+                int(last.native_value), self.coordinator.min_revert_seconds
+            )
 
     @property
     def available(self) -> bool:
         return True
 
     @property
+    def native_min_value(self) -> float:
+        return self.coordinator.min_revert_seconds
+
+    @property
     def native_value(self) -> float:
         return self.coordinator.revert_seconds
 
     async def async_set_native_value(self, value: float) -> None:
-        self.coordinator.revert_seconds = int(value) or DEFAULT_REVERT_SECONDS
+        self.coordinator.revert_seconds = max(
+            int(value), self.coordinator.min_revert_seconds
+        )
         self.async_write_ha_state()
