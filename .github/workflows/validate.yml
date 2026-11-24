@@ -1,13 +1,23 @@
 name: Validate
 
 # Pull Requests werden einmal geprüft (nicht zusätzlich beim Push auf den Branch);
-# Pushes laufen nur noch auf main.
+# Pushes laufen nur noch auf main. Zusätzlich:
+# - jede Nacht, damit Brüche durch neue Versionen von Home Assistant, pymodbus oder
+#   dem Test-Plugin auffallen, auch wenn am Repository nichts geändert wird
+# - als Teil des Release-Workflows (workflow_call), vor dem Anlegen des Releases
 on:
   push:
     branches:
       - main
   pull_request:
   workflow_dispatch:
+  workflow_call:
+  schedule:
+    - cron: "17 3 * * *"
+
+# Die Prüfungen lesen nur; auch als Teil des Release-Workflows keine Schreibrechte
+permissions:
+  contents: read
 
 # Neuer Push auf denselben PR/Branch bricht den überholten Lauf ab
 concurrency:
@@ -18,7 +28,9 @@ jobs:
   hassfest:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # hassfest und hacs folgen bewusst dem Branch: Sie müssen zur jeweils
+      # aktuellen Home-Assistant- bzw. HACS-Version passen.
       - uses: home-assistant/actions/hassfest@master
 
   hacs:
@@ -31,8 +43,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           # Python 3.13 installiert Home Assistant 2026.2, die älteste unterstützte
           # Version: Geprüft wird gegen die Schnittstellen, die mindestens da sein müssen.
@@ -67,8 +79,8 @@ jobs:
             pymodbus: "latest"
     name: tests (Python ${{ matrix.python }}, pymodbus ${{ matrix.pymodbus }})
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: ${{ matrix.python }}
           # Heruntergeladene Pakete (Home Assistant samt Abhängigkeiten) wiederverwenden
