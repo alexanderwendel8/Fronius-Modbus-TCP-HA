@@ -3,10 +3,8 @@
 from __future__ import annotations
 
 import logging
-from collections.abc import Sequence
-from typing import Any, TypeVar
-
-from collections.abc import Awaitable
+from collections.abc import Awaitable, Sequence
+from typing import Any
 
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
@@ -94,15 +92,12 @@ class FroniusEntity(CoordinatorEntity[FroniusCoordinator]):
         )
 
 
-_EntityT = TypeVar("_EntityT", bound=FroniusEntity)
-
-
-def drop_unsupported(
+def drop_unsupported[EntityT: FroniusEntity](
     hass: HomeAssistant,
     coordinator: FroniusCoordinator,
     platform: str,
-    entities: Sequence[_EntityT],
-) -> list[_EntityT]:
+    entities: Sequence[EntityT],
+) -> list[EntityT]:
     """Entitäten weglassen, deren Wert das Gerät als "nicht unterstützt" meldet.
 
     Betrifft nur Beschreibungen mit skip_if_unsupported=True, und nur wenn der
@@ -118,7 +113,7 @@ def drop_unsupported(
     """
     values = coordinator.data.values if coordinator.data else {}
     registry = er.async_get(hass)
-    kept: list[_EntityT] = []
+    kept: list[EntityT] = []
     for entity in entities:
         desc = entity.entity_description
         key = entity._data_key  # Schlüssel inkl. Zähler-Präfix

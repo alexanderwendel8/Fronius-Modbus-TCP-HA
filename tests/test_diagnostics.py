@@ -56,7 +56,7 @@ async def test_diagnostics_gen24(hass: HomeAssistant, socket_enabled) -> None:
         for secret in ("33333333", "M0000001", "M0000002", "127.0.0.1"):
             assert secret not in text, secret
         # Seriennummer steckt auch nicht hex-kodiert in den Rohregistern
-        assert "33333333".encode().hex().upper() not in text
+        assert b"33333333".hex().upper() not in text
 
         assert diag["options"] == {CONF_ALLOW_CONTROL: True}
         assert diag["scan_interval"] == 10

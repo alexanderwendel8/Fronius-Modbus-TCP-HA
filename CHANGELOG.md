@@ -29,6 +29,7 @@
 - Behoben: Nach **Reconfigure** oder einem Adresswechsel per DHCP blieb die Modbus-Verbindung zur alten Adresse offen. Sie wird jetzt freigegeben; ein freigegebener Client baut keine Verbindung mehr auf, auch wenn beim Entladen noch eine Abfrage läuft.
 - CI: Tests laufen zusätzlich mit Python 3.14 und damit gegen das aktuelle Home Assistant (bisher nur Python 3.13 / Home Assistant 2026.2).
 - Tests: Fehlerpfade und Sonderfälle ergänzt (`tests/test_edge_cases.py`), Abdeckung des Integrationscodes jetzt 100 %. Dabei behoben: Fehlerantworten beim Schreiben tragen jetzt wie beim Lesen den Modbus-Exception-Code.
+- CI: neuer Job `lint` mit `ruff` (Regeln in `pyproject.toml`) und `mypy` (Typprüfung des Integrationscodes). Die bisherigen Befunde sind behoben.
 
 ## 0.1.0
 

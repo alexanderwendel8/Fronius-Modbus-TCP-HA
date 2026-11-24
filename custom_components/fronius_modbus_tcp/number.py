@@ -115,15 +115,14 @@ class FroniusStorageLimitNumber(_FroniusValueNumber):
     async def async_set_native_value(self, value: float) -> None:
         coordinator = self.coordinator
         key = self.entity_description.key
-        limits = {
-            "charge_limit" if key == "battery_charge_limit" else "discharge_limit": value
-        }
+        is_charge = key == "battery_charge_limit"
         await async_write(
             coordinator,
             coordinator.client.set_storage_limits(
                 coordinator.inverter,
+                charge_limit=value if is_charge else None,
+                discharge_limit=None if is_charge else value,
                 revert_seconds=coordinator.revert_seconds,
-                **limits,
             ),
             {key: value},
         )

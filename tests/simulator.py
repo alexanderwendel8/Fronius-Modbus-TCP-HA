@@ -42,7 +42,7 @@ def device(*models: list[int]) -> list[int]:
     regs = s("SunS", 2)
     for m in models:
         regs += m
-    return regs + [0xFFFF, 0]
+    return [*regs, 0xFFFF, 0]
 
 
 # --- Wechselrichter ---------------------------------------------------------
