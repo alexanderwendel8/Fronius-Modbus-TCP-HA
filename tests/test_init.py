@@ -924,3 +924,53 @@ async def test_multiple_meters(hass: HomeAssistant, socket_enabled) -> None:
         await hass.async_block_till_done()
     finally:
         await server.stop()
+
+
+async def test_revert_time_applies_to_active_presets(hass: HomeAssistant, gen24) -> None:
+    """Geänderte Rückfallzeit wirkt sofort auf aktive Vorgaben, nicht auf inaktive."""
+    entry = await _setup(hass, gen24.port, **{CONF_METER_UNIT_ID: 0})
+    await _enable_control(hass, entry)
+    ent_reg = er.async_get(hass)
+    eid = lambda domain, key: ent_reg.async_get_entity_id(domain, DOMAIN, f"33333333_{key}")  # noqa: E731
+    revert = eid("number", "revert_time")
+    coordinator = entry.runtime_data
+    controls = coordinator.inverter.models[123][0]
+    storage = coordinator.inverter.models[124][0]
+
+    async def call(domain: str, service: str, entity_id: str, **data) -> None:
+        await hass.services.async_call(
+            domain, service, {"entity_id": entity_id, **data}, blocking=True
+        )
+        await hass.async_block_till_done()
+
+    async def read(address: int, count: int) -> list[int]:
+        return await coordinator.client.read(1, address, count)
+
+    # Simulator: Leistungsbegrenzung 70 % aktiv, Einspeisung ein, Speichergrenzen aus
+    await call("number", "set_value", revert, value=900)
+    assert await read(controls + 3, 5) == [7000, 0, 900, 0, 1]
+    assert await read(controls, 3) == [0, 0, 1]  # Conn unberührt
+    assert await read(storage + 13, 1) == [0]  # Speicher unberührt
+
+    # Standby und Entladegrenze aktivieren, dann Rückfallzeit erneut ändern
+    await call("switch", "turn_off", eid("switch", "feed_in_enabled"))
+    await call("switch", "turn_on", eid("switch", "battery_discharge_limit_active"))
+    await coordinator.async_refresh()
+    await call("number", "set_value", revert, value=1200)
+    assert await read(controls + 3, 5) == [7000, 0, 1200, 0, 1]
+    assert await read(controls, 3) == [0, 1200, 0]
+    assert await read(storage + 13, 1) == [1200]
+    assert await read(storage + 3, 1) == [2]  # Modus unverändert
+
+    # Alles aus → eine weitere Änderung schreibt nichts mehr
+    await call("switch", "turn_off", eid("switch", "power_limit_active"))
+    await call("switch", "turn_on", eid("switch", "feed_in_enabled"))
+    await call("switch", "turn_off", eid("switch", "battery_discharge_limit_active"))
+    await coordinator.async_refresh()
+    await call("number", "set_value", revert, value=600)
+    assert coordinator.revert_seconds == 600
+    assert (await read(controls + 5, 1)) == [1200]
+    assert (await read(storage + 13, 1)) == [1200]
+
+    assert await hass.config_entries.async_unload(entry.entry_id)
+    await hass.async_block_till_done()

@@ -204,7 +204,9 @@ Die Rückfallzeit beträgt immer mindestens das Dreifache des Abfrageintervalls.
 **Rückfallzeit:** Jede Vorgabe wird mit einer Rückfallzeit geschrieben. Da jede Modbus-Abfrage den Timer
 im Wechselrichter neu startet, bleibt eine Vorgabe aktiv, solange Home Assistant läuft. Fällt Home Assistant
 aus, kehrt der Wechselrichter nach dieser Zeit von selbst in den Normalbetrieb zurück – eine Drosselung
-oder ein Standby kann also nicht „hängen bleiben“.
+oder ein Standby kann also nicht „hängen bleiben“. Wird die Rückfallzeit geändert, überträgt die
+Integration den neuen Wert sofort an alle gerade aktiven Vorgaben (Leistungsbegrenzung, Standby,
+Lade-/Entladegrenze des Speichers).
 
 Beispiel-Automation: bei negativem Strompreis auf 0 % drosseln:
 

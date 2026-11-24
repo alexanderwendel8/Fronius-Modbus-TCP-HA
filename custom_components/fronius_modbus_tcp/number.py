@@ -173,7 +173,8 @@ class FroniusPowerLimitNumber(FroniusEntity, NumberEntity):
 
 
 class FroniusRevertTimeNumber(FroniusEntity, RestoreNumber):
-    """Rückfallzeit für Vorgaben (RvrtTms). Wird nur lokal gespeichert.
+    """Rückfallzeit für Vorgaben (RvrtTms). Wird lokal gespeichert und bei einer
+    Änderung an gerade aktive Vorgaben übertragen.
 
     Solange die Integration das Gerät abfragt, startet jede Abfrage den Timer
     neu; fällt Home Assistant aus, endet die Vorgabe nach dieser Zeit.
@@ -208,7 +209,8 @@ class FroniusRevertTimeNumber(FroniusEntity, RestoreNumber):
         return self.coordinator.revert_seconds
 
     async def async_set_native_value(self, value: float) -> None:
-        self.coordinator.revert_seconds = max(
-            int(value), self.coordinator.min_revert_seconds
-        )
+        coordinator = self.coordinator
+        coordinator.revert_seconds = max(int(value), coordinator.min_revert_seconds)
         self.async_write_ha_state()
+        # laufende Vorgaben sofort mit der neuen Rückfallzeit versehen
+        await async_write(coordinator, coordinator.async_apply_revert_time())
