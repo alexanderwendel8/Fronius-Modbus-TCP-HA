@@ -276,6 +276,10 @@ pip install -r requirements_test.txt
 pytest
 ```
 
+Die Prüfungen (`validate.yml`) laufen bei jedem Pull Request, auf `main`, vor jedem Release und zusätzlich
+jede Nacht – so fallen Brüche durch neue Versionen von Home Assistant oder pymodbus auch dann auf, wenn am
+Repository nichts geändert wird.
+
 Vor einem Commit außerdem `ruff check .` (Regeln in `pyproject.toml`) und `mypy` (Typprüfung des
 Integrationscodes) ausführen; beide laufen auch in der CI.
 
@@ -302,7 +306,8 @@ in [`.github/scripts/check_updates.py`](.github/scripts/check_updates.py); lokal
 Änderungen stehen in [`CHANGELOG.md`](CHANGELOG.md). Releases erstellt der Workflow `release.yml`
 mit den Notizen aus dem Changelog – entweder per Tag `vX.Y.Z` oder manuell unter
 *Actions → Release → Run workflow* (auf `main`, Eingabe z. B. `0.1.0`; der Tag wird dann gesetzt).
-Die Version muss zu `manifest.json` passen. Marketplace bzw. HACS zeigen danach die Versionsnummer statt des Commit-Hashs.
+Die Version muss zu `manifest.json` passen. Vor dem Release laufen dieselben Prüfungen wie bei jedem
+Pull Request (Hassfest, HACS, Lint, Tests); schlägt eine fehl, entsteht kein Release. Marketplace bzw. HACS zeigen danach die Versionsnummer statt des Commit-Hashs.
 
 ## Herstellerdokumentation
 

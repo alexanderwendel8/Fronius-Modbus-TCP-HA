@@ -137,6 +137,11 @@ Prüfen vor dem Commit: `python3 -c "import yaml; print(list(yaml.safe_load(open
 
 ## Stolpersteine
 
+- **Prüfungen vor dem Release:** Hat das Projekt einen Prüf-Workflow (Tests, Lint), diesen mit
+  `on: workflow_call` aufrufbar machen und in `release.yml` als Job `validate` einbinden
+  (`uses: ./.github/workflows/validate.yml`, der Release-Job bekommt `needs: validate`). Dann entsteht
+  kein Release, wenn eine Prüfung fehlschlägt. In diesem Repository ist das so eingerichtet.
+
 - **Tag-Push** (`git push origin vX.Y.Z`) scheitert in der Cloud-Umgebung mit 403 → nicht
   erneut versuchen, lokalen Tag löschen (`git tag -d`), Weg über `workflow_dispatch` nehmen.
 - `workflow_dispatch` ist erst startbar, wenn die Workflow-Datei auf dem Default-Branch liegt.

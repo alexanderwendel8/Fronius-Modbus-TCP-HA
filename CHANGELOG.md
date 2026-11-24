@@ -30,6 +30,7 @@
 - CI: Tests laufen zusätzlich mit Python 3.14 und damit gegen das aktuelle Home Assistant (bisher nur Python 3.13 / Home Assistant 2026.2).
 - Tests: Fehlerpfade und Sonderfälle ergänzt (`tests/test_edge_cases.py`), Abdeckung des Integrationscodes jetzt 100 %. Dabei behoben: Fehlerantworten beim Schreiben tragen jetzt wie beim Lesen den Modbus-Exception-Code.
 - CI: neuer Job `lint` mit `ruff` (Regeln in `pyproject.toml`) und `mypy` (Typprüfung des Integrationscodes). Die bisherigen Befunde sind behoben.
+- CI: Die Prüfungen laufen zusätzlich jede Nacht und vor jedem Release (kein Release bei fehlgeschlagener Prüfung). GitHub Actions auf aktuelle Versionen angehoben und auf Commit-SHAs festgelegt (`actions/checkout` v7.0.1, `actions/setup-python` v7.1.0, `softprops/action-gh-release` v3.0.4).
 
 ## 0.1.0
 

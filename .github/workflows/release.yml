@@ -4,7 +4,8 @@ name: Release
 # - beim Push eines Tags vX.Y.Z oder
 # - manuell (workflow_dispatch) auf main mit der Version als Eingabe; dann wird
 #   der Tag vX.Y.Z auf den aktuellen Commit von main gesetzt.
-# In beiden Fällen muss die Version zu manifest.json passen.
+# In beiden Fällen muss die Version zu manifest.json passen. Vor dem Release laufen
+# Hassfest, HACS, Lint und Tests (validate.yml); schlägt etwas fehl, entsteht keines.
 on:
   push:
     tags:
@@ -19,10 +20,15 @@ permissions:
   contents: write
 
 jobs:
+  # Vor dem Release dieselben Prüfungen wie bei jedem Pull Request
+  validate:
+    uses: ./.github/workflows/validate.yml
+
   release:
+    needs: validate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Version prüfen und Release Notes extrahieren
         id: meta
@@ -58,7 +64,7 @@ jobs:
           fi
           echo "tag=v$version" >> "$GITHUB_OUTPUT"
 
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@28ab305d0ffa26d60ec4bd614126329e26c7a0ec # v3.0.4
         with:
           tag_name: ${{ steps.meta.outputs.tag }}
           target_commitish: ${{ github.sha }}
