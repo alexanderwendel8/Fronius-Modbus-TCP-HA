@@ -312,6 +312,23 @@ mit den Notizen aus dem Changelog – entweder per Tag `vX.Y.Z` oder manuell unt
 Die Version muss zu `manifest.json` passen. Vor dem Release laufen dieselben Prüfungen wie bei jedem
 Pull Request (Hassfest, HACS, Lint, Tests); schlägt eine fehl, entsteht kein Release. Marketplace bzw. HACS zeigen danach die Versionsnummer statt des Commit-Hashs.
 
+### Vorabversionen
+
+Der Marketplace meldet nur Releases als Update, keine einzelnen Commits auf `main`
+([Quellcode](https://github.com/home-assistant/core/blob/2026.11.2/homeassistant/components/marketplace/repositories/base.py)).
+Zum Testen vor einem Release erstellt der Workflow `prerelease.yml` eine Vorabversion vom
+aktuellen Stand von `main`: *Actions → Pre-release → Run workflow*, Eingabe ist die geplante
+nächste Version, z. B. `0.3.0`. Daraus entsteht `v0.3.0b1`, beim nächsten Lauf `v0.3.0b2` usw.,
+mit den Notizen aus „Unveröffentlicht“. Vorher laufen dieselben Prüfungen wie beim Release. Ein Pull
+Request ist dafür nicht nötig; `main` bleibt unverändert (die Version `0.3.0b1` steht nur im Commit
+des Tags).
+
+Der Marketplace bietet Vorabversionen nur an, wenn beim Repository der Schalter **Pre-release**
+eingeschaltet ist: **Settings** > **Devices & services** > **Marketplace** → Gerät *Fronius Modbus TCP*,
+dort die standardmäßig deaktivierte Entität **Pre-release** aktivieren und einschalten
+([Doku](https://www.home-assistant.io/integrations/marketplace/)). Alle anderen bekommen weiter
+nur stabile Releases.
+
 ## Herstellerdokumentation
 
 Die Fronius-Registerkarten und State-Code-Tabellen liegen in [`docs/fronius/`](docs/fronius/README.md) –
