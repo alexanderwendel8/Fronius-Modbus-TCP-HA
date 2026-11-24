@@ -23,5 +23,10 @@ async def async_get_config_entry_diagnostics(
         "entry": async_redact_data(dict(entry.data), TO_REDACT),
         "inverter": async_redact_data(asdict(coordinator.inverter), TO_REDACT),
         "meter": async_redact_data(asdict(meter), TO_REDACT) if meter else None,
+        "extra_meters": [
+            async_redact_data(asdict(m), TO_REDACT)
+            for m in coordinator.meters.values()
+            if m is not meter
+        ],
         "values": coordinator.data.values if coordinator.data else None,
     }

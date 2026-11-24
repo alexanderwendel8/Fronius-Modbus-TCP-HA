@@ -12,6 +12,7 @@ from homeassistant.helpers import device_registry as dr, entity_registry as er
 
 from custom_components.fronius_modbus_tcp.const import (
     CONF_ALLOW_CONTROL,
+    CONF_EXTRA_METER_UNIT_IDS,
     CONF_METER_UNIT_ID,
     CONF_SCAN_INTERVAL,
     CONF_SITE_REGISTERS,
@@ -855,3 +856,71 @@ async def test_scan_interval_option(hass: HomeAssistant, gen24) -> None:
 
     assert await hass.config_entries.async_unload(entry.entry_id)
     await hass.async_block_till_done()
+
+
+async def test_multiple_meters(hass: HomeAssistant, socket_enabled) -> None:
+    """Weitere Smart Meter: eigenes Gerät je Zähler, eigene Werte, Fehler im Formular."""
+    server = sim.FroniusSimulator(
+        {
+            1: sim.gen24_plus_float(),
+            200: sim.meter_213(),
+            201: sim.meter_213(serial="M0000002", power=750.0),
+        }
+    )
+    await server.start()
+    try:
+        async def _try(extra: str):
+            result = await hass.config_entries.flow.async_init(
+                DOMAIN, context={"source": config_entries.SOURCE_USER}
+            )
+            return await hass.config_entries.flow.async_configure(
+                result["flow_id"],
+                {
+                    CONF_HOST: "127.0.0.1",
+                    CONF_PORT: server.port,
+                    CONF_UNIT_ID: 1,
+                    CONF_EXTRA_METER_UNIT_IDS: extra,
+                },
+            )
+
+        result = await _try("201, abc")
+        assert result["errors"] == {CONF_EXTRA_METER_UNIT_IDS: "invalid_meter_list"}
+        result = await _try("201, 300")
+        assert result["errors"] == {CONF_EXTRA_METER_UNIT_IDS: "invalid_meter_list"}
+        result = await _try("201, 202")
+        assert result["errors"] == {CONF_EXTRA_METER_UNIT_IDS: "meter_not_found"}
+
+        # Hauptzähler (200, automatisch gefunden) und Wechselrichter fallen aus der Liste
+        result = await _try("200; 201, 201, 1")
+        assert result["type"] is FlowResultType.CREATE_ENTRY, result
+        await hass.async_block_till_done()
+        entry = result["result"]
+        assert entry.data[CONF_METER_UNIT_ID] == 200
+        assert entry.data[CONF_EXTRA_METER_UNIT_IDS] == [201]
+
+        ent_reg = er.async_get(hass)
+        dev_reg = dr.async_get(hass)
+        assert _state(hass, ent_reg, "meter_M0000001_meter_power").state == "-1500.0"
+        assert _state(hass, ent_reg, "meter_M0000002_meter_power").state == "750.0"
+        primary = dev_reg.async_get_device(identifiers={(DOMAIN, "meter_M0000001")})
+        second = dev_reg.async_get_device(identifiers={(DOMAIN, "meter_M0000002")})
+        assert primary.name == "Smart Meter TS 65A-3"
+        assert second.name == "Smart Meter TS 65A-3 (201)"
+        assert second.via_device_id == primary.via_device_id
+
+        coordinator = entry.runtime_data
+        assert coordinator.meter.unit_id == 200
+        assert sorted(coordinator.meters) == [200, 201]
+        assert coordinator.data.values["201:meter_power"] == 750.0
+
+        # Zweiter Zähler fällt aus: nur seine Entitäten werden unavailable
+        del server.units[201]
+        await coordinator.async_refresh()
+        await hass.async_block_till_done()
+        assert _state(hass, ent_reg, "meter_M0000002_meter_power").state == "unavailable"
+        assert _state(hass, ent_reg, "meter_M0000001_meter_power").state == "-1500.0"
+
+        assert await hass.config_entries.async_unload(entry.entry_id)
+        await hass.async_block_till_done()
+    finally:
+        await server.stop()

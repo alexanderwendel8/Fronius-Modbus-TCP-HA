@@ -40,7 +40,6 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
 
     config_entry: FroniusConfigEntry
     inverter: InverterInfo
-    meter: MeterInfo | None
 
     def __init__(
         self,
@@ -49,6 +48,7 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
         client: FroniusModbusClient,
         inverter_unit: int,
         meter_unit: int | None,
+        extra_meter_units: list[int] | None = None,
     ) -> None:
         self.scan_interval_seconds = int(
             entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL_SECONDS)
@@ -62,12 +62,25 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
         )
         self.client = client
         self._inverter_unit = inverter_unit
+        # Hauptzähler (Werte ohne Präfix) und weitere Zähler, je eigene Unit-ID
         self._meter_unit = meter_unit
-        self.meter = None
+        self._meter_units: list[int] = list(
+            dict.fromkeys(u for u in (meter_unit, *(extra_meter_units or [])) if u)
+        )
+        self.meters: dict[int, MeterInfo] = {}
         self._meter_next_retry: datetime | None = None
-        self._meter_failed = False
+        self._meter_failed: set[int] = set()
         # Rückfallzeit für Vorgaben; gesetzt/wiederhergestellt von der Number-Entität
         self.revert_seconds = max(DEFAULT_REVERT_SECONDS, self.min_revert_seconds)
+
+    @property
+    def meter(self) -> MeterInfo | None:
+        """Hauptzähler (am Netzanschlusspunkt), falls eingerichtet und gefunden."""
+        return self.meters.get(self._meter_unit) if self._meter_unit else None
+
+    def meter_key_prefix(self, meter: MeterInfo) -> str:
+        """Präfix der Werte eines Zählers: leer für den Hauptzähler, sonst "<Unit-ID>:"."""
+        return "" if meter.unit_id == self._meter_unit else f"{meter.unit_id}:"
 
     @property
     def min_revert_seconds(self) -> int:
@@ -113,45 +126,50 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
                 },
             )
 
-        if self._meter_unit:
+        for unit in self._meter_units:
             try:
-                self.meter = await self.client.read_meter_info(self._meter_unit)
+                self.meters[unit] = await self.client.read_meter_info(unit)
             except FroniusModbusError as err:
                 # Zähler fehlt: Wechselrichter trotzdem einrichten, später erneut suchen
                 _LOGGER.warning(
                     "Smart Meter unter Unit-ID %s nicht gefunden: %s. "
                     "Die Suche wird alle %s Minuten wiederholt",
-                    self._meter_unit,
+                    unit,
                     err,
                     int(METER_RETRY_INTERVAL.total_seconds() // 60),
                 )
                 self._meter_next_retry = dt_util.utcnow() + METER_RETRY_INTERVAL
 
     async def _async_retry_meter(self) -> None:
-        """Beim Start nicht gefundenen Zähler erneut suchen.
+        """Beim Start nicht gefundene Zähler erneut suchen.
 
-        Wird er gefunden, lädt der Eintrag neu, damit die Zähler-Entitäten
+        Wird einer gefunden, lädt der Eintrag neu, damit seine Entitäten
         angelegt werden.
         """
         now = dt_util.utcnow()
         if self._meter_next_retry is None or now < self._meter_next_retry:
             return
         self._meter_next_retry = now + METER_RETRY_INTERVAL
-        try:
-            await self.client.read_meter_info(self._meter_unit)
-        except FroniusModbusError as err:
-            _LOGGER.debug(
-                "Smart Meter unter Unit-ID %s weiterhin nicht gefunden: %s",
-                self._meter_unit,
-                err,
+        found = False
+        for unit in self._meter_units:
+            if unit in self.meters:
+                continue
+            try:
+                await self.client.read_meter_info(unit)
+            except FroniusModbusError as err:
+                _LOGGER.debug(
+                    "Smart Meter unter Unit-ID %s weiterhin nicht gefunden: %s",
+                    unit,
+                    err,
+                )
+                continue
+            _LOGGER.info(
+                "Smart Meter unter Unit-ID %s gefunden, Eintrag wird neu geladen", unit
             )
-            return
-        _LOGGER.info(
-            "Smart Meter unter Unit-ID %s gefunden, Eintrag wird neu geladen",
-            self._meter_unit,
-        )
-        self._meter_next_retry = None
-        self.hass.config_entries.async_schedule_reload(self.config_entry.entry_id)
+            found = True
+        if found:
+            self._meter_next_retry = None
+            self.hass.config_entries.async_schedule_reload(self.config_entry.entry_id)
 
     async def _async_update_data(self) -> FroniusData:
         data = FroniusData()
@@ -160,18 +178,22 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
         except FroniusModbusError as err:
             raise UpdateFailed(f"Fehler beim Lesen des Wechselrichters: {err}") from err
 
-        if self.meter is not None:
+        for unit, meter in self.meters.items():
+            prefix = self.meter_key_prefix(meter)
             try:
-                data.values.update(await self.client.read_meter_data(self.meter))
+                values = await self.client.read_meter_data(meter)
             except FroniusModbusError as err:
-                # Zähler-Entitäten werden unavailable, Wechselrichter bleibt verfügbar
-                if not self._meter_failed:
-                    _LOGGER.warning("Smart Meter antwortet nicht: %s", err)
-                    self._meter_failed = True
+                # Entitäten dieses Zählers werden unavailable, der Rest bleibt verfügbar
+                if unit not in self._meter_failed:
+                    _LOGGER.warning(
+                        "Smart Meter (Unit-ID %s) antwortet nicht: %s", unit, err
+                    )
+                    self._meter_failed.add(unit)
             else:
-                if self._meter_failed:
-                    _LOGGER.info("Smart Meter antwortet wieder")
-                    self._meter_failed = False
-        elif self._meter_unit:
+                data.values.update({f"{prefix}{k}": v for k, v in values.items()})
+                if unit in self._meter_failed:
+                    _LOGGER.info("Smart Meter (Unit-ID %s) antwortet wieder", unit)
+                    self._meter_failed.discard(unit)
+        if len(self.meters) < len(self._meter_units):
             await self._async_retry_meter()
         return data

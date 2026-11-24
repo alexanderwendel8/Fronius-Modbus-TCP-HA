@@ -217,13 +217,13 @@ def single_mppt_float() -> list[int]:
 # --- Smart Meter ------------------------------------------------------------
 
 
-def meter_213() -> list[int]:
+def meter_213(serial: str = "M0000001", power: float = -1500.0) -> list[int]:
     body = (
         f(12.0) + f(4.0) + f(4.1) + f(3.9)              # A, AphA-C
         + f(230.5) + f(230.0) + f(231.0) + f(230.5)     # PhV, PhVphA-C
         + f(399.0) + f(398.5) + f(399.5) + f(399.0)     # PPV, AB, BC, CA
         + f(50.0)                                       # Hz
-        + f(-1500.0) + f(-500.0) + f(-600.0) + f(-400.0)  # W, WphA-C
+        + f(power) + f(-500.0) + f(-600.0) + f(-400.0)   # W, WphA-C
         + f(1600.0) + f(NAN) * 3                        # VA
         + f(200.0) + f(NAN) * 3                         # VAR
         + f(-0.95) + f(NAN) * 3                         # PF
@@ -235,7 +235,7 @@ def meter_213() -> list[int]:
     )
     assert len(body) == 124, len(body)
     return device(
-        common("Fronius", "Smart Meter TS 65A-3", "1.3", "M0000001", opt="<primary>"),
+        common("Fronius", "Smart Meter TS 65A-3", "1.3", serial, opt="<primary>"),
         model(213, body),
     )
 

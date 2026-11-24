@@ -124,11 +124,17 @@ Anschließend unter *Einstellungen → Geräte & Dienste → Integration hinzuf�
 | Port | 502 (oder 1502) | 502 |
 | Modbus-Adresse Wechselrichter | **1** | **Wechselrichter-Nummer** (00 → 100) |
 | Modbus-Adresse Smart Meter | leer = automatisch (200) | leer = automatisch (240) |
+| Weitere Smart Meter | z. B. `201, 202` | z. B. `241, 242` |
 
 `0` als Smart-Meter-Adresse schaltet den Zähler ab. Bei mehreren Wechselrichtern am Datamanager
 für jeden Wechselrichter einen eigenen Eintrag anlegen; der Smart Meter wird automatisch nur dem
 ersten Eintrag zugeordnet. Alle Einträge am selben Datamanager teilen sich eine Modbus-Verbindung und fragen
 nacheinander ab.
+
+**Mehrere Smart Meter:** Zusätzliche Zähler (z. B. Verbraucher- oder Erzeugerzähler) werden im Feld
+„Weitere Smart Meter“ mit ihren Modbus-Adressen eingetragen, durch Komma getrennt. Jeder Zähler erscheint
+als eigenes Gerät mit denselben Sensoren; bei gleichem Modell trägt der Gerätename die Adresse in Klammern.
+Der Zähler im Feld „Modbus-Adresse Smart Meter“ bleibt der Hauptzähler am Netzanschlusspunkt.
 
 **Verbindungsdaten ändern:** Bekommt der Wechselrichter eine neue IP-Adresse oder soll der Smart Meter
 nachträglich dazukommen, muss der Eintrag nicht gelöscht werden. Unter *Settings → Devices & services →
