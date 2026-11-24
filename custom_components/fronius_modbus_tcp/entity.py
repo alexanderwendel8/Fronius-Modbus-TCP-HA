@@ -96,9 +96,13 @@ def drop_unsupported(
     Betrifft nur Beschreibungen mit skip_if_unsupported=True, und nur wenn der
     Wert gelesen wurde (Schlüssel vorhanden) und None ist – fehlt der Schlüssel,
     ist das Lesen fehlgeschlagen (z. B. Smart Meter antwortet nicht) und die
-    Entität bleibt erhalten. Bestehende Registry-Einträge der weggelassenen
-    Entitäten werden entfernt; wird der Wert später unterstützt, legt der
-    nächste Start die Entität wieder an.
+    Entität bleibt erhalten.
+
+    Eine Entität, die für diesen Eintrag schon einmal angelegt wurde, hat früher
+    einen Wert geliefert. Fehlt er jetzt, ist das vorübergehend (Nacht, Neustart
+    des Geräts): Sie wird weiter angelegt und zeigt "unbekannt", damit Name,
+    Entitäts-ID und Einstellungen des Nutzers nicht verloren gehen. Verwaiste
+    Registry-Einträge ohne Bezug zu diesem Eintrag werden entfernt.
     """
     values = coordinator.data.values if coordinator.data else {}
     registry = er.async_get(hass)
@@ -107,12 +111,23 @@ def drop_unsupported(
         desc = entity.entity_description
         key = desc.key
         if getattr(desc, "skip_if_unsupported", False) and key in values and values[key] is None:
-            _LOGGER.debug("%s %s nicht unterstützt, wird nicht angelegt", platform, key)
-            if entity_id := registry.async_get_entity_id(
+            entity_id = registry.async_get_entity_id(
                 platform, DOMAIN, entity.unique_id or ""
-            ):
-                registry.async_remove(entity_id)
-            continue
+            )
+            known = entity_id is not None and (
+                (reg_entry := registry.async_get(entity_id)) is not None
+                and reg_entry.config_entry_id == coordinator.config_entry.entry_id
+            )
+            if not known:
+                _LOGGER.debug(
+                    "%s %s nicht unterstützt, wird nicht angelegt", platform, key
+                )
+                if entity_id:
+                    registry.async_remove(entity_id)
+                continue
+            _LOGGER.debug(
+                "%s %s liefert gerade keinen Wert, bleibt erhalten", platform, key
+            )
         kept.append(entity)
     return kept
 
