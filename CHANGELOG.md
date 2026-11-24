@@ -11,6 +11,11 @@
 - Zu kurze SunSpec-Modelle bringen die Abfrage nicht mehr zum Absturz: Ein Modell, das kürzer ist als von der Auswertung benötigt, wird mit einer Warnung im Log übersprungen; die übrigen Werte bleiben verfügbar. Unvollständige Modbus-Antworten werden als Lesefehler gemeldet.
 - Mehrere Wechselrichter am selben Datamanager teilen sich jetzt eine Modbus-Verbindung; ihre Abfragen laufen nacheinander statt parallel (Vorgabe von Fronius).
 - pymodbus: Mindestversion 3.11.2 (die von Home Assistant 2026.2 vorgegebene). Die CI testet mit 3.11.2 und der neuesten Version. Der Testsimulator ist ein eigener kleiner Modbus-TCP-Server und hängt nicht mehr vom Server aus pymodbus ab.
+- Neuer Workflow `update-check.yml`: prüft jeden Montag GitHub Actions, gepinnte Python-Pakete und neue
+  Home-Assistant-Releases (samt Python-Mindestversion) und legt für jede veraltete Komponente ein Issue mit
+  dem Label `aktualisierung` an; ist sie wieder aktuell, wird das Issue geschlossen. Logik in
+  `.github/scripts/check_updates.py`, mit Tests. Offene Issues werden zu Beginn jeder Claude-Sitzung geprüft
+  und nur nach Rückfrage abgearbeitet (`CLAUDE.md`).
 
 ## 0.1.0
 

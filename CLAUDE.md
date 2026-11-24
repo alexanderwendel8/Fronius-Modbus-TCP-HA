@@ -65,3 +65,22 @@ grep -rli "marketplace" /home/user/home-assistant/home-assistant.io/source/_docs
   Namen in `strings.json`, `translations/en.json`, `translations/de.json`.
 - Releases: Ablauf und wiederverwendbare Vorlage in `.claude/skills/release/SKILL.md`
   (Version in `manifest.json` + Abschnitt in `CHANGELOG.md`, dann Workflow `release.yml` manuell auf `main` starten).
+
+## Aktualisierungs-Issues
+
+- Der Workflow `.github/workflows/update-check.yml` (Logik: `.github/scripts/check_updates.py`)
+  legt wöchentlich für jede veraltete externe Komponente ein Issue mit dem Label
+  `aktualisierung` an und schließt es, sobald die Komponente aktuell ist.
+- Zu Beginn jeder Sitzung, vor der ersten Aufgabe, die offenen Issues mit dem Label
+  `aktualisierung` über die GitHub-Tools abrufen und jedes prüfen:
+  - Ist es noch zutreffend (Version im Repository mit dem Issue vergleichen)?
+  - Gibt es dafür schon einen offenen Pull Request?
+  - Was ist zu tun und wie riskant ist es (Release Notes bzw. Changelog der Komponente
+    auf Breaking Changes und neue Anforderungen lesen)?
+- Das Ergebnis kurz zusammenfassen und den Nutzer fragen, ob und welche Issues abgearbeitet
+  werden sollen. **Ohne Zustimmung nichts ändern.** Gibt es keine offenen Issues, das nur
+  in einem Satz erwähnen.
+- Beim Abarbeiten gelten die übrigen Regeln (CHANGELOG-Eintrag, Tests, CI-Matrix); im Pull
+  Request das Issue mit `Closes #<Nummer>` verknüpfen.
+- `pymodbus==3.11.2` in `requirements_test.txt` ist absichtlich die Mindestversion und trägt den
+  Kommentar `# update-check: ignore`; so markierte Pins prüft der Workflow nicht.
