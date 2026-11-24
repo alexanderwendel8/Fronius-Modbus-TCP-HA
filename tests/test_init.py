@@ -1111,11 +1111,17 @@ async def test_dhcp_discovery(hass: HomeAssistant, gen24, gen24_plain) -> None:
     result = await _discover("127.0.0.1", gen24.port)
     assert result["reason"] == "already_configured"
 
-    # Gleiches Gerät unter neuer Adresse → Host wird aktualisiert, Eintrag lädt neu
-    result = await _discover("localhost", gen24.port)
+    # Gleiches Gerät unter neuer Adresse → Host wird aktualisiert, Eintrag lädt neu.
+    # Der Eintrag steht dazu auf einer alten Adresse (TEST-NET, nie kontaktiert).
+    assert await hass.config_entries.async_unload(entry.entry_id)
+    await hass.async_block_till_done()
+    hass.config_entries.async_update_entry(
+        entry, data={**entry.data, CONF_HOST: "192.0.2.10"}
+    )
+    result = await _discover("127.0.0.1", gen24.port)
     assert result["type"] is FlowResultType.ABORT
     assert result["reason"] == "already_configured"
-    assert entry.data[CONF_HOST] == "localhost"
+    assert entry.data[CONF_HOST] == "127.0.0.1"
     await hass.async_block_till_done()
     assert entry.runtime_data.last_update_success
 
