@@ -1,5 +1,6 @@
 {
   "config": {
+    "flow_title": "{name}",
     "step": {
       "user": {
         "title": "Fronius Modbus TCP",
@@ -48,7 +49,8 @@
     "abort": {
       "already_configured": "Device is already configured",
       "reconfigure_successful": "Re-configuration was successful",
-      "wrong_device": "The device at this address has a different serial number than the configured one. To add another inverter, use **Add entry** instead."
+      "wrong_device": "The device at this address has a different serial number than the configured one. To add another inverter, use **Add entry** instead.",
+      "cannot_connect": "Failed to connect"
     }
   },
   "entity": {

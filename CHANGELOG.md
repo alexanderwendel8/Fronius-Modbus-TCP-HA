@@ -24,6 +24,8 @@
 - Eine geänderte Rückfallzeit wirkt jetzt sofort auf gerade aktive Vorgaben (Leistungsbegrenzung, Standby, Speichergrenzen) und nicht erst beim nächsten Schreiben.
 - Diagnose-Download erweitert: Optionen, pymodbus-Version, Abfrageintervall und die rohen Register aller SunSpec-Modelle von Wechselrichter und Smart Metern (Datamanager: zusätzlich Fronius-Register). Host und Seriennummern werden entfernt.
 - Start ohne erreichbares Gerät: Die zuletzt erkannte Gerätestruktur wird gespeichert. Antwortet der Wechselrichter beim Start von Home Assistant nicht (z. B. nachts), wird der Eintrag trotzdem eingerichtet; die Entitäten sind bis zur ersten Antwort „nicht verfügbar“, statt ganz zu fehlen.
+- Neu: Erkennung im Netzwerk per DHCP (MAC-Präfix 00:03:AC). Antwortet das Gerät per Modbus TCP unter den Standardwerten, wird die Einrichtung vorgeschlagen; eine neue IP-Adresse eines eingerichteten Geräts wird automatisch übernommen.
+- Neu: Symbole für Entitäten ohne Geräteklasse (`icons.json`), z. B. Status, Leistungsbegrenzung, Einspeisung, Speichergrenzen.
 
 ## 0.1.0
 

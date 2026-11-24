@@ -1,5 +1,6 @@
 {
   "config": {
+    "flow_title": "{name}",
     "step": {
       "user": {
         "title": "Fronius Modbus TCP",
@@ -48,7 +49,8 @@
     "abort": {
       "already_configured": "Gerät ist bereits eingerichtet",
       "reconfigure_successful": "Die Neukonfiguration war erfolgreich",
-      "wrong_device": "Das Gerät unter dieser Adresse hat eine andere Seriennummer als das eingerichtete. Für einen weiteren Wechselrichter stattdessen einen neuen Eintrag hinzufügen."
+      "wrong_device": "Das Gerät unter dieser Adresse hat eine andere Seriennummer als das eingerichtete. Für einen weiteren Wechselrichter stattdessen einen neuen Eintrag hinzufügen.",
+      "cannot_connect": "Verbindung fehlgeschlagen"
     }
   },
   "entity": {
