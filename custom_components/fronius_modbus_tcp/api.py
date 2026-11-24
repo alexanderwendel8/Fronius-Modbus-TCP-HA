@@ -166,7 +166,8 @@ class FroniusModbusClient:
         if result.isError():
             raise FroniusModbusError(
                 f"Modbus-Fehler (Unit {unit}) beim Schreiben von {address} "
-                f"({values}): {result}"
+                f"({values}): {result}",
+                getattr(result, "exception_code", None),
             )
 
     async def write(self, unit: int, address: int, values: list[int]) -> None:
