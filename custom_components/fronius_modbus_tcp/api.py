@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import inspect
 import logging
 from dataclasses import dataclass, field
 from typing import Any
@@ -21,6 +22,16 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 MAX_REGISTERS_PER_READ = 120
+
+# pymodbus hat den Parameter für die Unit-ID in 3.10 von "slave" in "device_id"
+# umbenannt. Home Assistant gibt die installierte Version vor (2025.3: 3.8,
+# 2026.2: 3.11), deshalb wird der Name einmalig an der Signatur abgelesen.
+_UNIT_KWARG = (
+    "device_id"
+    if "device_id"
+    in inspect.signature(AsyncModbusTcpClient.read_holding_registers).parameters
+    else "slave"
+)
 
 
 # Modbus-Exception-Codes, die "Funktion/Adresse gibt es nicht" bedeuten – im
@@ -133,15 +144,9 @@ class FroniusModbusClient:
 
     async def _read_raw(self, unit: int, address: int, count: int) -> list[int]:
         try:
-            try:
-                result = await self._client.read_holding_registers(
-                    address, count=count, device_id=unit
-                )
-            except TypeError:
-                # pymodbus < 3.10 verwendet noch "slave"
-                result = await self._client.read_holding_registers(
-                    address, count=count, slave=unit
-                )
+            result = await self._client.read_holding_registers(
+                address, count=count, **{_UNIT_KWARG: unit}
+            )
         except ModbusException as err:
             raise FroniusConnectionError(str(err)) from err
         if result.isError():
@@ -153,15 +158,9 @@ class FroniusModbusClient:
 
     async def _write_raw(self, unit: int, address: int, values: list[int]) -> None:
         try:
-            try:
-                result = await self._client.write_registers(
-                    address, values=values, device_id=unit
-                )
-            except TypeError:
-                # pymodbus < 3.10 verwendet noch "slave"
-                result = await self._client.write_registers(
-                    address, values=values, slave=unit
-                )
+            result = await self._client.write_registers(
+                address, values=values, **{_UNIT_KWARG: unit}
+            )
         except ModbusException as err:
             raise FroniusConnectionError(str(err)) from err
         if result.isError():

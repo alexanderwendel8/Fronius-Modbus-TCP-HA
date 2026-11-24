@@ -10,6 +10,7 @@
 - CI beschleunigt: pip-Cache, keine doppelten Läufe mehr bei Pull Requests, überholte Läufe werden abgebrochen.
 - Zu kurze SunSpec-Modelle bringen die Abfrage nicht mehr zum Absturz: Ein Modell, das kürzer ist als von der Auswertung benötigt, wird mit einer Warnung im Log übersprungen; die übrigen Werte bleiben verfügbar. Unvollständige Modbus-Antworten werden als Lesefehler gemeldet.
 - Mehrere Wechselrichter am selben Datamanager teilen sich jetzt eine Modbus-Verbindung; ihre Abfragen laufen nacheinander statt parallel (Vorgabe von Fronius).
+- pymodbus: Mindestversion 3.8.3 (die von Home Assistant 2025.3 vorgegebene). Der Name des Unit-ID-Parameters wird einmalig an der Signatur abgelesen statt über einen abgefangenen `TypeError`; die CI testet mit pymodbus 3.8.3, 3.11.2 und der neuesten Version. Der Testsimulator ist ein eigener kleiner Modbus-TCP-Server und hängt nicht mehr vom Server aus pymodbus ab.
 
 ## 0.1.0
 
