@@ -6,7 +6,7 @@ from homeassistant.const import CONF_HOST, CONF_PORT, Platform
 from homeassistant.core import HomeAssistant
 
 from .client_pool import async_acquire_client, async_release_client
-from .const import CONF_METER_UNIT_ID, CONF_UNIT_ID
+from .const import CONF_EXTRA_METER_UNIT_IDS, CONF_METER_UNIT_ID, CONF_UNIT_ID
 from .coordinator import FroniusConfigEntry, FroniusCoordinator
 
 PLATFORMS: list[Platform] = [
@@ -30,6 +30,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: FroniusConfigEntry) -> b
         client,
         inverter_unit=entry.data[CONF_UNIT_ID],
         meter_unit=entry.data.get(CONF_METER_UNIT_ID),
+        extra_meter_units=entry.data.get(CONF_EXTRA_METER_UNIT_IDS),
     )
     try:
         await coordinator.async_config_entry_first_refresh()

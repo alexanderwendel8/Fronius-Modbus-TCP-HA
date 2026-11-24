@@ -10,6 +10,8 @@ MANUFACTURER: Final = "Fronius"
 
 CONF_UNIT_ID: Final = "unit_id"
 CONF_METER_UNIT_ID: Final = "meter_unit_id"
+# Weitere Smart Meter (GEN24: 201–204, Datamanager: 241–244) als Liste von Unit-IDs
+CONF_EXTRA_METER_UNIT_IDS: Final = "extra_meter_unit_ids"
 # Gespeichertes Erkennungsergebnis: Fronius-Register 500-513 vorhanden (Datamanager)
 CONF_SITE_REGISTERS: Final = "site_registers"
 # Option: schreibende Entitäten (Leistungsbegrenzung, Standby …) anlegen

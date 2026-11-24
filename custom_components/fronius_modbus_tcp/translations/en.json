@@ -8,13 +8,15 @@
           "host": "Host",
           "port": "Port",
           "unit_id": "Inverter Modbus address",
-          "meter_unit_id": "Smart Meter Modbus address"
+          "meter_unit_id": "Smart Meter Modbus address",
+          "extra_meter_unit_ids": "Additional Smart Meters"
         },
         "data_description": {
           "host": "Hostname or IP address of the inverter or Datamanager.",
           "port": "Modbus TCP port: 502 (default) or 1502 (GEN24 option).",
           "unit_id": "GEN24, Tauro, Verto: always 1. Datamanager (Symo, Primo, Galvo, Eco …): the inverter number from the inverter display; number 00 = address 100.",
-          "meter_unit_id": "Leave empty for automatic detection (GEN24: 200, Datamanager: 240). Enter 0 if no Smart Meter should be read."
+          "meter_unit_id": "Leave empty for automatic detection (GEN24: 200, Datamanager: 240). Enter 0 if no Smart Meter should be read.",
+          "extra_meter_unit_ids": "Modbus addresses of further Smart Meters, separated by commas (GEN24: 201–204, Datamanager: 241–244). Leave empty if there is only one."
         }
       },
       "reconfigure": {
@@ -24,13 +26,15 @@
           "host": "Host",
           "port": "Port",
           "unit_id": "Inverter Modbus address",
-          "meter_unit_id": "Smart Meter Modbus address"
+          "meter_unit_id": "Smart Meter Modbus address",
+          "extra_meter_unit_ids": "Additional Smart Meters"
         },
         "data_description": {
           "host": "Hostname or IP address of the inverter or Datamanager.",
           "port": "Modbus TCP port: 502 (default) or 1502 (GEN24 option).",
           "unit_id": "GEN24, Tauro, Verto: always 1. Datamanager (Symo, Primo, Galvo, Eco …): the inverter number from the inverter display; number 00 = address 100.",
-          "meter_unit_id": "Leave empty for automatic detection (GEN24: 200, Datamanager: 240). Enter 0 if no Smart Meter should be read."
+          "meter_unit_id": "Leave empty for automatic detection (GEN24: 200, Datamanager: 240). Enter 0 if no Smart Meter should be read.",
+          "extra_meter_unit_ids": "Modbus addresses of further Smart Meters, separated by commas (GEN24: 201–204, Datamanager: 241–244). Leave empty if there is only one."
         }
       }
     },
@@ -38,7 +42,8 @@
       "cannot_connect": "Failed to connect",
       "not_sunspec": "The device responded but no SunSpec inverter data was found. Check the Modbus address.",
       "unknown": "Unexpected error",
-      "meter_not_found": "No Smart Meter found at this Modbus address."
+      "meter_not_found": "No Smart Meter found at this Modbus address.",
+      "invalid_meter_list": "Enter Modbus addresses between 1 and 247, separated by commas."
     },
     "abort": {
       "already_configured": "Device is already configured",

@@ -79,7 +79,7 @@ an der Modellkette (z. B. Modell 124 vorhanden → Batterie-fähig).
 | `EvtVnd1-4` dekodieren | `sunspec.py::parse_severity_events` / `parse_vendor_event_classes`, `state_codes.py` | ✅ GEN24: Schweregrad (Fehler/Warnung); Datamanager: Fehlerklassen je Familie (Unterscheidung über Fronius-Register) |
 | `Evt1` im Klartext | `sunspec.py::SUNSPEC_EVENTS` | ✅ 16 Bits laut `Evt1.csv` |
 | Modell 122 | `sunspec.py::parse_status` | ✅ `ActWh` (eigener Sensor, genauer als `WH`), `Ris`; `StActCtl`, `PVConn` … ⏳. Praxis: Symo 3.0-3-M am Datamanager liefert `ActWh`, aber kein `Ris` (Argeno-Registerkarte nennt beides „not supported“) |
-| Mehrere Smart Meter (200–204 / 240–244) | – | ⏳ derzeit nur einer |
+| Mehrere Smart Meter (200–204 / 240–244) | `coordinator.py` (`meters`), `config_flow.py` (`extra_meter_unit_ids`) | ✅ weitere Zähler per Unit-ID bei der Einrichtung; je Zähler ein eigenes Gerät |
 | Fronius-Register 214 (State Code), 500–513 (Anlagensummen) | `sunspec.py::parse_fronius_*`, `state_codes.py` | ✅ nur Datamanager; Erkennung per Testlesen beim Start |
 | Vorgaben lesen (Modell 123) | `sunspec.py::parse_controls`, `binary_sensor.py` | ✅ Leistungsbegrenzung, Standby, cos φ/Blindleistung (nur lesend) |
 | Steuerung Modell 123 | `api.py::set_power_limit` / `set_feed_in`, `number.py`, `switch.py` | ✅ Leistungsbegrenzung (5 Register in einem Befehl, SF frisch gelesen), Standby (`Conn`), immer mit `RvrtTms`; nur mit Option „Steuerung erlauben“. cos φ/Blindleistung ⏳ |

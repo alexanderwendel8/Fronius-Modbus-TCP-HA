@@ -14,7 +14,7 @@ from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .api import FroniusModbusError
+from .api import FroniusModbusError, MeterInfo
 from .const import DOMAIN, MANUFACTURER
 from .coordinator import FroniusCoordinator
 
@@ -28,10 +28,12 @@ def inverter_device_id(coordinator: FroniusCoordinator) -> str:
     return coordinator.inverter.serial_number or coordinator.config_entry.entry_id
 
 
-def meter_device_id(coordinator: FroniusCoordinator) -> str:
-    assert coordinator.meter is not None
-    serial = coordinator.meter.serial_number
-    return f"meter_{serial}" if serial else f"{coordinator.config_entry.entry_id}_meter"
+def meter_device_id(coordinator: FroniusCoordinator, meter: MeterInfo) -> str:
+    """Geräte-ID eines Zählers; ohne Seriennummer über Eintrag und Unit-ID."""
+    if meter.serial_number:
+        return f"meter_{meter.serial_number}"
+    suffix = "" if meter is coordinator.meter else f"_{meter.unit_id}"
+    return f"{coordinator.config_entry.entry_id}_meter{suffix}"
 
 
 class FroniusEntity(CoordinatorEntity[FroniusCoordinator]):
@@ -40,19 +42,29 @@ class FroniusEntity(CoordinatorEntity[FroniusCoordinator]):
     _attr_has_entity_name = True
 
     def __init__(
-        self, coordinator: FroniusCoordinator, key: str, device: str = DEVICE_INVERTER
+        self,
+        coordinator: FroniusCoordinator,
+        key: str,
+        device: str = DEVICE_INVERTER,
+        meter: MeterInfo | None = None,
     ) -> None:
         super().__init__(coordinator)
         self._key = key
+        # Schlüssel in den gelesenen Werten; weitere Zähler tragen ein Präfix
+        self._data_key = key
         inverter_id = inverter_device_id(coordinator)
 
         if device == DEVICE_METER:
-            meter = coordinator.meter
+            meter = meter or coordinator.meter
             assert meter is not None
-            device_id = meter_device_id(coordinator)
+            primary = meter is coordinator.meter
+            self._data_key = f"{coordinator.meter_key_prefix(meter)}{key}"
+            device_id = meter_device_id(coordinator, meter)
+            name = meter.model or "Smart Meter"
             self._attr_device_info = DeviceInfo(
                 identifiers={(DOMAIN, device_id)},
-                name=meter.model or "Smart Meter",
+                # gleiche Modelle unterscheidbar machen
+                name=name if primary else f"{name} ({meter.unit_id})",
                 manufacturer=meter.manufacturer or MANUFACTURER,
                 model=meter.model or None,
                 sw_version=meter.version or None,
@@ -78,7 +90,7 @@ class FroniusEntity(CoordinatorEntity[FroniusCoordinator]):
         return (
             super().available
             and self.coordinator.data is not None
-            and self._key in self.coordinator.data.values
+            and self._data_key in self.coordinator.data.values
         )
 
 
@@ -109,7 +121,7 @@ def drop_unsupported(
     kept: list[_EntityT] = []
     for entity in entities:
         desc = entity.entity_description
-        key = desc.key
+        key = entity._data_key  # Schlüssel inkl. Zähler-Präfix
         if getattr(desc, "skip_if_unsupported", False) and key in values and values[key] is None:
             entity_id = registry.async_get_entity_id(
                 platform, DOMAIN, entity.unique_id or ""

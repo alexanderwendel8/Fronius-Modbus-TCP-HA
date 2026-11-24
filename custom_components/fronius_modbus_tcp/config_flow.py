@@ -30,6 +30,7 @@ from .api import (
 from .client_pool import async_acquire_client, async_release_client
 from .const import (
     CONF_ALLOW_CONTROL,
+    CONF_EXTRA_METER_UNIT_IDS,
     CONF_METER_UNIT_ID,
     CONF_SCAN_INTERVAL,
     CONF_SITE_REGISTERS,
@@ -59,8 +60,27 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
         vol.Optional(CONF_METER_UNIT_ID): vol.All(
             vol.Coerce(int), vol.Range(min=0, max=247)
         ),
+        # weitere Zähler, durch Komma getrennt (z. B. "201, 202")
+        vol.Optional(CONF_EXTRA_METER_UNIT_IDS): str,
     }
 )
+
+
+def parse_unit_ids(text: str | None, exclude: set[int | None]) -> list[int]:
+    """Kommagetrennte Unit-IDs (1–247) lesen; doppelte und ausgeschlossene entfallen.
+
+    ValueError bei allem, was keine gültige Unit-ID ist.
+    """
+    units: list[int] = []
+    for part in (text or "").replace(";", ",").split(","):
+        if not (part := part.strip()):
+            continue
+        unit = int(part)
+        if not 1 <= unit <= 247:
+            raise ValueError(f"Unit-ID {unit} außerhalb 1–247")
+        if unit not in exclude and unit not in units:
+            units.append(unit)
+    return units
 
 
 class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
@@ -156,11 +176,30 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
                     errors[CONF_METER_UNIT_ID] = "meter_not_found"
                 meter_unit = requested
 
+        extra_units: list[int] = []
+        if not errors:
+            try:
+                extra_units = parse_unit_ids(
+                    user_input.get(CONF_EXTRA_METER_UNIT_IDS), exclude={unit, meter_unit}
+                )
+            except ValueError:
+                errors[CONF_EXTRA_METER_UNIT_IDS] = "invalid_meter_list"
+            for extra in extra_units:
+                if await async_detect_meter(host, port, [extra]) is None:
+                    _LOGGER.warning(
+                        "Einrichtung %s:%s: kein Smart Meter unter Unit-ID %s "
+                        "(GEN24: 200–204, Datamanager: 240–244)",
+                        host, port, extra,
+                    )
+                    errors[CONF_EXTRA_METER_UNIT_IDS] = "meter_not_found"
+                    break
+
         data: dict[str, Any] = {
             CONF_HOST: host,
             CONF_PORT: port,
             CONF_UNIT_ID: unit,
             CONF_METER_UNIT_ID: meter_unit,
+            CONF_EXTRA_METER_UNIT_IDS: extra_units,
         }
         if info is not None and info.site_registers_confirmed:
             # Gerätetyp (Datamanager / GEN24) dauerhaft merken
@@ -220,6 +259,9 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
             # ändert; Feld leeren startet die automatische Suche
             CONF_METER_UNIT_ID: entry.data.get(CONF_METER_UNIT_ID)
             or METER_UNIT_ID_NONE,
+            CONF_EXTRA_METER_UNIT_IDS: ", ".join(
+                str(u) for u in entry.data.get(CONF_EXTRA_METER_UNIT_IDS, [])
+            ),
         }
         return self.async_show_form(
             step_id="reconfigure",

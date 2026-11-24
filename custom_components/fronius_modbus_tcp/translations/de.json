@@ -8,13 +8,15 @@
           "host": "Host",
           "port": "Port",
           "unit_id": "Modbus-Adresse Wechselrichter",
-          "meter_unit_id": "Modbus-Adresse Smart Meter"
+          "meter_unit_id": "Modbus-Adresse Smart Meter",
+          "extra_meter_unit_ids": "Weitere Smart Meter"
         },
         "data_description": {
           "host": "Hostname oder IP-Adresse des Wechselrichters bzw. Datamanagers.",
           "port": "Modbus-TCP-Port: 502 (Standard) oder 1502 (Option beim GEN24).",
           "unit_id": "GEN24, Tauro, Verto: immer 1. Datamanager (Symo, Primo, Galvo, Eco …): Wechselrichter-Nummer laut Display; Nummer 00 = Adresse 100.",
-          "meter_unit_id": "Leer lassen für automatische Suche (GEN24: 200, Datamanager: 240). 0 eintragen, wenn kein Smart Meter gelesen werden soll."
+          "meter_unit_id": "Leer lassen für automatische Suche (GEN24: 200, Datamanager: 240). 0 eintragen, wenn kein Smart Meter gelesen werden soll.",
+          "extra_meter_unit_ids": "Modbus-Adressen weiterer Smart Meter, durch Komma getrennt (GEN24: 201–204, Datamanager: 241–244). Leer lassen, wenn es nur einen gibt."
         }
       },
       "reconfigure": {
@@ -24,13 +26,15 @@
           "host": "Host",
           "port": "Port",
           "unit_id": "Modbus-Adresse Wechselrichter",
-          "meter_unit_id": "Modbus-Adresse Smart Meter"
+          "meter_unit_id": "Modbus-Adresse Smart Meter",
+          "extra_meter_unit_ids": "Weitere Smart Meter"
         },
         "data_description": {
           "host": "Hostname oder IP-Adresse des Wechselrichters bzw. Datamanagers.",
           "port": "Modbus-TCP-Port: 502 (Standard) oder 1502 (Option beim GEN24).",
           "unit_id": "GEN24, Tauro, Verto: immer 1. Datamanager (Symo, Primo, Galvo, Eco …): Wechselrichter-Nummer laut Display; Nummer 00 = Adresse 100.",
-          "meter_unit_id": "Leer lassen für automatische Suche (GEN24: 200, Datamanager: 240). 0 eintragen, wenn kein Smart Meter gelesen werden soll."
+          "meter_unit_id": "Leer lassen für automatische Suche (GEN24: 200, Datamanager: 240). 0 eintragen, wenn kein Smart Meter gelesen werden soll.",
+          "extra_meter_unit_ids": "Modbus-Adressen weiterer Smart Meter, durch Komma getrennt (GEN24: 201–204, Datamanager: 241–244). Leer lassen, wenn es nur einen gibt."
         }
       }
     },
@@ -38,7 +42,8 @@
       "cannot_connect": "Verbindung fehlgeschlagen",
       "not_sunspec": "Das Gerät antwortet, liefert aber keine SunSpec-Wechselrichterdaten. Modbus-Adresse prüfen.",
       "unknown": "Unerwarteter Fehler",
-      "meter_not_found": "Unter dieser Modbus-Adresse wurde kein Smart Meter gefunden."
+      "meter_not_found": "Unter dieser Modbus-Adresse wurde kein Smart Meter gefunden.",
+      "invalid_meter_list": "Modbus-Adressen zwischen 1 und 247 eingeben, durch Komma getrennt."
     },
     "abort": {
       "already_configured": "Gerät ist bereits eingerichtet",

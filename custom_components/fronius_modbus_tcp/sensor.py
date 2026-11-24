@@ -26,6 +26,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from . import sunspec
+from .api import MeterInfo
 from .coordinator import FroniusConfigEntry, FroniusCoordinator
 from .entity import (
     DEVICE_INVERTER,
@@ -445,9 +446,9 @@ async def async_setup_entry(
                 FroniusSensor(coordinator, desc) for desc in BATTERY_NAMEPLATE_SENSORS
             ]
 
-    if (meter := coordinator.meter) is not None:
+    for meter in coordinator.meters.values():
         entities += [
-            FroniusSensor(coordinator, desc, device=DEVICE_METER)
+            FroniusSensor(coordinator, desc, device=DEVICE_METER, meter=meter)
             for desc in METER_SENSORS
             if desc.min_phases <= meter.phases
         ]
@@ -468,12 +469,13 @@ class FroniusSensor(FroniusEntity, SensorEntity):
         description: FroniusSensorEntityDescription,
         placeholders: dict[str, str] | None = None,
         device: str = DEVICE_INVERTER,
+        meter: MeterInfo | None = None,
     ) -> None:
-        super().__init__(coordinator, description.key, device)
+        super().__init__(coordinator, description.key, device, meter)
         self.entity_description = description
         if placeholders:
             self._attr_translation_placeholders = placeholders
 
     @property
     def native_value(self) -> float | int | str | None:
-        return self.coordinator.data.values.get(self.entity_description.key)
+        return self.coordinator.data.values.get(self._data_key)
