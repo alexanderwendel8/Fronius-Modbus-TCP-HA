@@ -1,5 +1,9 @@
 # Changelog
 
+## Unveröffentlicht
+
+- Behoben: Der Diagnose-Download brach mit einem internen Fehler ab, solange der Eintrag nicht geladen war (z. B. Gerät beim Start nicht erreichbar). Er liefert jetzt Zustand, Fehlermeldung, Eintragsdaten und die zuletzt gespeicherte Gerätestruktur.
+
 ## 0.2.0
 
 Robustere Erkennung und Abfrage, neue Einstell- und Steuermöglichkeiten sowie eine deutlich breitere
