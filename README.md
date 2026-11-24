@@ -127,7 +127,8 @@ Anschließend unter *Einstellungen → Geräte & Dienste → Integration hinzuf�
 
 `0` als Smart-Meter-Adresse schaltet den Zähler ab. Bei mehreren Wechselrichtern am Datamanager
 für jeden Wechselrichter einen eigenen Eintrag anlegen; der Smart Meter wird automatisch nur dem
-ersten Eintrag zugeordnet.
+ersten Eintrag zugeordnet. Alle Einträge am selben Datamanager teilen sich eine Modbus-Verbindung und fragen
+nacheinander ab.
 
 Antwortet der Smart Meter beim Start nicht, wird der Wechselrichter trotzdem eingerichtet. Die Integration
 sucht den Zähler dann alle 5 Minuten erneut und lädt den Eintrag neu, sobald er gefunden wird.
@@ -178,6 +179,7 @@ actions:
 | Datei | Zweck |
 |---|---|
 | `api.py` | Modbus-Client, Erkennung der Modellkette, Registerzugriff |
+| `client_pool.py` | Gemeinsame Verbindung für alle Einträge am selben Host und Port |
 | `sunspec.py` | SunSpec-Modelldefinitionen und Dekodierung (ohne HA-Abhängigkeit) |
 | `coordinator.py` | Zyklische Abfrage (`DataUpdateCoordinator`) |
 | `config_flow.py` | Einrichtung über die UI inkl. Verbindungstest |

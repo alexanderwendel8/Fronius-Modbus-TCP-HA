@@ -615,3 +615,68 @@ async def test_site_registers_stored_for_old_entry(
         await hass.async_block_till_done()
     finally:
         await server.stop()
+
+
+async def test_entries_on_same_host_share_connection(
+    hass: HomeAssistant, socket_enabled
+) -> None:
+    """Zwei Wechselrichter am selben Datamanager teilen sich Client und Verbindung."""
+    from pytest_homeassistant_custom_component.common import MockConfigEntry
+
+    from custom_components.fronius_modbus_tcp.client_pool import _pool
+
+    def _device(serial: str) -> tuple[list[int], dict[int, int]]:
+        regs = sim.datamanager_hybrid_int()
+        old = sim.s("44444444", 16)
+        (pos,) = [i for i in range(len(regs) - 15) if regs[i : i + 16] == old]
+        regs[pos : pos + 16] = sim.s(serial, 16)
+        return regs, sim.fronius_registers()
+
+    server = sim.FroniusSimulator({1: _device("44444444"), 2: _device("55555555")})
+    other = sim.FroniusSimulator({1: sim.gen24_float_no_battery()})
+    await server.start()
+    await other.start()
+    try:
+        entries = []
+        for unit, serial, port in (
+            (1, "44444444", server.port),
+            (2, "55555555", server.port),
+            (1, "other", other.port),
+        ):
+            entry = MockConfigEntry(
+                domain=DOMAIN,
+                unique_id=serial,
+                data={
+                    CONF_HOST: "127.0.0.1",
+                    CONF_PORT: port,
+                    CONF_UNIT_ID: unit,
+                    CONF_METER_UNIT_ID: None,
+                },
+            )
+            entry.add_to_hass(hass)
+            assert await hass.config_entries.async_setup(entry.entry_id)
+            entries.append(entry)
+        await hass.async_block_till_done()
+        first, second, third = entries
+
+        client = first.runtime_data.client
+        assert second.runtime_data.client is client
+        assert third.runtime_data.client is not client  # anderes Gerät
+        assert len(_pool(hass)) == 2
+
+        # Ein Eintrag wird entladen: Verbindung bleibt für den anderen bestehen
+        assert await hass.config_entries.async_unload(first.entry_id)
+        await hass.async_block_till_done()
+        assert client._client.connected
+        await second.runtime_data.async_refresh()
+        assert second.runtime_data.last_update_success
+
+        # Letzter Nutzer weg → Verbindung geschlossen, Pool leer
+        assert await hass.config_entries.async_unload(second.entry_id)
+        assert await hass.config_entries.async_unload(third.entry_id)
+        await hass.async_block_till_done()
+        assert not client._client.connected
+        assert _pool(hass) == {}
+    finally:
+        await server.stop()
+        await other.stop()

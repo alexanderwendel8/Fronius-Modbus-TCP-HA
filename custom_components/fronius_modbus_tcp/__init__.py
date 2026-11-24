@@ -5,7 +5,7 @@ from __future__ import annotations
 from homeassistant.const import CONF_HOST, CONF_PORT, Platform
 from homeassistant.core import HomeAssistant
 
-from .api import FroniusModbusClient
+from .client_pool import async_acquire_client, async_release_client
 from .const import CONF_METER_UNIT_ID, CONF_UNIT_ID
 from .coordinator import FroniusConfigEntry, FroniusCoordinator
 
@@ -20,7 +20,10 @@ PLATFORMS: list[Platform] = [
 
 async def async_setup_entry(hass: HomeAssistant, entry: FroniusConfigEntry) -> bool:
     """Integration aus einem Config-Entry einrichten."""
-    client = FroniusModbusClient(entry.data[CONF_HOST], entry.data[CONF_PORT])
+    host, port = entry.data[CONF_HOST], entry.data[CONF_PORT]
+    # Einträge am selben Gerät (mehrere Wechselrichter am Datamanager) teilen
+    # sich eine Verbindung, damit ihre Abfragen nacheinander laufen
+    client = async_acquire_client(hass, host, port)
     coordinator = FroniusCoordinator(
         hass,
         entry,
@@ -31,7 +34,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: FroniusConfigEntry) -> b
     try:
         await coordinator.async_config_entry_first_refresh()
     except Exception:
-        await client.close()
+        await async_release_client(hass, host, port)
         raise
 
     entry.runtime_data = coordinator
@@ -49,5 +52,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: FroniusConfigEntry) -> 
     """Config-Entry entladen."""
     unloaded = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unloaded:
-        await entry.runtime_data.client.close()
+        await async_release_client(
+            hass, entry.data[CONF_HOST], entry.data[CONF_PORT]
+        )
     return unloaded
