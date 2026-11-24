@@ -10,6 +10,8 @@ MANUFACTURER: Final = "Fronius"
 
 CONF_UNIT_ID: Final = "unit_id"
 CONF_METER_UNIT_ID: Final = "meter_unit_id"
+# Gespeichertes Erkennungsergebnis: Fronius-Register 500-513 vorhanden (Datamanager)
+CONF_SITE_REGISTERS: Final = "site_registers"
 # Option: schreibende Entitäten (Leistungsbegrenzung, Standby …) anlegen
 CONF_ALLOW_CONTROL: Final = "allow_control"
 

@@ -25,6 +25,7 @@ from .api import (
 from .const import (
     CONF_ALLOW_CONTROL,
     CONF_METER_UNIT_ID,
+    CONF_SITE_REGISTERS,
     CONF_UNIT_ID,
     DEFAULT_PORT,
     DEFAULT_UNIT_ID,
@@ -142,14 +143,18 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
             if not errors:
                 await self.async_set_unique_id(info.serial_number or None)
                 self._abort_if_unique_id_configured()
+                data = {
+                    CONF_HOST: host,
+                    CONF_PORT: port,
+                    CONF_UNIT_ID: user_input[CONF_UNIT_ID],
+                    CONF_METER_UNIT_ID: meter_unit,
+                }
+                if info.site_registers_confirmed:
+                    # Gerätetyp (Datamanager / GEN24) dauerhaft merken
+                    data[CONF_SITE_REGISTERS] = info.has_site_registers
                 return self.async_create_entry(
                     title=f"{info.manufacturer} {info.model}".strip() or host,
-                    data={
-                        CONF_HOST: host,
-                        CONF_PORT: port,
-                        CONF_UNIT_ID: user_input[CONF_UNIT_ID],
-                        CONF_METER_UNIT_ID: meter_unit,
-                    },
+                    data=data,
                 )
 
         return self.async_show_form(

@@ -13,6 +13,7 @@ from homeassistant.helpers import device_registry as dr, entity_registry as er
 from custom_components.fronius_modbus_tcp.const import (
     CONF_ALLOW_CONTROL,
     CONF_METER_UNIT_ID,
+    CONF_SITE_REGISTERS,
     CONF_UNIT_ID,
     DOMAIN,
 )
@@ -61,6 +62,7 @@ async def test_gen24_plus_with_meter(hass: HomeAssistant, gen24) -> None:
     assert entry.title == "Fronius Symo GEN24 10.0 Plus"
     assert entry.unique_id == "33333333"
     assert entry.data[CONF_METER_UNIT_ID] == 200  # automatisch gefunden
+    assert entry.data[CONF_SITE_REGISTERS] is False  # GEN24, dauerhaft gemerkt
 
     ent_reg = er.async_get(hass)
     dev_reg = dr.async_get(hass)
@@ -556,6 +558,59 @@ async def test_power_low_is_no_error(hass: HomeAssistant, socket_enabled) -> Non
         assert s("44444444_vendor_events").state == "Power low"
         error = ent_reg.async_get_entity_id("binary_sensor", DOMAIN, "44444444_error_active")
         assert hass.states.get(error).state == "off"
+        assert await hass.config_entries.async_unload(entry.entry_id)
+        await hass.async_block_till_done()
+    finally:
+        await server.stop()
+
+
+async def test_site_registers_stored_for_old_entry(
+    hass: HomeAssistant, socket_enabled
+) -> None:
+    """Eintrag ohne gespeicherten Gerätetyp: Ergebnis wird nachgetragen und danach nicht mehr geprüft."""
+    from unittest.mock import patch
+
+    from pytest_homeassistant_custom_component.common import MockConfigEntry
+
+    from custom_components.fronius_modbus_tcp.api import (
+        FroniusModbusClient,
+        FroniusModbusError,
+    )
+
+    server = sim.FroniusSimulator(
+        {1: (sim.datamanager_hybrid_int(), sim.fronius_registers())}
+    )
+    await server.start()
+    try:
+        entry = MockConfigEntry(
+            domain=DOMAIN,
+            unique_id="44444444",
+            data={
+                CONF_HOST: "127.0.0.1",
+                CONF_PORT: server.port,
+                CONF_UNIT_ID: 1,
+                CONF_METER_UNIT_ID: None,
+            },
+        )
+        entry.add_to_hass(hass)
+        assert await hass.config_entries.async_setup(entry.entry_id)
+        await hass.async_block_till_done()
+        assert entry.data[CONF_SITE_REGISTERS] is True
+        ent_reg = er.async_get(hass)
+        assert ent_reg.async_get_entity_id("sensor", DOMAIN, "44444444_site_power")
+
+        # Neustart: Probe würde fehlschlagen, wird aber nicht mehr ausgeführt
+        with patch.object(
+            FroniusModbusClient,
+            "_probe_site_registers",
+            side_effect=FroniusModbusError("darf nicht aufgerufen werden"),
+        ) as probe:
+            assert await hass.config_entries.async_reload(entry.entry_id)
+            await hass.async_block_till_done()
+            assert probe.call_count == 0
+        assert entry.runtime_data.inverter.has_site_registers
+        assert _state(hass, ent_reg, "44444444_site_power") is not None
+
         assert await hass.config_entries.async_unload(entry.entry_id)
         await hass.async_block_till_done()
     finally:

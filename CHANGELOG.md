@@ -6,6 +6,7 @@
 - Mindestversion korrigiert: Home Assistant 2025.3 (statt 2025.2) – der Code nutzt `AddConfigEntryEntitiesCallback`, das es erst ab 2025.3 gibt.
 - Optionale Sensoren, die schon einmal einen Wert geliefert haben, werden nicht mehr gelöscht, wenn der Wert bei einem späteren Start vorübergehend fehlt. Name, Entitäts-ID und Einstellungen bleiben erhalten.
 - Smart Meter, der beim Start nicht antwortet, wird alle 5 Minuten erneut gesucht; sobald er gefunden wird, erscheinen seine Sensoren ohne manuelles Neuladen. Ausfall und Rückkehr des Zählers im laufenden Betrieb stehen jetzt einmalig im Log.
+- Erkennung „Datamanager oder GEN24“ abgesichert: Ein vorübergehender Modbus-Fehler beim Prüfen der Fronius-Register 500–513 stuft das Gerät nicht mehr dauerhaft falsch ein. Nur die Fehlerantwort „unzulässige Adresse“ gilt als „nicht vorhanden“; das eindeutige Ergebnis wird im Eintrag gespeichert und bei späteren Starts nicht erneut geprüft. Antwortet ein Gerät auf diese Register gar nicht, scheitert die Einrichtung nicht mehr.
 
 ## 0.1.0
 
