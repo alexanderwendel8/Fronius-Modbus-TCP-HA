@@ -27,6 +27,8 @@ METER_UNIT_ID_GEN24: Final = 200
 METER_UNIT_ID_DATAMANAGER: Final = 240
 METER_UNIT_ID_CANDIDATES: Final = [METER_UNIT_ID_GEN24, METER_UNIT_ID_DATAMANAGER]
 METER_UNIT_ID_NONE: Final = 0  # im Formular: 0 = kein Smart Meter
+# Beim Start nicht gefundener Zähler: Abstand zwischen den erneuten Suchen
+METER_RETRY_INTERVAL: Final = timedelta(minutes=5)
 
 # Rückfallzeit (RvrtTms) für Vorgaben: Fällt Home Assistant aus, kehrt der
 # Wechselrichter danach von selbst in den Normalbetrieb zurück. Jede Modbus-

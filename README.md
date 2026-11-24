@@ -129,6 +129,9 @@ Anschließend unter *Einstellungen → Geräte & Dienste → Integration hinzuf�
 für jeden Wechselrichter einen eigenen Eintrag anlegen; der Smart Meter wird automatisch nur dem
 ersten Eintrag zugeordnet.
 
+Antwortet der Smart Meter beim Start nicht, wird der Wechselrichter trotzdem eingerichtet. Die Integration
+sucht den Zähler dann alle 5 Minuten erneut und lädt den Eintrag neu, sobald er gefunden wird.
+
 ## Steuerung (optional)
 
 Standardmäßig liest die Integration nur. Schreibende Entitäten gibt es erst nach
