@@ -213,6 +213,21 @@ pytest
 Die Tests starten simulierte Fronius-Geräte (`tests/simulator.py`) als echten Modbus-TCP-Server und
 richten die Integration in einer Home-Assistant-Testinstanz ein.
 
+Zusätzlich prüft der Workflow [`update-check.yml`](.github/workflows/update-check.yml)
+jeden Montag die externen Komponenten und legt für jede veraltete Komponente ein Issue mit
+dem Label `aktualisierung` an:
+- **GitHub Actions** in `.github/workflows` mit Versionsangabe (neues Release; Verweise auf einen
+  Branch wie `@main` werden übersprungen)
+- **Python-Pakete**, die in `requirements_test.txt` oder den Workflows fest gepinnt sind; Pins mit
+  dem Kommentar `# update-check: ignore` (z. B. die Mindestversion von pymodbus) nicht
+- **Home Assistant:** neues Monatsrelease gegenüber der neuesten Version in der Spalte
+  „Home Assistant“ der Tabelle [Getestete Geräte](#getestete-geräte) und eine höhere
+  Python-Mindestversion als in den Workflows
+
+Ist die Komponente wieder aktuell, schließt der Workflow das Issue selbst. Die Prüfungen stehen
+in [`.github/scripts/check_updates.py`](.github/scripts/check_updates.py); lokal zeigt
+`python .github/scripts/check_updates.py --dry-run` das Ergebnis, ohne Issues zu ändern.
+
 ## Releases
 
 Änderungen stehen in [`CHANGELOG.md`](CHANGELOG.md). Releases erstellt der Workflow `release.yml`
