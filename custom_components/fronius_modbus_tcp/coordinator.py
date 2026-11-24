@@ -20,6 +20,7 @@ from .api import (
 )
 from .const import (
     CONF_ALLOW_CONTROL,
+    CONF_SITE_REGISTERS,
     DEFAULT_REVERT_SECONDS,
     DEFAULT_SCAN_INTERVAL,
     DOMAIN,
@@ -71,10 +72,25 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
 
     async def _async_setup(self) -> None:
         """Einmalig beim ersten Refresh: Gerätestruktur erkennen."""
+        entry = self.config_entry
+        known = entry.data.get(CONF_SITE_REGISTERS)
         try:
-            self.inverter = await self.client.read_inverter_info(self._inverter_unit)
+            self.inverter = await self.client.read_inverter_info(
+                self._inverter_unit, site_registers=known
+            )
         except FroniusModbusError as err:
             raise UpdateFailed(f"Wechselrichter nicht erkannt: {err}") from err
+        if known is None and self.inverter.site_registers_confirmed:
+            # Einträge aus älteren Versionen: eindeutiges Ergebnis nachtragen, damit
+            # ein späterer vorübergehender Fehler den Gerätetyp nicht mehr ändert.
+            # Läuft vor dem Registrieren des Update-Listeners → kein Neuladen.
+            self.hass.config_entries.async_update_entry(
+                entry,
+                data={
+                    **entry.data,
+                    CONF_SITE_REGISTERS: self.inverter.has_site_registers,
+                },
+            )
 
         if self._meter_unit:
             try:

@@ -23,8 +23,19 @@ _LOGGER = logging.getLogger(__name__)
 MAX_REGISTERS_PER_READ = 120
 
 
+# Modbus-Exception-Codes, die "Funktion/Adresse gibt es nicht" bedeuten – im
+# Unterschied zu vorübergehenden Fehlern (Gerät beschäftigt, Gateway-Timeout …)
+EXC_ILLEGAL_FUNCTION = 1
+EXC_ILLEGAL_ADDRESS = 2
+
+
 class FroniusModbusError(Exception):
     """Allgemeiner Fehler bei der Kommunikation mit dem Gerät."""
+
+    def __init__(self, message: str, exception_code: int | None = None) -> None:
+        super().__init__(message)
+        # Code der Modbus-Fehlerantwort, None bei anderen Fehlern
+        self.exception_code = exception_code
 
 
 class FroniusConnectionError(FroniusModbusError):
@@ -57,6 +68,9 @@ class InverterInfo(SunSpecDeviceInfo):
     hybrid_storage: bool = False
     # Fronius-Register 214 (State Code) und 500-513 (Anlagensummen) – nur Datamanager
     has_site_registers: bool = False
+    # False: Ergebnis nicht eindeutig (Gerät hat auf die Probe nicht geantwortet)
+    # → nicht dauerhaft speichern, beim nächsten Start erneut prüfen
+    site_registers_confirmed: bool = True
     # Nennwerte aus Modell 120 (statisch, einmal beim Start gelesen)
     nameplate: dict[str, Any] = field(default_factory=dict)
 
@@ -132,7 +146,8 @@ class FroniusModbusClient:
             raise FroniusConnectionError(str(err)) from err
         if result.isError():
             raise FroniusModbusError(
-                f"Modbus-Fehler (Unit {unit}) beim Lesen von {address} (+{count}): {result}"
+                f"Modbus-Fehler (Unit {unit}) beim Lesen von {address} (+{count}): {result}",
+                getattr(result, "exception_code", None),
             )
         return result.registers
 
@@ -221,8 +236,14 @@ class FroniusModbusClient:
             "models": models,
         }
 
-    async def read_inverter_info(self, unit: int) -> InverterInfo:
-        """Wechselrichter erkennen: Inverter-Modell, MPPT-Module, Speicher."""
+    async def read_inverter_info(
+        self, unit: int, site_registers: bool | None = None
+    ) -> InverterInfo:
+        """Wechselrichter erkennen: Inverter-Modell, MPPT-Module, Speicher.
+
+        site_registers: bereits bekanntes Ergebnis der Prüfung auf die
+        Fronius-Register (aus dem Config-Eintrag); None = jetzt prüfen.
+        """
         models = await self.scan_models(unit)
         info = InverterInfo(**await self._read_common(unit, models))
 
@@ -257,19 +278,60 @@ class FroniusModbusClient:
             regs = await self.read_model(unit, models, sunspec.NAMEPLATE_MODEL)
             info.nameplate = sunspec.parse_nameplate(regs)
 
-        # Fronius-Register gibt es nur beim Datamanager; GEN24 & Co. antworten
-        # mit einer Modbus-Exception (unzulässige Adresse).
-        try:
-            await self.read(
-                unit, sunspec.FRONIUS_SITE_ADDRESS, sunspec.FRONIUS_SITE_COUNT
-            )
-        except FroniusConnectionError:
-            raise
-        except FroniusModbusError as err:
-            _LOGGER.debug("Unit %s: keine Fronius-Register 500-513 (%s)", unit, err)
+        if site_registers is None:
+            (
+                info.has_site_registers,
+                info.site_registers_confirmed,
+            ) = await self._probe_site_registers(unit)
         else:
-            info.has_site_registers = True
+            info.has_site_registers = site_registers
         return info
+
+    async def _probe_site_registers(self, unit: int) -> tuple[bool, bool]:
+        """Prüfen, ob es die Fronius-Register 500-513 gibt (nur Datamanager).
+
+        Rückgabe (vorhanden, eindeutig). Davon hängt ab, wie EvtVnd1-4 gedeutet
+        werden und ob State Code und Anlagensummen gelesen werden – ein
+        vorübergehender Fehler darf deshalb nicht als "nicht vorhanden" zählen:
+
+        - Antwort mit Daten → vorhanden.
+        - Fehlerantwort "unzulässige Adresse/Funktion" → nicht vorhanden
+          (GEN24, Tauro, Verto).
+        - Andere Fehlerantwort (Gerät beschäftigt …) → einmal wiederholen, dann
+          Fehler melden; die Einrichtung wird später erneut versucht.
+        - Keine Antwort, Gerät aber sonst erreichbar → nicht vorhanden, jedoch
+          nicht eindeutig (wird beim nächsten Start erneut geprüft).
+        """
+        last_error: FroniusModbusError | None = None
+        for _ in range(2):
+            try:
+                await self.read(
+                    unit, sunspec.FRONIUS_SITE_ADDRESS, sunspec.FRONIUS_SITE_COUNT
+                )
+            except FroniusConnectionError as err:
+                # Lebt das Gerät noch? Sonst ist es ein Verbindungsproblem.
+                await self.close()
+                await self.read(unit, SUNSPEC_BASE_ADDRESS, 2)
+                _LOGGER.debug(
+                    "Unit %s: keine Antwort auf Fronius-Register 500-513 (%s), "
+                    "Gerät sonst erreichbar → als nicht vorhanden gewertet",
+                    unit,
+                    err,
+                )
+                return False, False
+            except FroniusModbusError as err:
+                if err.exception_code in (EXC_ILLEGAL_FUNCTION, EXC_ILLEGAL_ADDRESS):
+                    _LOGGER.debug(
+                        "Unit %s: keine Fronius-Register 500-513 (%s)", unit, err
+                    )
+                    return False, True
+                last_error = err
+            else:
+                return True, True
+        raise FroniusModbusError(
+            f"Fronius-Register 500-513 (Unit {unit}) nicht prüfbar: {last_error}",
+            last_error.exception_code if last_error else None,
+        )
 
     async def read_meter_info(self, unit: int) -> MeterInfo:
         """Smart Meter unter der angegebenen Unit-ID erkennen."""

@@ -6,6 +6,7 @@ import pytest
 
 from custom_components.fronius_modbus_tcp import sunspec
 from custom_components.fronius_modbus_tcp.api import (
+    FroniusConnectionError,
     FroniusModbusClient,
     FroniusModbusError,
     async_detect_meter,
@@ -298,5 +299,82 @@ async def test_reset_events_datamanager(datamanager) -> None:
         info = await client.read_inverter_info(1)
         await client.reset_events(info)
         assert (await client.read(1, sunspec.FRONIUS_RESET_EVENTS_ADDRESS, 1)) == [0xFFFF]
+    finally:
+        await client.close()
+
+
+def _failing_site_read(client: FroniusModbusClient, errors: list[Exception]):
+    """client.read so ersetzen, dass Lesen ab Register 500 die Fehler der Reihe nach wirft."""
+    real_read = client.read
+    calls: list[int] = []
+
+    async def read(unit: int, address: int, count: int) -> list[int]:
+        if address == sunspec.FRONIUS_SITE_ADDRESS:
+            calls.append(address)
+            if errors:
+                raise errors.pop(0)
+        return await real_read(unit, address, count)
+
+    client.read = read  # type: ignore[method-assign]
+    return calls
+
+
+async def test_site_registers_absent_is_confirmed(gen24) -> None:
+    """GEN24: Fehlerantwort "unzulässige Adresse" → eindeutig keine Fronius-Register."""
+    client = FroniusModbusClient("127.0.0.1", gen24.port)
+    try:
+        info = await client.read_inverter_info(1)
+        assert not info.has_site_registers
+        assert info.site_registers_confirmed
+    finally:
+        await client.close()
+
+
+async def test_site_registers_transient_error_retried(datamanager) -> None:
+    """Vorübergehender Modbus-Fehler darf den Datamanager nicht zum GEN24 machen."""
+    client = FroniusModbusClient("127.0.0.1", datamanager.port)
+    calls = _failing_site_read(client, [FroniusModbusError("busy", 6)])
+    try:
+        info = await client.read_inverter_info(1)
+        assert info.has_site_registers
+        assert info.site_registers_confirmed
+        assert len(calls) == 2
+    finally:
+        await client.close()
+
+
+async def test_site_registers_persistent_error_raises(datamanager) -> None:
+    """Bleibt der Fehler bestehen, schlägt die Erkennung fehl (später neuer Versuch)."""
+    client = FroniusModbusClient("127.0.0.1", datamanager.port)
+    _failing_site_read(
+        client, [FroniusModbusError("busy", 6), FroniusModbusError("busy", 6)]
+    )
+    try:
+        with pytest.raises(FroniusModbusError, match="nicht prüfbar"):
+            await client.read_inverter_info(1)
+    finally:
+        await client.close()
+
+
+async def test_site_registers_no_answer_not_confirmed(gen24) -> None:
+    """Keine Antwort auf Register 500, Gerät sonst erreichbar → nicht vorhanden, nicht eindeutig."""
+    client = FroniusModbusClient("127.0.0.1", gen24.port)
+    _failing_site_read(client, [FroniusConnectionError("timeout")])
+    try:
+        info = await client.read_inverter_info(1)
+        assert not info.has_site_registers
+        assert not info.site_registers_confirmed
+    finally:
+        await client.close()
+
+
+async def test_site_registers_known_skips_probe(gen24) -> None:
+    """Gespeichertes Ergebnis wird übernommen, ohne das Gerät erneut zu prüfen."""
+    client = FroniusModbusClient("127.0.0.1", gen24.port)
+    calls = _failing_site_read(client, [])
+    try:
+        info = await client.read_inverter_info(1, site_registers=True)
+        assert info.has_site_registers
+        assert calls == []
     finally:
         await client.close()
