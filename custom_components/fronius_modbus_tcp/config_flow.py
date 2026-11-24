@@ -14,7 +14,12 @@ from homeassistant.config_entries import (
     OptionsFlow,
 )
 from homeassistant.core import callback
-from homeassistant.const import CONF_HOST, CONF_PORT
+from homeassistant.const import CONF_HOST, CONF_PORT, UnitOfTime
+from homeassistant.helpers.selector import (
+    NumberSelector,
+    NumberSelectorConfig,
+    NumberSelectorMode,
+)
 
 from .api import (
     FroniusConnectionError,
@@ -26,13 +31,17 @@ from .client_pool import async_acquire_client, async_release_client
 from .const import (
     CONF_ALLOW_CONTROL,
     CONF_METER_UNIT_ID,
+    CONF_SCAN_INTERVAL,
     CONF_SITE_REGISTERS,
     CONF_UNIT_ID,
     DEFAULT_PORT,
+    DEFAULT_SCAN_INTERVAL_SECONDS,
     DEFAULT_UNIT_ID,
     DOMAIN,
     METER_UNIT_ID_CANDIDATES,
     METER_UNIT_ID_NONE,
+    MAX_SCAN_INTERVAL_SECONDS,
+    MIN_SCAN_INTERVAL_SECONDS,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -222,21 +231,37 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
 
 
 class FroniusOptionsFlow(OptionsFlow):
-    """Optionen: Steuerung des Wechselrichters erlauben (Standard: aus)."""
+    """Optionen: Steuerung erlauben (Standard: aus) und Abfrageintervall."""
 
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
         if user_input is not None:
+            user_input[CONF_SCAN_INTERVAL] = int(user_input[CONF_SCAN_INTERVAL])
             return self.async_create_entry(data=user_input)
+        options = self.config_entry.options
         return self.async_show_form(
             step_id="init",
             data_schema=vol.Schema(
                 {
                     vol.Required(
                         CONF_ALLOW_CONTROL,
-                        default=self.config_entry.options.get(CONF_ALLOW_CONTROL, False),
+                        default=options.get(CONF_ALLOW_CONTROL, False),
                     ): bool,
+                    vol.Optional(
+                        CONF_SCAN_INTERVAL,
+                        default=options.get(
+                            CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL_SECONDS
+                        ),
+                    ): NumberSelector(
+                        NumberSelectorConfig(
+                            min=MIN_SCAN_INTERVAL_SECONDS,
+                            max=MAX_SCAN_INTERVAL_SECONDS,
+                            step=1,
+                            unit_of_measurement=UnitOfTime.SECONDS,
+                            mode=NumberSelectorMode.BOX,
+                        )
+                    ),
                 }
             ),
         )

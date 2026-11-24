@@ -13,6 +13,7 @@ from homeassistant.helpers import device_registry as dr, entity_registry as er
 from custom_components.fronius_modbus_tcp.const import (
     CONF_ALLOW_CONTROL,
     CONF_METER_UNIT_ID,
+    CONF_SCAN_INTERVAL,
     CONF_SITE_REGISTERS,
     CONF_UNIT_ID,
     DOMAIN,
@@ -815,4 +816,42 @@ async def test_storage_control_entities(hass: HomeAssistant, gen24, gen24_plain)
         if "battery" in e.unique_id
     ]
     assert await hass.config_entries.async_unload(plain.entry_id)
+    await hass.async_block_till_done()
+
+
+async def test_scan_interval_option(hass: HomeAssistant, gen24) -> None:
+    """Abfrageintervall einstellbar; die Rückfallzeit überdauert mindestens drei Abfragen."""
+    from datetime import timedelta
+
+    entry = await _setup(hass, gen24.port, **{CONF_METER_UNIT_ID: 0})
+    assert entry.runtime_data.update_interval == timedelta(seconds=10)
+
+    result = await hass.config_entries.options.async_init(entry.entry_id)
+    # außerhalb 5–60 s wird abgelehnt
+    with pytest.raises(Exception):  # noqa: B017, PT011 - InvalidData aus dem Schema
+        await hass.config_entries.options.async_configure(
+            result["flow_id"], {CONF_ALLOW_CONTROL: True, CONF_SCAN_INTERVAL: 2}
+        )
+    result = await hass.config_entries.options.async_configure(
+        result["flow_id"], {CONF_ALLOW_CONTROL: True, CONF_SCAN_INTERVAL: 45}
+    )
+    assert result["type"] is FlowResultType.CREATE_ENTRY
+    await hass.async_block_till_done()
+    assert entry.options[CONF_SCAN_INTERVAL] == 45
+
+    coordinator = entry.runtime_data
+    assert coordinator.update_interval == timedelta(seconds=45)
+    # 3 × 45 s = 135 s Mindestwert; Standard 300 s bleibt
+    assert coordinator.min_revert_seconds == 135
+    assert coordinator.revert_seconds == 300
+    ent_reg = er.async_get(hass)
+    revert = ent_reg.async_get_entity_id("number", DOMAIN, "33333333_revert_time")
+    assert hass.states.get(revert).attributes["min"] == 135
+    with pytest.raises(Exception):  # noqa: B017, PT011 - ServiceValidationError
+        await hass.services.async_call(
+            "number", "set_value", {"entity_id": revert, "value": 60}, blocking=True
+        )
+    assert coordinator.revert_seconds == 300
+
+    assert await hass.config_entries.async_unload(entry.entry_id)
     await hass.async_block_till_done()

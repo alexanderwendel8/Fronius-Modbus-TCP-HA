@@ -432,10 +432,12 @@
         "title": "Optionen Fronius Modbus TCP",
         "description": "Schreibende Entitäten verändern das Verhalten des Wechselrichters. In der Fronius-Weboberfläche muss „Wechselrichter-Steuerung über Modbus“ aktiviert sein; Vorgaben des Netzbetreibers (Steuerungs-Prioritäten) haben Vorrang.",
         "data": {
-          "allow_control": "Steuerung erlauben"
+          "allow_control": "Steuerung erlauben",
+          "scan_interval": "Abfrageintervall"
         },
         "data_description": {
-          "allow_control": "Legt Entitäten für Leistungsbegrenzung, Einspeisung (Standby), Rückfallzeit, Speichersteuerung (Lade-/Entladegrenze, Mindestreserve, Netzladung – nur Geräte mit Speicher) und – bei Datamanager-Geräten – Ereignisse zurücksetzen an."
+          "allow_control": "Legt Entitäten für Leistungsbegrenzung, Einspeisung (Standby), Rückfallzeit, Speichersteuerung (Lade-/Entladegrenze, Mindestreserve, Netzladung – nur Geräte mit Speicher) und – bei Datamanager-Geräten – Ereignisse zurücksetzen an.",
+          "scan_interval": "Wie oft das Gerät abgefragt wird (5–60 s, Standard 10 s). Datamanager-Geräte antworten langsam; ein längeres Intervall entlastet sie. Die Rückfallzeit beträgt mindestens das Dreifache dieses Intervalls."
         }
       }
     }

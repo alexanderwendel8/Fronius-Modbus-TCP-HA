@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -20,11 +20,14 @@ from .api import (
 )
 from .const import (
     CONF_ALLOW_CONTROL,
+    CONF_SCAN_INTERVAL,
     CONF_SITE_REGISTERS,
     DEFAULT_REVERT_SECONDS,
-    DEFAULT_SCAN_INTERVAL,
+    DEFAULT_SCAN_INTERVAL_SECONDS,
     DOMAIN,
     METER_RETRY_INTERVAL,
+    MIN_REVERT_SECONDS,
+    REVERT_INTERVAL_FACTOR,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -47,12 +50,15 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
         inverter_unit: int,
         meter_unit: int | None,
     ) -> None:
+        self.scan_interval_seconds = int(
+            entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL_SECONDS)
+        )
         super().__init__(
             hass,
             _LOGGER,
             config_entry=entry,
             name=DOMAIN,
-            update_interval=DEFAULT_SCAN_INTERVAL,
+            update_interval=timedelta(seconds=self.scan_interval_seconds),
         )
         self.client = client
         self._inverter_unit = inverter_unit
@@ -61,7 +67,14 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
         self._meter_next_retry: datetime | None = None
         self._meter_failed = False
         # Rückfallzeit für Vorgaben; gesetzt/wiederhergestellt von der Number-Entität
-        self.revert_seconds = DEFAULT_REVERT_SECONDS
+        self.revert_seconds = max(DEFAULT_REVERT_SECONDS, self.min_revert_seconds)
+
+    @property
+    def min_revert_seconds(self) -> int:
+        """Kleinste zulässige Rückfallzeit: muss mehrere Abfragen überdauern."""
+        return max(
+            MIN_REVERT_SECONDS, REVERT_INTERVAL_FACTOR * self.scan_interval_seconds
+        )
 
     @property
     def control_allowed(self) -> bool:

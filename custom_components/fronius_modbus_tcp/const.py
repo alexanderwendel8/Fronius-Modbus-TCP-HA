@@ -17,7 +17,15 @@ CONF_ALLOW_CONTROL: Final = "allow_control"
 
 DEFAULT_PORT: Final = 502
 DEFAULT_UNIT_ID: Final = 1
-DEFAULT_SCAN_INTERVAL: Final = timedelta(seconds=10)
+# Option: Abfrageintervall in Sekunden
+CONF_SCAN_INTERVAL: Final = "scan_interval"
+DEFAULT_SCAN_INTERVAL_SECONDS: Final = 10
+MIN_SCAN_INTERVAL_SECONDS: Final = 5
+MAX_SCAN_INTERVAL_SECONDS: Final = 60
+DEFAULT_SCAN_INTERVAL: Final = timedelta(seconds=DEFAULT_SCAN_INTERVAL_SECONDS)
+# Die Rückfallzeit muss mehrere Abfragen überdauern, sonst endet eine Vorgabe
+# zwischen zwei Abfragen: Mindestwert = Faktor × Abfrageintervall
+REVERT_INTERVAL_FACTOR: Final = 3
 
 # Fronius: GEN24 ≥ 1 s, Datamanager ≥ 10 s (Antwort läuft über Solar Net)
 DEFAULT_TIMEOUT: Final = 10

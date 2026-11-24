@@ -19,6 +19,7 @@
   `.github/scripts/check_updates.py`, mit Tests. Offene Issues werden zu Beginn jeder Claude-Sitzung geprüft
   und nur nach Rückfrage abgearbeitet (`CLAUDE.md`).
 - Neu: Speichersteuerung für Geräte mit Batterie (Modell 124, nur mit „Steuerung erlauben“): Lade- und Entladegrenze samt Schaltern, Mindestreserve und Laden aus dem Netz. Ungültige Leistungsfenster werden vor dem Schreiben abgelehnt. Bisher nur gegen simulierte Geräte getestet.
+- Neu: Abfrageintervall einstellbar (Optionen, 5–60 s, Standard 10 s). Die Rückfallzeit für Vorgaben beträgt mindestens das Dreifache des Intervalls, damit eine Vorgabe nicht zwischen zwei Abfragen endet.
 
 ## 0.1.0
 
