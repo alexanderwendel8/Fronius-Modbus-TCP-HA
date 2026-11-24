@@ -283,6 +283,48 @@ async def test_unsupported_sensors_not_created(hass: HomeAssistant, gen24) -> No
     await hass.async_block_till_done()
 
 
+async def test_known_sensor_survives_missing_value(
+    hass: HomeAssistant, gen24, socket_enabled
+) -> None:
+    """Früher gelieferter Wert fehlt beim Neustart → Sensor und Einstellungen bleiben."""
+    import struct
+
+    ent_reg = er.async_get(hass)
+    entry = await _setup(hass, gen24.port)
+    uid = "33333333_temperature_cabinet"
+    entity_id = ent_reg.async_get_entity_id("sensor", DOMAIN, uid)
+    assert entity_id
+    ent_reg.async_update_entity(entity_id, name="Schaltschrank")
+    assert await hass.config_entries.async_unload(entry.entry_id)
+    await hass.async_block_till_done()
+
+    # Gleiches Gerät, TmpCab jetzt NaN (z. B. nachts)
+    regs = sim.gen24_plus_float()
+    hi, lo = struct.unpack(">HH", struct.pack(">f", 41.0))
+    nan = list(struct.unpack(">HH", struct.pack(">f", sim.NAN)))
+    (pos,) = [i for i in range(len(regs) - 1) if regs[i : i + 2] == [hi, lo]]
+    regs[pos : pos + 2] = nan
+    server = sim.FroniusSimulator({1: regs, 200: sim.meter_213()})
+    await server.start()
+    try:
+        hass.config_entries.async_update_entry(
+            entry, data={**entry.data, CONF_PORT: server.port}
+        )
+        assert await hass.config_entries.async_setup(entry.entry_id)
+        await hass.async_block_till_done()
+
+        assert ent_reg.async_get_entity_id("sensor", DOMAIN, uid) == entity_id
+        assert ent_reg.async_get(entity_id).name == "Schaltschrank"
+        # Nie gelieferte Werte werden weiterhin nicht angelegt
+        assert not ent_reg.async_get_entity_id(
+            "sensor", DOMAIN, "33333333_temperature_heatsink"
+        )
+        assert await hass.config_entries.async_unload(entry.entry_id)
+        await hass.async_block_till_done()
+    finally:
+        await server.stop()
+
+
 async def test_hybrid_unused_energy_not_created(hass: HomeAssistant, socket_enabled) -> None:
     """Symo Hybrid: DCWH nicht unterstützt (0) → kein Energiesensor für den String."""
     server = sim.FroniusSimulator({1: sim.datamanager_hybrid_int()})

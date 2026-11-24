@@ -4,6 +4,7 @@
 
 - Steuerung am echten Symo 3.0-3-M (Datamanager 2.0) erfolgreich getestet: Leistungsbegrenzung und Einspeisung aus/ein.
 - Mindestversion korrigiert: Home Assistant 2025.3 (statt 2025.2) – der Code nutzt `AddConfigEntryEntitiesCallback`, das es erst ab 2025.3 gibt.
+- Optionale Sensoren, die schon einmal einen Wert geliefert haben, werden nicht mehr gelöscht, wenn der Wert bei einem späteren Start vorübergehend fehlt. Name, Entitäts-ID und Einstellungen bleiben erhalten.
 
 ## 0.1.0
 
