@@ -126,6 +126,17 @@ CTRL_CONN_WIN_TMS = 0  # Conn_WinTms, Conn_RvrtTms, Conn
 CTRL_WMAXLIMPCT = 3  # WMaxLimPct, _WinTms, _RvrtTms, _RmpTms, WMaxLim_Ena
 CTRL_WMAXLIM_ENA = 7
 CTRL_WMAXLIMPCT_SF = 21
+# Offsets im Rumpf von Modell 124 (Basic Storage Controls)
+STOR_CTL_MOD = 3  # Bit 0 = Ladegrenze aktiv, Bit 1 = Entladegrenze aktiv
+STOR_MINRSVPCT = 5
+STOR_OUTWRTE = 10  # OutWRte, InWRte (direkt hintereinander)
+STOR_INWRTE = 11
+STOR_RVRTTMS = 13  # InOutWRte_RvrtTms
+STOR_CHAGRISET = 15
+STOR_MINRSVPCT_SF = 19
+STOR_INOUTWRTE_SF = 23
+STOR_BIT_CHARGE = 0x1
+STOR_BIT_DISCHARGE = 0x2
 STATE_CODE_OK = "OK"
 MAX_STATE_LENGTH = 255  # Home Assistant begrenzt Zustände auf 255 Zeichen
 
@@ -455,7 +466,16 @@ def storage_available(regs: list[int]) -> bool:
 
 def parse_storage(regs: list[int]) -> dict[str, Any]:
     in_out_sf = to_int16(regs[23])
+    mode = to_uint16(regs[3])
+    grid = to_uint16(regs[15])
     return {
+        "battery_charge_limit_active": (
+            None if mode is None else bool(mode & STOR_BIT_CHARGE)
+        ),
+        "battery_discharge_limit_active": (
+            None if mode is None else bool(mode & STOR_BIT_DISCHARGE)
+        ),
+        "battery_grid_charging_allowed": None if grid is None else grid == 1,
         "battery_max_power": scale(to_uint16(regs[0]), to_int16(regs[16]), 0),
         "battery_control_mode": _enum(to_uint16(regs[3]), STORAGE_CONTROL_MODE),
         "battery_min_reserve": scale(to_uint16(regs[5]), to_int16(regs[19]), 2),
@@ -723,3 +743,38 @@ def encode_feed_in(enabled: bool, revert_seconds: int) -> list[int]:
     Beim Wiedereinschalten wird keine Rückfallzeit gesetzt (Normalbetrieb).
     """
     return [0, 0 if enabled else revert_seconds, 1 if enabled else 0]
+
+
+# --- Speichersteuerung (Modell 124, schreibend) -------------------------------
+
+
+def encode_percent(
+    percent: float, sf: int | None, *, minimum: float, maximum: float, name: str
+) -> int:
+    """Prozentwert als Registerwert (uint16 bzw. int16 im Zweierkomplement)."""
+    if not minimum <= percent <= maximum:
+        raise ValueError(f"{name} {percent} % außerhalb {minimum:g}–{maximum:g} %")
+    if sf is None:
+        raise ValueError(f"Skalierungsfaktor für {name} nicht verfügbar")
+    return round(percent / 10**sf) & 0xFFFF
+
+
+def check_storage_window(
+    mode: int, charge_limit: float | None, discharge_limit: float | None
+) -> None:
+    """Ungültiges Leistungsfenster vorab ablehnen.
+
+    Sind beide Grenzen aktiv (StorCtl_Mod = 3), muss −InWRte ≤ OutWRte gelten,
+    sonst antwortet das Gerät mit Exception 3 (Registerkarte storage_124).
+    Beispiel ungültig: Ladegrenze −50 % und Entladegrenze −60 %.
+    """
+    if mode != (STOR_BIT_CHARGE | STOR_BIT_DISCHARGE):
+        return
+    if charge_limit is None or discharge_limit is None:
+        return
+    if -charge_limit > discharge_limit:
+        raise ValueError(
+            f"Ladegrenze {charge_limit:g} % und Entladegrenze {discharge_limit:g} % "
+            "ergeben kein gültiges Leistungsfenster (beide aktiv: "
+            "−Ladegrenze darf nicht größer als die Entladegrenze sein)"
+        )

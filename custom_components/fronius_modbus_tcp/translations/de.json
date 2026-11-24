@@ -78,6 +78,15 @@
       },
       "revert_time": {
         "name": "Rückfallzeit Vorgaben"
+      },
+      "battery_charge_limit": {
+        "name": "Batterie-Ladegrenze"
+      },
+      "battery_discharge_limit": {
+        "name": "Batterie-Entladegrenze"
+      },
+      "battery_min_reserve": {
+        "name": "Batterie-Mindestreserve"
       }
     },
     "sensor": {
@@ -405,6 +414,15 @@
       },
       "feed_in_enabled": {
         "name": "Einspeisung"
+      },
+      "battery_charge_limit_active": {
+        "name": "Batterie-Ladegrenze aktiv"
+      },
+      "battery_discharge_limit_active": {
+        "name": "Batterie-Entladegrenze aktiv"
+      },
+      "battery_grid_charging_allowed": {
+        "name": "Batterie aus dem Netz laden"
       }
     }
   },
@@ -417,7 +435,7 @@
           "allow_control": "Steuerung erlauben"
         },
         "data_description": {
-          "allow_control": "Legt Entitäten für Leistungsbegrenzung, Einspeisung (Standby), Rückfallzeit und – bei Datamanager-Geräten – Ereignisse zurücksetzen an."
+          "allow_control": "Legt Entitäten für Leistungsbegrenzung, Einspeisung (Standby), Rückfallzeit, Speichersteuerung (Lade-/Entladegrenze, Mindestreserve, Netzladung – nur Geräte mit Speicher) und – bei Datamanager-Geräten – Ereignisse zurücksetzen an."
         }
       }
     }

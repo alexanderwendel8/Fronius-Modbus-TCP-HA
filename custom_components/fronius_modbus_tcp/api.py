@@ -487,6 +487,105 @@ class FroniusModbusClient:
             sunspec.encode_feed_in(enabled, revert_seconds),
         )
 
+    # --- Speicher (Modell 124) ---------------------------------------------------
+
+    def _storage_start(self, info: InverterInfo) -> int:
+        if not info.has_storage or sunspec.STORAGE_MODEL not in info.models:
+            raise FroniusModbusError("Gerät hat keinen Speicher (Modell 124)")
+        return info.models[sunspec.STORAGE_MODEL][0]
+
+    async def set_storage_limits(
+        self,
+        info: InverterInfo,
+        *,
+        charge_limit: float | None = None,
+        discharge_limit: float | None = None,
+        charge_active: bool | None = None,
+        discharge_active: bool | None = None,
+        revert_seconds: int,
+    ) -> None:
+        """Leistungsfenster des Speichers ändern; None = unverändert lassen.
+
+        Grenzen in % von WChaMax (InWRte / OutWRte, −100…100), aktiv über die
+        Bits in StorCtl_Mod. Aktueller Stand und Skalierungsfaktor werden unter
+        demselben Lock gelesen, das neue Fenster vorab geprüft. Die Rückfallzeit
+        (InOutWRte_RvrtTms) wird vor der Änderung gesetzt.
+        """
+        start = self._storage_start(info)
+        unit = info.unit_id
+        async with self._lock:
+            regs = await self._read_unlocked(
+                unit, start, sunspec.MIN_MODEL_LENGTH[sunspec.STORAGE_MODEL]
+            )
+            sf = sunspec.to_int16(regs[sunspec.STOR_INOUTWRTE_SF])
+            mode = sunspec.to_uint16(regs[sunspec.STOR_CTL_MOD]) or 0
+            current_out = sunspec.scale(
+                sunspec.to_int16(regs[sunspec.STOR_OUTWRTE]), sf, 2
+            )
+            current_in = sunspec.scale(
+                sunspec.to_int16(regs[sunspec.STOR_INWRTE]), sf, 2
+            )
+
+            new_mode = mode
+            for active, bit in (
+                (charge_active, sunspec.STOR_BIT_CHARGE),
+                (discharge_active, sunspec.STOR_BIT_DISCHARGE),
+            ):
+                if active is not None:
+                    new_mode = new_mode | bit if active else new_mode & ~bit
+            new_in = current_in if charge_limit is None else charge_limit
+            new_out = current_out if discharge_limit is None else discharge_limit
+            sunspec.check_storage_window(new_mode, new_in, new_out)
+
+            await self._write_unlocked(
+                unit, start + sunspec.STOR_RVRTTMS, [revert_seconds]
+            )
+            if charge_limit is not None or discharge_limit is not None:
+                # OutWRte und InWRte liegen hintereinander → ein Schreibbefehl
+                values = [
+                    regs[sunspec.STOR_OUTWRTE]
+                    if discharge_limit is None
+                    else sunspec.encode_percent(
+                        discharge_limit, sf, minimum=-100, maximum=100,
+                        name="Entladegrenze",
+                    ),
+                    regs[sunspec.STOR_INWRTE]
+                    if charge_limit is None
+                    else sunspec.encode_percent(
+                        charge_limit, sf, minimum=-100, maximum=100,
+                        name="Ladegrenze",
+                    ),
+                ]
+                await self._write_unlocked(
+                    unit, start + sunspec.STOR_OUTWRTE, values
+                )
+            if new_mode != mode:
+                await self._write_unlocked(
+                    unit, start + sunspec.STOR_CTL_MOD, [new_mode]
+                )
+
+    async def set_min_reserve(self, info: InverterInfo, percent: float) -> None:
+        """Mindestreserve des Speichers in % (MinRsvPct); bleibt dauerhaft gesetzt."""
+        start = self._storage_start(info)
+        async with self._lock:
+            (sf_reg,) = await self._read_unlocked(
+                info.unit_id, start + sunspec.STOR_MINRSVPCT_SF, 1
+            )
+            value = sunspec.encode_percent(
+                percent, sunspec.to_int16(sf_reg), minimum=0, maximum=100,
+                name="Mindestreserve",
+            )
+            await self._write_unlocked(
+                info.unit_id, start + sunspec.STOR_MINRSVPCT, [value]
+            )
+
+    async def set_grid_charging(self, info: InverterInfo, allowed: bool) -> None:
+        """Laden des Speichers aus dem Netz erlauben (ChaGriSet = 1) oder verbieten."""
+        start = self._storage_start(info)
+        await self.write(
+            info.unit_id, start + sunspec.STOR_CHAGRISET, [1 if allowed else 0]
+        )
+
     async def reset_events(self, info: InverterInfo) -> None:
         """Event Flags und State Code zurücksetzen (nur Datamanager, Register 215)."""
         if not info.has_site_registers:

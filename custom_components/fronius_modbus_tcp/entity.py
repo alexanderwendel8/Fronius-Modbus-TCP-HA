@@ -137,6 +137,15 @@ REPLACED_BY_CONTROLS: dict[str, set[str]] = {
     "sensor": {"power_limit"},
     "binary_sensor": {"power_limit_active", "feed_in_enabled"},
 }
+# … und zusätzlich, wenn ein Speicher gesteuert werden kann (Modell 124)
+REPLACED_BY_STORAGE_CONTROLS: dict[str, set[str]] = {
+    "sensor": {
+        "battery_charge_limit",
+        "battery_discharge_limit",
+        "battery_min_reserve",
+        "battery_grid_charging",
+    },
+}
 
 
 def remove_replaced(
@@ -146,9 +155,11 @@ def remove_replaced(
 
     Gibt die Schlüssel zurück, die die Plattform nicht anlegen soll.
     """
-    if not coordinator.control_allowed:
-        return set()
-    keys = REPLACED_BY_CONTROLS.get(platform, set())
+    keys: set[str] = set()
+    if coordinator.control_allowed:
+        keys |= REPLACED_BY_CONTROLS.get(platform, set())
+    if coordinator.storage_control_allowed:
+        keys |= REPLACED_BY_STORAGE_CONTROLS.get(platform, set())
     registry = er.async_get(hass)
     for key in keys:
         unique_id = f"{inverter_device_id(coordinator)}_{key}"
