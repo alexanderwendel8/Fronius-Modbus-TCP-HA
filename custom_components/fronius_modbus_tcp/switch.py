@@ -19,19 +19,37 @@ POWER_LIMIT_ACTIVE = SwitchEntityDescription(
 FEED_IN = SwitchEntityDescription(key="feed_in_enabled", translation_key="feed_in_enabled")
 
 
+BATTERY_CHARGE_LIMIT_ACTIVE = SwitchEntityDescription(
+    key="battery_charge_limit_active", translation_key="battery_charge_limit_active"
+)
+BATTERY_DISCHARGE_LIMIT_ACTIVE = SwitchEntityDescription(
+    key="battery_discharge_limit_active",
+    translation_key="battery_discharge_limit_active",
+)
+BATTERY_GRID_CHARGING = SwitchEntityDescription(
+    key="battery_grid_charging_allowed", translation_key="battery_grid_charging_allowed"
+)
+
+
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: FroniusConfigEntry,
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     coordinator = entry.runtime_data
+    entities: list[_FroniusSwitch] = []
     if coordinator.control_allowed:
-        async_add_entities(
-            [
-                FroniusPowerLimitSwitch(coordinator, POWER_LIMIT_ACTIVE),
-                FroniusFeedInSwitch(coordinator, FEED_IN),
-            ]
-        )
+        entities += [
+            FroniusPowerLimitSwitch(coordinator, POWER_LIMIT_ACTIVE),
+            FroniusFeedInSwitch(coordinator, FEED_IN),
+        ]
+    if coordinator.storage_control_allowed:
+        entities += [
+            FroniusStorageLimitSwitch(coordinator, BATTERY_CHARGE_LIMIT_ACTIVE),
+            FroniusStorageLimitSwitch(coordinator, BATTERY_DISCHARGE_LIMIT_ACTIVE),
+            FroniusGridChargingSwitch(coordinator, BATTERY_GRID_CHARGING),
+        ]
+    async_add_entities(entities)
 
 
 class _FroniusSwitch(FroniusEntity, SwitchEntity):
@@ -94,3 +112,49 @@ class FroniusFeedInSwitch(_FroniusSwitch):
             ),
             {"feed_in_enabled": False},
         )
+
+
+class FroniusStorageLimitSwitch(_FroniusSwitch):
+    """Lade- bzw. Entladegrenze des Speichers aktivieren (Bits in StorCtl_Mod)."""
+
+    async def _async_set(self, active: bool) -> None:
+        coordinator = self.coordinator
+        key = self.entity_description.key
+        flag = (
+            "charge_active"
+            if key == "battery_charge_limit_active"
+            else "discharge_active"
+        )
+        await async_write(
+            coordinator,
+            coordinator.client.set_storage_limits(
+                coordinator.inverter,
+                revert_seconds=coordinator.revert_seconds,
+                **{flag: active},
+            ),
+            {key: active},
+        )
+
+    async def async_turn_on(self, **kwargs: Any) -> None:
+        await self._async_set(True)
+
+    async def async_turn_off(self, **kwargs: Any) -> None:
+        await self._async_set(False)
+
+
+class FroniusGridChargingSwitch(_FroniusSwitch):
+    """Laden des Speichers aus dem Netz erlauben (ChaGriSet)."""
+
+    async def _async_set(self, allowed: bool) -> None:
+        coordinator = self.coordinator
+        await async_write(
+            coordinator,
+            coordinator.client.set_grid_charging(coordinator.inverter, allowed),
+            {self.entity_description.key: allowed},
+        )
+
+    async def async_turn_on(self, **kwargs: Any) -> None:
+        await self._async_set(True)
+
+    async def async_turn_off(self, **kwargs: Any) -> None:
+        await self._async_set(False)

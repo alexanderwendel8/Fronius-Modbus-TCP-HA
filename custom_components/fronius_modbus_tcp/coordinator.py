@@ -70,6 +70,14 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
             self.config_entry.options.get(CONF_ALLOW_CONTROL)
         ) and sunspec.CONTROLS_MODEL in self.inverter.models
 
+    @property
+    def storage_control_allowed(self) -> bool:
+        """Steuerung erlaubt und ein Speicher (Modell 124) ist vorhanden."""
+        return (
+            bool(self.config_entry.options.get(CONF_ALLOW_CONTROL))
+            and self.inverter.has_storage
+        )
+
     async def _async_setup(self) -> None:
         """Einmalig beim ersten Refresh: Gerätestruktur erkennen."""
         entry = self.config_entry

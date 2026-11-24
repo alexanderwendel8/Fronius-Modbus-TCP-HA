@@ -41,18 +41,103 @@ REVERT_TIME = NumberEntityDescription(
 )
 
 
+def _storage_limit(key: str) -> NumberEntityDescription:
+    return NumberEntityDescription(
+        key=key,
+        translation_key=key,
+        native_min_value=-100,
+        native_max_value=100,
+        native_step=1,
+        native_unit_of_measurement=PERCENTAGE,
+        mode=NumberMode.BOX,
+    )
+
+
+BATTERY_CHARGE_LIMIT = _storage_limit("battery_charge_limit")
+BATTERY_DISCHARGE_LIMIT = _storage_limit("battery_discharge_limit")
+BATTERY_MIN_RESERVE = NumberEntityDescription(
+    key="battery_min_reserve",
+    translation_key="battery_min_reserve",
+    native_min_value=0,
+    native_max_value=100,
+    native_step=1,
+    native_unit_of_measurement=PERCENTAGE,
+    mode=NumberMode.BOX,
+)
+
+
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: FroniusConfigEntry,
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     coordinator = entry.runtime_data
+    entities: list[NumberEntity] = []
     if coordinator.control_allowed:
-        async_add_entities(
-            [
-                FroniusPowerLimitNumber(coordinator, POWER_LIMIT),
-                FroniusRevertTimeNumber(coordinator, REVERT_TIME),
-            ]
+        entities += [
+            FroniusPowerLimitNumber(coordinator, POWER_LIMIT),
+            FroniusRevertTimeNumber(coordinator, REVERT_TIME),
+        ]
+    if coordinator.storage_control_allowed:
+        entities += [
+            FroniusStorageLimitNumber(coordinator, BATTERY_CHARGE_LIMIT),
+            FroniusStorageLimitNumber(coordinator, BATTERY_DISCHARGE_LIMIT),
+            FroniusMinReserveNumber(coordinator, BATTERY_MIN_RESERVE),
+        ]
+        if not coordinator.control_allowed:
+            # Rückfallzeit gilt auch für das Leistungsfenster des Speichers
+            entities.append(FroniusRevertTimeNumber(coordinator, REVERT_TIME))
+    async_add_entities(entities)
+
+
+class _FroniusValueNumber(FroniusEntity, NumberEntity):
+    """Number, deren Wert unter ihrem Schlüssel in den gelesenen Daten steht."""
+
+    def __init__(
+        self, coordinator: FroniusCoordinator, description: NumberEntityDescription
+    ) -> None:
+        super().__init__(coordinator, description.key)
+        self.entity_description = description
+
+    @property
+    def native_value(self) -> float | None:
+        return self.coordinator.data.values.get(self.entity_description.key)
+
+
+class FroniusStorageLimitNumber(_FroniusValueNumber):
+    """Lade- bzw. Entladegrenze des Speichers in % von WChaMax (InWRte / OutWRte).
+
+    Wirkt nur, solange der zugehörige Schalter "Grenze aktiv" eingeschaltet ist.
+    Negative Werte erzwingen die Gegenrichtung: Entladegrenze −50 % heißt
+    "mit mindestens 50 % laden" (Handbuch, Beispiele Leistungsfenster).
+    """
+
+    async def async_set_native_value(self, value: float) -> None:
+        coordinator = self.coordinator
+        key = self.entity_description.key
+        limits = {
+            "charge_limit" if key == "battery_charge_limit" else "discharge_limit": value
+        }
+        await async_write(
+            coordinator,
+            coordinator.client.set_storage_limits(
+                coordinator.inverter,
+                revert_seconds=coordinator.revert_seconds,
+                **limits,
+            ),
+            {key: value},
+        )
+
+
+class FroniusMinReserveNumber(_FroniusValueNumber):
+    """Mindestreserve des Speichers in % (MinRsvPct)."""
+
+    async def async_set_native_value(self, value: float) -> None:
+        coordinator = self.coordinator
+        await async_write(
+            coordinator,
+            coordinator.client.set_min_reserve(coordinator.inverter, value),
+            {self.entity_description.key: value},
         )
 
 

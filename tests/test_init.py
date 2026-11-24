@@ -744,3 +744,75 @@ async def test_reconfigure(hass: HomeAssistant, gen24, gen24_plain) -> None:
         await hass.async_block_till_done()
     finally:
         await moved.stop()
+
+
+async def test_storage_control_entities(hass: HomeAssistant, gen24, gen24_plain) -> None:
+    """Speichersteuerung: Entitäten ersetzen die Anzeige-Sensoren und schreiben ins Gerät."""
+    from homeassistant.exceptions import HomeAssistantError
+
+    entry = await _setup(hass, gen24.port, **{CONF_METER_UNIT_ID: 0})
+    ent_reg = er.async_get(hass)
+    eid = lambda domain, key: ent_reg.async_get_entity_id(domain, DOMAIN, f"33333333_{key}")  # noqa: E731
+    assert eid("sensor", "battery_min_reserve")
+    assert eid("number", "battery_min_reserve") is None
+
+    await _enable_control(hass, entry)
+    for key in (
+        "battery_charge_limit",
+        "battery_discharge_limit",
+        "battery_min_reserve",
+        "battery_grid_charging",
+    ):
+        assert eid("sensor", key) is None, key
+    # Status und Steuermodus bleiben als Sensoren
+    assert eid("sensor", "battery_soc")
+    charge, discharge = eid("number", "battery_charge_limit"), eid("number", "battery_discharge_limit")
+    reserve = eid("number", "battery_min_reserve")
+    discharge_on = eid("switch", "battery_discharge_limit_active")
+    charge_on = eid("switch", "battery_charge_limit_active")
+    grid = eid("switch", "battery_grid_charging_allowed")
+    assert hass.states.get(charge).state == "100.0"
+    assert hass.states.get(reserve).state == "10.0"
+    assert hass.states.get(discharge_on).state == "off"
+    assert hass.states.get(grid).state == "on"
+
+    async def call(domain: str, service: str, entity_id: str, **data) -> None:
+        await hass.services.async_call(
+            domain, service, {"entity_id": entity_id, **data}, blocking=True
+        )
+        await hass.async_block_till_done()
+
+    await call("number", "set_value", discharge, value=-50)
+    await call("switch", "turn_on", discharge_on)
+    await call("number", "set_value", reserve, value=30)
+    await call("switch", "turn_off", grid)
+    assert hass.states.get(discharge).state == "-50.0"
+    assert hass.states.get(discharge_on).state == "on"
+    assert hass.states.get(reserve).state == "30.0"
+    assert hass.states.get(grid).state == "off"
+
+    coordinator = entry.runtime_data
+    start = coordinator.inverter.models[124][0]
+    regs = await coordinator.client.read(1, start, 24)
+    assert regs[3] == 2 and regs[5] == 3000 and regs[10] == 0x10000 - 5000
+    assert regs[13] == 300 and regs[15] == 0
+
+    # Ungültiges Fenster → verständlicher Fehler, Gerät unverändert
+    await call("number", "set_value", charge, value=20)
+    with pytest.raises(HomeAssistantError):
+        await call("switch", "turn_on", charge_on)
+    assert (await coordinator.client.read(1, start + 3, 1)) == [2]
+
+    assert await hass.config_entries.async_unload(entry.entry_id)
+    await hass.async_block_till_done()
+
+    # Ohne Speicher keine Speicher-Entitäten
+    plain = await _setup(hass, gen24_plain.port)
+    await _enable_control(hass, plain)
+    assert not [
+        e
+        for e in er.async_entries_for_config_entry(ent_reg, plain.entry_id)
+        if "battery" in e.unique_id
+    ]
+    assert await hass.config_entries.async_unload(plain.entry_id)
+    await hass.async_block_till_done()

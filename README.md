@@ -159,6 +159,38 @@ EVU-Editor) haben Vorrang.
 Ist die Steuerung erlaubt, ersetzen „Leistungsbegrenzung“, „Leistungsbegrenzung aktiv“ und
 „Einspeisung“ die gleichnamigen reinen Anzeige-Entitäten.
 
+### Speichersteuerung (Geräte mit Batterie)
+
+Hat der Wechselrichter einen Speicher (SunSpec-Modell 124), kommen diese Entitäten dazu. Sie ersetzen
+die Anzeige-Sensoren „Batterie-Ladegrenze“, „-Entladegrenze“, „-Mindestreserve“ und „-Ladequelle“.
+
+| Entität | Typ | Wirkung |
+|---|---|---|
+| Batterie-Ladegrenze | Zahl −100…100 % | Maximale Ladeleistung in % der Speicher-Nennleistung (`WChaMax`) |
+| Batterie-Ladegrenze aktiv | Schalter | Ladegrenze anwenden |
+| Batterie-Entladegrenze | Zahl −100…100 % | Maximale Entladeleistung in % von `WChaMax` |
+| Batterie-Entladegrenze aktiv | Schalter | Entladegrenze anwenden |
+| Batterie-Mindestreserve | Zahl 0–100 % | Ladezustand, der nicht unterschritten werden soll (bleibt dauerhaft gesetzt) |
+| Batterie aus dem Netz laden | Schalter | Laden aus dem Netz erlauben. Muss zusätzlich in der Fronius-Weboberfläche erlaubt sein („Batterieladung aus EVU Netz erlauben“). |
+
+Eine Grenze wirkt nur, solange ihr Schalter eingeschaltet ist. Typische Vorgaben (aus dem Fronius-Handbuch):
+
+| Ziel | Einstellung |
+|---|---|
+| Nur laden, nicht entladen | Entladegrenze 0 %, „Entladegrenze aktiv“ ein |
+| Nur entladen, nicht laden | Ladegrenze 0 %, „Ladegrenze aktiv“ ein |
+| Speicher halten (weder laden noch entladen) | beide Grenzen 0 %, beide Schalter ein |
+| Laden erzwingen mit mindestens 50 % | Entladegrenze −50 %, „Entladegrenze aktiv“ ein |
+| Entladen erzwingen mit 50 % | Ladegrenze −50 %, Entladegrenze 50 %, beide Schalter ein |
+
+Negative Werte erzwingen also die Gegenrichtung. Sind beide Grenzen aktiv, darf die negierte Ladegrenze
+nicht größer sein als die Entladegrenze; ein solches Fenster lehnt die Integration mit einer Fehlermeldung
+ab, bevor sie schreibt. Lade- und Entladegrenze werden mit der Rückfallzeit geschrieben (siehe unten),
+Mindestreserve und Netzladung bleiben dauerhaft gesetzt. Alle Vorgaben sind laut Fronius Empfehlungen:
+Der Wechselrichter kann aus Sicherheitsgründen davon abweichen.
+
+**Nicht an einem echten Speicher getestet** – bisher nur gegen simulierte Geräte.
+
 **Rückfallzeit:** Jede Vorgabe wird mit einer Rückfallzeit geschrieben. Da jede Modbus-Abfrage den Timer
 im Wechselrichter neu startet, bleibt eine Vorgabe aktiv, solange Home Assistant läuft. Fällt Home Assistant
 aus, kehrt der Wechselrichter nach dieser Zeit von selbst in den Normalbetrieb zurück – eine Drosselung

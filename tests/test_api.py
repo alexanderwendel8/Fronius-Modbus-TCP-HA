@@ -500,3 +500,81 @@ async def test_set_power_limit_is_atomic(gen24) -> None:
         assert v["power_limit"] == 40.0 and v["power_limit_active"] is True
     finally:
         await client.close()
+
+
+async def test_storage_control(gen24) -> None:
+    """Modell 124: Leistungsfenster, Mindestreserve und Netzladung schreiben."""
+    client = FroniusModbusClient("127.0.0.1", gen24.port)
+    try:
+        info = await client.read_inverter_info(1)
+        start = info.models[sunspec.STORAGE_MODEL][0]
+        v = await client.read_inverter_data(info)
+        assert v["battery_charge_limit_active"] is False
+        assert v["battery_discharge_limit_active"] is False
+        assert v["battery_grid_charging_allowed"] is True
+
+        # Nur laden erlauben: Entladegrenze 0 % aktiv (Handbuch, Beispiel 1)
+        await client.set_storage_limits(
+            info, discharge_limit=0, discharge_active=True, revert_seconds=600
+        )
+        assert await client.read(1, start + sunspec.STOR_CTL_MOD, 1) == [2]
+        # OutWRte, InWRte (unverändert 100 %), WinTms, RvrtTms
+        assert await client.read(1, start + sunspec.STOR_OUTWRTE, 4) == [
+            0, 10000, 0xFFFF, 600,
+        ]
+        v = await client.read_inverter_data(info)
+        assert v["battery_discharge_limit"] == 0.0
+        assert v["battery_discharge_limit_active"] is True
+        assert v["battery_control_mode"] == "discharge_limit"
+
+        # Erzwungenes Laden mit mindestens 50 %: Entladegrenze −50 % (Beispiel 7)
+        await client.set_storage_limits(info, discharge_limit=-50, revert_seconds=600)
+        assert await client.read(1, start + sunspec.STOR_OUTWRTE, 1) == [0x10000 - 5000]
+        assert (await client.read_inverter_data(info))["battery_discharge_limit"] == -50.0
+
+        # Beide Grenzen aktiv: −Ladegrenze > Entladegrenze ist ungültig → nichts geschrieben
+        with pytest.raises(ValueError, match="kein gültiges Leistungsfenster"):
+            await client.set_storage_limits(
+                info, charge_limit=40, charge_active=True, revert_seconds=600
+            )
+        assert await client.read(1, start + sunspec.STOR_CTL_MOD, 1) == [2]
+        assert await client.read(1, start + sunspec.STOR_INWRTE, 1) == [10000]
+
+        # Gültig: laden zwischen 50 % und 75 % (Beispiel 5)
+        await client.set_storage_limits(
+            info, charge_limit=75, charge_active=True, revert_seconds=600
+        )
+        assert await client.read(1, start + sunspec.STOR_CTL_MOD, 1) == [3]
+        assert await client.read(1, start + sunspec.STOR_INWRTE, 1) == [7500]
+
+        # Grenzen wieder aus
+        await client.set_storage_limits(
+            info, charge_active=False, discharge_active=False, revert_seconds=600
+        )
+        assert await client.read(1, start + sunspec.STOR_CTL_MOD, 1) == [0]
+
+        with pytest.raises(ValueError, match="außerhalb"):
+            await client.set_storage_limits(info, charge_limit=150, revert_seconds=600)
+
+        await client.set_min_reserve(info, 25)
+        await client.set_grid_charging(info, False)
+        v = await client.read_inverter_data(info)
+        assert v["battery_min_reserve"] == 25.0
+        assert v["battery_grid_charging_allowed"] is False
+        assert v["battery_grid_charging"] == "pv"
+    finally:
+        await client.close()
+
+
+async def test_storage_control_requires_storage(socket_enabled) -> None:
+    """Ohne Speicher werden Schreibbefehle für Modell 124 abgelehnt."""
+    server = sim.FroniusSimulator({1: sim.gen24_float_no_battery()})
+    await server.start()
+    client = FroniusModbusClient("127.0.0.1", server.port)
+    try:
+        info = await client.read_inverter_info(1)
+        with pytest.raises(FroniusModbusError, match="keinen Speicher"):
+            await client.set_min_reserve(info, 20)
+    finally:
+        await client.close()
+        await server.stop()
