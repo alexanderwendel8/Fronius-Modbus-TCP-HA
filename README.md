@@ -223,6 +223,15 @@ actions:
     target: {entity_id: switch.symo_3_0_3_m_power_limit_active}
 ```
 
+## Diagnose und Fehlermeldungen
+
+Unter *Settings → Devices & services → Fronius Modbus TCP* lässt sich über das Drei-Punkte-Menü des Eintrags
+**Download diagnostics** eine Datei herunterladen. Sie enthält die erkannte Gerätestruktur, die Optionen,
+die zuletzt gelesenen Werte und die **rohen Register aller SunSpec-Modelle** von Wechselrichter und
+Smart Metern (bei Datamanager-Geräten zusätzlich die Fronius-Register 212–216 und 500–513). Host und
+Seriennummern sind entfernt. Bei einem Problem mit einem nicht getesteten Gerät diese Datei bitte dem
+Issue anhängen – damit lässt sich das Verhalten ohne Zugriff auf das Gerät nachvollziehen.
+
 ## Struktur
 
 | Datei | Zweck |
@@ -237,7 +246,7 @@ actions:
 | `binary_sensor.py` | Binärsensoren (Fehler, Warnung, Vorgaben aus Modell 123) |
 | `number.py`, `switch.py`, `button.py` | Steuerung (nur mit Option „Steuerung erlauben“) |
 | `state_codes.py` | Fronius State Codes im Klartext (erzeugt mit `scripts/generate_state_codes.py`) |
-| `diagnostics.py` | Diagnosedaten-Export |
+| `diagnostics.py` | Diagnosedaten-Export inkl. roher Register aller SunSpec-Modelle |
 | `strings.json`, `translations/` | Texte (EN/DE) |
 
 ## Neue Sensoren hinzufügen

@@ -22,6 +22,7 @@
 - Neu: Abfrageintervall einstellbar (Optionen, 5–60 s, Standard 10 s). Die Rückfallzeit für Vorgaben beträgt mindestens das Dreifache des Intervalls, damit eine Vorgabe nicht zwischen zwei Abfragen endet.
 - Neu: mehrere Smart Meter je Eintrag. Weitere Zähler (GEN24: 201–204, Datamanager: 241–244) werden bei der Einrichtung oder über **Reconfigure** mit ihren Modbus-Adressen eingetragen; jeder erscheint als eigenes Gerät. Bisher nur gegen simulierte Geräte getestet.
 - Eine geänderte Rückfallzeit wirkt jetzt sofort auf gerade aktive Vorgaben (Leistungsbegrenzung, Standby, Speichergrenzen) und nicht erst beim nächsten Schreiben.
+- Diagnose-Download erweitert: Optionen, pymodbus-Version, Abfrageintervall und die rohen Register aller SunSpec-Modelle von Wechselrichter und Smart Metern (Datamanager: zusätzlich Fronius-Register). Host und Seriennummern werden entfernt.
 
 ## 0.1.0
 
