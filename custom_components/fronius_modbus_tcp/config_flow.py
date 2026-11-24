@@ -18,10 +18,10 @@ from homeassistant.const import CONF_HOST, CONF_PORT
 
 from .api import (
     FroniusConnectionError,
-    FroniusModbusClient,
     FroniusModbusError,
     async_detect_meter,
 )
+from .client_pool import async_acquire_client, async_release_client
 from .const import (
     CONF_ALLOW_CONTROL,
     CONF_METER_UNIT_ID,
@@ -82,7 +82,9 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             host, port = user_input[CONF_HOST], user_input[CONF_PORT]
             unit = user_input[CONF_UNIT_ID]
-            client = FroniusModbusClient(host, port)
+            # Läuft am selben Gerät schon ein Eintrag, wird dessen Verbindung
+            # mitbenutzt (Abfragen nacheinander, Vorgabe Fronius)
+            client = async_acquire_client(self.hass, host, port)
             try:
                 info = await client.read_inverter_info(unit)
             except FroniusConnectionError as err:
@@ -113,7 +115,7 @@ class FroniusModbusConfigFlow(ConfigFlow, domain=DOMAIN):
                     sorted(info.models),
                 )
             finally:
-                await client.close()
+                await async_release_client(self.hass, host, port)
 
             meter_unit: int | None = None
             if not errors:
