@@ -21,6 +21,7 @@
 - Neu: Speichersteuerung für Geräte mit Batterie (Modell 124, nur mit „Steuerung erlauben“): Lade- und Entladegrenze samt Schaltern, Mindestreserve und Laden aus dem Netz. Ungültige Leistungsfenster werden vor dem Schreiben abgelehnt. Bisher nur gegen simulierte Geräte getestet.
 - Neu: Abfrageintervall einstellbar (Optionen, 5–60 s, Standard 10 s). Die Rückfallzeit für Vorgaben beträgt mindestens das Dreifache des Intervalls, damit eine Vorgabe nicht zwischen zwei Abfragen endet.
 - Neu: mehrere Smart Meter je Eintrag. Weitere Zähler (GEN24: 201–204, Datamanager: 241–244) werden bei der Einrichtung oder über **Reconfigure** mit ihren Modbus-Adressen eingetragen; jeder erscheint als eigenes Gerät. Bisher nur gegen simulierte Geräte getestet.
+- Eine geänderte Rückfallzeit wirkt jetzt sofort auf gerade aktive Vorgaben (Leistungsbegrenzung, Standby, Speichergrenzen) und nicht erst beim nächsten Schreiben.
 
 ## 0.1.0
 

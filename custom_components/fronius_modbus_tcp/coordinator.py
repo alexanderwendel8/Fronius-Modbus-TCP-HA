@@ -104,6 +104,34 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
             and self.inverter.has_storage
         )
 
+    async def async_apply_revert_time(self) -> None:
+        """Geänderte Rückfallzeit an alle gerade aktiven Vorgaben übertragen.
+
+        Ohne das gälte der neue Wert erst beim nächsten Schreiben; eine laufende
+        Vorgabe behielte bis dahin die alte Rückfallzeit. Grundlage ist der
+        zuletzt gelesene Stand. Laut Handbuch ("Ändern der Rückkehrzeit bei
+        aktiver Leistungsreduktion") wird die Zeit gesetzt und die Betriebsart
+        mit Ena = 1 erneut gestartet.
+        """
+        values = self.data.values if self.data else {}
+        revert = self.revert_seconds
+        if self.control_allowed:
+            percent = values.get("power_limit")
+            if values.get("power_limit_active") is True and percent is not None:
+                await self.client.set_power_limit(
+                    self.inverter, percent, enabled=True, revert_seconds=revert
+                )
+            if values.get("feed_in_enabled") is False:
+                await self.client.set_feed_in(
+                    self.inverter, False, revert_seconds=revert
+                )
+        if self.storage_control_allowed and (
+            values.get("battery_charge_limit_active")
+            or values.get("battery_discharge_limit_active")
+        ):
+            # ohne weitere Angaben schreibt set_storage_limits nur die Rückfallzeit
+            await self.client.set_storage_limits(self.inverter, revert_seconds=revert)
+
     async def _async_setup(self) -> None:
         """Einmalig beim ersten Refresh: Gerätestruktur erkennen."""
         entry = self.config_entry
