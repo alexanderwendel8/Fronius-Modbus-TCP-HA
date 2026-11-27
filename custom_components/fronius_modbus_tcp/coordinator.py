@@ -81,6 +81,8 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
         self.client = client
         # (Host, Port) der gemeinsamen Verbindung, gesetzt beim Einrichten
         self.client_key: tuple[str, int] = ("", 0)
+        # Registry-ID des Wechselrichter-Geräts (für via_device_id der Zähler)
+        self.inverter_registry_id: str | None = None
         self._inverter_unit = inverter_unit
         # Hauptzähler (Werte ohne Präfix) und weitere Zähler, je eigene Unit-ID
         self._meter_unit = meter_unit

@@ -5,10 +5,12 @@ from __future__ import annotations
 from homeassistant.const import CONF_HOST, CONF_PORT, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
+from homeassistant.helpers import device_registry as dr
 
 from .client_pool import async_acquire_client, async_release_client
 from .const import CONF_EXTRA_METER_UNIT_IDS, CONF_METER_UNIT_ID, CONF_UNIT_ID
 from .coordinator import FroniusConfigEntry, FroniusCoordinator, structure_store
+from .entity import inverter_device_info
 
 PLATFORMS: list[Platform] = [
     Platform.BINARY_SENSOR,
@@ -49,6 +51,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: FroniusConfigEntry) -> b
     # nach einer Änderung (Reconfigure, neue IP per DHCP) stehen in entry.data
     # schon die neuen Werte – freigegeben werden muss aber die alte Verbindung.
     coordinator.client_key = (host, port)
+    # Wechselrichter-Gerät vorab anlegen: Die Zähler verweisen über dessen
+    # Registry-ID darauf (via_device_id), und die muss es schon geben, wenn die
+    # Zähler-Entitäten entstehen.
+    info = inverter_device_info(coordinator)
+    device = dr.async_get(hass).async_get_or_create(
+        config_entry_id=entry.entry_id,
+        identifiers=info["identifiers"],
+        name=info.get("name"),
+        manufacturer=info.get("manufacturer"),
+        model=info.get("model"),
+        sw_version=info.get("sw_version"),
+        serial_number=info.get("serial_number"),
+    )
+    coordinator.inverter_registry_id = device.id
     entry.runtime_data = coordinator
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     # Optionen geändert (z. B. Steuerung erlaubt) → Entitäten neu anlegen

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 from collections.abc import Awaitable, Sequence
-from typing import Any
+from typing import Any, cast
 
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
@@ -18,8 +18,28 @@ from .coordinator import FroniusCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 
+# Zuordnung Zähler → Wechselrichter: Neuere Home-Assistant-Versionen erwarten
+# via_device_id (die Registry-ID des Wechselrichter-Geräts); via_device mit der
+# Kennung ist dort veraltet (Entfernung laut Core in 2027.8). Ältere Versionen
+# wie 2026.2 kennen nur via_device.
+VIA_DEVICE_ID = "via_device_id" in DeviceInfo.__annotations__
+
+
 def inverter_device_id(coordinator: FroniusCoordinator) -> str:
     return coordinator.inverter.serial_number or coordinator.config_entry.entry_id
+
+
+def inverter_device_info(coordinator: FroniusCoordinator) -> DeviceInfo:
+    """Geräteangaben des Wechselrichters (Entitäten und ausdrückliches Anlegen)."""
+    inverter = coordinator.inverter
+    return DeviceInfo(
+        identifiers={(DOMAIN, inverter_device_id(coordinator))},
+        name=inverter.model or "Fronius Wechselrichter",
+        manufacturer=inverter.manufacturer or MANUFACTURER,
+        model=inverter.model or None,
+        sw_version=inverter.version or None,
+        serial_number=inverter.serial_number or None,
+    )
 
 
 def meter_device_id(coordinator: FroniusCoordinator, meter: MeterInfo) -> str:
@@ -46,14 +66,12 @@ class FroniusEntity(CoordinatorEntity[FroniusCoordinator]):
         self._key = key
         # Schlüssel in den gelesenen Werten; weitere Zähler tragen ein Präfix
         self._data_key = key
-        inverter_id = inverter_device_id(coordinator)
-
         if meter is not None:
             primary = meter is coordinator.meter
             self._data_key = f"{coordinator.meter_key_prefix(meter)}{key}"
             device_id = meter_device_id(coordinator, meter)
             name = meter.model or "Smart Meter"
-            self._attr_device_info = DeviceInfo(
+            info = DeviceInfo(
                 identifiers={(DOMAIN, device_id)},
                 # gleiche Modelle unterscheidbar machen
                 name=name if primary else f"{name} ({meter.unit_id})",
@@ -61,19 +79,19 @@ class FroniusEntity(CoordinatorEntity[FroniusCoordinator]):
                 model=meter.model or None,
                 sw_version=meter.version or None,
                 serial_number=meter.serial_number or None,
-                via_device=(DOMAIN, inverter_id),
             )
+            # Der Schlüssel hängt von der Home-Assistant-Version ab, daher nicht
+            # über den TypedDict-Konstruktor (die Typprüfung kennt nur einen davon)
+            link: dict[str, Any] = (
+                {"via_device_id": coordinator.inverter_registry_id}
+                if VIA_DEVICE_ID and coordinator.inverter_registry_id
+                else {"via_device": (DOMAIN, inverter_device_id(coordinator))}
+            )
+            cast(dict[str, Any], info).update(link)
+            self._attr_device_info = info
         else:
-            inverter = coordinator.inverter
-            device_id = inverter_id
-            self._attr_device_info = DeviceInfo(
-                identifiers={(DOMAIN, device_id)},
-                name=inverter.model or "Fronius Wechselrichter",
-                manufacturer=inverter.manufacturer or MANUFACTURER,
-                model=inverter.model or None,
-                sw_version=inverter.version or None,
-                serial_number=inverter.serial_number or None,
-            )
+            device_id = inverter_device_id(coordinator)
+            self._attr_device_info = inverter_device_info(coordinator)
         self._attr_unique_id = f"{device_id}_{key}"
 
     @property
