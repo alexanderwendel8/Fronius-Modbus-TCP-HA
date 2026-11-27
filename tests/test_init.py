@@ -1161,3 +1161,27 @@ def test_icons_match_translations() -> None:
         for key, icon in entries.items():
             assert key in names[platform], f"{platform}.{key}"
             assert icon["default"].startswith("mdi:")
+
+
+async def test_no_deprecated_home_assistant_apis(hass: HomeAssistant, gen24, caplog) -> None:
+    """Einrichtung mit Zähler und Steuerung meldet keine veralteten Aufrufe.
+
+    Home Assistant protokolliert veraltete Aufrufe einer Custom Integration als
+    "Detected that custom integration '<domain>' …" (z. B. via_device statt
+    via_device_id in neueren Versionen).
+    """
+    entry = await _setup(hass, gen24.port)
+    await _enable_control(hass, entry)
+    assert f"custom integration '{DOMAIN}'" not in caplog.text
+
+    from custom_components.fronius_modbus_tcp.entity import VIA_DEVICE_ID
+
+    dev_reg = dr.async_get(hass)
+    inverter_dev = _find_device(dev_reg, entry, "33333333")
+    meter_dev = _find_device(dev_reg, entry, "meter_M0000001")
+    assert meter_dev.via_device_id == inverter_dev.id
+    if VIA_DEVICE_ID:
+        assert entry.runtime_data.inverter_registry_id == inverter_dev.id
+
+    assert await hass.config_entries.async_unload(entry.entry_id)
+    await hass.async_block_till_done()

@@ -3,9 +3,25 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
+import sys
+from typing import TYPE_CHECKING, Any
 
-import voluptuous as vol
+# Neuere Home-Assistant-Versionen verwenden für Schemas probatio, den API-kompatiblen
+# Nachfolger von voluptuous, und typisieren die Flow-Funktionen damit. Ältere wie
+# 2026.2 haben nur voluptuous. Die Typprüfung entscheidet über die Python-Version
+# (probatio ab Home Assistant 2026.10, das Python 3.14 verlangt), zur Laufzeit
+# zählt, was installiert ist.
+if TYPE_CHECKING:
+    if sys.version_info >= (3, 14):
+        import probatio as vol
+    else:
+        import voluptuous as vol
+else:
+    try:
+        import probatio as vol
+    except ImportError:
+        import voluptuous as vol
+
 from homeassistant.config_entries import (
     ConfigEntry,
     ConfigFlow,
