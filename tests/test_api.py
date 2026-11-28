@@ -578,3 +578,24 @@ async def test_storage_control_requires_storage(socket_enabled) -> None:
     finally:
         await client.close()
         await server.stop()
+
+
+async def test_hybrid_storage_skips_revert_time(datamanager, caplog) -> None:
+    """Symo Hybrid: InOutWRte_RvrtTms ist "Not supported" → nicht schreiben, einmal warnen."""
+    client = FroniusModbusClient("127.0.0.1", datamanager.port)
+    try:
+        info = await client.read_inverter_info(1)
+        assert info.hybrid_storage
+        start = info.models[sunspec.STORAGE_MODEL][0]
+        before = await client.read(1, start + sunspec.STOR_RVRTTMS, 1)
+
+        await client.set_storage_limits(
+            info, discharge_limit=0, discharge_active=True, revert_seconds=600
+        )
+        await client.set_storage_limits(info, discharge_limit=10, revert_seconds=600)
+        assert await client.read(1, start + sunspec.STOR_CTL_MOD, 1) == [2]
+        assert await client.read(1, start + sunspec.STOR_OUTWRTE, 1) == [1000]
+        assert await client.read(1, start + sunspec.STOR_RVRTTMS, 1) == before
+        assert caplog.text.count("Rückfallzeit für Lade-/Entladegrenzen") == 1
+    finally:
+        await client.close()

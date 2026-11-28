@@ -96,8 +96,11 @@ an der Modellkette (z. B. Modell 124 vorhanden → Batterie-fähig).
 | `EvtVnd1-4` dekodieren | `sunspec.py::parse_severity_events` / `parse_vendor_event_classes`, `state_codes.py` | ✅ GEN24: Schweregrad (Fehler/Warnung); Datamanager: Fehlerklassen je Familie (Unterscheidung über Fronius-Register) |
 | `Evt1` im Klartext | `sunspec.py::SUNSPEC_EVENTS` | ✅ 16 Bits laut `Evt1.csv` |
 | Modell 122 | `sunspec.py::parse_status` | ✅ `ActWh` (eigener Sensor, genauer als `WH`), `Ris`; `StActCtl`, `PVConn` … ⏳. Praxis: Symo 3.0-3-M am Datamanager liefert `ActWh`, aber kein `Ris` (Argeno-Registerkarte nennt beides „not supported“) |
+| Seriennummer (Common `SN`) | `entity.py::inverter_device_id`, `coordinator.py` | ✅ Datamanager liefert ggf. Ersatzwert (PMC/UID), der im Betrieb wechseln kann (Symo Hybrid immer) → Gerät/Entitäten nutzen die Seriennummer aus der Einrichtung, Abweichung wird gewarnt |
+| Fronius-Register 217 `F_Storage_Restrictions_View_Mode` | – | ❌ nicht gelesen; 0 = Modell 124 zeigt nur Modbus-Grenzen (Standard), 1 = systemweite |
+| Speicher-Rückfallzeit `InOutWRte_RvrtTms` | `api.py::set_storage_limits` | ✅ GEN24/Verto; Symo Hybrid „Not supported“ → nicht geschrieben, Warnung im Log |
 | Mehrere Smart Meter (200–204 / 240–244) | `coordinator.py` (`meters`), `config_flow.py` (`extra_meter_unit_ids`) | ✅ weitere Zähler per Unit-ID bei der Einrichtung; je Zähler ein eigenes Gerät |
-| Fronius-Register 214 (State Code), 500–513 (Anlagensummen) | `sunspec.py::parse_fronius_*`, `state_codes.py` | ✅ nur Datamanager; Erkennung per Testlesen beim Start |
+| Fronius-Register 214 (State Code), 500–513 (Anlagensummen) | `sunspec.py::parse_fronius_*`, `state_codes.py` | ✅ nur Datamanager; Erkennung per Testlesen beim Start. 214 laut Registerkarte beim Symo Hybrid „not supported“ (Inhalt ungeprüft); 506–509 heißt dort „energy for last year“, im Handbuch „Jahresenergie“ – der Code folgt dem Handbuch |
 | Vorgaben lesen (Modell 123) | `sunspec.py::parse_controls`, `binary_sensor.py` | ✅ Leistungsbegrenzung, Standby, cos φ/Blindleistung (nur lesend) |
 | Steuerung Modell 123 | `api.py::set_power_limit` / `set_feed_in`, `number.py`, `switch.py` | ✅ Leistungsbegrenzung (5 Register in einem Befehl, SF frisch gelesen), Standby (`Conn`), immer mit `RvrtTms`; nur mit Option „Steuerung erlauben“. cos φ/Blindleistung ⏳ |
 | Fronius-Register 215 (Ereignisse zurücksetzen) | `api.py::reset_events`, `button.py` | ✅ nur Datamanager |

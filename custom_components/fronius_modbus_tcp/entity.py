@@ -26,7 +26,16 @@ VIA_DEVICE_ID = "via_device_id" in DeviceInfo.__annotations__
 
 
 def inverter_device_id(coordinator: FroniusCoordinator) -> str:
-    return coordinator.inverter.serial_number or coordinator.config_entry.entry_id
+    """Feste Kennung des Wechselrichters für Gerät und Entitäten.
+
+    Vorrang hat die beim Einrichten gespeicherte Seriennummer (unique_id des
+    Eintrags): Am Datamanager meldet das Common Model je nach Gerät und
+    Startzeitpunkt ersatzweise die Seriennummer der Steuerung (PMC) oder eine
+    interne UID, und der Wert kann im Betrieb wechseln (beim Symo Hybrid immer
+    ein Ersatzwert). Bei bisherigen Einträgen ist beides identisch.
+    """
+    entry = coordinator.config_entry
+    return entry.unique_id or coordinator.inverter.serial_number or entry.entry_id
 
 
 def inverter_device_info(coordinator: FroniusCoordinator) -> DeviceInfo:

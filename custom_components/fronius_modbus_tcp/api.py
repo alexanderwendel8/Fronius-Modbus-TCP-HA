@@ -131,6 +131,7 @@ class FroniusModbusClient:
         )
         self._lock = asyncio.Lock()
         self._closed = False
+        self._hybrid_revert_warned = False
 
     async def connect(self) -> None:
         """Verbindung aufbauen (falls noch nicht verbunden)."""
@@ -533,7 +534,9 @@ class FroniusModbusClient:
         Grenzen in % von WChaMax (InWRte / OutWRte, −100…100), aktiv über die
         Bits in StorCtl_Mod. Aktueller Stand und Skalierungsfaktor werden unter
         demselben Lock gelesen, das neue Fenster vorab geprüft. Die Rückfallzeit
-        (InOutWRte_RvrtTms) wird vor der Änderung gesetzt.
+        (InOutWRte_RvrtTms) wird vor der Änderung gesetzt – außer beim Symo Hybrid:
+        Dort ist das Register laut Fronius-Registerkarte "Not supported", und
+        Schreibbefehle darauf werden laut Handbuch ohne Fehlermeldung ignoriert.
         """
         start = self._storage_start(info)
         unit = info.unit_id
@@ -561,9 +564,18 @@ class FroniusModbusClient:
             new_out = current_out if discharge_limit is None else discharge_limit
             sunspec.check_storage_window(new_mode, new_in, new_out)
 
-            await self._write_unlocked(
-                unit, start + sunspec.STOR_RVRTTMS, [revert_seconds]
-            )
+            if info.hybrid_storage:
+                if not self._hybrid_revert_warned and new_mode:
+                    self._hybrid_revert_warned = True
+                    _LOGGER.warning(
+                        "Symo Hybrid: Die Rückfallzeit für Lade-/Entladegrenzen wird "
+                        "vom Gerät nicht unterstützt. Aktive Grenzen bleiben bestehen, "
+                        "bis sie ausgeschaltet werden – auch wenn Home Assistant ausfällt"
+                    )
+            else:
+                await self._write_unlocked(
+                    unit, start + sunspec.STOR_RVRTTMS, [revert_seconds]
+                )
             if charge_limit is not None or discharge_limit is not None:
                 # OutWRte und InWRte liegen hintereinander → ein Schreibbefehl
                 values = [

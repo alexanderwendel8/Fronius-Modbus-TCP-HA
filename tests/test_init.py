@@ -1185,3 +1185,33 @@ async def test_no_deprecated_home_assistant_apis(hass: HomeAssistant, gen24, cap
 
     assert await hass.config_entries.async_unload(entry.entry_id)
     await hass.async_block_till_done()
+
+
+async def test_device_id_stable_when_serial_changes(
+    hass: HomeAssistant, gen24, caplog
+) -> None:
+    """Datamanager meldet einen Ersatzwert statt der Seriennummer (oder umgekehrt):
+    Gerät und Entitäten behalten die Kennung aus der Einrichtung."""
+    from pytest_homeassistant_custom_component.common import MockConfigEntry
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        unique_id="PMC0000001",  # beim Einrichten gemeldet, jetzt liefert das Gerät 33333333
+        data={CONF_HOST: "127.0.0.1", CONF_PORT: gen24.port, CONF_UNIT_ID: 1},
+    )
+    entry.add_to_hass(hass)
+    assert await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+
+    dev_reg = dr.async_get(hass)
+    ent_reg = er.async_get(hass)
+    assert _find_device(dev_reg, entry, "PMC0000001")
+    identifiers = {
+        i for d in dr.async_entries_for_config_entry(dev_reg, entry.entry_id)
+        for i in d.identifiers
+    }
+    assert (DOMAIN, "33333333") not in identifiers
+    assert ent_reg.async_get_entity_id("sensor", DOMAIN, "PMC0000001_ac_power")
+    assert ent_reg.async_get_entity_id("sensor", DOMAIN, "33333333_ac_power") is None
+    assert "meldet die Seriennummer 33333333 statt PMC0000001" in caplog.text
+    assert await hass.config_entries.async_unload(entry.entry_id)
