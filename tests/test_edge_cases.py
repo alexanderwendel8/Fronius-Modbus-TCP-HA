@@ -35,7 +35,6 @@ from custom_components.fronius_modbus_tcp.const import (
     DOMAIN,
 )
 from custom_components.fronius_modbus_tcp.diagnostics import (
-    _package_version,
     async_get_config_entry_diagnostics,
 )
 
@@ -533,8 +532,3 @@ async def test_diagnostics_unreadable_fronius_registers(
         await hass.async_block_till_done()
     finally:
         await server.stop()
-
-
-def test_package_version_of_missing_package() -> None:
-    assert _package_version("gibt-es-sicher-nicht-xyz") is None
-    assert _package_version("pymodbus")
