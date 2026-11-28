@@ -2,14 +2,22 @@
 
 # Changelog
 
-## Unveröffentlicht
+## 0.2.1
 
-- Behoben: Bei jedem Neustart oder Neuladen stand „Error fetching fronius_modbus_tcp data: … Request cancelled outside library“ als ERROR im Log. Wird eine laufende Abfrage abgebrochen, ist das jetzt ein Abbruch und kein Verbindungsfehler mehr.
-- Behoben: Der Diagnose-Download las die pymodbus-Version über eine Dateioperation in der Event-Loop; Home Assistant meldete das als „Detected blocking call“. Die Version kommt jetzt direkt aus dem Modul.
-- Vorbereitet auf neuere Home-Assistant-Versionen: Smart Meter werden über `via_device_id` dem Wechselrichter zugeordnet statt über das veraltete `via_device` (laut Home Assistant entfällt es mit 2027.8; ab 2026.10 erscheint sonst eine Warnung im Log). Formular-Schemas verwenden `probatio`, wo Home Assistant es mitbringt, sonst wie bisher `voluptuous`. Home Assistant 2026.2 bleibt unterstützt; Lint und Typprüfung laufen jetzt gegen beide Versionen.
+Fehlerbehebungen und Vorbereitung auf neuere Home-Assistant-Versionen. Am Testsystem (Symo 3.0-3-M am
+Datamanager 2.0, Home Assistant 2026.11) über die Vorabversionen 0.2.1b1–b4 geprüft.
+
+### Behoben
+- Bei jedem Neustart oder Neuladen stand „Error fetching fronius_modbus_tcp data: … Request cancelled outside library“ als ERROR im Log. Wird eine laufende Abfrage abgebrochen, ist das jetzt ein Abbruch und kein Verbindungsfehler mehr.
+- Der Diagnose-Download las die pymodbus-Version über eine Dateioperation in der Event-Loop; Home Assistant meldete das als „Detected blocking call“. Die Version kommt jetzt direkt aus dem Modul.
+- Der Diagnose-Download brach mit einem internen Fehler ab, solange der Eintrag nicht geladen war (z. B. Gerät beim Start nicht erreichbar). Er liefert jetzt Zustand, Fehlermeldung, Eintragsdaten und die zuletzt gespeicherte Gerätestruktur.
+
+### Vorbereitet auf neuere Home-Assistant-Versionen
+- Smart Meter werden über `via_device_id` dem Wechselrichter zugeordnet statt über das veraltete `via_device` (laut Home Assistant entfällt es mit 2027.8; ab 2026.10 erscheint sonst eine Warnung im Log). Formular-Schemas verwenden `probatio`, wo Home Assistant es mitbringt, sonst wie bisher `voluptuous`. Home Assistant 2026.2 bleibt unterstützt; Lint und Typprüfung laufen jetzt gegen beide Versionen.
+
+### Dokumentation und Entwicklung
 - Dokumentation: Englische Fassungen von README (`README.en.md`) und Changelog (`CHANGELOG.en.md`). Beide Sprachfassungen werden gleichlaufend gepflegt; ein Test prüft, dass sie dieselbe Struktur haben.
 - Entwicklung: Neuer Workflow `prerelease.yml` erstellt manuell eine Vorabversion (`vX.Y.Zb1`, `b2` …) vom aktuellen Stand von `main`, mit den Notizen aus „Unveröffentlicht“. So lassen sich Änderungen über den Marketplace testen (Schalter **Pre-release** beim Repository), ohne ein Release zu machen.
-- Behoben: Der Diagnose-Download brach mit einem internen Fehler ab, solange der Eintrag nicht geladen war (z. B. Gerät beim Start nicht erreichbar). Er liefert jetzt Zustand, Fehlermeldung, Eintragsdaten und die zuletzt gespeicherte Gerätestruktur.
 
 ## 0.2.0
 
