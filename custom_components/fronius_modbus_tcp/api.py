@@ -96,6 +96,19 @@ class FroniusData:
     values: dict[str, Any] = field(default_factory=dict)
 
 
+def _as_connection_error(err: ModbusException) -> BaseException:
+    """pymodbus-Fehler in einen Verbindungsfehler übersetzen.
+
+    Wird die wartende Aufgabe abgebrochen (Entladen, Neustart von Home Assistant),
+    meldet pymodbus das als ModbusIOException ("Request cancelled outside …").
+    Das ist kein Verbindungsfehler: Der Abbruch wird als CancelledError
+    weitergereicht, sonst protokolliert der Koordinator einen ERROR.
+    """
+    if isinstance(err.__cause__, asyncio.CancelledError):
+        return asyncio.CancelledError()
+    return FroniusConnectionError(str(err))
+
+
 class FroniusModbusClient:
     """Kapselt den Modbus-Zugriff, damit HA-Code frei von pymodbus-Details bleibt.
 
@@ -148,7 +161,7 @@ class FroniusModbusClient:
                 address, count=count, device_id=unit
             )
         except ModbusException as err:
-            raise FroniusConnectionError(str(err)) from err
+            raise _as_connection_error(err) from err
         if result.isError():
             raise FroniusModbusError(
                 f"Modbus-Fehler (Unit {unit}) beim Lesen von {address} (+{count}): {result}",
@@ -162,7 +175,7 @@ class FroniusModbusClient:
                 address, values=values, device_id=unit
             )
         except ModbusException as err:
-            raise FroniusConnectionError(str(err)) from err
+            raise _as_connection_error(err) from err
         if result.isError():
             raise FroniusModbusError(
                 f"Modbus-Fehler (Unit {unit}) beim Schreiben von {address} "

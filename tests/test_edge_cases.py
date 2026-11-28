@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 from unittest.mock import patch
 
 import pytest
@@ -10,6 +11,7 @@ from homeassistant.const import CONF_HOST, CONF_PORT
 from homeassistant.core import HomeAssistant, State
 from homeassistant.data_entry_flow import FlowResultType
 from homeassistant.helpers import entity_registry as er
+from pymodbus.exceptions import ModbusIOException
 from pytest_homeassistant_custom_component.common import (
     MockConfigEntry,
     mock_restore_cache_with_extra_data,
@@ -532,3 +534,73 @@ async def test_diagnostics_unreadable_fronius_registers(
         await hass.async_block_till_done()
     finally:
         await server.stop()
+
+
+async def _silent_server() -> tuple[asyncio.Server, int]:
+    """TCP-Server, der Verbindungen annimmt, aber nie antwortet (Abfrage hängt)."""
+
+    async def handle(reader: asyncio.StreamReader, writer: asyncio.StreamWriter) -> None:
+        try:
+            await reader.read()  # bis der Client trennt
+        finally:
+            writer.close()
+
+    server = await asyncio.start_server(handle, "127.0.0.1", 0)
+    return server, server.sockets[0].getsockname()[1]
+
+
+async def test_cancelled_request_stays_cancelled(socket_enabled) -> None:
+    """Wird eine laufende Abfrage abgebrochen, bleibt es ein Abbruch.
+
+    pymodbus macht daraus eine ModbusIOException ("Request cancelled outside
+    library"); als Verbindungsfehler weitergereicht, protokollierte Home Assistant
+    beim Herunterfahren jedes Mal einen ERROR.
+    """
+    server, port = await _silent_server()
+    client = FroniusModbusClient("127.0.0.1", port, timeout=10, retries=0)
+    try:
+        for call in (lambda: client.read(1, 40000, 2), lambda: client.write(1, 40000, [1])):
+            task = asyncio.create_task(call())
+            await asyncio.sleep(0.2)  # Anfrage ist abgeschickt, Antwort steht aus
+            task.cancel()
+            with pytest.raises(asyncio.CancelledError):
+                await task
+    finally:
+        await client.close()
+        server.close()
+        await server.wait_closed()
+
+
+async def test_shutdown_during_poll_logs_no_error(
+    hass: HomeAssistant, socket_enabled, caplog
+) -> None:
+    """Abbruch einer laufenden Abfrage (Neustart, Entladen): kein "Error fetching"."""
+    device = await _serve({1: sim.gen24_float_no_battery()})
+    try:
+        entry = _entry(device.port)
+        entry.add_to_hass(hass)
+        assert await hass.config_entries.async_setup(entry.entry_id)
+        await hass.async_block_till_done()
+        coordinator = entry.runtime_data
+
+        async def hanging_read(*args, **kwargs):
+            # Verhalten von pymodbus: Abbruch von außen wird zur ModbusIOException
+            try:
+                await asyncio.Event().wait()
+            except asyncio.CancelledError as exc:
+                raise ModbusIOException("Request cancelled outside library.") from exc
+
+        with patch.object(
+            coordinator.client._client, "read_holding_registers", hanging_read
+        ):
+            refresh = asyncio.create_task(coordinator.async_refresh())
+            await asyncio.sleep(0.1)
+            caplog.clear()
+            refresh.cancel()
+            with pytest.raises(asyncio.CancelledError):
+                await refresh
+        assert "Error fetching" not in caplog.text
+        assert await hass.config_entries.async_unload(entry.entry_id)
+        await hass.async_block_till_done()
+    finally:
+        await device.stop()

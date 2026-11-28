@@ -4,6 +4,7 @@
 
 ## Unveröffentlicht
 
+- Behoben: Bei jedem Neustart oder Neuladen stand „Error fetching fronius_modbus_tcp data: … Request cancelled outside library“ als ERROR im Log. Wird eine laufende Abfrage abgebrochen, ist das jetzt ein Abbruch und kein Verbindungsfehler mehr.
 - Behoben: Der Diagnose-Download las die pymodbus-Version über eine Dateioperation in der Event-Loop; Home Assistant meldete das als „Detected blocking call“. Die Version kommt jetzt direkt aus dem Modul.
 - Vorbereitet auf neuere Home-Assistant-Versionen: Smart Meter werden über `via_device_id` dem Wechselrichter zugeordnet statt über das veraltete `via_device` (laut Home Assistant entfällt es mit 2027.8; ab 2026.10 erscheint sonst eine Warnung im Log). Formular-Schemas verwenden `probatio`, wo Home Assistant es mitbringt, sonst wie bisher `voluptuous`. Home Assistant 2026.2 bleibt unterstützt; Lint und Typprüfung laufen jetzt gegen beide Versionen.
 - Dokumentation: Englische Fassungen von README (`README.en.md`) und Changelog (`CHANGELOG.en.md`). Beide Sprachfassungen werden gleichlaufend gepflegt; ein Test prüft, dass sie dieselbe Struktur haben.
