@@ -4,6 +4,8 @@
 
 ## Unveröffentlicht
 
+- Behoben: Am Datamanager kann die gemeldete Seriennummer ein Ersatzwert sein, der im Betrieb wechselt (laut Fronius-Registerkarte, beim Symo Hybrid immer). Gerät und Entitäten behalten jetzt die Seriennummer aus der Einrichtung, statt bei einem Wechsel doppelt angelegt zu werden; eine Abweichung steht als Warnung im Log. Bestehende Einträge ändern sich nicht.
+- Symo Hybrid: Die Rückfallzeit für Lade- und Entladegrenze wird vom Gerät nicht unterstützt. Die Integration schreibt sie dort nicht mehr und weist einmal im Log darauf hin, dass aktive Grenzen bis zum Ausschalten bestehen bleiben. README ergänzt, ebenso der Hinweis, dass die Grenzen-Anzeige am Datamanager nur Modbus-Vorgaben zeigt.
 - Dokumentation: Die beiden Fronius-Registerarchive sind jetzt vollständig im Repository, darunter die Registerkarten der Wechselrichter am Datamanager (mit Modell 124 für den Symo Hybrid) und der Smart Meter am Datamanager. Neues Skript `scripts/xlsx_to_csv.py` erzeugt die CSV-Fassungen.
 - Dokumentation: Hinweis auf Herkunft und Rechte der Fronius-Unterlagen und der daraus übernommenen Statustexte; sie stehen nicht unter der Projektlizenz. Neuer Abschnitt „Lizenz“ in der README.
 

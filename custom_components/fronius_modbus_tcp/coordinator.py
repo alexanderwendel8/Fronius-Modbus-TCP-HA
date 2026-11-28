@@ -181,6 +181,22 @@ class FroniusCoordinator(DataUpdateCoordinator[FroniusData]):
                 "nicht verfügbar",
                 err,
             )
+        serial = self.inverter.serial_number
+        if (
+            not self.started_from_cache
+            and entry.unique_id
+            and serial
+            and serial != entry.unique_id
+        ):
+            # Datamanager: Ersatzwert (PMC/UID) statt Seriennummer oder umgekehrt;
+            # Gerät und Entitäten behalten die Kennung aus der Einrichtung
+            _LOGGER.warning(
+                "Wechselrichter meldet die Seriennummer %s statt %s (beim Einrichten). "
+                "Der Datamanager liefert je nach Gerät und Startzeitpunkt einen "
+                "Ersatzwert; Gerät und Entitäten bleiben unverändert",
+                serial,
+                entry.unique_id,
+            )
         if (
             not self.started_from_cache
             and known is None

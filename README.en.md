@@ -203,6 +203,14 @@ message before writing. Charge and discharge limits are written with the fallbac
 minimum reserve and grid charging stay set permanently. According to Fronius, all settings are
 recommendations: the inverter may deviate from them for safety reasons.
 
+**Symo Hybrid (Datamanager):** The device does not support a fallback time for the charge and
+discharge limits (`InOutWRte_RvrtTms` is "Not supported" according to the Fronius register map). An
+active limit stays in place there until its switch is turned off – even if Home Assistant fails. The
+integration then does not write the fallback time and reports this once in the log.
+
+On the Datamanager, the charge and discharge limit values show only the limits set via Modbus by default,
+not system-wide restrictions (Fronius register 217 `F_Storage_Restrictions_View_Mode`, 0 = "local").
+
 **Not tested with a real battery** – only against simulated devices so far.
 
 **Polling interval:** In the same dialog (**Configure**) you can set how often the device is polled:

@@ -201,6 +201,15 @@ ab, bevor sie schreibt. Lade- und Entladegrenze werden mit der Rückfallzeit ges
 Mindestreserve und Netzladung bleiben dauerhaft gesetzt. Alle Vorgaben sind laut Fronius Empfehlungen:
 Der Wechselrichter kann aus Sicherheitsgründen davon abweichen.
 
+**Symo Hybrid (Datamanager):** Das Gerät unterstützt keine Rückfallzeit für Lade- und Entladegrenze
+(`InOutWRte_RvrtTms` laut Fronius-Registerkarte „Not supported“). Eine aktive Grenze bleibt dort bestehen,
+bis ihr Schalter ausgeschaltet wird – auch wenn Home Assistant ausfällt. Die Integration schreibt die
+Rückfallzeit dann nicht und meldet das einmal im Log.
+
+Die Anzeige von Lade- und Entladegrenze zeigt beim Datamanager standardmäßig nur die per Modbus gesetzten
+Grenzen, nicht systemweite Vorgaben (Fronius-Register 217 `F_Storage_Restrictions_View_Mode`,
+0 = „local“).
+
 **Nicht an einem echten Speicher getestet** – bisher nur gegen simulierte Geräte.
 
 **Abfrageintervall:** Im selben Dialog („Konfigurieren“) lässt sich einstellen, wie oft das Gerät abgefragt

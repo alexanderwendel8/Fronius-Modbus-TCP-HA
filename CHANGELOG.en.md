@@ -4,6 +4,8 @@
 
 ## Unreleased
 
+- Fixed: On the Datamanager, the reported serial number can be a substitute value that changes during operation (according to the Fronius register map, always on the Symo Hybrid). Device and entities now keep the serial number from setup instead of being created twice after a change; a mismatch is logged as a warning. Existing entries do not change.
+- Symo Hybrid: The device does not support the fallback time for the charge and discharge limits. The integration no longer writes it there and notes once in the log that active limits remain until switched off. README extended, including the note that the limit values on the Datamanager show only Modbus settings.
 - Documentation: Both Fronius register archives are now complete in the repository, including the register maps of inverters behind the Datamanager (with model 124 for the Symo Hybrid) and of Smart Meters behind the Datamanager. New script `scripts/xlsx_to_csv.py` creates the CSV versions.
 - Documentation: Note on the origin and rights of the Fronius documents and the state texts taken from them; they are not covered by the project licence. New section "Licence" in the README.
 
