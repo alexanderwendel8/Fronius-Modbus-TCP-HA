@@ -24,6 +24,9 @@ Schnellzugriff:
   Volltext in `docs/fronius/handbuecher/text/*.txt` (PDF-Seiten bei Bedarf mit Read + `pages` ansehen)
 - Suche: `grep -rn "WMaxLimPct" docs/fronius/*/csv/ docs/fronius/handbuecher/text/`
 
+Helfer (Skills): `fronius-doku-aktualisierung` gleicht die Unterlagen mit den aktuellen Fronius-Downloads ab
+und sucht neue; `fronius-rechtslage` prüft, ob sie wiederveröffentlicht werden dürfen.
+
 Regeln:
 - Adressen in der Fronius-Doku sind **1-basiert**, im Code **0-basiert** (−1).
 - Archiv 1.2.7: Modellblätter haben **relative** Adressen (1 = ID, 2 = L) → Rumpf-Offset = relativ − 3.
