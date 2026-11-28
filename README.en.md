@@ -67,10 +67,10 @@ the grid connection point, positive = grid import, negative = feed-in.
 | Device | Connection | Inverter firmware | Integration | Home Assistant | Result |
 |---|---|---|---|---|---|
 | **Symo 3.0-3-M** (real device) | Datamanager 2.0, Modbus TCP, unit ID 1 | 0.3.30.2 | 0.1.0 | 2026.11.2 (HA OS 18.4) | ✅ measurements, site values, state code, error classes, models 120/122/123 read-only · ✅ control: power limitation and feed-in off/on (2026-11-23) |
-| GEN24 Plus with battery and Smart Meter | simulated (tests) | – | 0.2.0 | test environment | ✅ automated tests |
-| Symo Hybrid with battery (Datamanager) | simulated (tests) | – | 0.2.0 | test environment | ✅ automated tests |
-| GEN24 without battery, device with a single DC input | simulated (tests) | – | 0.2.0 | test environment | ✅ automated tests |
-| Smart Meter 203 (int+SF) / 213 (float) | simulated (tests) | – | 0.2.0 | test environment | ✅ automated tests |
+| GEN24 Plus with battery and Smart Meter | simulated (tests) | – | 0.2.1 | test environment | ✅ automated tests |
+| Symo Hybrid with battery (Datamanager) | simulated (tests) | – | 0.2.1 | test environment | ✅ automated tests |
+| GEN24 without battery, device with a single DC input | simulated (tests) | – | 0.2.1 | test environment | ✅ automated tests |
+| Smart Meter 203 (int+SF) / 213 (float) | simulated (tests) | – | 0.2.1 | test environment | ✅ automated tests |
 
 Observations on the real Symo: it provides `ActWh` (model 122), but no isolation resistance and no
 temperatures – these sensors are therefore not created.
@@ -105,7 +105,7 @@ The integration is not (yet) listed in the catalog and is added as a custom repo
    **GitHub link**, then **Add**. If not done yet, the Marketplace now asks for a GitHub connection
    (sign-in with a code on github.com; read access to public data only) – it is required for custom
    repositories.
-3. Open the repository in the list, select **Install**, check the version (latest release, e.g. `v0.2.0`),
+3. Open the repository in the list, select **Install**, check the version (latest release, e.g. `v0.2.1`),
    **Install**. If a restart is needed, a repair issue under *Settings → System → Repairs* reminds you.
 
 Updates appear under *Settings → Updates* (with release notes); with a GitHub connection the Marketplace
