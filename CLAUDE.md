@@ -10,7 +10,7 @@ welches Gerät, Unterschiede zwischen den Gerätegenerationen, Bezug zum Code.
 
 | Archiv | Inhalt | Zusammenfassung |
 |---|---|---|
-| `docs/fronius/archiv_1.1.7/` | Argeno, Datamanager-Geräte, **State Codes & Event Flags** | `archiv_1.1.7/README.md` |
+| `docs/fronius/archiv_1.1.7/` | Datamanager-Geräte samt Smart Meter, Argeno, **State Codes & Event Flags** | `archiv_1.1.7/README.md` |
 | `docs/fronius/archiv_1.2.7/` | **GEN24**, Tauro, Verto, **Smart Meter**, **Batterie (124)** | `archiv_1.2.7/README.md` |
 | `docs/fronius/handbuecher/` | Modbus-Handbücher Datamanager & GEN24, Datamanager 2.0 (PDF + Text) | `handbuecher/README.md` |
 
@@ -18,6 +18,8 @@ Schnellzugriff:
 - GEN24-Register eines Modells: `docs/fronius/archiv_1.2.7/csv/Gen24_Primo_Symo_Inverter_Register_Map_Float_storage_ROW/<blatt>.csv`
   (`inverter_11x`, `mppt_160`, `storage_124`, `controls_123`, `nameplate_120` …, absolute Adressen in `Complete_Map.csv`)
 - Smart Meter: `docs/fronius/archiv_1.2.7/csv/Smart_Meter_Register_Map_Float/ac_meter_21x.csv`
+- Datamanager-Geräte (Symo, Primo, Galvo, Symo Hybrid …): `docs/fronius/archiv_1.1.7/csv/Inverter_Register_Map_Float_v1_0_with_SYMOHYBRID_MODEL_124/<blatt>.csv`
+  (`I11X_Inverter`, `I120_Nameplate` … `IC124_Basic_Storage_Control`, `Fronius_Register`), Smart Meter: `…/Meter_Register_Map_Float_v1_0/M21X_Meter.csv`
 - Argeno: `docs/fronius/archiv_1.1.7/csv/Argeno_Register_Map/<Modellnummer>.csv`
 - Status/Events Datamanager-Geräte: `docs/fronius/archiv_1.1.7/csv/Fronius_State_Codes_Event_Flags_1_0/`
 - Verhalten, Geräte-IDs, Timeouts, Steuerungsabläufe, Batterie-Logik, Meter-Vorzeichen: `docs/fronius/handbuecher/README.md`,

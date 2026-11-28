@@ -3,7 +3,7 @@
 ← [Gesamtindex](../README.md)
 
 Herstellerunterlagen von Fronius zu Modbus TCP / SunSpec (Archivversion **1.1.7-0**, Geräte mit
-Fronius Datamanager: Symo, Primo, Galvo, IG Plus, Eco … sowie Argeno, siehe
+Fronius Datamanager: Symo, Primo, Galvo, IG Plus, Eco, Symo Hybrid, Smart Meter am Datamanager … sowie Argeno, siehe
 [`original/INFO.TXT`](original/INFO.TXT) und [`original/CHANGELOG.TXT`](original/CHANGELOG.TXT)).
 
 - `original/` – unveränderte Originaldateien (xlsx, csv, json, txt)
@@ -21,13 +21,19 @@ Fronius Datamanager: Symo, Primo, Galvo, IG Plus, Eco … sowie Argeno, siehe
 | Datei (in `original/`) | CSV-Export | Inhalt | Wofür nachschlagen |
 |---|---|---|---|
 | `Argeno_Register_Map.xlsx` | `csv/Argeno_Register_Map/<Modell>.csv` | Komplette SunSpec-Registerkarte des **Fronius Argeno** (Model „Argeno 125“), ein Blatt pro Modell + `Index` | Registerbelegung, Datentypen, Einheiten, „not supported“-Hinweise, Lese-/Schreibrechte |
+| `Inverter_Register_Map_Float_v1.0_with_SYMOHYBRID_MODEL_124.xlsx` | `csv/Inverter_Register_Map_Float_v1_0_with_SYMOHYBRID_MODEL_124/*.csv` | Registerkarte der **Wechselrichter am Datamanager** (Symo, Primo, Galvo, Eco, IG Plus, Symo Hybrid), float: Modelle 1, 111–113, 120–123, 160, **124** (nur Symo Hybrid), Blatt `Fronius_Register` (212–217, 500–513) | Registerbelegung der Datamanager-Geräte, Speicher beim Symo Hybrid, Fronius-Register |
+| `Inverter_Register_Map_IntSF_v1.0_with_SYMOHYBRID_MODEL_124.xlsx` | `csv/Inverter_Register_Map_IntSF_v1_0_with_SYMOHYBRID_MODEL_124/*.csv` | dasselbe als int+SF (Modelle 101–103) | wie oben |
+| `Meter_Register_Map_Float_v1.0.xlsx` | `csv/Meter_Register_Map_Float_v1_0/*.csv` | **Smart Meter am Datamanager**, float (Modell 211–213) | Zählerwerte, Vorzeichen |
+| `Meter_Register_Map_IntSF_v1.0.xlsx` | `csv/Meter_Register_Map_IntSF_v1_0/*.csv` | Smart Meter am Datamanager, int+SF (Modell 201–203) | wie oben |
+| `IG_Sensor_Card_Register_Map_Float_and_IntSF_v1.0.xlsx` | `csv/IG_Sensor_Card_Register_Map_Float_and_IntSF_v1_0/*.csv` | Fronius IG Sensor Card (Modelle 1, 302 Einstrahlung, 303 Modultemperatur, 307 Wetter) | Nur relevant, falls Sensorkarten unterstützt werden sollen |
 | `Fronius_State_Codes__Event_Flags_1.0.xlsx` | `csv/Fronius_State_Codes_Event_Flags_1_0/*.csv` | Bedeutung von `St`, `StVnd`, `Evt1`, `EvtVnd1-4` und die State-Code-Listen je Gerätefamilie | Status-/Fehlerdekodierung |
 | `IG_String_Control_Register_Map_Float_and_IntSF_v1.0.xlsx` | `csv/IG_String_Control_Register_Map_Float_and_IntSF_v1_0/*.csv` | Fronius IG String Control (Modelle 1 + 403 String Combiner) | Nur relevant, falls String-Combiner unterstützt werden sollen |
-| `St.csv` | – | SunSpec-Betriebszustand `St` (1–8) | = Blatt `St` |
-| `EvtVnd1-4_{Galvo,Symo,Primo,IGPlus}.csv` | – | Bit → Fehlerklasse → State Codes je Familie | = Blätter `EvtVnd1-4 <Familie>` |
-| `{Galvo,Primo,IGPlus}_State_Codes.csv` | – | State Code → Klartext | = Blätter `<Familie> State Codes` (Symo nur im xlsx/`csv/`) |
+| `St.csv`, `StVnd.csv` | – | SunSpec-Betriebszustand `St` (1–8) bzw. Fronius `StVnd` | = Blätter `St`, `StVnd` |
+| `Evt1.csv` | – | SunSpec-Ereignisse `Evt1` | = Blatt `Evt1` |
+| `EvtVnd1-4_{All,Galvo,Symo,Primo,IGPlus}.csv` | – | Bit → Fehlerklasse → State Codes je Familie (`All` = alle zusammen) | = Blätter `EvtVnd1-4 <Familie>` |
+| `{Galvo,Primo,Symo,IGPlus}_State_Codes.csv` | – | State Code → Klartext | = Blätter `<Familie> State Codes` |
 | `FroniusEventFlags.json` | – | EvtVnd1–3 als JSON für `all`, `symo`, `galvo`, `primo`, `igplus` | Maschinenlesbare Quelle für Event-Mapping (Fehler beachten, Abschnitt 6) |
-| `galvo.json`, `primo.json` | – | Auszug aus `FroniusEventFlags.json` | – |
+| `all.json`, `galvo.json`, `igplus.json`, `primo.json`, `symo.json` | – | Auszug aus `FroniusEventFlags.json` je Familie | – |
 
 Die CSV-Dateien von Galvo und IGPlus haben **keine Kopfzeile**; Primo und Symo haben eine
 mehrzeilige Kopfzeile. Spalten jeweils:

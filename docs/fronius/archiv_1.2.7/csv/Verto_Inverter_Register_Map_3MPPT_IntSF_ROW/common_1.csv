@@ -1,0 +1,24 @@
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model common (1),uint16,,,1
+2,2,1,R,0x03,L,Length of sunspec model common (1),uint16,Registers,,65
+3,18,16,R,0x03,Mn,Manufacturer,string,,,Fronius
+19,34,16,R,0x03,Md,Device,string,,,"e.g. Verto 10.0
+Verto 12.5
+Verto 15.0
+Verto 17.5
+Verto 20.0
+Verto 22.0
+Verto 24.0
+Verto 10.0 208-240
+Verto 12.0 208-240
+Verto 10.0 480
+Verto 12.5 480
+Verto 15.0 480
+Verto 20.0 480
+Verto 24.0 480"
+35,42,8,R,0x03,Opt,Options,string,,,not supported
+43,50,8,R,0x03,Vr,SW version of inverter,string,,,e.g. 1.8.10-0
+51,66,16,R,0x03,SN,Serialnumber of the inverter,string,,,e.g. 12345678
+67,67,1,R,0x03,DA,Modbus Device Address,uint16,,,1 - 247

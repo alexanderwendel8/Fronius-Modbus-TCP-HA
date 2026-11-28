@@ -1,0 +1,9 @@
+"Start
+Offset","End
+Offset",Size,RW,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Uniquely identifies this as a SunSpec Back of Module Temperature Modbus Register Model,uint16,,,303
+2,2,1,R,0x03,L,Length of Register Model,uint16,Registers,,2 (0 Registers for fixed size block + 2 * 1 Registers for repeating blocks)
+3,3,1,R,0x03,TmpBOM,Back of module temperature measurement,int16,°C,-1,Temperature Sensor 1
+4,4,1,R,0x03,TmpBOM,Back of module temperature measurement,int16,°C,-1,Temperature Sensor 2

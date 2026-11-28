@@ -1,0 +1,43 @@
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DEREnterService (703),uint16,,,703
+2,2,1,R,0x03,L,Length of sunspec model DEREnterService (703),uint16,Registers,,17
+3,3,1,RW,"0x03
+0x06
+0x10",ES,Permit enter service.,enum16,,,"0: Disabled
+1: Enabled"
+4,4,1,RW,"0x03
+0x06
+0x10",ESVHi,Enter service voltage high threshold as percent of normal voltage.,uint16,Pct,V_SF,"0% to 149.51 % *
+
+*Actual range may vary based on inverter configuration or country setup"
+5,5,1,RW,"0x03
+0x06
+0x10",ESVLo,Enter service voltage low threshold as percent of normal voltage.,uint16,Pct,V_SF,"0% to 149.51% *
+
+*Actual range may vary based on inverter configuration or country setup"
+6,7,2,RW,"0x03
+0x06
+0x10",ESHzHi,Enter service frequency high threshold.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+8,9,2,RW,"0x03
+0x06
+0x10",ESHzLo,Enter service frequency low threshold.,uint32,Hz,Hz_SF,"45 to 66 *
+
+*Actual range may vary based on inverter configuration or country setup"
+10,11,2,RW,"0x03
+0x06
+0x10",ESDlyTms,Enter service delay time in seconds.,uint32,Secs,,"0 to 900 *
+
+*Actual range may vary based on inverter configuration or country setup"
+12,13,2,R,0x03,ESRndTms,Enter service random delay in seconds.,uint32,Secs,,not supported
+14,15,2,RW,"0x03
+0x06
+0x10",ESRmpTms,Enter service ramp time in seconds.,uint32,Secs,,"1 to 100000 *
+
+*Actual range may vary based on inverter configuration or country setup"
+16,17,2,R,0x03,ESDlyRemTms,Enter service delay time remaining in seconds.,uint32,Secs,,not supported
+18,18,1,R,0x03,V_SF,Voltage percentage scale factor.,sunssf,,,-2
+19,19,1,R,0x03,Hz_SF,Frequency scale factor.,sunssf,,,-2

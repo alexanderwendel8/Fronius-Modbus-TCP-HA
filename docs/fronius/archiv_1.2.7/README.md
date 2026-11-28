@@ -30,13 +30,19 @@ siehe [`original/INFO.TXT`](original/INFO.TXT) und [`original/CHANGELOG.TXT`](or
 | Primo/Symo GEN24 | float | US | `Gen24_Primo_Symo_Inverter_Register_Map_Float_US` | + 124, 701–713 |
 | Primo/Symo GEN24 Plus | float | US | `Gen24_Primo_Symo_Inverter_Register_Map_Float_storage_US` | + 124, 701–713 |
 | Primo/Symo GEN24 | int+SF | US | `Gen24_Primo_Symo_Inverter_Register_Map_IntSF_US` | + 124, 701–713 |
+| Primo/Symo GEN24 Plus | int+SF | US | `Gen24_Primo_Symo_Inverter_Register_Map_IntSF_storage_US` | + 124, 701–713 |
+| Tauro | float | ROW | `Tauro_Inverter_Register_Map_Float_ROW` | 1, 113, 120–123, 160 (N=3) |
 | Tauro | int+SF | ROW | `Tauro_Inverter_Register_Map_IntSF_ROW` | 1, 103, 120–123, 160 (N=3) |
 | Tauro ECO | float | ROW | `Tauro_ECO_Inverter_Register_Map_Float_ROW` | 1, 113, 120–123, 160 (N=1) |
 | Tauro ECO | int+SF | ROW | `Tauro_ECO_Inverter_Register_Map_IntSF_ROW` | 1, 103, 120–123, 160 (N=1) |
 | Verto (4 MPPT) | float | ROW | `Verto_Inverter_Register_Map_4MPPT_Float_ROW` | 1, 113, 120–123, 160 (N=4) |
 | Verto (4 MPPT) | int+SF | ROW | `Verto_Inverter_Register_Map_4MPPT_IntSF_ROW` | 1, 103, 120–123, 160 (N=4) |
+| Verto (3 MPPT) | float | ROW | `Verto_Inverter_Register_Map_3MPPT_Float_ROW` | 1, 113, 120–123, 160 (N=3) |
+| Verto (3 MPPT) | int+SF | ROW | `Verto_Inverter_Register_Map_3MPPT_IntSF_ROW` | 1, 103, 120–123, 160 (N=3) |
+| Verto Plus (3 MPPT + Batterie) | float | ROW | `Verto_Inverter_Register_Map_3MPPT_Float_storage_ROW` | 1, 113, 120–123, 160 (N=5), **124** |
 | Verto Plus (3 MPPT + Batterie) | int+SF | ROW | `Verto_Inverter_Register_Map_3MPPT_IntSF_storage_ROW` | 1, 103, 120–123, 160 (N=5), **124** |
 | Fronius Smart Meter | float | – | `Smart_Meter_Register_Map_Float` | 1, **211/212/213/214** |
+| Fronius Smart Meter | int+SF | – | `Smart_Meter_Register_Map_IntSF` | 1, **201/202/203/204** |
 
 ROW = „Rest of World“ (Europa usw.), US = Nordamerika (zusätzlich SunSpec-DER-Modelle 701–713,
 Modell 124 auch ohne Batterie vorhanden, dann alle Register „not supported“).

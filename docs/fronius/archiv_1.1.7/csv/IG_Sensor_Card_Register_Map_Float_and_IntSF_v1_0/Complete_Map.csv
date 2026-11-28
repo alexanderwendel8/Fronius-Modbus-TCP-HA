@@ -1,0 +1,56 @@
+"Fronius Datamanager Register Map: IG Sensor Card (1, 302, 303, 307)"
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40001,40002,2,R,0x03,SID,Well-known value. Uniquely identifies this as a SunSpec Modbus Map,uint32,,,0x53756e53 ('SunS')
+40003,40003,1,R,0x03,ID,Well-known value. Uniquely identifies this as a SunSpec Common Model block,uint16,,,1
+40004,40004,1,R,0x03,L,Length of Common Model block,uint16,Registers,,65
+40005,40020,16,R,0x03,Mn,Manufacturer,String32,,,Fronius
+40021,40036,16,R,0x03,Md,Device model,String32
+40037,40044,8,R,0x03,Opt,Options,String16
+40045,40052,8,R,0x03,Vr,SW version,String16
+40053,40068,16,R,0x03,SN,Serialnumber,String32
+40069,40069,1,R,0x03,DA,Modbus Device Address,uint16,,,1-247
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40070,40070,1,R,0x03,ID,Uniquely identifies this as a SunSpec Irradiance Modbus Register Model,uint16,,,302
+40071,40071,1,R,0x03,L,Length of Register Model,uint16,Registers,,5
+40072,40072,1,R,0x03,GHI,Global Horizontal Irradiance,uint16,W / m2
+40073,40073,1,R,0x03,POAI,Plane-of-Array Irradiance,uint16,W / m2,,not supported
+40074,40074,1,R,0x03,DFI,Diffuse Irradiance,uint16,W / m2,,not supported
+40075,40075,1,R,0x03,DNI,Direct Normal Irradiance,uint16,W / m2,,not supported
+40076,40076,1,R,0x03,OTI,Other Irradiance,uint16,W / m2,,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40077,40077,1,R,0x03,ID,Uniquely identifies this as a SunSpec Back of Module Temperature Modbus Register Model,uint16,,,303
+40078,40078,1,R,0x03,L,Length of Register Model,uint16,Registers,,2 (0 Registers for fixed size block + 2 * 1 Registers for repeating blocks)
+40079,40079,1,R,0x03,TmpBOM,Back of module temperature measurement,int16,°C,-1,Temperature Sensor 1
+40080,40080,1,R,0x03,TmpBOM,Back of module temperature measurement,int16,°C,-1,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40081,40081,1,R,0x03,ID,Uniquely identifies this as a SunSpec Base Meteorological Modbus Register Model,uint16,,,307
+40082,40082,1,R,0x03,L,Length of Register Model,uint16,Registers,,11
+40083,40083,1,R,0x03,TmpAmb,Ambient Temperature,int16,°C,-1,Temperature Sensor 2
+40084,40084,1,R,0x03,RH,Relative Humidity,int16,%,,not supported
+40085,40085,1,R,0x03,Pres,Barometric Pressure,int16,Hpa,,not supported
+40086,40086,1,R,0x03,WndSpd,Wind Speed,int16,m/s
+40087,40087,1,R,0x03,WndDir,Wind Direction,int16,deg,,not supported
+40088,40088,1,R,0x03,Rain,Rainfall,int16,mm,,not supported
+40089,40089,1,R,0x03,Snw,Snow Depth,int16,mm,,not supported
+40090,40090,1,R,0x03,PPT,Precipitation Type (WMO 4680 SYNOP code reference),int16,,,not supported
+40091,40091,1,R,0x03,ElecFld,Electric Field,int16,Vm,,not supported
+40092,40092,1,R,0x03,SurWet,Surface Wetness,int16,kO,,not supported
+40093,40093,1,R,0x03,SoilWet,Soil Wetness,int16,%,,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40094,40094,1,R,0x03,ID,Identifies this as End block,uint16,,,0xFFFF
+40095,40095,1,R,0x03,L,Length of model block,uint16,Registers,,0
