@@ -1,5 +1,21 @@
 # Fronius Modbus-Dokumentation – Gesamtindex
 
+> **Herkunft und Rechte:** Alle Dateien in `original/` sind unveränderte, öffentliche Downloads von
+> www.fronius.com; `csv/` und `text/` sind daraus maschinell erzeugte Fassungen. Rechteinhaber ist
+> Fronius International GmbH. Die Dateien stehen **nicht** unter der Apache-2.0-Lizenz dieses
+> Repositorys.
+>
+> | Unterlage | Quelle |
+> |---|---|
+> | `archiv_1.1.7` (Version 1.1.7-0) | https://www.fronius.com/QR-link/0006 |
+> | `archiv_1.2.7` (Version 1.2.7-2) | https://www.fronius.com/QR-link/0024 |
+> | Handbuch 42,0410,2649 | https://www.fronius.com/~/downloads/Solar%20Energy/Operating%20Instructions/42,0410,2649.pdf |
+> | Handbuch 42,0410,2049 | https://www.fronius.com/~/downloads/Solar%20Energy/Operating%20Instructions/42,0410,2049.pdf |
+> | Handbuch 42,0426,0191 | https://www.fronius.com/~/downloads/Solar%20Energy/Operating%20Instructions/42,0426,0191,DE.pdf |
+>
+> Die Argeno-Registerkarte (`archiv_1.1.7/original/Argeno_Register_Map.xlsx`) ist in keinem der beiden
+> Archive enthalten; ihre Download-Quelle ist nicht belegt.
+
 Herstellerunterlagen von Fronius zu Modbus TCP / SunSpec, aufgeteilt nach Fronius-Archiv.
 Jedes Archiv hat `original/` (unverändert), `csv/` (jedes xlsx-Blatt als CSV, per `grep` durchsuchbar)
 und eine eigene README mit Zusammenfassung. Die Handbücher liegen als PDF plus Textfassung (`text/`) vor.

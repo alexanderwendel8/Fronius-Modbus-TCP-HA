@@ -335,3 +335,18 @@ nur stabile Releases.
 
 Die Fronius-Registerkarten und State-Code-Tabellen liegen in [`docs/fronius/`](docs/fronius/README.md) –
 mit Dateiindex und Zusammenfassung der für diese Integration relevanten Punkte.
+
+Diese Unterlagen stammen von Fronius International GmbH und sind dort frei herunterladbar
+(Links in [`docs/fronius/README.md`](docs/fronius/README.md)). Sie liegen hier nur als Referenz für
+die Entwicklung und stehen **nicht** unter der Lizenz dieses Projekts; alle Rechte liegen bei
+Fronius. Das gilt auch für die englischen Statustexte in
+[`state_codes.py`](custom_components/fronius_modbus_tcp/state_codes.py), die aus
+„Fronius State Codes & Event Flags 1.0“ übernommen sind.
+
+## Lizenz
+
+Der Code dieses Projekts steht unter der [Apache-Lizenz 2.0](LICENSE). Ausgenommen sind die
+Herstellerunterlagen in `docs/fronius/` und die daraus übernommenen Statustexte (siehe
+[Herstellerdokumentation](#herstellerdokumentation)). „Fronius“, „GEN24“, „Symo“, „Primo“, „Tauro“
+und „Verto“ sind Marken der Fronius International GmbH; dieses Projekt ist nicht mit Fronius
+verbunden.

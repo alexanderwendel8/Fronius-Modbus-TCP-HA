@@ -2,6 +2,10 @@
 
 # Changelog
 
+## Unreleased
+
+- Documentation: Note on the origin and rights of the Fronius documents and the state texts taken from them; they are not covered by the project licence. New section "Licence" in the README.
+
 ## 0.2.1
 
 Bug fixes and preparation for newer Home Assistant versions. Checked on the test system (Symo 3.0-3-M behind a

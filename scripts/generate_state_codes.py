@@ -57,6 +57,7 @@ def main() -> None:
         "",
         "AUTOMATISCH ERZEUGT von scripts/generate_state_codes.py – nicht von Hand ändern.",
         "Quelle: Fronius State Codes & Event Flags 1.0 (docs/fronius/archiv_1.1.7).",
+        "Texte © Fronius International GmbH, nicht unter der Projektlizenz.",
         '"""',
         "",
         "from __future__ import annotations",
