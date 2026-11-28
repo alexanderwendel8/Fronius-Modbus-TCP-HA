@@ -2,6 +2,10 @@
 
 # Changelog
 
+## Unveröffentlicht
+
+- Dokumentation: Hinweis auf Herkunft und Rechte der Fronius-Unterlagen und der daraus übernommenen Statustexte; sie stehen nicht unter der Projektlizenz. Neuer Abschnitt „Lizenz“ in der README.
+
 ## 0.2.1
 
 Fehlerbehebungen und Vorbereitung auf neuere Home-Assistant-Versionen. Am Testsystem (Symo 3.0-3-M am

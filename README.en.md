@@ -337,3 +337,18 @@ receiving stable releases only.
 
 The Fronius register maps and state code tables are in [`docs/fronius/`](docs/fronius/README.md) –
 with a file index and a summary (in German) of the points relevant to this integration.
+
+These documents come from Fronius International GmbH and can be downloaded freely there
+(links in [`docs/fronius/README.md`](docs/fronius/README.md)). They are kept here only as a reference
+for development and are **not** covered by this project's licence; all rights remain with
+Fronius. This also applies to the English state texts in
+[`state_codes.py`](custom_components/fronius_modbus_tcp/state_codes.py), which are taken from
+"Fronius State Codes & Event Flags 1.0".
+
+## Licence
+
+The code of this project is licensed under the [Apache License 2.0](LICENSE). Excluded are the
+manufacturer documents in `docs/fronius/` and the state texts taken from them (see
+[Manufacturer documentation](#manufacturer-documentation)). "Fronius", "GEN24", "Symo", "Primo",
+"Tauro" and "Verto" are trademarks of Fronius International GmbH; this project is not affiliated
+with Fronius.
