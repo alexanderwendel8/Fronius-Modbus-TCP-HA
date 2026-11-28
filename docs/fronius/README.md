@@ -25,7 +25,7 @@ verhält (Geräte-IDs, Timeouts, Schreiben/Steuern, Vorzeichen, Batterie-Logik).
 
 | Archiv | Geräte | Zusammenfassung |
 |---|---|---|
-| **1.1.7-0** | Datamanager-Geräte (Symo, Primo, Galvo, IG Plus …), **Argeno**, IG String Control, **State Codes & Event Flags** | [archiv_1.1.7/README.md](archiv_1.1.7/README.md) |
+| **1.1.7-0** | Datamanager-Geräte (Symo, Primo, Galvo, IG Plus, **Symo Hybrid** …) samt **Smart Meter**, **Argeno**, IG String Control, IG Sensor Card, **State Codes & Event Flags** | [archiv_1.1.7/README.md](archiv_1.1.7/README.md) |
 | **1.2.7-2** | **Primo/Symo GEN24 (Plus)**, **Tauro**, **Tauro ECO**, **Verto (Plus)**, **Smart Meter** | [archiv_1.2.7/README.md](archiv_1.2.7/README.md) |
 | **Handbücher (PDF)** | Modbus TCP & RTU für **Datamanager** und **GEN24**, Bedienungsanleitung **Datamanager 2.0** – Geräte-IDs, Timeouts, Steuerung, Batterie, Vorzeichen | [handbuecher/README.md](handbuecher/README.md) |
 
@@ -40,9 +40,10 @@ verhält (Geräte-IDs, Timeouts, Schreiben/Steuern, Vorzeichen, Batterie-Logik).
 | GEN24 US-Varianten | `archiv_1.2.7/csv/Gen24_…_US/` (zusätzlich 701–713) | wie GEN24 |
 | **Tauro / Tauro ECO** | `archiv_1.2.7/csv/Tauro_*` | wie GEN24 |
 | **Verto / Verto Plus** | `archiv_1.2.7/csv/Verto_*` | wie GEN24 |
-| **Smart Meter** (am GEN24/Tauro/Verto) | `archiv_1.2.7/csv/Smart_Meter_Register_Map_Float/` | – |
+| **Smart Meter** (am GEN24/Tauro/Verto) | `archiv_1.2.7/csv/Smart_Meter_Register_Map_{Float,IntSF}/` | – |
+| **Smart Meter** (am Datamanager) | `archiv_1.1.7/csv/Meter_Register_Map_{Float,IntSF}_v1_0/` | – |
 | **Argeno** | `archiv_1.1.7/csv/Argeno_Register_Map/<Modell>.csv` | St/StVnd/Evt1 aus archiv_1.1.7 |
-| Symo, Primo, Galvo, Eco, IG Plus (**mit Datamanager**) | *Registerkarte nicht im Repo* – Modellaufbau wie SunSpec-Standard | `archiv_1.1.7/csv/Fronius_State_Codes_Event_Flags_1_0/` (EvtVnd1-4 je Familie) |
+| Symo, Primo, Galvo, Eco, IG Plus, Symo Hybrid (**mit Datamanager**) | `archiv_1.1.7/csv/Inverter_Register_Map_{Float,IntSF}_v1_0_with_SYMOHYBRID_MODEL_124/` (Modell 124 nur Symo Hybrid) | `archiv_1.1.7/csv/Fronius_State_Codes_Event_Flags_1_0/` (EvtVnd1-4 je Familie) |
 | IG String Control | `archiv_1.1.7/csv/IG_String_Control_Register_Map_Float_and_IntSF_v1_0/` | – |
 
 Erkennbar ist die Geräteklasse zur Laufzeit am Common Model (`Md`, z. B. „Symo GEN24 10.0“) und

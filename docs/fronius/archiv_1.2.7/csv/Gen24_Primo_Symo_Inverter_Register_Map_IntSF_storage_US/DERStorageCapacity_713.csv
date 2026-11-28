@@ -1,0 +1,12 @@
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERStorageCapacity (713),uint16,,,713
+2,2,1,R,0x03,L,Length of sunspec model DERStorageCapacity (713),uint16,Registers,,7
+3,3,1,R,0x03,WHRtg,Energy rating of the DER storage.,uint16,WH,WH_SF,not supported
+4,4,1,R,0x03,WHAvail,Energy available of the DER storage (WHAvail = WHRtg * SoC * SoH),uint16,WH,WH_SF,not supported
+5,5,1,R,0x03,SoC,State of charge of the DER storage.,uint16,Pct,Pct_SF,0% to 100%
+6,6,1,R,0x03,SoH,State of health of the DER storage.,uint16,Pct,Pct_SF,not supported
+7,7,1,R,0x03,Sta,Storage status.,enum16,,,not supported
+8,8,1,R,0x03,WH_SF,Scale factor for energy capacity.,sunssf,,,not supported
+9,9,1,R,0x03,Pct_SF,Scale factor for percentage.,sunssf,,,-2

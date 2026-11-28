@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- Documentation: Both Fronius register archives are now complete in the repository, including the register maps of inverters behind the Datamanager (with model 124 for the Symo Hybrid) and of Smart Meters behind the Datamanager. New script `scripts/xlsx_to_csv.py` creates the CSV versions.
 - Documentation: Note on the origin and rights of the Fronius documents and the state texts taken from them; they are not covered by the project licence. New section "Licence" in the README.
 
 ## 0.2.1

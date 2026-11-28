@@ -46,14 +46,12 @@ und Dateien nur im Repository, je Handbuch den Ausgabestand (`0NN-TTMMJJJJ`) und
 identisch ist. Exit-Code 1 = Abweichungen. Dateinamen werden ohne Sonderzeichen verglichen
 (`Int&SF` ≙ `IntSF`, Leerzeichen ≙ `_`).
 
-Bekannte Unterschiede (Stand 28.11.2026, keine Aktualisierung):
-- `archiv_1.1.7` enthält nur einen Teil des Fronius-Archivs. Bei Fronius zusätzlich: Inverter-
-  und Meter-Registerkarten der Datamanager-Geräte (`Inverter_Register_Map_*_with_SYMOHYBRID_MODEL_124`,
-  `Meter_Register_Map_*_v1.0`), IG Sensor Card, `Evt1.csv`, `StVnd.csv`, `Symo_State_Codes.csv`,
-  `all.json`, `igplus.json`, `symo.json`, `EvtVnd1-4_All.csv`. Die Argeno-Registerkarte stammt aus
-  einem anderen Download.
-- `archiv_1.2.7` enthält nicht alle Varianten (z. B. `…_Int&SF_storage_US`, `Smart_Meter_…_Int&SF`,
-  `Tauro_…_Float_ROW`, einige Verto-3MPPT-Varianten).
+Bekannter Unterschied (Stand 28.11.2026): Die Argeno-Registerkarte in `archiv_1.1.7` ist in keinem
+der beiden Fronius-Archive enthalten (Quelle nicht belegt); sonst entsprechen beide Archive vollständig
+den Fronius-Downloads (ohne die Excel-Sperrdateien `.~lock.*`).
+
+Beim Übernehmen: Dateinamen ohne `&`, Leerzeichen als `_` (wie die vorhandenen); CSV-Fassungen mit
+`python3 scripts/xlsx_to_csv.py <original/Datei.xlsx> …` erzeugen.
 
 ## 2. Nach neuen Unterlagen suchen
 
@@ -78,7 +76,7 @@ Fragen, ob übernommen werden soll. **Ohne Zustimmung nichts ändern.**
 ## 4. Übernehmen (nur nach Zustimmung)
 
 - Neue Archivversion als eigener Ordner `docs/fronius/archiv_<Version>/` mit `original/`
-  (unverändert), `csv/` (jedes Blatt als CSV) und `README.md` nach dem Muster der vorhandenen Archive;
+  (unverändert), `csv/` (jedes Blatt als CSV, `scripts/xlsx_to_csv.py`) und `README.md` nach dem Muster der vorhandenen Archive;
   bestehende Ordner bleiben, Originale werden nie verändert.
 - Neue Handbuch-Ausgabe: PDF in `handbuecher/original/` ersetzen, Textfassung mit
   `pdftotext -layout` neu erzeugen, Tabelle „Stand“ in `handbuecher/README.md` anpassen.

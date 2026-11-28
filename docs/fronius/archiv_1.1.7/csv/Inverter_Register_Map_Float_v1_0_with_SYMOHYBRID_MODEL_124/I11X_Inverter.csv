@@ -1,0 +1,38 @@
+"Start
+Offset","End
+Offset",Size,RW,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,"Uniquely identifies this as a SunSpec Inverter Float Modbus Map; 111: single phase, 112: split phase, 113: three phase",uint16,,,"111, 112, 113"
+2,2,1,R,0x03,L,Length of inverter model block,uint16,Registers,,60
+3,4,2,R,0x03,A,AC Total Current value,float32,A
+5,6,2,R,0x03,AphA,AC Phase-A Current value,float32,A
+7,8,2,R,0x03,AphB,AC Phase-B Current value,float32,A
+9,10,2,R,0x03,AphC,AC Phase-C Current value,float32,A
+11,12,2,R,0x03,PPVphAB,AC Voltage Phase-AB value,float32,V
+13,14,2,R,0x03,PPVphBC,AC Voltage Phase-BC value,float32,V
+15,16,2,R,0x03,PPVphCA,AC Voltage Phase-CA value,float32,V
+17,18,2,R,0x03,PhVphA,AC Voltage Phase-A-to-neutral value,float32,V
+19,20,2,R,0x03,PhVphB,AC Voltage Phase-B-to-neutral value,float32,V
+21,22,2,R,0x03,PhVphC,AC Voltage Phase-C-to-neutral value,float32,V
+23,24,2,R,0x03,W,AC Power value,float32,W
+25,26,2,R,0x03,Hz,AC Frequency value,float32,Hz
+27,28,2,R,0x03,VA,Apparent Power,float32,VA
+29,30,2,R,0x03,VAr,Reactive Power,float32,VAr
+31,32,2,R,0x03,PF,Power Factor,float32,%
+33,34,2,R,0x03,WH,AC Lifetime Energy production,float32,Wh,,may be imprecise
+35,36,2,R,0x03,DCA,DC Current value,float32,A,,Not supported if multiple DC inputs; current can be found in Multiple MPPT model
+37,38,2,R,0x03,DCV,DC Voltage value,float32,V,,Not supported if multiple DC inputs; voltage can be found in Multiple MPPT model
+39,40,2,R,0x03,DCW,DC Power value,float32,W,,Total power of all DC inputs
+41,42,2,R,0x03,TmpCab,Cabinet Temperature,float32,° C,,Not supported
+43,44,2,R,0x03,TmpSnk,Coolant or Heat Sink Temperature,float32,° C,,Not supported
+45,46,2,R,0x03,TmpTrns,Transformer Temperature,float32,° C,,Not supported
+47,48,2,R,0x03,TmpOt,Other Temperature,float32,° C,,Not supported
+49,49,1,R,0x03,St,Operating State,enum16,Enumerated
+50,50,1,R,0x03,StVnd,Vendor Defined Operating State,enum16,Enumerated
+51,52,2,R,0x03,Evt1,Event Flags (bits 0-31),uint32,Bitfield
+53,54,2,R,0x03,Evt2,Event Flags (bits 32-63),uint32,Bitfield
+55,56,2,R,0x03,EvtVnd1,Vendor Defined Event Flags (bits 0-31),uint32,Bitfield
+57,58,2,R,0x03,EvtVnd2,Vendor Defined Event Flags (bits 32-63),uint32,Bitfield
+59,60,2,R,0x03,EvtVnd3,Vendor Defined Event Flags (bits 64-95),uint32,Bitfield
+61,62,2,R,0x03,EvtVnd4,Vendor Defined Event Flags (bits 96-127),uint32,Bitfield

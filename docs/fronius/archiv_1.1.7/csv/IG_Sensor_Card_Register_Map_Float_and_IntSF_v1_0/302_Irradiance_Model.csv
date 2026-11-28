@@ -1,0 +1,12 @@
+"Start
+Offset","End
+Offset",Size,RW,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Uniquely identifies this as a SunSpec Irradiance Modbus Register Model,uint16,,,302
+2,2,1,R,0x03,L,Length of Register Model,uint16,Registers,,5
+3,3,1,R,0x03,GHI,Global Horizontal Irradiance,uint16,W / m2
+4,4,1,R,0x03,POAI,Plane-of-Array Irradiance,uint16,W / m2,,not supported
+5,5,1,R,0x03,DFI,Diffuse Irradiance,uint16,W / m2,,not supported
+6,6,1,R,0x03,DNI,Direct Normal Irradiance,uint16,W / m2,,not supported
+7,7,1,R,0x03,OTI,Other Irradiance,uint16,W / m2,,not supported

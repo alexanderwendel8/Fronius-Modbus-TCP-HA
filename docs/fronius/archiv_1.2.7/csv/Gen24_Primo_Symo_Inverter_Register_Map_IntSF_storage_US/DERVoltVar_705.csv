@@ -1,0 +1,307 @@
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model DERVoltVar (705),uint16,,,705
+2,2,1,R,0x03,L,Length of sunspec model DERVoltVar (705),uint16,Registers,,85
+3,3,1,RW,"0x03
+0x06
+0x10",Ena,Volt-Var control enable.,enum16,,,"0: Disabled
+1: Enabled"
+4,4,1,RW,"0x03
+0x06
+0x10",AdptCrvReq,Index of curve points to adopt. First curve index is 1.,uint16,,,2 to 4
+5,5,1,R,0x03,AdptCrvRslt,Result of last adopt curve operation.,enum16,,,"0: In Progress
+1: Completed
+2: Failed"
+6,6,1,R,0x03,NPt,Number of curve points supported.,uint16,,,4
+7,7,1,R,0x03,NCrv,Number of stored curves supported.,uint16,,,4
+8,9,2,RW,"0x03
+0x06
+0x10",RvrtTms,Reversion time in seconds.  0 = No reversion time.,uint32,Secs,,0 to 4294967294
+10,11,2,R,0x03,RvrtRem,Reversion time remaining in seconds.,uint32,Secs,,0 to 4294967294
+12,12,1,RW,"0x03
+0x06
+0x10",RvrtCrv,Default curve after reversion timeout.,uint16,,,2 to 4
+13,13,1,R,0x03,V_SF,Scale factor for curve voltage points.,sunssf,,,-2
+14,14,1,R,0x03,DeptRef_SF,Scale factor for curve var points.,sunssf,,,-2
+15,15,1,R,0x03,RspTms_SF,Open loop response time scale factor.,sunssf,,,-3
+16,16,1,RW,"0x03
+0x06
+0x10",Crv/1/ActPt,Number of active points.,uint16,,,4
+17,17,1,RW,"0x03
+0x06
+0x10",Crv/1/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+18,18,1,RW,"0x03
+0x06
+0x10",Crv/1/Pri,Power priority.,enum16,,,1
+19,19,1,RW,"0x03
+0x06
+0x10",Crv/1/VRef,Vref adjustment as percentage of nominal voltage.,uint16,VRefPct,V_SF,"95 to 105 *
+
+*Actual range may vary based on inverter configuration or country setup"
+20,20,1,R,0x03,Crv/1/VRefAuto,Autonomous vref value as a percentage of nominal voltage.,uint16,VRefPct,V_SF,not supported
+21,21,1,RW,"0x03
+0x06
+0x10",Crv/1/VRefAutoEna,Enable autonomous vref.,enum16,,,"0: Disabled
+1: Enabled"
+22,22,1,RW,"0x03
+0x06
+0x10",Crv/1/VRefAutoTms,Autonomous vref time constant.,uint16,Secs,,"299 to 11500 *
+
+*Actual range may vary based on inverter configuration or country setup"
+23,24,2,RW,"0x03
+0x06
+0x10",Crv/1/RspTms,Open loop response time.,uint32,Secs,RspTms_SF,"0.023 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+25,25,1,R,0x03,Crv/1/ReadOnly,Curve read-write access.,enum16,,,1 (R)
+26,26,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+27,27,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+28,28,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+29,29,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+30,30,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+31,31,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+32,32,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+33,33,1,RW,"0x03
+0x06
+0x10",Crv/1/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+34,34,1,RW,"0x03
+0x06
+0x10",Crv/2/ActPt,Number of active points.,uint16,,,4
+35,35,1,RW,"0x03
+0x06
+0x10",Crv/2/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+36,36,1,RW,"0x03
+0x06
+0x10",Crv/2/Pri,Power priority.,enum16,,,1
+37,37,1,RW,"0x03
+0x06
+0x10",Crv/2/VRef,Vref adjustment as percentage of nominal voltage.,uint16,VRefPct,V_SF,"95 to 105 *
+
+*Actual range may vary based on inverter configuration or country setup"
+38,38,1,R,0x03,Crv/2/VRefAuto,Autonomous vref value as a percentage of nominal voltage.,uint16,VRefPct,V_SF,not supported
+39,39,1,RW,"0x03
+0x06
+0x10",Crv/2/VRefAutoEna,Enable autonomous vref.,enum16,,,"0: Disabled
+1: Enabled"
+40,40,1,RW,"0x03
+0x06
+0x10",Crv/2/VRefAutoTms,Autonomous vref time constant.,uint16,Secs,,"299 to 11500 *
+
+*Actual range may vary based on inverter configuration or country setup"
+41,42,2,RW,"0x03
+0x06
+0x10",Crv/2/RspTms,Open loop response time.,uint32,Secs,RspTms_SF,"0.023 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+43,43,1,R,0x03,Crv/2/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+44,44,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+45,45,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+46,46,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+47,47,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+48,48,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+49,49,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+50,50,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+51,51,1,RW,"0x03
+0x06
+0x10",Crv/2/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+52,52,1,RW,"0x03
+0x06
+0x10",Crv/3/ActPt,Number of active points.,uint16,,,4
+53,53,1,RW,"0x03
+0x06
+0x10",Crv/3/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+54,54,1,RW,"0x03
+0x06
+0x10",Crv/3/Pri,Power priority.,enum16,,,1
+55,55,1,RW,"0x03
+0x06
+0x10",Crv/3/VRef,Vref adjustment as percentage of nominal voltage.,uint16,VRefPct,V_SF,"95 to 105 *
+
+*Actual range may vary based on inverter configuration or country setup"
+56,56,1,R,0x03,Crv/3/VRefAuto,Autonomous vref value as a percentage of nominal voltage.,uint16,VRefPct,V_SF,not supported
+57,57,1,RW,"0x03
+0x06
+0x10",Crv/3/VRefAutoEna,Enable autonomous vref.,enum16,,,"0: Disabled
+1: Enabled"
+58,58,1,RW,"0x03
+0x06
+0x10",Crv/3/VRefAutoTms,Autonomous vref time constant.,uint16,Secs,,"299 to 11500 *
+
+*Actual range may vary based on inverter configuration or country setup"
+59,60,2,RW,"0x03
+0x06
+0x10",Crv/3/RspTms,Open loop response time.,uint32,Secs,RspTms_SF,"0.023 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+61,61,1,R,0x03,Crv/3/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+62,62,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+63,63,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+64,64,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+65,65,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+66,66,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+67,67,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+68,68,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+69,69,1,RW,"0x03
+0x06
+0x10",Crv/3/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+70,70,1,RW,"0x03
+0x06
+0x10",Crv/4/ActPt,Number of active points.,uint16,,,4
+71,71,1,RW,"0x03
+0x06
+0x10",Crv/4/DeptRef,Curve dependent reference.,enum16,,,0 to 3
+72,72,1,RW,"0x03
+0x06
+0x10",Crv/4/Pri,Power priority.,enum16,,,1
+73,73,1,RW,"0x03
+0x06
+0x10",Crv/4/VRef,Vref adjustment as percentage of nominal voltage.,uint16,VRefPct,V_SF,"95 to 105 *
+
+*Actual range may vary based on inverter configuration or country setup"
+74,74,1,R,0x03,Crv/4/VRefAuto,Autonomous vref value as a percentage of nominal voltage.,uint16,VRefPct,V_SF,not supported
+75,75,1,RW,"0x03
+0x06
+0x10",Crv/4/VRefAutoEna,Enable autonomous vref.,enum16,,,"0: Disabled
+1: Enabled"
+76,76,1,RW,"0x03
+0x06
+0x10",Crv/4/VRefAutoTms,Autonomous vref time constant.,uint16,Secs,,"299 to 11500 *
+
+*Actual range may vary based on inverter configuration or country setup"
+77,78,2,RW,"0x03
+0x06
+0x10",Crv/4/RspTms,Open loop response time.,uint32,Secs,RspTms_SF,"0.023 to 138 *
+
+*Actual range may vary based on inverter configuration or country setup"
+79,79,1,R,0x03,Crv/4/ReadOnly,Curve read-write access.,enum16,,,0 (RW)
+80,80,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/1/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+81,81,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/1/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+82,82,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/2/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+83,83,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/2/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+84,84,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/3/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+85,85,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/3/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"
+86,86,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/4/V,Curve voltage point as percentage.,uint16,VRefPct,V_SF,"50% to 150% *
+
+*Actual range may vary based on inverter configuration or country setup"
+87,87,1,RW,"0x03
+0x06
+0x10",Crv/4/Pt/4/Var,Curve reactive power point as set in DeptRef point.,int16,DeptRef,DeptRef_SF,"-60% to 60% *
+
+*Actual range may vary based on inverter configuration or country setup"

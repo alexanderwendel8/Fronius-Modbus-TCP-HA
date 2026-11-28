@@ -1,0 +1,26 @@
+"Start
+Offset","End
+Offset",Size,RW,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,2,2,R,0x03,SID,Well-known value. Uniquely identifies this as a SunSpec Modbus Map,uint32,,,0x53756e53 ('SunS')
+3,3,1,R,0x03,ID,Well-known value. Uniquely identifies this as a SunSpec Common Model block,uint16,,,1
+4,4,1,R,0x03,L,Length of Common Model block,uint16,Registers,,65
+5,20,16,R,0x03,Mn,Manufacturer,String32,,,Fronius
+21,36,16,R,0x03,Md,Device model,String32,,,z. B. IG+150V [3p]
+37,44,8,R,0x03,Opt,Options,String16,,,Firmware version of Datamanager
+45,52,8,R,0x03,Vr,SW version of inverter,String16
+53,68,16,R,0x03,SN,Serialnumber of the inverter,String32,,,"Inverter Serial Number
+
+Please note, that the inverter serial number is not supported on all devices and also depends on the internal inverter controller‘s production date and its Software-Version.
+
+If the inverter serial number is not supported, then two fallbacks are implemented that are still unique but may not match the inverter serial number printed on the nameplate:
+
+1: serial of inverter controller (PMC) if supported
+
+2: Unique ID (UID) of inverter controller
+
+For SYMOHYBRID Inverters the Inverter serial number is not supported and this register always contains one of the two implemented fallbacks.
+
+Please note further that due to startup timing issues or synchronization faults this field may change its value during operation from one option to another, eg.: At boottime only UID is available and after some time device information is synchronized then this field changes from UID to PMC or inverter serial number."
+69,69,1,R,0x03,DA,Modbus Device Address,uint16,,,1 - 247

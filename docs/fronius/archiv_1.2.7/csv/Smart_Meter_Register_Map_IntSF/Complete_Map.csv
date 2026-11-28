@@ -1,0 +1,102 @@
+Smart Meter Register Map  with Integer+SF AC-Meter Model
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40001,40002,2,R,0x03,SID,Well-known value. Uniquely identifies this as a SunSpec Modbus Map,uint32,,,0x53756e53 ('SunS')
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40003,40003,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model common (1),uint16,,,1
+40004,40004,1,R,0x03,L,Length of sunspec model common (1),uint16,Registers,,65
+40005,40020,16,R,0x03,Mn,Smart Meter Manufacturer,string,,,"e.g. ""Fronius"""
+40021,40036,16,R,0x03,Md,Smart Meter Model,string,,,"e.g. ""Smart Meter 63A"""
+40037,40044,8,R,0x03,Opt,Smart Meter Name,string,,,"e.g. ""<primary>"""
+40045,40052,8,R,0x03,Vr,SW version of,string,,,"e.g. ""2.9"""
+40053,40068,16,R,0x03,SN,Smart Meter Serialnumber,string,,,"e.g. ""18370117"""
+40069,40069,1,R,0x03,DA,Modbus Device Address,uint16,,,1 - 247
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40070,40070,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model ac_meter (20x),uint16,,,"201: Single Phase (AN or AB), 202: Split Single Phase (ABN), 203: WYE-Connect Three Phase (ABCN), 204: Delta-Connect Three Phase (ABC)"
+40071,40071,1,R,0x03,L,Length of sunspec model ac_meter (20x),uint16,Registers,,105
+40072,40072,1,R,0x03,A,Total AC Current,int16,A,A_SF
+40073,40073,1,R,0x03,AphA,Phase A Current,int16,A,A_SF
+40074,40074,1,R,0x03,AphB,Phase B Current,int16,A,A_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40075,40075,1,R,0x03,AphC,Phase C Current,int16,A,A_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40076,40076,1,R,0x03,A_SF,Current scale factor,sunssf,,,"auto-scaled on A, AphA, AphB and AphC"
+40077,40077,1,R,0x03,PhV,Line to Neutral AC Voltage (average of active phases),int16,V,V_SF
+40078,40078,1,R,0x03,PhVphA,Phase Voltage AN,int16,V,V_SF
+40079,40079,1,R,0x03,PhVphB,Phase Voltage BN,int16,V,V_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40080,40080,1,R,0x03,PhVphC,Phase Voltage CN,int16,V,V_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40081,40081,1,R,0x03,PPV,Line to Line AC Voltage (average of active phases),int16,V,V_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40082,40082,1,R,0x03,PhVphAB,Phase Voltage AB,int16,V,V_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40083,40083,1,R,0x03,PhVphBC,Phase Voltage BC,int16,V,V_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40084,40084,1,R,0x03,PhVphCA,Phase Voltage CA,int16,V,V_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40085,40085,1,R,0x03,V_SF,Voltage scale factor,sunssf,,,-1
+40086,40086,1,R,0x03,Hz,Frequency,int16,Hz,Hz_SF
+40087,40087,1,R,0x03,Hz_SF,Frequency scale factor,sunssf,,,-2
+40088,40088,1,R,0x03,W,Total Real Power,int16,W,W_SF
+40089,40089,1,R,0x03,WphA,Watts phase A,int16,W,W_SF
+40090,40090,1,R,0x03,WphB,Watts phase B,int16,W,W_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40091,40091,1,R,0x03,WphC,Watts phase C,int16,W,W_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40092,40092,1,R,0x03,W_SF,Real Power scale factor,sunssf,,,"auto-scaled on W, WphA, WphB and WphC"
+40093,40093,1,R,0x03,VA,AC Apparent Power,int16,VA,VA_SF
+40094,40094,1,R,0x03,VAphA,VA phase A,int16,VA,VA_SF
+40095,40095,1,R,0x03,VAphB,VA phase B,int16,VA,VA_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40096,40096,1,R,0x03,VAphC,VA phase C,int16,VA,VA_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40097,40097,1,R,0x03,VA_SF,Apparent Power scale factor,sunssf,,,"auto-scaled on VA, VAphA, VAphB and VAphC"
+40098,40098,1,R,0x03,VAR,Reactive Power,int16,var,VAR_SF
+40099,40099,1,R,0x03,VARphA,VAR phase A,int16,var,VAR_SF
+40100,40100,1,R,0x03,VARphB,VAR phase B,int16,var,VAR_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40101,40101,1,R,0x03,VARphC,VAR phase C,int16,var,VAR_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40102,40102,1,R,0x03,VAR_SF,Reactive Power scale factor,sunssf,,,"auto-scaled on VAR, VARphA, VARphB and VARphC"
+40103,40103,1,R,0x03,PF,Power Factor,int16,Pct,PF_SF
+40104,40104,1,R,0x03,PFphA,PF phase A,int16,Pct,PF_SF
+40105,40105,1,R,0x03,PFphB,PF phase B,int16,Pct,PF_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40106,40106,1,R,0x03,PFphC,PF phase C,int16,Pct,PF_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40107,40107,1,R,0x03,PF_SF,Power Factor scale factor,sunssf,,,-1
+40108,40109,2,R,0x03,TotWhExp,Total Real Energy Exported,acc32,Wh,TotWh_SF
+40110,40111,2,R,0x03,TotWhExpPhA,Total Watt-hours Exported phase A,acc32,Wh,TotWh_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40112,40113,2,R,0x03,TotWhExpPhB,Total Watt-hours Exported phase B,acc32,Wh,TotWh_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40114,40115,2,R,0x03,TotWhExpPhC,Total Watt-hours Exported phase C,acc32,Wh,TotWh_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40116,40117,2,R,0x03,TotWhImp,Total Real Energy Imported,acc32,Wh,TotWh_SF
+40118,40119,2,R,0x03,TotWhImpPhA,Total Watt-hours Imported phase A,acc32,Wh,TotWh_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40120,40121,2,R,0x03,TotWhImpPhB,Total Watt-hours Imported phase B,acc32,Wh,TotWh_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40122,40123,2,R,0x03,TotWhImpPhC,Total Watt-hours Imported phase C,acc32,Wh,TotWh_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40124,40124,1,R,0x03,TotWh_SF,Real Energy scale factor,sunssf,,,auto-scaled on group `TotWh*`
+40125,40126,2,R,0x03,TotVAhExp,Total Apparent Energy Exported,acc32,VAh,TotVAh_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40127,40128,2,R,0x03,TotVAhExpPhA,Total VA-hours Exported phase A,acc32,VAh,TotVAh_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40129,40130,2,R,0x03,TotVAhExpPhB,Total VA-hours Exported phase B,acc32,VAh,TotVAh_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40131,40132,2,R,0x03,TotVAhExpPhC,Total VA-hours Exported phase C,acc32,VAh,TotVAh_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40133,40134,2,R,0x03,TotVAhImp,Total Apparent Energy Imported,acc32,VAh,TotVAh_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40135,40136,2,R,0x03,TotVAhImpPhA,Total VA-hours Imported phase A,acc32,VAh,TotVAh_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40137,40138,2,R,0x03,TotVAhImpPhB,Total VA-hours Imported phase B,acc32,VAh,TotVAh_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40139,40140,2,R,0x03,TotVAhImpPhC,Total VA-hours Imported phase C,acc32,VAh,TotVAh_SF,This data-point is supported/not-supported depending on the grid connection and/or used smart meter.
+40141,40141,1,R,0x03,TotVAh_SF,Apparent Energy scale factor,sunssf,,,auto-scaled on group `TotVAh*`
+40142,40143,2,R,0x03,TotVArhImpQ1,Total Reactive Energy Imported Quadrant 1,acc32,varh,TotVArh_SF,not supported
+40144,40145,2,R,0x03,TotVArhImpQ1PhA,Total VAr-hours Imported Q1 phase A,acc32,varh,TotVArh_SF,not supported
+40146,40147,2,R,0x03,TotVArhImpQ1PhB,Total VAr-hours Imported Q1 phase B,acc32,varh,TotVArh_SF,not supported
+40148,40149,2,R,0x03,TotVArhImpQ1PhC,Total VAr-hours Imported Q1 phase C,acc32,varh,TotVArh_SF,not supported
+40150,40151,2,R,0x03,TotVArhImpQ2,Total Reactive Power Imported Quadrant 2,acc32,varh,TotVArh_SF,not supported
+40152,40153,2,R,0x03,TotVArhImpQ2PhA,Total VAr-hours Imported Q2 phase A,acc32,varh,TotVArh_SF,not supported
+40154,40155,2,R,0x03,TotVArhImpQ2PhB,Total VAr-hours Imported Q2 phase B,acc32,varh,TotVArh_SF,not supported
+40156,40157,2,R,0x03,TotVArhImpQ2PhC,Total VAr-hours Imported Q2 phase C,acc32,varh,TotVArh_SF,not supported
+40158,40159,2,R,0x03,TotVArhExpQ3,Total Reactive Power Exported Quadrant 3,acc32,varh,TotVArh_SF,not supported
+40160,40161,2,R,0x03,TotVArhExpQ3PhA,Total VAr-hours Exported Q3 phase A,acc32,varh,TotVArh_SF,not supported
+40162,40163,2,R,0x03,TotVArhExpQ3PhB,Total VAr-hours Exported Q3 phase B,acc32,varh,TotVArh_SF,not supported
+40164,40165,2,R,0x03,TotVArhExpQ3PhC,Total VAr-hours Exported Q3 phase C,acc32,varh,TotVArh_SF,not supported
+40166,40167,2,R,0x03,TotVArhExpQ4,Total Reactive Power Exported Quadrant 4,acc32,varh,TotVArh_SF,not supported
+40168,40169,2,R,0x03,TotVArhExpQ4PhA,Total VAr-hours Exported Q4 Imported phase A,acc32,varh,TotVArh_SF,not supported
+40170,40171,2,R,0x03,TotVArhExpQ4PhB,Total VAr-hours Exported Q4 Imported phase B,acc32,varh,TotVArh_SF,not supported
+40172,40173,2,R,0x03,TotVArhExpQ4PhC,Total VAr-hours Exported Q4 Imported phase C,acc32,varh,TotVArh_SF,not supported
+40174,40174,1,R,0x03,TotVArh_SF,Reactive Energy scale factor,sunssf,,,not supported
+40175,40176,2,R,0x03,Evt,Meter Event Flags,bitfield32,,,currently hardcoded to zero
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40177,40177,1,R,0x03,ID,Identifies this as End block,uint16,,,0xFFFF
+40178,40178,1,R,0x03,L,Length of model block,uint16,,,0x0

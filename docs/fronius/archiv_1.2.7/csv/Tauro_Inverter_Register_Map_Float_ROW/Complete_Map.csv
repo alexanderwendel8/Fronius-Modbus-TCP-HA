@@ -1,0 +1,300 @@
+Fronius Tauro Inverter Register Map with Float Inverter Model for ROW use
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40001,40002,2,R,0x03,SID,Well-known value. Uniquely identifies this as a SunSpec Modbus Map,uint32,,,0x53756e53 ('SunS')
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40003,40003,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model common (1),uint16,,,1
+40004,40004,1,R,0x03,L,Length of sunspec model common (1),uint16,Registers,,65
+40005,40020,16,R,0x03,Mn,Manufacturer,string,,,Fronius
+40021,40036,16,R,0x03,Md,Device,string,,,"e.g. Tauro 50-3-P
+Tauro 50-3-D"
+40037,40044,8,R,0x03,Opt,Options,string,,,not supported
+40045,40052,8,R,0x03,Vr,SW version of inverter,string,,,e.g. 1.8.10-0
+40053,40068,16,R,0x03,SN,Serialnumber of the inverter,string,,,e.g. 12345678
+40069,40069,1,R,0x03,DA,Modbus Device Address,uint16,,,1 - 247
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40070,40070,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model inverter (113),uint16,,,113
+40071,40071,1,R,0x03,L,Length of sunspec model inverter (113),uint16,Registers,,60
+40072,40073,2,R,0x03,A,AC Current,float32,A
+40074,40075,2,R,0x03,AphA,Phase A Current,float32,A
+40076,40077,2,R,0x03,AphB,Phase B Current,float32,A
+40078,40079,2,R,0x03,AphC,Phase C Current,float32,A
+40080,40081,2,R,0x03,PPVphAB,Phase Voltage AB,float32,V
+40082,40083,2,R,0x03,PPVphBC,Phase Voltage BC,float32,V
+40084,40085,2,R,0x03,PPVphCA,Phase Voltage CA,float32,V
+40086,40087,2,R,0x03,PhVphA,Phase Voltage AN,float32,V
+40088,40089,2,R,0x03,PhVphB,Phase Voltage BN,float32,V
+40090,40091,2,R,0x03,PhVphC,Phase Voltage CN,float32,V
+40092,40093,2,R,0x03,W,AC Power,float32,W
+40094,40095,2,R,0x03,Hz,Line Frequency,float32,Hz
+40096,40097,2,R,0x03,VA,AC Apparent Power,float32,VA
+40098,40099,2,R,0x03,VAr,AC Reactive Power,float32,var
+40100,40101,2,R,0x03,PF,AC Power Factor,float32,Pct
+40102,40103,2,R,0x03,WH,AC Energy,float32,Wh
+40104,40105,2,R,0x03,DCA,DC Current,float32,A,,"not supported if the inverter has multiple DC inputs
+current of DC-strings can be found in MPPT model 160"
+40106,40107,2,R,0x03,DCV,DC Voltage,float32,V,,"not supported if the inverter has multiple DC inputs
+current of DC-strings can be found in MPPT model 160"
+40108,40109,2,R,0x03,DCW,DC Power,float32,W
+40110,40111,2,R,0x03,TmpCab,Cabinet Temperature,float32,C
+40112,40113,2,R,0x03,TmpSnk,Heat Sink Temperature,float32,C,,not supported
+40114,40115,2,R,0x03,TmpTrns,Transformer Temperature,float32,C,,not supported
+40116,40117,2,R,0x03,TmpOt,Other Temperature,float32,C,,not supported
+40118,40118,1,R,0x03,St,Enumerated value.  Operating state,enum16,,,see all states in our Modbus TCP & RTU user manual under SunSpec Operating Codes
+40119,40119,1,R,0x03,StVnd,Vendor specific operating state code,enum16,,,"same as register ""St"""
+40120,40121,2,R,0x03,Evt1,Bitmask value. Event fields,bitfield32
+40122,40123,2,R,0x03,Evt2,Reserved for future use,bitfield32
+40124,40125,2,R,0x03,EvtVnd1,Vendor defined events,bitfield32,,,"""Customer"" event severity level bitfield
+  bit 0 -> Error
+  bit 1 -> Warning
+  bit 2 -> Info
+
+This bitfield is composed as a superposition for the severity-levels of all currently active events on view level ""Customer"".
+If a bit is set it means that currently there is at least one active event with this severity level.
+Multiple bits can be set at once indicating several active events with different severity-levels."
+40126,40127,2,R,0x03,EvtVnd2,Vendor defined events,bitfield32,,,"""Technician"" event severity level bitfield
+  bit 0 -> Error
+  bit 1 -> Warning
+  bit 2 -> Info
+
+This bitfield is composed as a superposition for the severity-levels of all currently active events on view level ""Technician""
+If a bit is set it means that currently there is at least one active event with this severity level.
+Multiple bits can be set at once indicating several active events with different severity-levels.
+
+View level ""Technician"" is a superset of view level ""Customer"". This means that all events visible
+for view level ""Customer"" are also visible for view level ""Technician""."
+40128,40129,2,R,0x03,EvtVnd3,Vendor defined events,bitfield32,,,not supported
+40130,40131,2,R,0x03,EvtVnd4,Vendor defined events,bitfield32,,,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40132,40132,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model nameplate (120),uint16,,,120
+40133,40133,1,R,0x03,L,Length of sunspec model nameplate (120),uint16,Registers,,26
+40134,40134,1,R,0x03,DERTyp,Type of DER device. Default value is 4 to indicate PV device.,enum16,,,4 (PV)
+40135,40135,1,R,0x03,WRtg,Continuous power output capability of the inverter.,uint16,W,WRtg_SF
+40136,40136,1,R,0x03,WRtg_SF,Scale factor,sunssf,,,1
+40137,40137,1,R,0x03,VARtg,Continuous Volt-Ampere capability of the inverter.,uint16,VA,VARtg_SF
+40138,40138,1,R,0x03,VARtg_SF,Scale factor,sunssf,,,1
+40139,40139,1,R,0x03,VArRtgQ1,Continuous VAR capability of the inverter in quadrant 1.,int16,var,VArRtg_SF
+40140,40140,1,R,0x03,VArRtgQ2,Continuous VAR capability of the inverter in quadrant 2.,int16,var,VArRtg_SF,0.0
+40141,40141,1,R,0x03,VArRtgQ3,Continuous VAR capability of the inverter in quadrant 3.,int16,var,VArRtg_SF,0.0
+40142,40142,1,R,0x03,VArRtgQ4,Continuous VAR capability of the inverter in quadrant 4.,int16,var,VArRtg_SF
+40143,40143,1,R,0x03,VArRtg_SF,Scale factor,sunssf,,,1
+40144,40144,1,R,0x03,ARtg,Maximum RMS AC current level capability of the inverter.,uint16,A,ARtg_SF
+40145,40145,1,R,0x03,ARtg_SF,Scale factor,sunssf,,,-2
+40146,40146,1,R,0x03,PFRtgQ1,Minimum power factor capability of the inverter in quadrant 1.,int16,cos(),PFRtg_SF,from -1.0 to 0
+40147,40147,1,R,0x03,PFRtgQ2,Minimum power factor capability of the inverter in quadrant 2.,int16,cos(),PFRtg_SF,1.0
+40148,40148,1,R,0x03,PFRtgQ3,Minimum power factor capability of the inverter in quadrant 3.,int16,cos(),PFRtg_SF,1.0
+40149,40149,1,R,0x03,PFRtgQ4,Minimum power factor capability of the inverter in quadrant 4.,int16,cos(),PFRtg_SF,from 0 to 1.0
+40150,40150,1,R,0x03,PFRtg_SF,Scale factor,sunssf,,,-3
+40151,40151,1,R,0x03,WHRtg,Nominal energy rating of storage device.,uint16,Wh,WHRtg_SF,not supported
+40152,40152,1,R,0x03,WHRtg_SF,Scale factor,sunssf,,,not supported
+40153,40153,1,R,0x03,AhrRtg,The usable capacity of the battery.  Maximum charge minus minimum charge from a technology capability perspective (Amp-hour capacity rating).,uint16,AH,AhrRtg_SF,not supported
+40154,40154,1,R,0x03,AhrRtg_SF,Scale factor for amp-hour rating.,sunssf,,,not supported
+40155,40155,1,R,0x03,MaxChaRte,Maximum rate of energy transfer into the storage device.,uint16,W,MaxChaRte_SF,not supported
+40156,40156,1,R,0x03,MaxChaRte_SF,Scale factor,sunssf,,,not supported
+40157,40157,1,R,0x03,MaxDisChaRte,Maximum rate of energy transfer out of the storage device.,uint16,W,MaxDisChaRte_SF,not supported
+40158,40158,1,R,0x03,MaxDisChaRte_SF,Scale factor,sunssf,,,not supported
+40159,40159,1,R,0x03,Pad,Pad register.,pad
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40160,40160,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model settings (121),uint16,,,121
+40161,40161,1,R,0x03,L,Length of sunspec model settings (121),uint16,Registers,,30
+40162,40162,1,R,0x03,WMax,Setting for maximum power output. Default to WRtg.,uint16,W,WMax_SF
+40163,40163,1,R,0x03,VRef,Voltage at the PCC.,uint16,V,VRef_SF
+40164,40164,1,R,0x03,VRefOfs,Offset  from PCC to inverter.,int16,V,VRefOfs_SF,0.0
+40165,40165,1,R,0x03,VMax,Setpoint for maximum voltage.,uint16,V,VMinMax_SF,not supported
+40166,40166,1,R,0x03,VMin,Setpoint for minimum voltage.,uint16,V,VMinMax_SF,not supported
+40167,40167,1,R,0x03,VAMax,Setpoint for maximum apparent power. Default to VARtg.,uint16,VA,VAMax_SF,same as nameplate.VARtg
+40168,40168,1,R,0x03,VArMaxQ1,Setting for maximum reactive power in quadrant 1. Default to VArRtgQ1.,int16,var,VArMax_SF,same as nameplate.VArRtgQ1
+40169,40169,1,R,0x03,VArMaxQ2,Setting for maximum reactive power in quadrant 2. Default to VArRtgQ2.,int16,var,VArMax_SF,same as nameplate.VArRtgQ2
+40170,40170,1,R,0x03,VArMaxQ3,Setting for maximum reactive power in quadrant 3. Default to VArRtgQ3.,int16,var,VArMax_SF,same as nameplate.VArRtgQ3
+40171,40171,1,R,0x03,VArMaxQ4,Setting for maximum reactive power in quadrant 4. Default to VArRtgQ4.,int16,var,VArMax_SF,same as nameplate.VArRtgQ4
+40172,40172,1,R,0x03,WGra,Default ramp rate of change of active power due to command or internal action.,uint16,% WMax/sec,WGra_SF,not supported
+40173,40173,1,R,0x03,PFMinQ1,Setpoint for minimum power factor value in quadrant 1. Default to PFRtgQ1.,int16,cos(),PFMin_SF,same as nameplate.PFRtgQ1
+40174,40174,1,R,0x03,PFMinQ2,Setpoint for minimum power factor value in quadrant 2. Default to PFRtgQ2.,int16,cos(),PFMin_SF,same as nameplate.PFRtgQ2
+40175,40175,1,R,0x03,PFMinQ3,Setpoint for minimum power factor value in quadrant 3. Default to PFRtgQ3.,int16,cos(),PFMin_SF,same as nameplate.PFRtgQ3
+40176,40176,1,R,0x03,PFMinQ4,Setpoint for minimum power factor value in quadrant 4. Default to PFRtgQ4.,int16,cos(),PFMin_SF,same as nameplate.PFRtgQ4
+40177,40177,1,R,0x03,VArAct,VAR action on change between charging and discharging: 1=switch 2=maintain VAR characterization.,enum16,,,not supported
+40178,40178,1,R,0x03,ClcTotVA,Calculation method for total apparent power. 1=vector 2=arithmetic.,enum16,,,not supported
+40179,40179,1,R,0x03,MaxRmpRte,Setpoint for maximum ramp rate as percentage of nominal maximum ramp rate. This setting will limit the rate that watts delivery to the grid can increase or decrease in response to intermittent PV generation.,uint16,% WGra,MaxRmpRte_SF,not supported
+40180,40180,1,R,0x03,ECPNomHz,Setpoint for nominal frequency at the ECP.,uint16,Hz,ECPNomHz_SF,not supported
+40181,40181,1,R,0x03,ConnPh,Identity of connected phase for single phase inverters. A=1 B=2 C=3.,enum16,,,not supported
+40182,40182,1,R,0x03,WMax_SF,Scale factor for real power.,sunssf,,,1
+40183,40183,1,R,0x03,VRef_SF,Scale factor for voltage at the PCC.,sunssf,,,0
+40184,40184,1,R,0x03,VRefOfs_SF,Scale factor for offset voltage.,sunssf,,,0
+40185,40185,1,R,0x03,VMinMax_SF,Scale factor for min/max voltages.,sunssf,,,not supported
+40186,40186,1,R,0x03,VAMax_SF,Scale factor for apparent power.,sunssf,,,1
+40187,40187,1,R,0x03,VArMax_SF,Scale factor for reactive power.,sunssf,,,1
+40188,40188,1,R,0x03,WGra_SF,Scale factor for default ramp rate.,sunssf,,,not supported
+40189,40189,1,R,0x03,PFMin_SF,Scale factor for minimum power factor.,sunssf,,,-3
+40190,40190,1,R,0x03,MaxRmpRte_SF,Scale factor for maximum ramp percentage.,sunssf,,,not supported
+40191,40191,1,R,0x03,ECPNomHz_SF,Scale factor for nominal frequency.,sunssf,,,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40192,40192,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model status (122),uint16,,,122
+40193,40193,1,R,0x03,L,Length of sunspec model status (122),uint16,Registers,,44
+40194,40194,1,R,0x03,PVConn,PV inverter present/available status. Enumerated value.,bitfield16,,,"Bit 0: Connected 
+Bit 1: Available
+Bit 2: Operating"
+40195,40195,1,R,0x03,StorConn,Storage inverter present/available status. Enumerated value.,bitfield16,,,"Bit 0: Connected 
+Bit 1: Available
+Bit 2: Operating"
+40196,40196,1,R,0x03,ECPConn,ECP connection status: disconnected=0  connected=1.,bitfield16,,,Bit 0: Connected
+40197,40200,4,R,0x03,ActWh,AC lifetime active (real) energy output.,acc64,Wh
+40201,40204,4,R,0x03,ActVAh,AC lifetime apparent energy output.,acc64,VAh,,not supported
+40205,40208,4,R,0x03,ActVArhQ1,AC lifetime reactive energy output in quadrant 1.,acc64,varh,,not supported
+40209,40212,4,R,0x03,ActVArhQ2,AC lifetime reactive energy output in quadrant 2.,acc64,varh,,not supported
+40213,40216,4,R,0x03,ActVArhQ3,AC lifetime negative energy output  in quadrant 3.,acc64,varh,,not supported
+40217,40220,4,R,0x03,ActVArhQ4,AC lifetime reactive energy output  in quadrant 4.,acc64,varh,,not supported
+40221,40221,1,R,0x03,VArAval,Amount of VARs available without impacting watts output.,int16,var,VArAval_SF,not supported
+40222,40222,1,R,0x03,VArAval_SF,Scale factor for available VARs.,sunssf,,,not supported
+40223,40223,1,R,0x03,WAval,Amount of Watts available.,uint16,var,WAval_SF,not supported
+40224,40224,1,R,0x03,WAval_SF,Scale factor for available Watts.,sunssf,,,not supported
+40225,40226,2,R,0x03,StSetLimMsk,Bit Mask indicating setpoint limit(s) reached.,bitfield32,,,not supported
+40227,40228,2,R,0x03,StActCtl,Bit Mask indicating which inverter controls are currently active.,bitfield32,,,"bits are set according to enabled controls in immediate controls model 123
+
+Bit 0: FixedW 
+Bit 1: FixedVAR
+Bit 2: FixedPF"
+40229,40232,4,R,0x03,TmSrc,Source of time synchronization.,string,,,RTC
+40233,40234,2,R,0x03,Tms,Seconds since 01-01-2000 00:00 UTC,uint32,Secs
+40235,40235,1,R,0x03,RtSt,Bit Mask indicating active ride-through status.,bitfield16,,,not supported
+40236,40236,1,R,0x03,Ris,Isolation resistance.,uint16,ohms,Ris_SF
+40237,40237,1,R,0x03,Ris_SF,Scale factor for isolation resistance.,sunssf,,,auto-scaled on Ris
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40238,40238,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model controls (123),uint16,,,123
+40239,40239,1,R,0x03,L,Length of sunspec model controls (123),uint16,Registers,,24
+40240,40240,1,RW,"0x03
+0x06
+0x10",Conn_WinTms,Time window for connect/disconnect.,uint16,Secs,,0 - 300
+40241,40241,1,RW,"0x03
+0x06
+0x10",Conn_RvrtTms,Timeout period for connect/disconnect.,uint16,Secs,,0 - 28800
+40242,40242,1,RW,"0x03
+0x06
+0x10",Conn,Enumerated valued.  Connection control.,enum16,,,"0: Disconnected
+1: Connected"
+40243,40243,1,RW,"0x03
+0x06
+0x10",WMaxLimPct,Set power output to specified level.,uint16,% WMax,WMaxLimPct_SF,0% - 100%
+40244,40244,1,RW,"0x03
+0x06
+0x10",WMaxLimPct_WinTms,Time window for power limit change.,uint16,Secs,,0 - 300
+40245,40245,1,RW,"0x03
+0x06
+0x10",WMaxLimPct_RvrtTms,Timeout period for power limit.,uint16,Secs,,0 - 28800
+40246,40246,1,RW,"0x03
+0x06
+0x10",WMaxLimPct_RmpTms,Ramp time for moving from current setpoint to new setpoint.,uint16,Secs,,0 - 65534
+40247,40247,1,RW,"0x03
+0x06
+0x10",WMaxLim_Ena,Enumerated valued.  Throttle enable/disable control.,enum16,,,"0: Disabled
+1: Enabled"
+40248,40248,1,RW,"0x03
+0x06
+0x10",OutPFSet,Set power factor to specific value - cosine of angle.,int16,cos(),OutPFSet_SF,"from -1.0 to nameplate.PFRtgQ1
+and
+from nameplate.PFRtgQ4 to +1.0"
+40249,40249,1,RW,"0x03
+0x06
+0x10",OutPFSet_WinTms,Time window for power factor change.,uint16,Secs,,0 - 300
+40250,40250,1,RW,"0x03
+0x06
+0x10",OutPFSet_RvrtTms,Timeout period for power factor.,uint16,Secs,,0 - 28800
+40251,40251,1,RW,"0x03
+0x06
+0x10",OutPFSet_RmpTms,Ramp time for moving from current setpoint to new setpoint.,uint16,Secs,,0 - 65534
+40252,40252,1,RW,"0x03
+0x06
+0x10",OutPFSet_Ena,Enumerated valued.  Fixed power factor enable/disable control.,enum16,,,"0: Disabled
+1: Enabled"
+40253,40253,1,R,0x03,VArWMaxPct,Reactive power in percent of WMax.,int16,% WMax,VArPct_SF,not supported
+40254,40254,1,RW,"0x03
+0x06
+0x10",VArMaxPct,Reactive power in percent of VArMax.,int16,% VArMax,VArPct_SF,-100% - +100%
+40255,40255,1,R,0x03,VArAvalPct,Reactive power in percent of VArAval.,int16,% VArAval,VArPct_SF,not supported
+40256,40256,1,RW,"0x03
+0x06
+0x10",VArPct_WinTms,Time window for VAR limit change.,uint16,Secs,,0 - 300
+40257,40257,1,RW,"0x03
+0x06
+0x10",VArPct_RvrtTms,Timeout period for VAR limit.,uint16,Secs,,0 - 28800
+40258,40258,1,RW,"0x03
+0x06
+0x10",VArPct_RmpTms,Ramp time for moving from current setpoint to new setpoint.,uint16,Secs,,0 - 65534
+40259,40259,1,R,0x03,VArPct_Mod,Enumerated value. VAR percent limit mode.,enum16,,,2: VAR limit as a % of VArMax
+40260,40260,1,RW,"0x03
+0x06
+0x10",VArPct_Ena,Enumerated valued.  Percent limit VAr enable/disable control.,enum16,,,"0: Disabled
+1: Enabled"
+40261,40261,1,R,0x03,WMaxLimPct_SF,Scale factor for power output percent.,sunssf,,,-2
+40262,40262,1,R,0x03,OutPFSet_SF,Scale factor for power factor.,sunssf,,,-3
+40263,40263,1,R,0x03,VArPct_SF,Scale factor for reactive power percent.,sunssf,,,0
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40264,40264,1,R,0x03,ID,Well-known value. Uniquely identifies this as a sunspec model mppt (160),uint16,,,160
+40265,40265,1,R,0x03,L,Length of sunspec model mppt (160),uint16,Registers,,68
+40266,40266,1,R,0x03,DCA_SF,Current Scale Factor,sunssf,,,auto-scaled on DCA 1-N
+40267,40267,1,R,0x03,DCV_SF,Voltage Scale Factor,sunssf,,,auto-scaled on DCV 1-N
+40268,40268,1,R,0x03,DCW_SF,Power Scale Factor,sunssf,,,auto-scaled on DCW 1-N
+40269,40269,1,R,0x03,DCWH_SF,Energy Scale Factor,sunssf,,,auto-scaled on DCWH 1-N
+40270,40271,2,R,0x03,Evt,Global Events,bitfield32,,,not supported
+40272,40272,1,R,0x03,N,Number of Modules,count,,,"number of mppt trackers
+
+3 MPPT => 3 repeating block"
+40273,40273,1,R,0x03,TmsPer,Timestamp Period,uint16,,,not supported
+40274,40274,1,R,0x03,module/1/ID,Input ID,uint16,,,1
+40275,40282,8,R,0x03,module/1/IDStr,Input ID Sting,string,,,'MPPT 1'
+40283,40283,1,R,0x03,module/1/DCA,DC Current,uint16,A,DCA_SF
+40284,40284,1,R,0x03,module/1/DCV,DC Voltage,uint16,V,DCV_SF
+40285,40285,1,R,0x03,module/1/DCW,DC Power,uint16,W,DCW_SF
+40286,40287,2,R,0x03,module/1/DCWH,Lifetime Energy,acc32,Wh,DCWH_SF
+40288,40289,2,R,0x03,module/1/Tms,Timestamp,uint32,Secs,,number of seconds since Jan 1st 2000 00:00 am
+40290,40290,1,R,0x03,module/1/Tmp,Temperature,int16,C,,not supported
+40291,40291,1,R,0x03,module/1/DCSt,Operating State,enum16,,,not supported
+40292,40293,2,R,0x03,module/1/DCEvt,Module Events,bitfield32,,,not supported
+40294,40294,1,R,0x03,module/2/ID,Input ID,uint16,,,2
+40295,40302,8,R,0x03,module/2/IDStr,Input ID Sting,string,,,'MPPT 2'
+40303,40303,1,R,0x03,module/2/DCA,DC Current,uint16,A,DCA_SF
+40304,40304,1,R,0x03,module/2/DCV,DC Voltage,uint16,V,DCV_SF
+40305,40305,1,R,0x03,module/2/DCW,DC Power,uint16,W,DCW_SF
+40306,40307,2,R,0x03,module/2/DCWH,Lifetime Energy,acc32,Wh,DCWH_SF
+40308,40309,2,R,0x03,module/2/Tms,Timestamp,uint32,Secs,,number of seconds since Jan 1st 2000 00:00 am
+40310,40310,1,R,0x03,module/2/Tmp,Temperature,int16,C,,not supported
+40311,40311,1,R,0x03,module/2/DCSt,Operating State,enum16,,,not supported
+40312,40313,2,R,0x03,module/2/DCEvt,Module Events,bitfield32,,,not supported
+40314,40314,1,R,0x03,module/3/ID,Input ID,uint16,,,3
+40315,40322,8,R,0x03,module/3/IDStr,Input ID Sting,string,,,'MPPT 3'
+40323,40323,1,R,0x03,module/3/DCA,DC Current,uint16,A,DCA_SF
+40324,40324,1,R,0x03,module/3/DCV,DC Voltage,uint16,V,DCV_SF
+40325,40325,1,R,0x03,module/3/DCW,DC Power,uint16,W,DCW_SF
+40326,40327,2,R,0x03,module/3/DCWH,Lifetime Energy,acc32,Wh,DCWH_SF
+40328,40329,2,R,0x03,module/3/Tms,Timestamp,uint32,Secs,,number of seconds since Jan 1st 2000 00:00 am
+40330,40330,1,R,0x03,module/3/Tmp,Temperature,int16,C,,not supported
+40331,40331,1,R,0x03,module/3/DCSt,Operating State,enum16,,,not supported
+40332,40333,2,R,0x03,module/3/DCEvt,Module Events,bitfield32,,,not supported
+
+Start,End,Size,R/W,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+40334,40334,1,R,0x03,ID,Identifies this as End block,uint16,,,0xFFFF
+40335,40335,1,R,0x03,L,Length of model block,uint16,,,0x0

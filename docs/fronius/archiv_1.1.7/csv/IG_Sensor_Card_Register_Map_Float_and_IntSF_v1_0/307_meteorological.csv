@@ -1,0 +1,18 @@
+"Start
+Offset","End
+Offset",Size,RW,"Function
+codes",Name,Description,Type,Units,Scale Factor,"Range
+of values"
+1,1,1,R,0x03,ID,Uniquely identifies this as a SunSpec Base Meteorological Modbus Register Model,uint16,,,307
+2,2,1,R,0x03,L,Length of Register Model,uint16,Registers,,11
+3,3,1,R,0x03,TmpAmb,Ambient Temperature,int16,°C,-1
+4,4,1,R,0x03,RH,Relative Humidity,int16,%,,not supported
+5,5,1,R,0x03,Pres,Barometric Pressure,int16,Hpa,,not supported
+6,6,1,R,0x03,WndSpd,Wind Speed,int16,m/s
+7,7,1,R,0x03,WndDir,Wind Direction,int16,deg,,not supported
+8,8,1,R,0x03,Rain,Rainfall,int16,mm,,not supported
+9,9,1,R,0x03,Snw,Snow Depth,int16,mm,,not supported
+10,10,1,R,0x03,PPT,Precipitation Type (WMO 4680 SYNOP code reference),int16,,,not supported
+11,11,1,R,0x03,ElecFld,Electric Field,int16,Vm,,not supported
+12,12,1,R,0x03,SurWet,Surface Wetness,int16,kO,,not supported
+13,13,1,R,0x03,SoilWet,Soil Wetness,int16,%,,not supported

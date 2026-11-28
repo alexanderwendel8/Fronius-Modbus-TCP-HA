@@ -4,6 +4,7 @@
 
 ## Unveröffentlicht
 
+- Dokumentation: Die beiden Fronius-Registerarchive sind jetzt vollständig im Repository, darunter die Registerkarten der Wechselrichter am Datamanager (mit Modell 124 für den Symo Hybrid) und der Smart Meter am Datamanager. Neues Skript `scripts/xlsx_to_csv.py` erzeugt die CSV-Fassungen.
 - Dokumentation: Hinweis auf Herkunft und Rechte der Fronius-Unterlagen und der daraus übernommenen Statustexte; sie stehen nicht unter der Projektlizenz. Neuer Abschnitt „Lizenz“ in der README.
 
 ## 0.2.1
