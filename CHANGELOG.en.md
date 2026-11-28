@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- Fixed: The diagnostics download read the pymodbus version through a file operation in the event loop; Home Assistant reported this as "Detected blocking call". The version now comes directly from the module.
 - Prepared for newer Home Assistant versions: Smart Meters are linked to the inverter via `via_device_id` instead of the deprecated `via_device` (Home Assistant removes it in 2027.8; from 2026.10 a warning appears in the log otherwise). Form schemas use `probatio` where Home Assistant ships it, otherwise `voluptuous` as before. Home Assistant 2026.2 remains supported; lint and type check now run against both versions.
 - Documentation: English versions of the README (`README.en.md`) and the changelog (`CHANGELOG.en.md`). Both language versions are maintained in parallel; a test checks that they have the same structure.
 - Development: New workflow `prerelease.yml` manually creates a pre-release (`vX.Y.Zb1`, `b2` …) from the current state of `main`, with the notes from "Unreleased". This allows changes to be tested via the Marketplace (switch **Pre-release** for the repository) without making a release.

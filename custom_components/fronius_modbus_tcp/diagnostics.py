@@ -8,9 +8,9 @@ auch Modelle, die die Integration (noch) nicht auswertet.
 from __future__ import annotations
 
 from dataclasses import asdict
-from importlib.metadata import PackageNotFoundError, version
 from typing import Any
 
+import pymodbus
 from homeassistant.components.diagnostics import async_redact_data
 from homeassistant.const import CONF_HOST
 from homeassistant.core import HomeAssistant
@@ -20,6 +20,8 @@ from .api import FroniusModbusClient, FroniusModbusError, SunSpecDeviceInfo
 from .coordinator import FroniusConfigEntry, FroniusCoordinator, structure_store
 
 TO_REDACT = {CONF_HOST, "serial_number"}
+# pymodbus.__version__ statt importlib.metadata.version(): Letzteres liest Dateien
+# und blockiert damit die Event-Loop (Home Assistant meldet "Detected blocking call").
 
 # Seriennummer im Common Model: Register 48–63 des Rumpfs (SN, 16 Register)
 _COMMON_SN = slice(48, 64)
@@ -65,13 +67,6 @@ async def _raw_fronius(client: FroniusModbusClient, unit: int) -> dict[str, Any]
     return raw
 
 
-def _package_version(name: str) -> str | None:
-    try:
-        return version(name)
-    except PackageNotFoundError:
-        return None
-
-
 async def _not_loaded(hass: HomeAssistant, entry: FroniusConfigEntry) -> dict[str, Any]:
     """Eintrag nicht geladen (z. B. Gerät beim Start nicht erreichbar).
 
@@ -91,7 +86,7 @@ async def _not_loaded(hass: HomeAssistant, entry: FroniusConfigEntry) -> dict[st
         "reason": reason,
         "entry": async_redact_data(dict(entry.data), TO_REDACT),
         "options": dict(entry.options),
-        "pymodbus": _package_version("pymodbus"),
+        "pymodbus": pymodbus.__version__,
         "stored_structure": async_redact_data(stored, TO_REDACT) if stored else None,
     }
 
@@ -118,7 +113,7 @@ async def async_get_config_entry_diagnostics(
         "loaded": True,
         "entry": async_redact_data(dict(entry.data), TO_REDACT),
         "options": dict(entry.options),
-        "pymodbus": _package_version("pymodbus"),
+        "pymodbus": pymodbus.__version__,
         "scan_interval": coordinator.scan_interval_seconds,
         "last_update_success": coordinator.last_update_success,
         "inverter": async_redact_data(asdict(inverter), TO_REDACT),
